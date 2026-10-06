@@ -68,7 +68,7 @@ screens.practiceHome = () => {
     <div class="card howto"><b>איך זה עובד?</b><div class="how">${['רואים גרף של מניה בדויה', 'מחליטים אם לקנות או לחכות', 'אם קונים: בונים תוכנית צעד אחרי צעד', 'מריצים את הגרף ורואים מה קרה'].map((t, i) => `<div><i>${i + 1}</i><span>${t}</span></div>`).join('')}</div>
       <span class="muted" style="font-size:13px;line-height:1.6">אין כאן כסף אמיתי. הנקודות והכוכבים הם על החשיבה שלכם ולא על המזל. לפעמים התשובה הנכונה היא לחכות.</span></div>
     <div style="height:14px"></div>
-    ${SCEN.map((s, i) => `<button class="les" data-go="practice" data-arg="${i}"><div class="ic" style="color:var(--green)">${ic.chart}</div><div class="tx"><b>מקרה ${i + 1}</b><span>גרף הדגמה</span></div><span class="st" style="direction:ltr">${'★'.repeat(d[s.id] || 0)}${'☆'.repeat(3 - (d[s.id] || 0))}</span></button>`).join('')}
+    ${SCEN.map((s, i) => `<button class="les" data-go="practice" data-arg="${i}"><div class="ic" style="color:var(--lime)">${ic.chart}</div><div class="tx"><b>מקרה ${i + 1}</b><span>גרף הדגמה</span></div><span class="st" style="direction:ltr">${'★'.repeat(d[s.id] || 0)}${'☆'.repeat(3 - (d[s.id] || 0))}</span></button>`).join('')}
     <p class="demo-note">הגרפים נוצרים בקוד ואינם נתוני שוק אמיתיים. אין כאן המלצת השקעה.</p></div>`;
 };
 
@@ -225,6 +225,7 @@ screens.feedback = ({ idx, st, sim }) => {
   const sc = SCEN[idx], P = buildScen(sc), ev = evaluate(sc, P, st), ok = ev.fails === 0;
   const ac = A(), prev = ac.practiceDone[sc.id] || 0;
   if (ev.stars > prev) { ac.stars += ev.stars - prev; ac.xp = (ac.xp || 0) + (ev.stars - prev) * 10; ac.practiceDone[sc.id] = ev.stars; save(); }
+  markActive(ac);
   let result = '', alt = '', title, sub;
   const pl = st.plan;
   if (pl) {

@@ -88,6 +88,10 @@ function go(name, arg) {
   setTimeout(() => { if (tok !== navToken) return; render(); scr.classList.add('entering'); setTimeout(() => scr.classList.remove('entering'), 520); }, 170);
 }
 const lvl = (a) => 1 + Math.floor((a.xp || 0) / 100);
+const dayKey = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+function markActive(ac) { ac.days = ac.days || {}; const k = dayKey(); ac.days[k] = (ac.days[k] || 0) + 1; save(); }
+function streakDays(ac) { const d = new Date(); let n = 0; if (!(ac.days || {})[dayKey(d)]) d.setDate(d.getDate() - 1); while ((ac.days || {})[dayKey(d)]) { n++; d.setDate(d.getDate() - 1); } return n; }
+const LVL_TITLE = ['מתחיל', 'סקרן', 'חוקר', 'אנליסט', 'מומחה'];
 function closeSheetNow() { ['sheet', 'term'].forEach(id => { const s = $('#' + id); s.hidden = true; s.classList.remove('open'); s.innerHTML = ''; }); }
 function renderTabs(active) {
   const items = [['home', 'בית', ic.home], ['lessons', 'שיעורים', ic.book], ['practiceHome', 'תרגול', ic.chart, true], ['market', 'שוק', ic.trend], ['portfolio', 'תיק', ic.wallet]];
