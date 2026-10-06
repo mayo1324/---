@@ -3,6 +3,7 @@ import re, sys
 from pathlib import Path
 root = Path(__file__).resolve().parent.parent / "prototype"
 out = Path(sys.argv[1])
+standalone = "--standalone" in sys.argv
 html = (root / "index.html").read_text(encoding="utf-8")
 css = (root / "style.css").read_text(encoding="utf-8")
 order = ["core", "data", "art", "screens1", "screens2", "practice", "boot"]
@@ -25,5 +26,7 @@ body{{background:#0b0d10}}
 {js}
 </script>
 '''
+if standalone:
+    page = '<!doctype html>\n<html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">' + page + '</body></html>'
 out.write_text(page, encoding="utf-8")
 print(out, len(page))
