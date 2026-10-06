@@ -58,7 +58,7 @@ screens.glossary = () => {
 };
 
 const ALL_DONE = () => LESSONS.every(l => lessonsDone().includes(l.id));
-const portfolioOpen = () => ALL_DONE() || A().demoUnlock;
+const portfolioOpen = () => PROTOTYPE_OPEN_PORTFOLIO || ALL_DONE() || A().demoUnlock;
 
 /* ===== onboarding ===== */
 screens.onboarding = (i = 0) => {
@@ -82,27 +82,61 @@ screens.onboarding = (i = 0) => {
   $('#next').onclick = () => { if (i === 2) done('signup'); else screens.onboarding(i + 1); };
 };
 
-/* ===== login ===== */
+/* ===== sign in / sign up: glass cards ===== */
+const fi = {
+  user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.6 3.6-5.4 7-5.4s6.2 1.8 7 5.4"/></svg>',
+  cal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="5.5" width="16" height="14.5" rx="3"/><path d="M8 3.5v4M16 3.5v4M4 10.5h16"/></svg>',
+  mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5.5" width="17" height="13" rx="3"/><path d="M4 8l8 5.5L20 8"/></svg>',
+  lock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="10.5" width="14" height="10" rx="2.6"/><path d="M8.5 10.5V8a3.5 3.5 0 017 0v2.5"/></svg>',
+  eye: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg>',
+  candle: '<svg viewBox="0 0 48 48"><g stroke="#10180a" stroke-width="3.4" stroke-linecap="round"><path d="M16 9v30M32 13v26"/></g><rect x="10.5" y="17" width="11" height="15" rx="3" fill="#10180a"/><rect x="26.5" y="21" width="11" height="12" rx="3" fill="#10180a"/></svg>'
+};
+const authLogo = () => `<div class="authlogo"><div class="lgi">${fi.candle}</div><h1><span>לומדים</span> <b>שוק הון</b></h1><p>ללמוד, לתרגל, להבין</p></div>`;
+const gfield = (id, icon, ph, extra = '', type = 'text', dirLtr = false) => `<div class="gf"><span class="lead">${icon}</span><input class="gi" id="${id}" type="${type}" placeholder="${ph}" ${dirLtr ? 'dir="ltr" style="text-align:right"' : ''} ${extra}>${type === 'password' ? `<button type="button" class="eye" data-eye="${id}" aria-label="הצגת סיסמה">${fi.eye}</button>` : ''}</div><div class="err-t" id="e-${id}"></div>`;
+const socials = (verb) => `<div class="orline"><span>או</span></div><button class="soc" data-prov="google"><i class="pm g">G</i>${verb} עם Google</button><button class="soc" data-prov="apple"><i class="pm a">A</i>${verb} עם Apple</button>`;
+function bindAuth(root) {
+  $$('[data-eye]', root).forEach(b => b.onclick = () => { const i = $('#' + b.dataset.eye); i.type = i.type === 'password' ? 'text' : 'password'; b.classList.toggle('on', i.type === 'text'); });
+  $$('[data-prov]', root).forEach(b => b.onclick = () => providerFlow(b.dataset.prov));
+}
+/* demo only: there is no real Google or Apple connection in the prototype */
+function providerFlow(kind) {
+  const nm = kind === 'google' ? 'Google' : 'Apple', old = Object.values(loadDB().accounts).find(a => a.provider === kind);
+  openSheet(`<div class="prov"><i class="pm big ${kind === 'google' ? 'g' : 'a'}">${kind === 'google' ? 'G' : 'A'}</i><h3>המשך עם ${nm}</h3>
+    <p class="muted" style="font-size:13.5px;line-height:1.6;margin:6px 0 14px">בגרסת ההדגמה אין חיבור אמיתי ל-${nm}. בגרסה האמיתית השם והאימייל יגיעו משם, ונצטרך רק את הגיל.</p>
+    ${old ? `<button class="btn primary" id="pgo">כניסה כ-${old.name}</button>` : `<div class="gf"><span class="lead">${fi.user}</span><input class="gi" id="pn" placeholder="איך לקרוא לך?"></div><div class="gf" style="margin-top:10px"><span class="lead">${fi.cal}</span><input class="gi" id="pa" type="number" inputmode="numeric" placeholder="גיל (15 ומעלה)"></div><div class="err-t" id="pe"></div><button class="btn primary" id="pgo" style="margin-top:12px">המשך</button>`}
+    <button class="btn ghost small" data-close="1" style="margin-top:8px">ביטול</button></div>`);
+  $('#pgo').onclick = () => {
+    const db = loadDB();
+    if (old) { db.session = old.email; save(); closeSheet(); toast('ברוך שובך, ' + old.name); go('home'); return; }
+    const nmv = $('#pn').value.trim(), age = +$('#pa').value;
+    if (nmv.length < 2) { $('#pe').textContent = 'כתבו שם של לפחות שתי אותיות'; return; }
+    if (!age || age < 15) { $('#pe').textContent = age ? 'האפליקציה מיועדת לגיל 15 ומעלה' : 'כתבו גיל'; return; }
+    const email = `${kind}.demo@example.com`; const ac = newAcct(nmv, age, email, Math.random().toString(36).slice(2), 'להבין איך זה עובד'); ac.provider = kind;
+    db.accounts[email] = ac; db.session = email; save(); closeSheet(); go('home');
+  };
+}
+
 screens.login = () => {
-  scr.innerHTML = `<div class="anim">
-    <div class="top"><button class="icon-btn" id="bk">${ic.back}</button><span></span></div>
-    <h1>טוב לראות אותך שוב</h1><p class="muted" style="margin-top:8px">התחברו כדי להמשיך מאיפה שעצרתם.</p>
-    <div class="field"><label for="em">אימייל</label><input class="inp" id="em" type="email" dir="ltr" style="text-align:right" placeholder="name@example.com" autocomplete="username"><div class="err-t" id="e-em"></div></div>
-    <div class="field"><label for="pw">סיסמה</label><input class="inp" id="pw" type="password" dir="ltr" style="text-align:right" placeholder="הסיסמה שלך" autocomplete="current-password"><div class="err-t" id="e-pw"></div></div>
-    <button class="link" id="fg" style="margin-top:12px">שכחתי סיסמה</button>
-    <div style="height:22px"></div>
-    <button class="btn primary" id="go">התחברות</button>
-    <p class="muted" style="text-align:center;margin-top:22px;font-size:14px">אין לך חשבון? <button class="link" id="su">יצירת חשבון</button></p>
+  scr.innerHTML = `<div class="auth anim">
+    <button class="icon-btn" id="bk" style="margin:4px 0 0">${ic.back}</button>${authLogo()}
+    <div class="glass"><h2>כניסה לחשבון</h2>
+      ${gfield('em', fi.mail, 'אימייל', 'autocomplete="username"', 'email', true)}
+      ${gfield('pw', fi.lock, 'סיסמה', 'autocomplete="current-password"', 'password', true)}
+      <div class="rowx"><button class="check on" id="rem" type="button"><i></i><span>זכור אותי</span></button><button class="link" id="fg" type="button">שכחתי סיסמה</button></div>
+      <button class="btn primary" id="go">${fi.lock.replace('<svg', '<svg width="18" height="18"')} כניסה</button>
+      ${socials('כניסה')}
+      <p class="alt">אין לך חשבון? <button class="link" id="su">יצירת חשבון</button></p></div>
     <p class="demo-note" style="text-align:center">אב טיפוס: החשבונות נשמרים רק בדפדפן הזה.</p></div>`;
+  bindAuth(scr);
+  $('#rem').onclick = () => $('#rem').classList.toggle('on');
   $('#bk').onclick = () => go('onboarding', 0);
   $('#su').onclick = () => go('signup');
   $('#fg').onclick = () => toast('באב הטיפוס אין איפוס סיסמה');
-  const setErr = (id, msg) => { $('#e-' + id).textContent = msg || ''; $('#' + id).classList.toggle('err', !!msg); return !!msg; };
+  const setErr = (id, msg) => { $('#e-' + id).textContent = msg || ''; $('#' + id).closest('.gf').classList.toggle('err', !!msg); return !!msg; };
   const submit = () => {
     const em = $('#em').value.trim().toLowerCase(), pw = $('#pw').value, acc = loadDB().accounts[em];
     let bad = setErr('em', /^\S+@\S+\.\S+$/.test(em) ? (acc ? '' : 'לא מצאנו חשבון עם האימייל הזה') : 'כתבו אימייל תקין');
-    if (!bad) bad = setErr('pw', !pw ? 'כתבו סיסמה' : acc.pass !== hash(pw) ? 'הסיסמה לא נכונה' : '');
-    else setErr('pw', '');
+    if (!bad) bad = setErr('pw', !pw ? 'כתבו סיסמה' : acc.pass !== hash(pw) ? 'הסיסמה לא נכונה' : ''); else setErr('pw', '');
     if (bad) return;
     loadDB().session = em; save(); toast('ברוך שובך, ' + acc.name); go('home');
   };
@@ -110,34 +144,34 @@ screens.login = () => {
   $('#pw').onkeydown = (e) => { if (e.key === 'Enter') submit(); };
 };
 
-/* ===== signup ===== */
 screens.signup = () => {
   const st = { goal: 'להבין איך זה עובד', terms: false };
-  scr.innerHTML = `<div class="anim">
-    <div class="top"><button class="icon-btn" id="bk">${ic.back}</button><span></span></div>
-    <h1>יוצרים חשבון</h1><p class="muted" style="margin-top:8px">שנייה אחת ואתם בפנים. אין כסף אמיתי באפליקציה.</p>
-    <div class="field"><label for="nm">איך לקרוא לך?</label><input class="inp" id="nm" placeholder="השם שלך" autocomplete="off"><div class="err-t" id="e-nm"></div></div>
-    <div class="field"><label for="age">גיל</label><input class="inp" id="age" type="number" inputmode="numeric" placeholder="15 ומעלה" min="1" max="99"><div class="err-t" id="e-age"></div></div>
-    <div class="field"><label for="em">אימייל</label><input class="inp" id="em" type="email" dir="ltr" style="text-align:right" placeholder="name@example.com" autocomplete="username"><div class="err-t" id="e-em"></div></div>
-    <div class="field"><label for="pw">סיסמה</label><input class="inp" id="pw" type="password" dir="ltr" style="text-align:right" placeholder="לפחות 4 תווים" autocomplete="new-password"><div class="err-t" id="e-pw"></div></div>
-    <div class="field"><label>מה המטרה שלך?</label><div class="chips" id="goals">${['להבין איך זה עובד', 'ללמוד לקרוא גרפים', 'סתם סקרנות'].map(g => `<button class="chip${g === st.goal ? ' on' : ''}">${g}</button>`).join('')}</div></div>
-    <button class="check" id="terms"><i></i><span>אני מבין שהתוכן לימודי בלבד, אין בו המלצות השקעה והבטחות לרווח, ואין כסף אמיתי באפליקציה.</span></button>
-    <div class="err-t" id="e-t"></div>
-    <div style="height:18px"></div>
-    <button class="btn primary" id="go">יצירת חשבון</button>
-    <p class="muted" style="text-align:center;margin-top:20px;font-size:14px">כבר יש לך חשבון? <button class="link" id="li">התחברות</button></p></div>`;
+  scr.innerHTML = `<div class="auth anim">
+    <button class="icon-btn" id="bk" style="margin:4px 0 0">${ic.back}</button>${authLogo()}
+    <div class="glass"><h2>יצירת חשבון</h2>
+      ${gfield('nm', fi.user, 'איך לקרוא לך?', 'autocomplete="off"')}
+      ${gfield('age', fi.cal, 'גיל (15 ומעלה)', 'min="1" max="99" inputmode="numeric"', 'number')}
+      ${gfield('em', fi.mail, 'אימייל', 'autocomplete="username"', 'email', true)}
+      ${gfield('pw', fi.lock, 'סיסמה (לפחות 4 תווים)', 'autocomplete="new-password"', 'password', true)}
+      <div class="goals"><span>מה המטרה שלך?</span><div class="chips" id="goals">${['להבין איך זה עובד', 'ללמוד לקרוא גרפים', 'סתם סקרנות'].map(g => `<button class="chip${g === st.goal ? ' on' : ''}" type="button">${g}</button>`).join('')}</div></div>
+      <button class="check" id="terms" type="button"><i></i><span>אני מבין שהתוכן לימודי בלבד, אין בו המלצות השקעה והבטחות לרווח, ואין כסף אמיתי באפליקציה.</span></button>
+      <div class="err-t" id="e-t"></div>
+      <button class="btn primary" id="go">${fi.lock.replace('<svg', '<svg width="18" height="18"')} יצירת חשבון</button>
+      ${socials('הרשמה')}
+      <p class="alt">כבר יש לך חשבון? <button class="link" id="li">התחברות</button></p></div></div>`;
+  bindAuth(scr);
   $('#bk').onclick = () => go('onboarding', 0);
   $('#li').onclick = () => go('login');
   $('#goals').onclick = (e) => { const c = e.target.closest('.chip'); if (!c) return; $$('.chip', $('#goals')).forEach(x => x.classList.remove('on')); c.classList.add('on'); st.goal = c.textContent; };
   $('#terms').onclick = () => { st.terms = !st.terms; $('#terms').classList.toggle('on', st.terms); };
-  const setErr = (id, msg, inp) => { $('#e-' + id).textContent = msg || ''; if (inp) $('#' + inp).classList.toggle('err', !!msg); return !!msg; };
+  const setErr = (id, msg) => { $('#e-' + id).textContent = msg || ''; const f = $('#' + id); if (f && f.closest('.gf')) f.closest('.gf').classList.toggle('err', !!msg); return !!msg; };
   $('#go').onclick = () => {
     const nm = $('#nm').value.trim(), age = +$('#age').value, em = $('#em').value.trim().toLowerCase(), pw = $('#pw').value;
     let bad = false;
-    bad = setErr('nm', nm.length < 2 ? 'כתבו שם של לפחות שתי אותיות' : '', 'nm') || bad;
-    bad = setErr('age', !age ? 'כתבו גיל' : age < 15 ? 'האפליקציה מיועדת לגיל 15 ומעלה' : '', 'age') || bad;
-    bad = setErr('em', !/^\S+@\S+\.\S+$/.test(em) ? 'כתבו אימייל תקין' : loadDB().accounts[em] ? 'כבר יש חשבון עם האימייל הזה. אפשר להתחבר' : '', 'em') || bad;
-    bad = setErr('pw', pw.length < 4 ? 'הסיסמה צריכה להיות לפחות 4 תווים' : '', 'pw') || bad;
+    bad = setErr('nm', nm.length < 2 ? 'כתבו שם של לפחות שתי אותיות' : '') || bad;
+    bad = setErr('age', !age ? 'כתבו גיל' : age < 15 ? 'האפליקציה מיועדת לגיל 15 ומעלה' : '') || bad;
+    bad = setErr('em', !/^\S+@\S+\.\S+$/.test(em) ? 'כתבו אימייל תקין' : loadDB().accounts[em] ? 'כבר יש חשבון עם האימייל הזה. אפשר להתחבר' : '') || bad;
+    bad = setErr('pw', pw.length < 4 ? 'הסיסמה צריכה להיות לפחות 4 תווים' : '') || bad;
     bad = setErr('t', st.terms ? '' : 'צריך לאשר כדי להמשיך') || bad;
     if (bad) return;
     loadDB().accounts[em] = newAcct(nm, age, em, pw, st.goal); loadDB().session = em; save();

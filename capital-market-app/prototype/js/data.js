@@ -1,5 +1,7 @@
 'use strict';
 /* ===== fictional market (NOT real quotes). Prices move live, in memory only. ===== */
+/* prototype switch: true opens the virtual portfolio for everyone (normally it opens after all lessons) */
+const PROTOTYPE_OPEN_PORTFOLIO = true;
 const ASSETS = [
   { id: 'IDX100', n: 'מדד הדגמה 100', s: 'IDX100', k: 'index', sec: 'מדד רחב', price: 1842.35, vol: .9, trend: 1, seed: 101, col: '#3b82f6', about: 'מדד בדוי שמדמה סל של 100 חברות דמיוניות. הוא נועד לתרגול בלבד.' },
   { id: 'TECH', n: 'מדד טכנולוגיה הדגמה', s: 'TECH', k: 'index', sec: 'מדד ענפי', price: 962.8, vol: 1.5, trend: -1, seed: 102, col: '#8b5cf6', about: 'מדד בדוי של חברות טכנולוגיה דמיוניות. נע חזק יותר מהמדד הרחב.' },
