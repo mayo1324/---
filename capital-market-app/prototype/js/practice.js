@@ -237,7 +237,7 @@ screens.feedback = ({ idx, st, sim }) => {
     for (let k = 0; k < 7; k++) res.push(simulate(altFuture(P, sc.seed * 31 + k * 17 + 5, drift), { stop: pl.stop, target: pl.target }).res);
     const w = res.filter(r => r === 'target').length, l = res.filter(r => r === 'stop').length;
     alt = `<div class="card alt"><b>בדיקה נוספת: אותה תוכנית, 7 גרפים אחרים</b><div class="altrow">${res.map(r => `<i class="${r}">${r === 'target' ? '✓' : r === 'stop' ? '✕' : '·'}</i>`).join('')}</div>
-      <span class="muted" style="font-size:13.5px;line-height:1.65">${w} הגיעו ליעד, ${l} ירדו לסטופ. זה בסדר! כשהרווח האפשרי גדול מההפסד, מספיק להצליח בערך 1 מכל ${Math.round(1 + rrv)} פעמים כדי לא להפסיד בסך הכול. תוצאה אחת לא מוכיחה כלום, ולכן בודקים את התוכנית ולא רק את התוצאה. (גרפי הדגמה בדויים.)</span></div>`;
+      <span class="muted" style="font-size:13.5px;line-height:1.65">${w} הגיעו ליעד, ${l} ירדו לסטופ. זה בסדר! כשהרווח האפשרי גדול מההפסד, מספיק להצליח בערך 1 מכל ${Math.round(1 + rrv)} פעמים כדי לא להפסיד בסך הכול. תוצאה אחת לא מוכיחה כלום, ולכן בודקים את התוכנית ולא רק את התוצאה. (גרפים אקראיים בדויים, עם הנחה של עלייה קלה. זו הדגמה ולא סטטיסטיקה אמיתית.)</span></div>`;
     if (ok) { title = sim.res === 'target' ? 'תוכנית מצוינת!' : sim.res === 'stop' ? 'תוכנית טובה, אבל הפעם לא הצליח' : 'תוכנית טובה'; sub = sim.res === 'stop' ? 'זה קורה גם לתוכניות טובות. הסטופ עשה את שלו: ההפסד נשאר קטן.' : 'כל החלקים בתוכנית נכונים.'; }
   } else if (st.decision === 'wait') {
     result = `<div class="card pnl"><span class="eyebrow">מה קרה בגרף</span><div class="wbig" style="font-size:20px">${sc.action === 'wait' ? 'לא הפסדתם כלום' : 'לא קניתם'}</div><span class="muted" style="font-size:13.5px;line-height:1.5">${sc.why}</span></div>`;

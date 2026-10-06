@@ -93,7 +93,7 @@ const fi = {
 };
 const authLogo = () => `<div class="authlogo"><div class="lgi">${fi.candle}</div><h1><span>לומדים</span> <b>שוק הון</b></h1><p>ללמוד, לתרגל, להבין</p></div>`;
 const gfield = (id, icon, ph, extra = '', type = 'text', dirLtr = false) => `<div class="gf"><span class="lead">${icon}</span><input class="gi" id="${id}" type="${type}" placeholder="${ph}" ${dirLtr ? 'dir="ltr" style="text-align:right"' : ''} ${extra}>${type === 'password' ? `<button type="button" class="eye" data-eye="${id}" aria-label="הצגת סיסמה">${fi.eye}</button>` : ''}</div><div class="err-t" id="e-${id}"></div>`;
-const socials = (verb) => `<div class="orline"><span>או</span></div><button class="soc" data-prov="google"><i class="pm g">G</i>${verb} עם Google</button><button class="soc" data-prov="apple"><i class="pm a">A</i>${verb} עם Apple</button>`;
+const socials = (verb) => `<div class="orline"><span>או</span></div><button class="soc" data-prov="google"><i class="pm g">G</i>${verb} עם Google<span class="dtag">הדגמה</span></button><button class="soc" data-prov="apple"><i class="pm a">A</i>${verb} עם Apple<span class="dtag">הדגמה</span></button>`;
 function bindAuth(root) {
   $$('[data-eye]', root).forEach(b => b.onclick = () => { const i = $('#' + b.dataset.eye); i.type = i.type === 'password' ? 'text' : 'password'; b.classList.toggle('on', i.type === 'text'); });
   $$('[data-prov]', root).forEach(b => b.onclick = () => providerFlow(b.dataset.prov));
@@ -153,6 +153,7 @@ screens.signup = () => {
       ${gfield('age', fi.cal, 'גיל (15 ומעלה)', 'min="1" max="99" inputmode="numeric"', 'number')}
       ${gfield('em', fi.mail, 'אימייל', 'autocomplete="username"', 'email', true)}
       ${gfield('pw', fi.lock, 'סיסמה (לפחות 4 תווים)', 'autocomplete="new-password"', 'password', true)}
+      <p class="muted" style="font-size:12.5px;line-height:1.5;margin:-2px 4px 12px">זו גרסת ניסוי. אל תשתמשו בסיסמה שאתם משתמשים בה במקום אחר.</p>
       <div class="goals"><span>מה המטרה שלך?</span><div class="chips" id="goals">${['להבין איך זה עובד', 'ללמוד לקרוא גרפים', 'סתם סקרנות'].map(g => `<button class="chip${g === st.goal ? ' on' : ''}" type="button">${g}</button>`).join('')}</div></div>
       <button class="check" id="terms" type="button"><i></i><span>אני מבין שהתוכן לימודי בלבד, אין בו המלצות השקעה והבטחות לרווח, ואין כסף אמיתי באפליקציה.</span></button>
       <div class="err-t" id="e-t"></div>
@@ -196,7 +197,7 @@ screens.home = () => {
   scr.innerHTML = `<div class="anim home">
     <div class="hello"><button class="avatar ringed" data-go="profile" aria-label="פרופיל"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="3"/><circle cx="28" cy="28" r="26" fill="none" stroke="#ffc94d" stroke-width="3" stroke-linecap="round" stroke-dasharray="163" stroke-dashoffset="${(163 * (1 - xp / 100)).toFixed(0)}" transform="rotate(-90 28 28)"/></svg><span>${s.name[0]}</span></button>
       <div class="t"><span class="eyebrow">שלום, רמה ${lvl(s)}</span><b>${s.name}</b></div>
-      <div class="pill">${ic.fire}${s.streak}</div><div class="pill gold">${ic.star}${s.stars}</div></div>
+      <div class="pill">${ic.fire}${streakDays(s)}</div><div class="pill gold">${ic.star}${s.stars}</div></div>
     <button class="hero2" data-go="${nextL ? 'lesson' : 'portfolio'}" ${nextL ? `data-arg="${nextL.id}"` : ''}>
       <div class="h2art">${sceneSVG(heroVis)}</div>
       <div class="h2in"><div class="h2t"><span class="tag">${nextL ? 'המשך מאיפה שעצרת' : 'סיימת את כל השיעורים'}</span>
@@ -229,6 +230,7 @@ screens.lessons = () => {
 screens.lesson = (id) => {
   const L = LESSONS.find(x => x.id === id) || LESSONS[0];
   let i = 0, answered = false, dir = 1;
+  const ord = L.q.o.map((_, k) => k); for (let k = ord.length - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [ord[k], ord[j]] = [ord[j], ord[k]]; }
   const n = L.slides.length + 1, say = SAY[L.id] || [];
   const draw = () => {
     const quiz = i === L.slides.length, sl = L.slides[i];
@@ -236,7 +238,7 @@ screens.lesson = (id) => {
       <div class="top"><button class="icon-btn" id="bk">${ic.x}</button><span class="muted" style="font-size:13px">${L.title}</span><span style="width:42px"></span></div>
       <div class="prog">${Array.from({ length: n }, (_, k) => `<i class="${k < i ? 'on' : k === i ? 'on cur' : ''}"></i>`).join('')}</div>
       <div class="slide ${dir > 0 ? 'in-r' : 'in-l'}">${quiz
-        ? `<span class="tag">בדיקה קטנה</span><h2>${L.q.q}</h2><div class="grow">${L.q.o.map((o, k) => `<button class="opt" data-k="${k}">${o}</button>`).join('')}</div><div id="qm" class="muted" style="margin-top:14px;min-height:22px"></div>`
+        ? `<span class="tag">בדיקה קטנה</span><h2>${L.q.q}</h2><div class="grow">${ord.map(k => `<button class="opt" data-k="${k}">${L.q.o[k]}</button>`).join('')}</div><div id="qm" class="muted" style="margin-top:14px;min-height:22px"></div>`
         : `<div class="scene-card">${sceneSVG(sl.v)}<span class="cnt">${i + 1}/${L.slides.length}</span></div>
            <div class="tip-note">${ic.bulb}<span>${say[i] || 'שימו לב לאיור.'}</span></div>
            <h2>${sl.t}</h2><p>${sl.b}</p>${toyHTML(sl.x)}${sl.w ? `<div class="warn">${sl.w}</div>` : ''}<div class="grow"></div>`}</div>
@@ -287,9 +289,9 @@ screens.profile = () => {
   const bd = [['👣', 'צעד ראשון', s.lessonsDone.length > 0], ['⭐', '3 כוכבים', s.stars >= 3], ['🎯', 'תרגיל מושלם', Object.values(s.practiceDone).some(v => v === 3)], ['📚', 'כל השיעורים', ALL_DONE()], ['💼', 'עסקה ראשונה', s.portfolio.hist.length > 0], ['🧘', 'סבלנות', Object.entries(s.practiceDone).some(([k, v]) => v === 3 && SCEN.find(x => x.id === k && x.action === 'wait'))]];
   scr.innerHTML = `<div class="anim"><div class="top"><button class="icon-btn" data-go="home">${ic.back}</button><h2>פרופיל</h2><span style="width:42px"></span></div>
     <div class="pf"><div class="avatar big">${s.name[0]}</div><h1 style="font-size:24px">${s.name}</h1><span class="muted" dir="ltr">${s.email || ''}</span></div>
-    <div class="stat3"><div class="card"><b class="gold">${s.stars}</b><span>כוכבים</span></div><div class="card"><b>${s.streak}</b><span>ימים ברצף</span></div><div class="card"><b>${s.lessonsDone.length}/${LESSONS.length}</b><span>שיעורים</span></div></div>
+    <div class="stat3"><div class="card"><b class="gold">${s.stars}</b><span>כוכבים</span></div><div class="card"><b>${streakDays(s)}</b><span>ימים ברצף</span></div><div class="card"><b>${s.lessonsDone.length}/${LESSONS.length}</b><span>שיעורים</span></div></div>
     <div class="sec"><h3>הישגים</h3></div><div class="badges">${bd.map(([e, t, on]) => `<div class="badge${on ? '' : ' off'}"><i>${e}</i>${t}</div>`).join('')}</div>
-    <button class="premcard" data-go="paywall"><div class="pmi">${s.premium ? '✓' : '★'}</div><div><b>${s.premium ? 'המנוי פעיל' : 'שדרוג לפרימיום'}</b><span>${s.premium ? 'אפשר לראות מה כלול' : 'ללמוד בלי גבולות. עד 50% הנחה'}</span></div>${ic.back}</button>
+    <button class="premcard" data-go="paywall"><div class="pmi">${s.premium ? '✓' : '★'}</div><div><b>${s.premium ? 'המנוי פעיל' : 'שדרוג לפרימיום'}</b><span>${s.premium ? 'אפשר לראות מה כלול' : 'ללמוד בלי גבולות. עד 50% הנחה'}${s.premium ? '' : '<span class="dtag">הדגמה</span>'}</span></div>${ic.back}</button>
     <div class="sec"><h3>כלי הדגמה</h3></div>
     <button class="btn ghost" id="un" style="margin-bottom:10px">${portfolioOpen() ? 'התיק פתוח' : 'פתח את התיק בלי לסיים שיעורים'}</button>
     <button class="btn ghost" id="lo" style="margin-bottom:10px">התנתקות</button>

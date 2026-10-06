@@ -840,3 +840,5 @@ bdi{unicode-bidi:isolate}
 .scrib path{stroke-width:15}
 .payhero>*:not(.scrib){position:relative;z-index:1}
 .two2 .gf{margin-top:0}
+
+.dtag{display:inline-block;font-size:10.5px;font-weight:700;line-height:1;padding:3px 7px;border-radius:999px;background:rgba(200,255,61,.14);color:var(--lime);margin-inline-start:8px;vertical-align:middle}

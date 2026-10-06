@@ -346,7 +346,7 @@ screens.paywall = () => {
     <button class="inc" id="inc"><span>מה כלול</span>${ic.back}</button>
     <div class="feats">${FEATS.slice(0, 2).map(f => `<div class="feat"><i>${f[0]}</i><b>${f[1]}</b><span>${f[2]}</span></div>`).join('')}</div>
     <div class="feats" id="more" hidden>${FEATS.slice(2).map(f => `<div class="feat"><i>${f[0]}</i><b>${f[1]}</b><span>${f[2]}</span></div>`).join('')}</div>
-    <div class="plans" id="plans">${PLANS.map((p, i) => `<button class="plan${p.id === sel ? ' on' : ''}" data-p="${p.id}" style="animation-delay:${.1 + i * .08}s"><i class="rad"></i><div class="pn"><b>${p.name}</b><span>${p.sub}${p.mo ? ' · ' + money(p.mo, 2) + ' לחודש' : ''}</span></div><div class="pp"><b>${money(p.price, 2)}</b>${p.old ? `<s>${money(p.old, 2)}</s>` : ''}</div>${p.save ? `<em class="saveb">חיסכון ${p.save}%</em>` : ''}</button>`).join('')}</div>
+    <div style="text-align:center;margin-bottom:8px"><span class="dtag">הדגמה</span></div><div class="plans" id="plans">${PLANS.map((p, i) => `<button class="plan${p.id === sel ? ' on' : ''}" data-p="${p.id}" style="animation-delay:${.1 + i * .08}s"><i class="rad"></i><div class="pn"><b>${p.name}</b><span>${p.sub}${p.mo ? ' · ' + money(p.mo, 2) + ' לחודש' : ''}</span></div><div class="pp"><b>${money(p.price, 2)}</b>${p.old ? `<s>${money(p.old, 2)}</s>` : ''}</div>${p.save ? `<em class="saveb">חיסכון ${p.save}%</em>` : ''}</button>`).join('')}</div>
     <p class="demo-note" style="text-align:center">מחירי הדגמה בלבד. באב הטיפוס אין חיוב אמיתי, וכל התכנים פתוחים לכולם.</p>
     <div class="paybar"><button class="btn primary" id="cta">להמשיך לתשלום</button><span>אפשר לבטל בכל זמן</span></div></div>`;
   $('#x').onclick = () => go('profile');
@@ -355,8 +355,8 @@ screens.paywall = () => {
   $('#cta').onclick = () => openPay(PLANS.find(x => x.id === sel));
 };
 function openPay(pl) {
-  openSheet(`<h3>תשלום</h3><p class="muted" style="font-size:13.5px">מסלול ${pl.name} · <b style="color:var(--text)">${money(pl.price, 2)}</b> ${pl.per}</p>
-    <div class="wallets"><button class="soc" data-w="apple"><i class="pm a">A</i>Apple Pay</button><button class="soc" data-w="google"><i class="pm g">G</i>Google Pay</button></div>
+  openSheet(`<h3>תשלום <span class="dtag">הדגמה</span></h3><p class="muted" style="font-size:13.5px">מסלול ${pl.name} · <b style="color:var(--text)">${money(pl.price, 2)}</b> ${pl.per}</p>
+    <div class="wallets"><button class="soc" data-w="apple"><i class="pm a">A</i>Apple Pay<span class="dtag">הדגמה</span></button><button class="soc" data-w="google"><i class="pm g">G</i>Google Pay<span class="dtag">הדגמה</span></button></div>
     <div class="orline"><span>או כרטיס אשראי</span></div>
     <div class="gf"><span class="lead">${fi.lock}</span><input class="gi" id="cn" inputmode="numeric" dir="ltr" style="text-align:right" placeholder="מספר כרטיס" maxlength="19" autocomplete="off"></div>
     <div class="two2"><div class="gf"><input class="gi" id="ce" inputmode="numeric" dir="ltr" style="text-align:center;padding:0 12px" placeholder="MM/YY" maxlength="5" autocomplete="off"></div><div class="gf"><input class="gi" id="cv" inputmode="numeric" dir="ltr" style="text-align:center;padding:0 12px" placeholder="CVV" maxlength="4" autocomplete="off"></div></div>
