@@ -33,15 +33,13 @@ screens.asset = (id) => {
     <div class="as-price"><div class="gtext" id="pp">${fmt(a.price)}</div><div id="pc" class="chgchip"></div></div>
     <div class="tfs" id="tfs">${TF.map(t => `<button class="tf${t[0] === st.tf ? ' on' : ''}" data-tf="${t[0]}">${t[1]}</button>`).join('')}</div>
     <div class="cbox"><div class="tip" id="tip"></div><svg class="chart" id="ch"></svg>
-      <div class="ctl"><div class="seg" id="seg"><button class="on" data-m="candle">נרות</button><button data-m="line">קו</button></div>
-        <button class="tg" id="tma">ממוצע נע</button><button class="qm" data-term="ma" aria-label="מה זה ממוצע נע">?</button><button class="tg" id="tvol">נפח</button><button class="qm" data-term="volume" aria-label="מה זה נפח">?</button></div></div>
+      <div class="ctl"><button class="toolsbtn" id="tools"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20l9-9M13 11l3-3 4 4-3 3zM4 20l3-1 9-9"/></svg>כלי ניתוח</button></div></div>
+    <div id="modebar"></div>
+    <div class="insight" id="dh" hidden></div>
     <div id="poscard"></div>
-    <div class="dtools" id="dt"><span class="dl">ציור:</span>${[['', 'הצלבה'], ['trend', 'קו מגמה'], ['h', 'קו אופקי'], ['erase', 'מחיקה']].map(([k, t], i) => `<button class="dtb${i ? '' : ' on'}" data-t="${k}">${t}</button>`).join('')}</div>
-    <div class="dhint" id="dh">גררו על הגרף כדי לראות פרטי נר. בחרו כלי ציור כדי לנתח.</div>
-    ${learn(['trendline', 'candle', 'volatility', 'support', 'resistance'])}
-    <div class="stats" id="stats"></div>
-    <div class="card" style="margin-top:14px"><b style="font-size:15px">על הנכס</b><p class="muted" style="font-size:14px;line-height:1.6;margin-top:6px">${a.about}</p></div>
-    <p class="demo-note">גרף הדגמה שנוצר בקוד. אין כאן מחירים אמיתיים ואין המלצת השקעה.</p>
+    <div class="kpis" id="kpis"></div>
+    <button class="morebtn" id="more">עוד נתונים ומידע על הנכס</button>
+    <div id="moreBox" hidden><div class="stats" id="stats"></div><div class="card" style="margin-top:12px"><b style="font-size:15px">על הנכס</b><p class="muted" style="font-size:14px;line-height:1.6;margin-top:6px">${a.about}</p></div>${learn(['volatility', 'candle'])}<p class="demo-note">גרף הדגמה שנוצר בקוד. אין כאן מחירים אמיתיים ואין המלצת השקעה.</p></div>
     <div class="buybar"><button class="btn sell" id="sl" ${held() ? '' : 'style="opacity:.45"'}>מכירה</button><button class="btn primary" id="by">קנייה</button></div></div>`;
   const svg = $('#ch');
   const el = (n, at, p) => { const e = document.createElementNS(NS, n); for (const k in at) e.setAttribute(k, at[k]); (p || svg).appendChild(e); return e; };
@@ -50,7 +48,8 @@ screens.asset = (id) => {
     const hi = Math.max(...cs.map(c => c.h)), lo = Math.min(...cs.map(c => c.l)), o = cs[0].o, l = cs[cs.length - 1].c, ch = (l / o - 1) * 100;
     const vl = a.vol < .9 ? 'נמוכה' : a.vol < 1.4 ? 'בינונית' : 'גבוהה';
     const row = (k, v, c) => `<div><span>${k}</span><b class="${c || ''}">${v}</b></div>`;
-    $('#stats').innerHTML = row('שינוי בתקופה', sgn(ch) + '%', chgCls(ch)) + row('פתיחת התקופה', fmt(o)) + row('הכי גבוה', fmt(hi)) + row('הכי נמוך', fmt(lo)) + row(term('volatility'), vl) + row('נפח ממוצע (הדגמה)', fmt(cs.reduce((s, c) => s + c.v, 0) / cs.length, 0));
+    $('#kpis').innerHTML = row('שינוי בתקופה', sgn(ch) + '%', chgCls(ch)) + row('הכי גבוה', fmt(hi)) + row('הכי נמוך', fmt(lo));
+    $('#stats').innerHTML = row('פתיחת התקופה', fmt(o)) + row(term('volatility'), vl) + row('נפח ממוצע (הדגמה)', fmt(cs.reduce((s, c) => s + c.v, 0) / cs.length, 0));
   }
   function tip() {
     const cs = series(a, st.tf), i = st.cross == null ? cs.length - 1 : st.cross, c = cs[i], up = c.c >= c.o;
@@ -105,30 +104,60 @@ screens.asset = (id) => {
     posCard();
     const on = A().watch.includes(a.id); $('#wt').innerHTML = on ? ic.star : ic.starO; $('#wt').style.color = on ? '#ffc94d' : '';
   }
+  /* compact strip; the full position details live in a sheet so the page stays calm */
   function posCard() {
     const box = $('#poscard'); if (!box) return; const pos = held();
     if (!pos) { box.innerHTML = ''; return; }
+    const g = pos.qty * (a.price - pos.avg), gp = (a.price / pos.avg - 1) * 100;
+    box.innerHTML = `<button class="posstrip" id="ps"><div class="l"><span>הפוזיציה שלך</span><b class="${chgCls(g)}">${g >= 0 ? '+' : '-'}${money(Math.abs(g), 2)} (${sgn(gp)}%)</b></div><div class="lv"><em class="s">סטופ ${pos.stop ? fmt(pos.stop) : 'אין'}</em><em class="t">יעד ${pos.target ? fmt(pos.target) : 'אין'}</em></div>${ic.back}</button>`;
+    $('#ps').onclick = posSheet;
+  }
+  function posSheet() {
+    const pos = held(); if (!pos) return;
     const v = pos.qty * a.price, g = pos.qty * (a.price - pos.avg), gp = (a.price / pos.avg - 1) * 100;
     const sd = pos.stop ? (a.price - pos.stop) / a.price * 100 : null, td = pos.target ? (pos.target / a.price - 1) * 100 : null;
-    box.innerHTML = `<div class="card poscard"><div class="ph"><b>הפוזיציה שלך</b><span class="chgchip ${chgCls(g)}">${sgn(gp)}%</span></div>
-      <div class="pgrid"><div><span>כמות</span><b>${fmt(pos.qty, 2)}</b></div><div><span>מחיר כניסה</span><b>${fmt(pos.avg)}</b></div><div><span>שווי עכשיו</span><b>${money(v)}</b></div><div><span>רווח או הפסד</span><b class="${chgCls(g)}">${g >= 0 ? '+' : '-'}${money(Math.abs(g), 2)}</b></div></div>
-      <div class="plv"><div class="pl s"><i></i><span>סטופ</span><b>${pos.stop ? fmt(pos.stop) : 'לא נקבע'}</b><em>${sd != null ? 'עוד ' + fmt(sd, 1) + '% מתחת למחיר' : 'ההפסד פתוח'}</em></div>
-      <div class="pl t"><i></i><span>יעד</span><b>${pos.target ? fmt(pos.target) : 'לא נקבע'}</b><em>${td != null ? 'עוד ' + fmt(td, 1) + '% מעל המחיר' : ''}</em></div></div>
-      <div class="chips"><button class="chip${st.tool === 'pstop' ? ' on' : ''}" data-a="pstop">${pos.stop ? 'שנה סטופ' : 'קבע סטופ'}</button><button class="chip${st.tool === 'ptgt' ? ' on' : ''}" data-a="ptgt">${pos.target ? 'שנה יעד' : 'קבע יעד'}</button>${pos.stop ? '<button class="chip" data-a="xstop">הסר סטופ</button>' : ''}${pos.target ? '<button class="chip" data-a="xtgt">הסר יעד</button>' : ''}</div></div>`;
-    $$('[data-a]', box).forEach(b => b.onclick = () => {
+    openSheet(`<h3>הפוזיציה שלך ב${a.n}</h3>
+      <div class="pgrid" style="margin-top:12px"><div><span>כמות</span><b>${fmt(pos.qty, 2)}</b></div><div><span>מחיר כניסה</span><b>${fmt(pos.avg)}</b></div><div><span>שווי עכשיו</span><b>${money(v)}</b></div><div><span>רווח או הפסד</span><b class="${chgCls(g)}">${g >= 0 ? '+' : '-'}${money(Math.abs(g), 2)} (${sgn(gp)}%)</b></div></div>
+      <div class="plv"><div class="pl s"><i></i><span>${term('stop')}</span><b>${pos.stop ? fmt(pos.stop) : 'לא נקבע'}</b><em>${sd != null ? 'עוד ' + fmt(sd, 1) + '% מתחת למחיר' : 'ההפסד פתוח'}</em></div>
+      <div class="pl t"><i></i><span>${term('target')}</span><b>${pos.target ? fmt(pos.target) : 'לא נקבע'}</b><em>${td != null ? 'עוד ' + fmt(td, 1) + '% מעל המחיר' : ''}</em></div></div>
+      <div class="chips"><button class="chip" data-a="pstop">${pos.stop ? 'שנה סטופ' : 'קבע סטופ'}</button><button class="chip" data-a="ptgt">${pos.target ? 'שנה יעד' : 'קבע יעד'}</button>${pos.stop ? '<button class="chip" data-a="xstop">הסר סטופ</button>' : ''}${pos.target ? '<button class="chip" data-a="xtgt">הסר יעד</button>' : ''}</div>
+      <button class="btn ghost small" data-close="1" style="margin-top:14px">סגירה</button>`);
+    $$('#sheet [data-a]').forEach(b => b.onclick = () => {
       const k = b.dataset.a;
-      if (k === 'xstop') { pos.stop = 0; save(); toast('הסטופ הוסר'); posCard(); draw(); return; }
-      if (k === 'xtgt') { pos.target = 0; save(); toast('היעד הוסר'); posCard(); draw(); return; }
-      st.tool = st.tool === k ? '' : k; $$('.dtb', $('#dt')).forEach(x => x.classList.toggle('on', x.dataset.t === st.tool)); svg.classList.toggle('drawing', !!st.tool); posCard(); dhint();
-      if (st.tool) { const cb = $('.cbox'); if (cb) cb.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' }); toast(st.tool === 'pstop' ? 'לחצו על הגרף במחיר הסטופ' : 'לחצו על הגרף במחיר היעד'); }
+      if (k === 'xstop') { pos.stop = 0; save(); toast('הסטופ הוסר'); closeSheet(); posCard(); draw(); return; }
+      if (k === 'xtgt') { pos.target = 0; save(); toast('היעד הוסר'); closeSheet(); posCard(); draw(); return; }
+      closeSheet(); setTool(k);
     });
   }
+  /* analysis tools sheet: chart type, indicators and drawing, so the main screen stays clean */
+  function openTools() {
+    openSheet(`<h3>כלי ניתוח</h3>
+      <label class="lbl">סוג גרף</label><div class="seg" id="seg">${[['candle', 'נרות'], ['line', 'קו']].map(([k, t]) => `<button class="${st.mode === k ? 'on' : ''}" data-m="${k}">${t}</button>`).join('')}</div>
+      <label class="lbl">להוסיף לגרף</label><div class="chips"><button class="chip${st.ma ? ' on' : ''}" id="tma">ממוצע נע</button><button class="chip${st.vol ? ' on' : ''}" id="tvol">נפח</button><button class="qm" data-term="ma" aria-label="מה זה ממוצע נע">?</button><button class="qm" data-term="volume" aria-label="מה זה נפח">?</button></div>
+      <label class="lbl">לצייר על הגרף</label><div class="drawgrid">${[['trend', 'קו מגמה', 'גוררים בין שתי נקודות'], ['h', 'קו אופקי', 'תמיכה או התנגדות'], ['erase', 'מחיקה', 'נוגעים ליד קו']].map(([k, t, d]) => `<button class="dg" data-t="${k}"><b>${t}</b><span>${d}</span></button>`).join('')}</div>
+      <p class="muted" style="font-size:12.5px;margin-top:10px">הציורים נשמרים לכל נכס ולכל טווח זמן.</p>
+      ${learn(['trendline', 'support', 'resistance'])}
+      <button class="btn primary small" data-close="1" style="margin-top:14px">סיום</button>`);
+    const q = (x) => $(x, $('#sheet'));
+    $$('#seg button', $('#sheet')).forEach(b => b.onclick = () => { st.mode = b.dataset.m; $$('#seg button', $('#sheet')).forEach(x => x.classList.toggle('on', x === b)); draw(); });
+    q('#tma').onclick = (e) => { st.ma = !st.ma; e.currentTarget.classList.toggle('on', st.ma); draw(); };
+    q('#tvol').onclick = (e) => { st.vol = !st.vol; e.currentTarget.classList.toggle('on', st.vol); draw(); };
+    $$('.dg', $('#sheet')).forEach(b => b.onclick = () => { closeSheet(); setTool(b.dataset.t); });
+  }
+  const MODE = { trend: ['קו מגמה', 'גררו על הגרף מנקודה לנקודה'], h: ['קו אופקי', 'לחצו על הגרף במחיר הרצוי'], erase: ['מחיקה', 'לחצו ליד קו כדי למחוק'], pstop: ['קביעת סטופ', 'לחצו על הגרף מתחת למחיר עכשיו'], ptgt: ['קביעת יעד', 'לחצו על הגרף מעל המחיר עכשיו'] };
+  function setTool(t) {
+    st.tool = t; svg.classList.toggle('drawing', !!t);
+    const mb = $('#modebar');
+    if (!t) mb.innerHTML = '';
+    else { mb.innerHTML = `<div class="modebarin"><div><b>${MODE[t][0]}</b><span>${MODE[t][1]}</span></div><button id="mend">סיום</button></div>`; $('#mend').onclick = () => setTool(''); }
+    dhint();
+  }
   function dhint() {
-    const h = $('#dh'); if (!h) return; const cs = series(a, st.tf), last = cs[cs.length - 1].c, L = lines(), hint = { pstop: 'לחצו על הגרף במחיר שבו תרצו לצאת כדי להגביל הפסד (מתחת למחיר עכשיו).', ptgt: 'לחצו על הגרף במחיר שבו תרצו לצאת עם רווח (מעל המחיר עכשיו).', '': 'גררו על הגרף כדי לראות פרטי נר. בחרו כלי ציור כדי לנתח.', trend: 'גררו על הגרף מנקודה לנקודה כדי למתוח קו מגמה.', h: 'לחצו על הגרף כדי לסמן קו אופקי (תמיכה או התנגדות).', erase: 'לחצו ליד קו כדי למחוק אותו.' }[st.tool];
+    const h = $('#dh'); if (!h) return; const cs = series(a, st.tf), last = cs[cs.length - 1].c, L = lines();
     const tl = [...L].reverse().find(l => l.t === 'trend'), hl = [...L].reverse().find(l => l.t === 'h'); let note = '';
     if (!st.tool && tl) { const m = (tl.p2 - tl.p1) / (tl.i2 - tl.i1), at = tl.p1 + m * (cs.length - 1 - tl.i1); note = `קו המגמה ${m > 0 ? 'עולה' : 'יורד'}. המחיר עכשיו ${last >= at ? 'מעל הקו' : 'מתחת לקו'} (${fmt(Math.abs(last / at - 1) * 100, 1)}%). זו עדיין תצפית, לא תחזית.`; }
     else if (!st.tool && hl) note = `המחיר עכשיו ${last >= hl.p ? 'מעל' : 'מתחת'} לקו האופקי ב-${fmt(Math.abs(last / hl.p - 1) * 100, 1)}%.`;
-    h.textContent = st.tool || !note ? hint : note;
+    h.hidden = !note; h.textContent = note;
   }
   function coord(e) { const r = svg.getBoundingClientRect(), v = st.view, tot = +svg.getAttribute('viewBox').split(' ')[3], px = (e.clientX - r.left) / r.width * W, py = (e.clientY - r.top) / r.height * tot; return { i: clamp(Math.round((px - 4 - v.slot / 2) / v.slot), 0, v.n - 1), p: v.hi - (py - 8) / (v.ph - 22) * (v.hi - v.lo), px, py }; }
   function distLine(l, px, py) { const v = st.view; if (l.t === 'h') return Math.abs(v.y(l.p) - py); const m = (l.p2 - l.p1) / (l.i2 - l.i1), yy = v.y(l.p1 + m * ((px - 4 - v.slot / 2) / v.slot - l.i1)); return Math.abs(yy - py); }
@@ -139,7 +168,7 @@ screens.asset = (id) => {
     down = true; try { svg.setPointerCapture(e.pointerId); } catch (_) { }
     if (st.tool === 'pstop' || st.tool === 'ptgt') { const c = coord(e), pos = held(), pr = Math.round(c.p * 100) / 100;
       if (pos) { if (st.tool === 'pstop') { if (pr >= a.price) toast('הסטופ צריך להיות מתחת למחיר עכשיו'); else { pos.stop = pr; save(); toast('הסטופ נקבע ב-' + fmt(pr)); st.tool = ''; } } else { if (pr <= a.price) toast('היעד צריך להיות מעל המחיר עכשיו'); else { pos.target = pr; save(); toast('היעד נקבע ב-' + fmt(pr)); st.tool = ''; } } }
-      $$('.dtb', $('#dt')).forEach(x => x.classList.toggle('on', x.dataset.t === st.tool)); svg.classList.toggle('drawing', !!st.tool); posCard(); draw(); return; }
+      setTool(st.tool); posCard(); draw(); return; }
     if (st.tool === 'trend') { const c = coord(e); st.tmp = { t: 'trend', i1: c.i, p1: c.p, i2: c.i, p2: c.p }; draw(); return; }
     if (st.tool === 'h') { const c = coord(e); st.tmp = { t: 'h', p: c.p }; draw(); return; }
     if (st.tool === 'erase') { const c = coord(e), L = lines(); let bi = -1, bd = 18; L.forEach((l, k) => { const d = distLine(l, c.px, c.py); if (d < bd) { bd = d; bi = k; } }); if (bi >= 0) { L.splice(bi, 1); save(); toast('הקו נמחק'); } draw(); return; }
@@ -155,10 +184,8 @@ screens.asset = (id) => {
     st.cross = null; draw(); };
   svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
   $('#tfs').onclick = (e) => { const b = e.target.closest('.tf'); if (!b) return; st.tf = b.dataset.tf; $$('.tf', $('#tfs')).forEach(x => x.classList.toggle('on', x === b)); head(); draw(); svg.classList.remove('swap'); void svg.getBoundingClientRect(); svg.classList.add('swap'); };
-  $('#dt').onclick = (e) => { const b = e.target.closest('.dtb'); if (!b) return; st.tool = b.dataset.t; $$('.dtb', $('#dt')).forEach(x => x.classList.toggle('on', x === b)); svg.classList.toggle('drawing', !!st.tool); dhint(); };
-  $('#seg').onclick = (e) => { const b = e.target.closest('button'); if (!b) return; st.mode = b.dataset.m; $$('button', $('#seg')).forEach(x => x.classList.toggle('on', x === b)); draw(); };
-  $('#tma').onclick = () => { st.ma = !st.ma; $('#tma').classList.toggle('on', st.ma); draw(); };
-  $('#tvol').onclick = () => { st.vol = !st.vol; $('#tvol').classList.toggle('on', st.vol); draw(); };
+  $('#tools').onclick = openTools;
+  $('#more').onclick = () => { const b = $('#moreBox'); b.hidden = !b.hidden; $('#more').textContent = b.hidden ? 'עוד נתונים ומידע על הנכס' : 'פחות'; if (!b.hidden) b.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'nearest' }); };
   $('#bk').onclick = () => go('market');
   $('#wt').onclick = () => { const w = A().watch, i = w.indexOf(a.id); if (i >= 0) { w.splice(i, 1); toast('הוסר מהמעקב'); } else { w.push(a.id); toast('נוסף למעקב'); } save(); head(); };
   $('#by').onclick = () => openTrade(a, 'buy');
