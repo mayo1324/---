@@ -183,35 +183,32 @@ screens.signup = () => {
 screens.home = () => {
   const s = A(), nextL = LESSONS.find(l => !s.lessonsDone.includes(l.id));
   const done = s.lessonsDone.length, total = LESSONS.length, open = portfolioOpen();
-  const eq = equity(s), L = lvl(s), xp = s.xp || 0, strk = streakDays(s);
-  const att = Object.values(s.practiceDone), acc = att.length ? Math.round(att.reduce((x, y) => x + y, 0) / (att.length * 3) * 100) + '%' : '-';
-  const now = new Date(), sun = new Date(now); sun.setDate(now.getDate() - now.getDay());
-  const DN = ['א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳', 'ו׳', 'ש׳'];
-  const week = Array.from({ length: 7 }, (_, i) => { const d = new Date(sun); d.setDate(sun.getDate() + i); const n = (s.days || {})[dayKey(d)] || 0; return { n, num: d.getDate(), name: DN[i], today: dayKey(d) === dayKey(now) }; });
-  const R = 21, C = 2 * Math.PI * R, ringS = (f) => `<svg viewBox="0 0 52 52" class="mr"><circle cx="26" cy="26" r="${R}" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="5"/><circle cx="26" cy="26" r="${R}" fill="none" stroke="#c8ff3d" stroke-width="5" stroke-linecap="round" stroke-dasharray="${C.toFixed(0)}" stroke-dashoffset="${(C * (1 - f)).toFixed(0)}" transform="rotate(-90 26 26)"/></svg>`;
-  const ico = {
-    gear: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>',
-    bell: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 22a2.4 2.4 0 002.4-2.4h-4.8A2.4 2.4 0 0012 22zm7-6.5V11a7 7 0 10-14 0v4.5L3 17.5V19h18v-1.5z"/></svg>',
-    target: '<svg viewBox="0 0 24 24" fill="none" stroke="#c8ff3d" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="#c8ff3d"/></svg>',
-    badge: '<svg viewBox="0 0 24 24" fill="#c8ff3d"><path d="M12 2l2.4 2 3.1-.2 1.3 2.8 2.7 1.6-.5 3.1 1.2 2.9-2.4 2-.7 3-3.1.5-2.1 2.3L12 22l-2.1-2.3-3.1-.5-.7-3-2.4-2 1.2-2.9-.5-3.1 2.7-1.6 1.3-2.8 3.1.2z"/><path d="M8 12.2l2.8 2.8L16 9.6" fill="none" stroke="#0b0b0b" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    cal: '<svg viewBox="0 0 24 24" fill="#c8ff3d"><rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4M16 3v4" stroke="#c8ff3d" stroke-width="2.4" stroke-linecap="round"/><path d="M8 12h8M8 16h5" stroke="#0b0b0b" stroke-width="2.2" stroke-linecap="round"/></svg>'
-  };
-  const trophy = `<svg viewBox="0 0 120 120" class="trophy"><defs><linearGradient id="tg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eaff8a"/><stop offset=".55" stop-color="#b6ec1c"/><stop offset="1" stop-color="#5f8a05"/></linearGradient><linearGradient id="tg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b3b3b"/><stop offset="1" stop-color="#111"/></linearGradient></defs><ellipse cx="60" cy="112" rx="34" ry="5" fill="#000" opacity=".5"/><path d="M34 22C16 22 12 44 32 54M86 22c18 0 22 22 2 32" fill="none" stroke="url(#tg1)" stroke-width="7" stroke-linecap="round"/><path d="M32 16h56c0 34-8 52-28 54C40 68 32 50 32 16z" fill="url(#tg1)"/><path d="M42 20c-2 26 4 42 14 46" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="4" stroke-linecap="round"/><rect x="54" y="68" width="12" height="18" rx="3" fill="url(#tg1)"/><path d="M36 100h48l-6-14H42z" fill="url(#tg2)"/><path d="M60 30l3.4 7 7.6 1-5.5 5.3 1.4 7.6-6.9-3.7-6.9 3.7 1.4-7.6-5.5-5.3 7.6-1z" fill="#1c2b04" opacity=".8"/></svg>`;
-  const coinArt = `<svg viewBox="0 0 160 110" class="coinart"><defs><linearGradient id="cg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eaff8a"/><stop offset=".5" stop-color="#b6ec1c"/><stop offset="1" stop-color="#4f7404"/></linearGradient></defs><g transform="translate(46 56)"><circle r="46" fill="url(#cg1)"/><circle r="36" fill="none" stroke="#2c4403" stroke-opacity=".5" stroke-width="3"/><g stroke="#16220a" stroke-width="5" stroke-linecap="round"><path d="M-12 -22v44M12 -14v34"/></g><rect x="-19" y="-10" width="14" height="22" rx="3" fill="#16220a"/><rect x="5" y="-4" width="14" height="22" rx="3" fill="#16220a"/></g><g class="cfloat"><circle cx="118" cy="30" r="17" fill="url(#cg1)"/><circle cx="118" cy="30" r="11" fill="none" stroke="#2c4403" stroke-opacity=".5" stroke-width="2.4"/></g><g class="cfloat2"><circle cx="126" cy="80" r="11" fill="url(#cg1)"/></g></svg>`;
-  scr.innerHTML = `<div class="anim home2">
-    <div class="h-top"><div class="h-icons"><button class="hbtn" data-go="profile" aria-label="פרופיל">${ico.gear}</button><button class="hbtn" id="bell" aria-label="התראות">${ico.bell}<i></i></button></div>
-      <div class="xpchip"><svg viewBox="0 0 24 24" width="18" height="18"><circle cx="12" cy="12" r="10" fill="#c8ff3d"/><path d="M9 7v10M15 9v6" stroke="#0b0b0b" stroke-width="2.4" stroke-linecap="round"/></svg><b data-cu="${xp}" data-d="0">${xp}</b><span>נק' ניסיון</span><button class="plus" data-go="lessons" aria-label="עוד שיעורים">+</button></div></div>
-    <div class="h-av"><div class="avring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="57" fill="none" stroke="#c8ff3d" stroke-width="2.4" stroke-dasharray="7 8" stroke-linecap="round" class="spin"/></svg><button class="avdisc" data-go="profile">${s.name[0]}</button></div>
-      <h2>${s.name}</h2><span class="muted">${LVL_TITLE[Math.min(L - 1, 4)]} · רמה ${L}</span></div>
-    <div class="h-stats"><div>${ico.target}<b>${acc}</b><span>דיוק בתרגול</span></div><i></i><div>${ico.badge}<b>${L}</b><span>רמה</span></div><i></i><div>${ico.cal}<b>${strk}</b><span>ימים ברצף</span></div></div>
-    <div class="week">${week.map(d => `<div class="wd${d.today ? ' today' : ''}"><i class="${d.n ? 'on' : ''}"></i><span>${d.name}</span><b>${d.num}</b></div>`).join('')}</div>
-    <button class="gcard lesson" data-go="${nextL ? 'lesson' : 'portfolio'}" ${nextL ? `data-arg="${nextL.id}"` : ''}>${ringS(done / total)}<div class="gt"><span>${nextL ? 'המשך ללמוד' : 'סיימת את כל השיעורים'}</span><b>${nextL ? nextL.title : 'לתיק הוירטואלי'}</b><em>${done} מתוך ${total} שיעורים</em></div><span class="go">${ic.back}</span></button>
-    <div class="h-grid"><button class="gcard small" data-go="portfolio"><div class="pf-ic">${open ? ic.wallet : ic.lock}</div><b>התיק שלי</b><span class="${open ? 'up' : ''}">${open ? money(eq) : 'נפתח בסיום'}</span></button>
-      <div class="gcard streak"><div class="st-t"><b>${strk ? strk + ' ימים ברצף' : 'מתחילים היום'}</b><span>${strk ? 'תמשיכו ככה!' : 'שיעור אחד מספיק'}</span><div class="sdots">${Array.from({ length: 7 }, (_, i) => `<i class="${i < Math.min(strk, 7) ? 'on' : ''}"></i>`).join('')}</div></div>${trophy}</div></div>
-    <button class="banner2" data-go="practiceHome">${coinArt}<div><b>תרגול חדש מחכה לך</b><span>קוראים גרף, בונים תוכנית וצוברים כוכבים</span></div></button>
-    <div class="h-grid g2"><button class="gcard small" data-go="market"><div class="pf-ic">${ic.trend}</div><b>שוק <span class="live"></span></b><span>חוקרים מדדים ומניות</span></button><button class="gcard small" data-go="glossary"><div class="pf-ic">${ic.book}</div><b>מילון</b><span>כל מילה בשפה פשוטה</span></button></div>
-    <p class="demo-note" style="text-align:center;margin-top:14px">כל הנתונים באפליקציה בדויים, לתרגול בלבד.</p></div>`;
-  $('#bell').onclick = () => toast('אין התראות חדשות');
+  const eq = equity(s), pl = eq - START_CASH, xp = (s.xp || 0) % 100;
+  const movers = [...ASSETS].sort((x, y) => Math.abs(y.chg) - Math.abs(x.chg)).slice(0, 5);
+  const heroVis = nextL ? (nextL.slides[0] || {}).v : 'riskline';
+  const R = 52, C = 2 * Math.PI * R, ring = (frac, big) => `<svg viewBox="0 0 120 120" class="rg"><circle cx="60" cy="60" r="${R}" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="9"/><circle cx="60" cy="60" r="${R}" fill="none" stroke="#c8ff3d" stroke-width="9" stroke-linecap="round" stroke-dasharray="${C.toFixed(0)}" stroke-dashoffset="${(C * (1 - frac)).toFixed(0)}" transform="rotate(-90 60 60)" style="filter:drop-shadow(0 0 5px #c8ff3d)"/><text x="60" y="68" text-anchor="middle" fill="#fff" font-size="26" font-weight="800" font-family="Heebo,sans-serif">${big}</text></svg>`;
+  const xcards = [
+    ['practiceHome', 'תרגול', 'קוראים גרף ומחליטים', 'support', ''],
+    ['market', 'שוק', 'חוקרים מדדים ומניות', 'riskline', ''],
+    ['glossary', 'מילון', 'כל מילה בשפה פשוטה', 'candle1', ''],
+    ['portfolio', 'התיק שלי', open ? money(eq) : 'נפתח בסיום השיעורים', 'size', open ? '' : 'lk']
+  ];
+  scr.innerHTML = `<div class="anim home">
+    <div class="hello"><button class="avatar ringed" data-go="profile" aria-label="פרופיל"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="3"/><circle cx="28" cy="28" r="26" fill="none" stroke="#ffc94d" stroke-width="3" stroke-linecap="round" stroke-dasharray="163" stroke-dashoffset="${(163 * (1 - xp / 100)).toFixed(0)}" transform="rotate(-90 28 28)"/></svg><span>${s.name[0]}</span></button>
+      <div class="t"><span class="eyebrow">שלום, רמה ${lvl(s)}</span><b>${s.name}</b></div>
+      <div class="pill">${ic.fire}${s.streak}</div><div class="pill gold">${ic.star}${s.stars}</div></div>
+    <button class="hero2" data-go="${nextL ? 'lesson' : 'portfolio'}" ${nextL ? `data-arg="${nextL.id}"` : ''}>
+      <div class="h2art">${sceneSVG(heroVis)}</div>
+      <div class="h2in"><div class="h2t"><span class="tag">${nextL ? 'המשך מאיפה שעצרת' : 'סיימת את כל השיעורים'}</span>
+        <h2>${nextL ? nextL.title : 'עכשיו אפשר לחקור ולתרגל'}</h2><p>${nextL ? nextL.min + ' דקות' : 'התיק הוירטואלי מחכה לך'}</p></div>
+        <div class="h2r">${ring(done / total, done + '/' + total)}</div></div>
+      <span class="h2go">${nextL ? 'להמשיך' : 'לתיק שלי'} ${ic.back}</span></button>
+    <div class="sec2"><h3>לחקור</h3></div>
+    <div class="rail">${xcards.map(([go, t, d, v, cls], i) => `<button class="xcard ${cls}" data-go="${go}" style="animation-delay:${.15 + i * .07}s"><div class="xart">${sceneSVG(v)}${cls ? `<div class="xlock">${ic.lock}</div>` : ''}</div><b>${t}</b><span>${d}</span></button>`).join('')}</div>
+    <div class="sec2"><h3>זזים עכשיו <span class="live"></span></h3><button class="link" data-go="market">הכול</button></div>
+    <div class="rail arail">${movers.map(a => `<button class="acard" data-go="asset" data-arg="${a.id}"><div class="ah"><div class="logo" style="background:${a.col}">${a.s.slice(0, 2)}</div><span>${a.s}</span></div>${spark(a.spark, a.chg >= 0, 128, 40)}<b data-px="${a.id}">${fmt(a.price)}</b><em class="${chgCls(a.chg)}" data-chg="${a.id}">${sgn(a.chg)}%</em></button>`).join('')}</div>
+    <p class="demo-note" style="text-align:center">נתוני הדגמה בדויים שנעים בזמן אמת.</p></div>`;
+  livePrices();
 };
 function lessonCard(l) {
   const done = lessonsDone().includes(l.id);

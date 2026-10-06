@@ -765,3 +765,38 @@ bdi{unicode-bidi:isolate}
 .prov{text-align:center}.prov .gf{text-align:right}
 .alt{text-align:center;color:#8a8a8a;font-size:14px;margin-top:8px}
 .glass .check i{border-radius:7px}
+
+/* ===== portfolio in a wallet-app style ===== */
+.pf2 .pf-top{display:flex;justify-content:space-between;align-items:center;margin:4px 0 14px}
+.who{display:flex;align-items:center;gap:10px}.who small{display:block;font-size:12px;color:#8a8a8a}.who b{font-size:16px}
+.avd{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#dcff72,#7fa80e);display:grid;place-items:center;font-weight:800;color:#12190a}
+.balcard{position:relative;border-radius:30px;padding:18px 16px 14px;overflow:hidden;background:linear-gradient(160deg,#1d2410 0%,#121212 55%);border:1px solid rgba(200,255,61,.2);box-shadow:0 24px 50px rgba(0,0,0,.5),0 0 44px rgba(200,255,61,.07)}
+.balcard::after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(200,255,61,.2),transparent 65%);top:-120px;left:-80px;pointer-events:none}
+.bal-h{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+.livepill{display:flex;align-items:center;gap:7px;font-size:11.5px;color:#bfc7b0;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.07)}
+.bal{position:relative;z-index:1;font-size:42px;font-weight:800;letter-spacing:-1.2px;margin:6px 0 4px;direction:ltr;text-align:right}
+.balrow{display:flex;align-items:center;gap:10px;position:relative;z-index:1}
+.balcard .eqc{position:relative;z-index:1;margin:10px 0 4px;height:110px}
+.minis{display:grid;grid-template-columns:1fr 1fr;gap:8px;position:relative;z-index:1}
+.minis div{background:rgba(255,255,255,.06);border-radius:14px;padding:9px 12px}
+.minis span{display:block;font-size:11.5px;color:#8e8e8e}.minis b{font-size:17px;direction:ltr;display:inline-block}
+.acts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.act{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;height:82px;border-radius:22px;background:linear-gradient(180deg,#1f1f1f,#151515);border:1px solid rgba(255,255,255,.07);box-shadow:0 10px 20px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.07);animation:pop .55s cubic-bezier(.2,1.5,.4,1) both;transition:transform .15s}
+.act:active{transform:scale(.93)}
+.act .ai{width:30px;height:30px;display:grid;place-items:center;color:var(--lime)}.act .ai svg{width:24px;height:24px}
+.act b{font-size:12.5px;font-weight:600}
+.act.primary{background:linear-gradient(160deg,#dcff72,#a8e312);border-color:transparent;box-shadow:0 12px 26px rgba(200,255,61,.3),inset 0 1px 0 rgba(255,255,255,.5)}
+.act.primary .ai,.act.primary b{color:#10180a}
+.alist{border-radius:24px;background:#141414;border:1px solid rgba(255,255,255,.06);overflow:hidden}
+.arow{display:flex;align-items:center;gap:12px;width:100%;padding:13px 14px;border-bottom:1px solid rgba(255,255,255,.06);text-align:right;transition:background .2s}
+.arow:last-child{border:0}.arow:active{background:rgba(255,255,255,.05)}
+.arow .nm{flex:1;min-width:0}.arow .nm b{display:block;font-size:15px}.arow .nm span{font-size:12px;color:#8a8a8a}
+.arow .px b{font-size:15px}
+.arow .logo{width:40px;height:40px;font-size:13px}
+.pf2 .sec2{margin:22px 0 12px}
+
+/* old home restored, in the current lime palette */
+.avatar.ringed span{background:linear-gradient(135deg,#dcff72,#7fa80e);color:#12190a;box-shadow:0 0 22px rgba(200,255,61,.3)}
+.hero2{border-color:rgba(200,255,61,.18);box-shadow:0 24px 50px rgba(0,0,0,.45),0 0 50px rgba(200,255,61,.08)}
+.h2go{background:linear-gradient(135deg,#dcff72,#aee614);color:#11190a;box-shadow:0 8px 24px rgba(200,255,61,.32)}
+.rg circle:nth-child(2){stroke:#c8ff3d}

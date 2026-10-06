@@ -262,17 +262,25 @@ screens.portfolio = () => {
     return;
   }
   const eq0 = equity(ac), pl0 = eq0 - START_CASH;
-  const posList = Object.entries(P.pos);
-  scr.innerHTML = `<div class="anim"><div class="top"><h2>התיק שלי <span class="live"></span></h2><button class="vbadge" data-term="virtual">כסף וירטואלי ?</button></div>
-    <div class="card pf-hero"><span class="eyebrow">שווי התיק</span><div class="wbig gtext" id="eqv">${money(eq0, 2)}</div>
-      <div class="pf-row"><span id="eqp" class="chgchip ${chgCls(pl0)}">${sgn(pl0 / START_CASH * 100)}%</span><span id="eqs" class="muted" style="font-size:13px"><bdi dir="ltr">${sgn(pl0, 2)} ₪</bdi> מההתחלה</span></div>
-      <svg class="chart eqc" id="eqc" viewBox="0 0 330 90"></svg></div>
-    <div class="mini"><div class="card"><span class="eyebrow">${term('cash', 'כסף פנוי')}</span><div class="mbig" id="cash">${money(P.cash)}</div></div><div class="card"><span class="eyebrow">מושקע</span><div class="mbig" id="inv">${money(eq0 - P.cash)}</div></div></div>
-    <div class="sec"><h3>${term('diversify', 'פיזור')} התיק</h3></div><div class="card"><div class="alloc" id="alloc"></div><div class="legend" id="legend"></div></div>${learn(['diversify', 'cash', 'risk'])}
-    <div class="sec"><h3>פוזיציות</h3><button class="link" data-go="market">לחקור עוד</button></div>
+  const pi = {
+    buy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+    sell: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v13M6 13l6 6 6-6"/></svg>',
+    pie: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v9h9"/><path d="M20.5 15A9 9 0 1112 3"/></svg>',
+    clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'
+  };
+  scr.innerHTML = `<div class="anim pf2">
+    <div class="pf-top"><div class="who"><span class="avd">${ac.name[0]}</span><div><small>שלום</small><b>${ac.name}</b></div></div><button class="vbadge" data-term="virtual">כסף וירטואלי ?</button></div>
+    <div class="balcard"><div class="bal-h"><span class="eyebrow">שווי התיק</span><span class="livepill"><i class="live"></i>בזמן אמת</span></div>
+      <div class="bal gtext" id="eqv">${money(eq0, 2)}</div>
+      <div class="balrow"><span id="eqp" class="chgchip ${chgCls(pl0)}">${sgn(pl0 / START_CASH * 100)}%</span><span id="eqs" class="muted"><bdi dir="ltr">${sgn(pl0, 2)} ₪</bdi> מההתחלה</span></div>
+      <svg class="chart eqc" id="eqc" viewBox="0 0 330 110"></svg>
+      <div class="minis"><div><span>${term('cash', 'כסף פנוי')}</span><b id="cash">${money(P.cash)}</b></div><div><span>מושקע</span><b id="inv">${money(eq0 - P.cash)}</b></div></div></div>
+    <div class="acts">${[['buy', 'קנייה', pi.buy, 'primary'], ['sell', 'מכירה', pi.sell, ''], ['alloc', 'פיזור', pi.pie, ''], ['hist', 'היסטוריה', pi.clock, '']].map(([k, t, i, c], n) => `<button class="act ${c}" data-act="${k}" style="animation-delay:${.12 + n * .06}s"><span class="ai">${i}</span><b>${t}</b></button>`).join('')}</div>
+    <div class="sec2"><h3>הנכסים שלי</h3><button class="link" data-go="market">לחקור עוד</button></div>
     <div id="poss"></div>
-    <div class="sec"><h3>היסטוריית עסקאות</h3></div><div class="card" id="hist" style="padding:4px 16px"></div>
-    <div style="height:16px"></div><button class="btn ghost" id="rs">איפוס התיק ל-${money(START_CASH)}</button>
+    <div class="sec2" id="allocH"><h3>${term('diversify', 'פיזור')} התיק</h3></div><div class="card"><div class="alloc" id="alloc"></div><div class="legend" id="legend"></div></div>
+    <div class="sec2" id="histH"><h3>היסטוריית עסקאות</h3></div><div class="card" id="hist" style="padding:4px 16px"></div>
+    <button class="btn ghost" id="rs" style="margin-top:18px">איפוס התיק ל-${money(START_CASH)}</button>
     <p class="disc">כל הכסף והמחירים כאן וירטואליים ובדויים, לצורך תרגול בלבד. אין כאן המלצת השקעה.</p></div>`;
   const colOf = (id) => id === 'cash' ? '#64748b' : byId(id).col;
   function paint(first) {
@@ -280,19 +288,25 @@ screens.portfolio = () => {
     $('#eqv').textContent = money(eq, 2); const p = $('#eqp'); p.textContent = sgn(pl / START_CASH * 100) + '%'; p.className = 'chgchip ' + chgCls(pl); $('#eqs').innerHTML = `<bdi dir="ltr">${sgn(pl, 2)} ₪</bdi> מההתחלה`;
     $('#cash').textContent = money(P.cash); $('#inv').textContent = money(eq - P.cash);
     const e = P.eq.length > 1 ? P.eq : [START_CASH, START_CASH]; const mn = Math.min(...e), mx = Math.max(...e), up = e[e.length - 1] >= e[0];
-    const rng_ = (mx - mn) || 1, pts = e.map((v, i) => [i / (e.length - 1) * 330, 8 + (1 - (v - mn) / rng_) * 70]);
-    const d = pts.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' '), c = up ? '#1ff0b0' : '#ff6048';
-    $('#eqc').innerHTML = `<defs><linearGradient id="eg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c}" stop-opacity=".35"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></linearGradient></defs><path d="${d} L330,90 L0,90 Z" fill="url(#eg)"/><path d="${d}" fill="none" stroke="${c}" stroke-width="2.2" stroke-linejoin="round" style="filter:drop-shadow(0 0 5px ${c})"/><circle cx="${pts[pts.length - 1][0]}" cy="${pts[pts.length - 1][1]}" r="4" fill="#fff" stroke="${c}" stroke-width="2"/>`;
+    const rng_ = (mx - mn) || 1, pts = e.map((v, i) => [i / (e.length - 1) * 330, 10 + (1 - (v - mn) / rng_) * 74]);
+    const d = pts.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' '), c = up ? '#1ff0b0' : '#ff6048', last = pts[pts.length - 1];
+    $('#eqc').innerHTML = `<defs><linearGradient id="eg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c}" stop-opacity=".38"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></linearGradient></defs><g stroke="#fff" stroke-opacity=".06">${[30, 60, 90].map(y => `<path d="M0 ${y}H330"/>`).join('')}</g><path d="${d} L330,110 L0,110 Z" fill="url(#eg)"/><path d="${d}" fill="none" stroke="${c}" stroke-width="2.6" stroke-linejoin="round" ${first ? 'class="draw"' : ''} style="filter:drop-shadow(0 0 7px ${c})"/><circle cx="${last[0]}" cy="${last[1]}" r="9" fill="${c}" fill-opacity=".25" class="pulse-r"/><circle cx="${last[0]}" cy="${last[1]}" r="4.5" fill="#fff" stroke="${c}" stroke-width="2.4"/>`;
     const parts = [['cash', P.cash], ...Object.entries(P.pos).map(([id, x]) => [id, x.qty * byId(id).price])];
     $('#alloc').innerHTML = parts.map(([id, v]) => `<i style="width:${(v / eq * 100).toFixed(2)}%;background:${colOf(id)}"></i>`).join('');
     $('#legend').innerHTML = parts.map(([id, v]) => `<span><i style="background:${colOf(id)}"></i>${id === 'cash' ? 'מזומן' : byId(id).s} ${fmt(v / eq * 100, 0)}%</span>`).join('');
     const list = Object.entries(P.pos);
-    $('#poss').innerHTML = list.length ? list.map(([id, x]) => { const a = byId(id), v = x.qty * a.price, g = x.qty * (a.price - x.avg), gp = (a.price / x.avg - 1) * 100; return `<button class="les pos" data-go="asset" data-arg="${id}"><div class="logo" style="background:${a.col}">${a.s.slice(0, 2)}</div><div class="tx"><b>${a.n}</b><span><bdi dir="ltr">${fmt(x.qty, 2)}</bdi> יחידות · ${x.stop ? 'סטופ <bdi dir="ltr">' + fmt(x.stop) + '</bdi>' : 'בלי סטופ'}${x.target ? ' · יעד <bdi dir="ltr">' + fmt(x.target) + '</bdi>' : ''}</span></div><div class="px"><b>${money(v)}</b><span class="${chgCls(g)}">${sgn(gp)}%</span></div></button>`; }).join('')
+    $('#poss').innerHTML = list.length ? `<div class="alist">${list.map(([id, x]) => { const a = byId(id), v = x.qty * a.price, g = x.qty * (a.price - x.avg), gp = (a.price / x.avg - 1) * 100; return `<button class="arow" data-go="asset" data-arg="${id}"><div class="logo" style="background:${a.col}">${a.s.slice(0, 2)}</div><div class="nm"><b>${a.n}</b><span><bdi dir="ltr">${fmt(x.qty, 2)}</bdi> יחידות${x.stop ? ' · סטופ' : ''}${x.target ? ' · יעד' : ''}</span></div>${spark(a.spark, g >= 0, 64, 30)}<div class="px"><b>${money(v)}</b><span class="${chgCls(g)}">${sgn(gp)}%</span></div></button>`; }).join('')}</div>`
       : `<div class="card empty">${ic.wallet}<b>עוד אין פוזיציות</b><span class="muted">בחרו נכס בשוק, חקרו את הגרף ובנו תוכנית לפני שקונים.</span><div style="display:flex;gap:8px;margin-top:12px"><button class="btn primary small" data-go="market" style="width:auto;padding:0 22px">לשוק</button><button class="btn ghost small" id="smp" style="width:auto;padding:0 18px">טעינת דוגמה</button></div></div>`;
-    if (first) $('#hist').innerHTML = P.hist.length ? P.hist.slice(0, 8).map(h => { const a = byId(h.id); return `<div class="hrow"><div><b>${h.type === 'buy' ? 'קנייה' : 'מכירה'} · ${a.s}</b><span>${fmt(h.qty, 2)} ב-${fmt(h.price)}${h.why ? ' · ' + h.why : ''}</span></div><b class="${h.type === 'sell' ? chgCls(h.pnl) : ''}">${h.type === 'sell' ? sgn(h.pnl, 2) + ' ₪' : money(h.amt)}</b></div>`; }).join('') : '<p class="muted" style="padding:18px 0;text-align:center">עוד לא בוצעו עסקאות</p>';
+    if (first) $('#hist').innerHTML = P.hist.length ? P.hist.slice(0, 8).map(h => { const a = byId(h.id); return `<div class="hrow"><div><b>${h.type === 'buy' ? 'קנייה' : 'מכירה'} · ${a.s}</b><span><bdi dir="ltr">${fmt(h.qty, 2)}</bdi> ב-<bdi dir="ltr">${fmt(h.price)}</bdi>${h.why ? ' · ' + h.why : ''}</span></div><b class="${h.type === 'sell' ? chgCls(h.pnl) : ''}">${h.type === 'sell' ? sgn(h.pnl, 2) + ' ₪' : money(h.amt)}</b></div>`; }).join('') : '<p class="muted" style="padding:18px 0;text-align:center">עוד לא בוצעו עסקאות</p>';
   }
   paint(true);
   $('#poss').addEventListener('click', (ev) => { if (!ev.target.closest('#smp')) return; [['ALFA', 600, -.02, .06, .12], ['IDX100', 900, .015, .05, .1], ['GAMA', 450, -.03, .07, .15]].forEach(([id, amt, d, sp, tp]) => { const a = byId(id), avg = a.price * (1 - d), q = amt / avg; if (P.cash >= amt) { P.cash -= amt; P.pos[id] = { qty: q, avg, stop: avg * (1 - sp), target: avg * (1 + tp) }; P.hist.unshift({ t: Date.now(), type: 'buy', id, qty: q, price: avg, amt }); } }); P.eq.push(equity(ac)); save(); toast('נטענו 3 פוזיציות לדוגמה'); go('portfolio'); });
+  $$('.act', scr).forEach(b => b.onclick = () => {
+    const k = b.dataset.act;
+    if (k === 'buy') go('market');
+    else if (k === 'sell') { const L = Object.keys(P.pos); if (!L.length) return toast('אין עדיין פוזיציות למכירה'); openSheet(`<h3>איזה נכס למכור?</h3><div class="alist" style="margin-top:12px">${L.map(id => { const a = byId(id), x = P.pos[id]; return `<button class="arow" data-go="asset" data-arg="${id}"><div class="logo" style="background:${a.col}">${a.s.slice(0, 2)}</div><div class="nm"><b>${a.n}</b><span>${money(x.qty * a.price)}</span></div></button>`; }).join('')}</div><button class="btn ghost small" data-close="1" style="margin-top:12px">סגירה</button>`); }
+    else $(k === 'alloc' ? '#allocH' : '#histH').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+  });
   onTick(() => paint(false));
   let sure = false;
   $('#rs').onclick = () => { if (!sure) { sure = true; $('#rs').textContent = 'בטוח? לחצו שוב לאיפוס'; return; } ac.portfolio = { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] }; save(); toast('התיק אופס'); go('portfolio'); };
