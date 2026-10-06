@@ -569,3 +569,45 @@ bdi{unicode-bidi:isolate}
 .dg{padding:12px 8px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid var(--line);text-align:center}
 .dg b{display:block;font-size:14px}.dg span{font-size:11.5px;color:var(--muted)}
 .sheet-body .seg{display:flex;width:max-content}
+
+/* ===== calmer, more inviting home ===== */
+.home .hello{margin:4px 0 16px}
+.avatar.ringed{position:relative;background:none;box-shadow:none;width:52px;height:52px}
+.avatar.ringed svg{position:absolute;inset:0;width:100%;height:100%}
+.avatar.ringed span{position:absolute;inset:6px;border-radius:50%;background:linear-gradient(135deg,#46f7c4,#0b8a66);display:grid;place-items:center;font-weight:800;color:#04251b;font-size:18px;box-shadow:0 0 22px rgba(31,240,176,.35)}
+.hero2{position:relative;display:block;width:100%;min-height:196px;border-radius:30px;overflow:hidden;text-align:right;border:1px solid rgba(255,255,255,.12);box-shadow:0 24px 50px rgba(0,0,0,.45),0 0 50px rgba(31,240,176,.1);transition:transform .2s}
+.hero2:active{transform:scale(.985)}
+.h2art{position:absolute;inset:0}.h2art .scene{width:100%;height:100%;object-fit:cover}
+.h2art svg{transform:scale(1.35);transform-origin:20% 40%}
+.hero2::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(270deg,rgba(7,10,18,.96) 28%,rgba(7,10,18,.55) 70%,rgba(7,10,18,.2))}
+.h2in{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:flex-start;padding:20px 20px 0;gap:12px}
+.h2t{flex:1}
+.h2t h2{font-size:23px;line-height:1.25;margin:10px 0 4px;text-wrap:balance}
+.h2t p{color:#c4ccd8;font-size:14px}
+.h2r{width:74px;flex:none}.rg{width:74px;height:74px}
+.h2go{position:relative;z-index:2;display:inline-flex;align-items:center;gap:6px;margin:16px 20px 20px;padding:11px 20px;border-radius:999px;background:linear-gradient(135deg,#46f7c4,#12c98e);color:#03231a;font-weight:800;font-size:14.5px;box-shadow:0 8px 24px rgba(31,240,176,.4)}
+.h2go svg{width:16px;height:16px;transform:scaleX(-1)}
+.sec2{display:flex;justify-content:space-between;align-items:center;margin:26px 0 12px}
+.sec2 h3{font-size:19px;font-weight:700;display:flex;align-items:center;gap:8px}
+.rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -20px;padding:2px 20px 10px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.xcard{flex:none;width:156px;scroll-snap-align:start;text-align:right;border-radius:24px;padding:8px 8px 14px;background:linear-gradient(160deg,rgba(32,38,47,.8),rgba(17,21,27,.85));border:1px solid var(--line);box-shadow:0 14px 30px rgba(0,0,0,.35);animation:rise .55s cubic-bezier(.2,.8,.2,1) both;transition:transform .2s}
+.xcard:active{transform:scale(.97)}
+.xart{position:relative;height:104px;border-radius:18px;overflow:hidden;margin-bottom:10px}
+.xart .scene{width:100%;height:100%}
+.xcard b{display:block;font-size:16px;padding:0 6px}.xcard span{display:block;font-size:12px;color:var(--muted);padding:0 6px;margin-top:2px;line-height:1.4}
+.xcard.lk .xart svg{filter:grayscale(.6) brightness(.6)}
+.xlock{position:absolute;inset:0;display:grid;place-items:center}.xlock svg{width:30px;height:30px;color:#fff;filter:none!important}
+.acard{flex:none;width:150px;scroll-snap-align:start;text-align:right;padding:12px;border-radius:20px;background:linear-gradient(160deg,rgba(32,38,47,.75),rgba(17,21,27,.8));border:1px solid var(--line)}
+.acard .ah{display:flex;align-items:center;gap:8px;margin-bottom:8px}.acard .ah span{font-weight:700;font-size:14px}
+.acard .logo{width:30px;height:30px;font-size:11px}
+.acard b{display:block;font-size:19px;margin-top:6px;direction:ltr;text-align:right}.acard em{font-style:normal;font-size:13px;font-weight:700;direction:ltr;display:inline-block}
+.acard .spark{width:100%;height:40px}
+/* decorative art on the home screen carries no text of its own */
+.h2art text,.xart text{display:none}
+.h2art g:has(> text),.xart g:has(> text){display:none}
+.h2art{filter:saturate(1.1) brightness(.9)}
+.rail>:first-child{margin-inline-start:20px}
+.rail>:last-child{margin-inline-end:20px}
+.rail{scroll-padding-inline:20px}
+.h2art{opacity:.42;filter:blur(1.5px) saturate(1.1)}

@@ -147,33 +147,33 @@ screens.signup = () => {
 
 /* ===== home ===== */
 screens.home = () => {
-  const s = A();
-  const nextL = LESSONS.find(l => !s.lessonsDone.includes(l.id));
+  const s = A(), nextL = LESSONS.find(l => !s.lessonsDone.includes(l.id));
   const done = s.lessonsDone.length, total = LESSONS.length, open = portfolioOpen();
-  const eq = equity(s), pl = eq - START_CASH;
-  const movers = [...ASSETS].sort((a, b) => Math.abs(b.chg) - Math.abs(a.chg)).slice(0, 4);
-  scr.innerHTML = `<div class="anim">
-    <div class="hello"><button class="avatar" data-go="profile" aria-label="פרופיל">${s.name[0]}</button><div class="t"><span class="eyebrow">שלום</span><b>${s.name}</b></div>
+  const eq = equity(s), pl = eq - START_CASH, xp = (s.xp || 0) % 100;
+  const movers = [...ASSETS].sort((x, y) => Math.abs(y.chg) - Math.abs(x.chg)).slice(0, 5);
+  const heroVis = nextL ? (nextL.slides[0] || {}).v : 'riskline';
+  const R = 52, C = 2 * Math.PI * R, ring = (frac, big) => `<svg viewBox="0 0 120 120" class="rg"><circle cx="60" cy="60" r="${R}" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="9"/><circle cx="60" cy="60" r="${R}" fill="none" stroke="#1ff0b0" stroke-width="9" stroke-linecap="round" stroke-dasharray="${C.toFixed(0)}" stroke-dashoffset="${(C * (1 - frac)).toFixed(0)}" transform="rotate(-90 60 60)" style="filter:drop-shadow(0 0 5px #1ff0b0)"/><text x="60" y="68" text-anchor="middle" fill="#fff" font-size="26" font-weight="800" font-family="Heebo,sans-serif">${big}</text></svg>`;
+  const xcards = [
+    ['practiceHome', 'תרגול', 'קוראים גרף ומחליטים', 'support', ''],
+    ['market', 'שוק', 'חוקרים מדדים ומניות', 'riskline', ''],
+    ['glossary', 'מילון', 'כל מילה בשפה פשוטה', 'candle1', ''],
+    ['portfolio', 'התיק שלי', open ? money(eq) : 'נפתח בסיום השיעורים', 'size', open ? '' : 'lk']
+  ];
+  scr.innerHTML = `<div class="anim home">
+    <div class="hello"><button class="avatar ringed" data-go="profile" aria-label="פרופיל"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="3"/><circle cx="28" cy="28" r="26" fill="none" stroke="#ffc94d" stroke-width="3" stroke-linecap="round" stroke-dasharray="163" stroke-dashoffset="${(163 * (1 - xp / 100)).toFixed(0)}" transform="rotate(-90 28 28)"/></svg><span>${s.name[0]}</span></button>
+      <div class="t"><span class="eyebrow">שלום, רמה ${lvl(s)}</span><b>${s.name}</b></div>
       <div class="pill">${ic.fire}${s.streak}</div><div class="pill gold">${ic.star}${s.stars}</div></div>
-    <div class="xp-row"><span>רמה ${lvl(s)}</span><div class="bar"><i style="width:${(s.xp || 0) % 100}%"></i></div><span class="muted">${(s.xp || 0) % 100}/100</span></div>
-    ${tickerHTML()}
-    <div class="hero">
-      <span class="tag">${nextL ? 'ממשיכים מאיפה שעצרת' : 'סיימת את כל השיעורים'}</span>
-      <h3>${nextL ? nextL.title : 'כל הכבוד!'}</h3><p>${nextL ? `שיעור של ${nextL.min} דקות, ואחריו תרגול.` : 'עכשיו אפשר לחקור את השוק ולתרגל בתיק הוירטואלי.'}</p>
-      <div class="row2"><div class="bar"><i style="width:${Math.round(done / total * 100)}%"></i></div><span class="muted" style="font-size:13px">${done}/${total}</span></div>
-      <button class="btn primary" data-go="${nextL ? 'lesson' : 'portfolio'}" ${nextL ? `data-arg="${nextL.id}"` : ''}>${nextL ? 'המשך לשיעור' : 'לתיק שלי'}</button></div>
-    <button class="card wcard ${open ? '' : 'locked'}" data-go="portfolio">
-      <div class="wl"><span class="eyebrow">${open ? 'התיק הוירטואלי שלי' : 'התיק הוירטואלי'}</span>
-        <div class="wbig gtext" ${open ? `data-cu="${eq}" data-pre="₪" data-d="0"` : ''}>${open ? money(eq) : money(START_CASH)}</div>
-        <span class="${open ? chgCls(pl) : 'muted'}" style="font-size:13px">${open ? `<bdi dir="ltr">${sgn(pl, 0)} ₪</bdi> מההתחלה` : `נפתח אחרי ${LESSONS.length - done} שיעורים`}</span></div>
-      <div class="wr">${open ? ic.wallet : ic.lock}</div></button>
-    <div class="mini"><div class="card"><span class="eyebrow">תרגול</span><div class="big">${ic.chart.replace('<svg', '<svg width="30" height="30" style="color:var(--green)"')}</div><button class="link" style="margin-top:8px" data-go="practiceHome">למקרי התרגול</button></div>
-      <div class="card"><span class="eyebrow">כוכבים שצברת</span><div class="big gold">${s.stars} ★</div><span class="muted" style="font-size:12px">עד 3 בכל תרגיל</span></div></div>
-    <div class="sec"><h3>זזים עכשיו <span class="live"></span></h3><button class="link" data-go="market">לשוק</button></div>
-    <div class="rows card" style="padding:4px 16px">${movers.map(assetRow).join('')}</div>
-    <p class="demo-note">נתוני הדגמה בדויים שנעים בזמן אמת, לא מחירים אמיתיים.</p>
-    <div class="sec"><h3>המסלול שלך</h3><button class="link" data-go="lessons">כל השיעורים</button></div>
-    ${LESSONS.slice(0, 3).map(lessonCard).join('')}</div>`;
+    <button class="hero2" data-go="${nextL ? 'lesson' : 'portfolio'}" ${nextL ? `data-arg="${nextL.id}"` : ''}>
+      <div class="h2art">${sceneSVG(heroVis)}</div>
+      <div class="h2in"><div class="h2t"><span class="tag">${nextL ? 'המשך מאיפה שעצרת' : 'סיימת את כל השיעורים'}</span>
+        <h2>${nextL ? nextL.title : 'עכשיו אפשר לחקור ולתרגל'}</h2><p>${nextL ? nextL.min + ' דקות' : 'התיק הוירטואלי מחכה לך'}</p></div>
+        <div class="h2r">${ring(done / total, done + '/' + total)}</div></div>
+      <span class="h2go">${nextL ? 'להמשיך' : 'לתיק שלי'} ${ic.back}</span></button>
+    <div class="sec2"><h3>לחקור</h3></div>
+    <div class="rail">${xcards.map(([go, t, d, v, cls], i) => `<button class="xcard ${cls}" data-go="${go}" style="animation-delay:${.15 + i * .07}s"><div class="xart">${sceneSVG(v)}${cls ? `<div class="xlock">${ic.lock}</div>` : ''}</div><b>${t}</b><span>${d}</span></button>`).join('')}</div>
+    <div class="sec2"><h3>זזים עכשיו <span class="live"></span></h3><button class="link" data-go="market">הכול</button></div>
+    <div class="rail arail">${movers.map(a => `<button class="acard" data-go="asset" data-arg="${a.id}"><div class="ah"><div class="logo" style="background:${a.col}">${a.s.slice(0, 2)}</div><span>${a.s}</span></div>${spark(a.spark, a.chg >= 0, 128, 40)}<b data-px="${a.id}">${fmt(a.price)}</b><em class="${chgCls(a.chg)}" data-chg="${a.id}">${sgn(a.chg)}%</em></button>`).join('')}</div>
+    <p class="demo-note" style="text-align:center">נתוני הדגמה בדויים שנעים בזמן אמת.</p></div>`;
   livePrices();
 };
 function lessonCard(l) {
