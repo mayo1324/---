@@ -22,7 +22,7 @@ function loadDB() {
 }
 function save() { try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) { } }
 const START_CASH = 5000;
-const newAcct = (name, age, email, pass, goal) => ({ name, age, email, pass: hash(pass), goal, stars: 0, streak: 1, lessonsDone: [], practiceDone: {}, watch: ['ALFA', 'IDX100'], portfolio: { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] }, demoUnlock: false });
+const newAcct = (name, age, email, pass, goal) => ({ name, age, email, pass: hash(pass), goal, stars: 0, xp: 0, streak: 1, lessonsDone: [], practiceDone: {}, watch: ['ALFA', 'IDX100'], portfolio: { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] }, demoUnlock: false });
 const GUEST = newAcct('אורח', 16, '', 'x', '');
 const A = () => { const d = loadDB(); return (d.session && d.accounts[d.session]) || GUEST; };
 const loggedIn = () => { const d = loadDB(); return !!(d.session && d.accounts[d.session]); };
@@ -64,21 +64,30 @@ const onTick = (fn) => ticks.push(fn);
 let cur = { name: '', arg: null };
 const NO_TABS = ['onboarding', 'login', 'signup', 'lesson', 'lessonDone', 'practice', 'feedback', 'asset'];
 const TAB_OF = { asset: 'market', practiceHome: 'practiceHome', profile: '', glossary: 'lessons' };
+let navToken = 0, booted = false;
 function go(name, arg) {
   cur = { name, arg };
-  ticks.length = 0;
-  closeSheetNow();
-  const tabs = !NO_TABS.includes(name);
-  scr.className = 'screen' + (tabs ? ' has-tabs' : '');
-  scr.innerHTML = '';
-  screens[name](arg);
-  scr.scrollTop = 0;
-  const tb = $('#tabbar');
-  tb.hidden = !tabs;
-  if (tabs) renderTabs(name in TAB_OF ? TAB_OF[name] : name);
-  runCountUps();
-  try { history.replaceState(null, '', '#' + name); } catch (e) { }
+  const tok = ++navToken;
+  const render = () => {
+    ticks.length = 0;
+    closeSheetNow();
+    const tabs = !NO_TABS.includes(name);
+    scr.className = 'screen' + (tabs ? ' has-tabs' : '');
+    scr.innerHTML = '';
+    screens[name](arg);
+    scr.scrollTop = 0;
+    const tb = $('#tabbar');
+    tb.hidden = !tabs;
+    if (tabs) renderTabs(name in TAB_OF ? TAB_OF[name] : name);
+    runCountUps();
+    try { history.replaceState(null, '', '#' + name); } catch (e) { }
+  };
+  if (!booted || reduceMotion) { booted = true; render(); return; }
+  const sw = $('#sweep'); sw.classList.remove('run'); void sw.offsetWidth; sw.classList.add('run');
+  scr.classList.add('leaving');
+  setTimeout(() => { if (tok !== navToken) return; render(); scr.classList.add('entering'); setTimeout(() => scr.classList.remove('entering'), 520); }, 170);
 }
+const lvl = (a) => 1 + Math.floor((a.xp || 0) / 100);
 function closeSheetNow() { ['sheet', 'term'].forEach(id => { const s = $('#' + id); s.hidden = true; s.classList.remove('open'); s.innerHTML = ''; }); }
 function renderTabs(active) {
   const items = [['home', 'בית', ic.home], ['lessons', 'שיעורים', ic.book], ['practiceHome', 'תרגול', ic.chart, true], ['market', 'שוק', ic.trend], ['portfolio', 'תיק', ic.wallet]];

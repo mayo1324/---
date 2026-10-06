@@ -64,14 +64,14 @@ const portfolioOpen = () => ALL_DONE() || A().demoUnlock;
 screens.onboarding = (i = 0) => {
   i = +i || 0;
   const slides = [
-    ['למדו שוק הון בצורה אחרת', 'שיעורים קצרים של כ-10 דקות, ואחריהם תרגול על גרף נרות. בלי משעמם ובלי מילים מסובכות.', 11],
-    ['לומדים להחליט, לא לנחש', 'מתרגלים קריאת גרף, מחליטים אם בכלל להיכנס, ובונים תוכנית עם סטופ ויעד. בלי כסף אמיתי.', 23],
-    ['חוקרים ומתאמנים בתיק וירטואלי', 'אחרי השיעורים מקבלים 5,000 ש"ח וירטואליים לתרגול. הכול לימודי, בלי המלצות השקעה ובלי הבטחות לרווח.', 37]
+    ['למדו שוק הון בצורה אחרת', 'שיעורים קצרים ומצוירים, ואחריהם תרגול על גרף. בלי משעמם ובלי מילים מסובכות.', 'wow'],
+    ['לומדים להחליט, לא לנחש', 'קוראים גרף, מחליטים אם בכלל לקנות, ובונים תוכנית עם סטופ ויעד. בלי כסף אמיתי.', 'think'],
+    ['חוקרים ומתאמנים בתיק וירטואלי', 'אחרי השיעורים מקבלים 5,000 ש"ח וירטואליים לתרגול. הכול לימודי, בלי המלצות השקעה.', 'cheer']
   ];
-  const [h, p, seed] = slides[i];
+  const [h, p, mood] = slides[i];
   scr.innerHTML = `<div class="ob anim">
     <div class="ob-top"><button class="link" id="lg">יש לי חשבון</button><button class="link" id="skip">דלג</button></div>
-    <div class="ob-art">${artCandles(seed)}<div class="ob-card"><span class="eyebrow">כוכבים</span><b>${'★'.repeat(i + 1)}</b></div></div>
+    <div class="ob-art">${obScene(i)}<div class="ob-mascot">${mascot(mood, 168)}</div><div class="ob-bubble">${['היי! אני שורי. בואו נלמד ביחד.', 'אני אעזור לכם בכל שלב.', 'מוכנים להתחיל?'][i]}</div></div>
     <h1>${h}</h1><p>${p}</p>
     <div class="dots">${slides.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('')}</div>
     <div class="grow"></div>
@@ -155,6 +155,7 @@ screens.home = () => {
   scr.innerHTML = `<div class="anim">
     <div class="hello"><button class="avatar" data-go="profile" aria-label="פרופיל">${s.name[0]}</button><div class="t"><span class="eyebrow">שלום</span><b>${s.name}</b></div>
       <div class="pill">${ic.fire}${s.streak}</div><div class="pill gold">${ic.star}${s.stars}</div></div>
+    <div class="xp-row"><span>רמה ${lvl(s)}</span><div class="bar"><i style="width:${(s.xp || 0) % 100}%"></i></div><span class="muted">${(s.xp || 0) % 100}/100</span></div>
     ${tickerHTML()}
     <div class="hero">
       <span class="tag">${nextL ? 'ממשיכים מאיפה שעצרת' : 'סיימת את כל השיעורים'}</span>
@@ -193,29 +194,36 @@ screens.lessons = () => {
 };
 screens.lesson = (id) => {
   const L = LESSONS.find(x => x.id === id) || LESSONS[0];
-  let i = 0, answered = false;
-  const n = L.slides.length + 1;
+  let i = 0, answered = false, dir = 1;
+  const n = L.slides.length + 1, say = SAY[L.id] || [];
   const draw = () => {
     const quiz = i === L.slides.length, sl = L.slides[i];
-    scr.innerHTML = `<div class="anim">
+    scr.innerHTML = `<div class="lp">
       <div class="top"><button class="icon-btn" id="bk">${ic.x}</button><span class="muted" style="font-size:13px">${L.title}</span><span style="width:42px"></span></div>
-      <div class="prog">${Array.from({ length: n }, (_, k) => `<i class="${k <= i ? 'on' : ''}"></i>`).join('')}</div>
-      <div class="slide">${quiz ? `<span class="tag">בדיקה קטנה</span><h2>${L.q.q}</h2><div class="grow">${L.q.o.map((o, k) => `<button class="opt" data-k="${k}">${o}</button>`).join('')}</div><div id="qm" class="muted" style="margin-top:14px;min-height:22px"></div>`
-        : `<span class="tag">${i + 1} מתוך ${L.slides.length}</span><h2>${sl.t}</h2><p>${sl.b}</p><div class="vis">${lessonVis(sl.v)}</div>${sl.w ? `<div class="warn">${sl.w}</div>` : ''}<div class="grow"></div>`}</div>
+      <div class="prog">${Array.from({ length: n }, (_, k) => `<i class="${k < i ? 'on' : k === i ? 'on cur' : ''}"></i>`).join('')}</div>
+      <div class="slide ${dir > 0 ? 'in-r' : 'in-l'}">${quiz
+        ? `<div class="say"><div class="m" id="qmm">${mascot('think', 92)}</div><div class="bubble">בדיקה קטנה! אתם מוכנים?</div></div><h2>${L.q.q}</h2><div class="grow">${L.q.o.map((o, k) => `<button class="opt" data-k="${k}">${o}</button>`).join('')}</div><div id="qm" class="muted" style="margin-top:14px;min-height:22px"></div>`
+        : `<div class="scene-card">${sceneSVG(sl.v)}<span class="cnt">${i + 1}/${L.slides.length}</span></div>
+           <div class="say"><div class="m">${mascot(i === L.slides.length - 1 ? 'happy' : (i % 2 ? 'wow' : 'happy'), 76)}</div><div class="bubble">${say[i] || 'שימו לב לציור!'}</div></div>
+           <h2>${sl.t}</h2><p>${sl.b}</p>${toyHTML(sl.x)}${sl.w ? `<div class="warn">${sl.w}</div>` : ''}<div class="grow"></div>`}</div>
       <div class="nav2">${i > 0 && !quiz ? `<button class="btn ghost" id="pv" style="flex:none;width:90px">חזרה</button>` : ''}<button class="btn primary" id="nx" ${quiz ? 'disabled' : ''}>${quiz ? 'סיום שיעור' : 'הבא'}</button></div></div>`;
+    scr.scrollTop = 0;
     $('#bk').onclick = () => go('lessons');
-    const pv = $('#pv'); if (pv) pv.onclick = () => { i--; draw(); };
+    const pv = $('#pv'); if (pv) pv.onclick = () => { i--; dir = -1; draw(); };
+    if (!quiz) bindToy(sl.x, scr);
     $('#nx').onclick = () => {
-      if (!quiz) { i++; draw(); return; }
-      const s = A(); if (!s.lessonsDone.includes(L.id)) { s.lessonsDone.push(L.id); s.stars += 1; save(); }
-      go('lessonDone', L.id);
+      if (!quiz) { i++; dir = 1; draw(); return; }
+      const s = A(), first = !s.lessonsDone.includes(L.id);
+      if (first) { s.lessonsDone.push(L.id); s.stars += 1; s.xp = (s.xp || 0) + 20; save(); }
+      go('lessonDone', { id: L.id, gained: first ? 20 : 0, before: (s.xp || 0) - (first ? 20 : 0) });
     };
-    if (quiz) $$('.opt').forEach(b => b.onclick = () => {
+    if (quiz) $$('.opt').forEach(b => b.onclick = (e) => {
       if (answered) return;
       const ok = +b.dataset.k === L.q.a;
       b.classList.add(ok ? 'ok' : 'bad');
-      if (ok) { answered = true; $('#qm').innerHTML = '<span class="up">נכון! כל הכבוד.</span>'; $('#nx').disabled = false; }
-      else $('#qm').innerHTML = '<span class="down">לא בדיוק, נסו שוב.</span>';
+      $('#qmm').innerHTML = mascot(ok ? 'cheer' : 'oops', 92);
+      if (ok) { answered = true; burst(e.clientX, e.clientY, '#ffc94d', 16); $('#qm').innerHTML = '<span class="up">נכון! כל הכבוד.</span>'; $('#nx').disabled = false; }
+      else { $('#qm').innerHTML = '<span class="down">לא בדיוק, נסו שוב.</span>'; b.classList.add('shake'); }
     });
   };
   draw();
@@ -224,14 +232,19 @@ function confetti(n = 30) {
   if (reduceMotion) return '';
   return `<div class="confetti">${Array.from({ length: n }, (_, k) => `<i style="left:${(k * 37) % 100}%;background:${['#1ff0b0', '#ffc94d', '#60a5fa', '#ff6048', '#a78bfa'][k % 5]};animation-delay:${(k % 7) * .12}s"></i>`).join('')}</div>`;
 }
-screens.lessonDone = (id) => {
-  const L = LESSONS.find(x => x.id === id) || LESSONS[0];
-  const all = ALL_DONE(), left = LESSONS.length - lessonsDone().length;
-  scr.innerHTML = `${confetti()}<div class="fb ok anim" style="padding-top:60px"><div class="big-ic" style="color:var(--green)">${ic.check}</div>
+screens.lessonDone = (a) => {
+  const id = a.id || a, L = LESSONS.find(x => x.id === id) || LESSONS[0], gained = a.gained || 0;
+  const ac = A(), all = ALL_DONE(), left = LESSONS.length - lessonsDone().length;
+  const xp1 = ac.xp || 0, xp0 = a.before != null ? a.before : xp1, up = Math.floor(xp1 / 100) > Math.floor(xp0 / 100);
+  scr.innerHTML = `${confetti(46)}<div class="done anim"><div class="rays"></div>
+    <div class="dm">${mascot('cheer', 190)}</div>
     <h1>סיימת את השיעור!</h1><p class="muted" style="margin:6px 20px 0">${L.title}</p>
-    <div class="stars"><span class="pop">${starSvg(true)}</span></div><p class="muted">קיבלת כוכב אחד</p>
-    ${all ? `<div class="card unlock" style="margin-top:22px">${ic.wallet}<b>התיק הוירטואלי נפתח!</b><span class="muted">מחכים לך 5,000 ש"ח וירטואליים לתרגול</span></div>` : `<p class="muted" style="margin-top:18px">עוד ${left} שיעורים עד שהתיק הוירטואלי ייפתח</p>`}
-    <div class="btns" style="margin-top:28px"><button class="btn primary" data-go="${all ? 'portfolio' : 'practiceHome'}">${all ? 'לתיק שלי' : 'עכשיו לתרגול'}</button><button class="btn ghost" data-go="home">חזרה לבית</button></div></div>`;
+    <div class="stars"><span class="pop">${starSvg(true)}</span></div>
+    <div class="card xpc"><div class="xpt"><b data-cu="${gained}" data-pre="+" data-suf=" נק' ניסיון">+${gained}</b><span class="muted">רמה ${lvl(ac)}</span></div>
+      <div class="bar"><i id="xpf" style="width:${(xp0 % 100)}%"></i></div>${up ? '<div class="lvlup">עליתם רמה!</div>' : `<span class="muted" style="font-size:12.5px">עוד ${100 - (xp1 % 100)} נקודות לרמה הבאה</span>`}</div>
+    ${all ? `<div class="card unlock" style="margin-top:14px">${ic.wallet}<b>התיק הוירטואלי נפתח!</b><span class="muted">מחכים לך 5,000 ש"ח וירטואליים לתרגול</span></div>` : `<p class="muted" style="margin-top:14px">עוד ${left} שיעורים עד שהתיק הוירטואלי ייפתח</p>`}
+    <div class="btns" style="margin-top:18px"><button class="btn primary" data-go="${all ? 'portfolio' : 'practiceHome'}">${all ? 'לתיק שלי' : 'עכשיו לתרגול'}</button><button class="btn ghost" data-go="home">חזרה לבית</button></div></div>`;
+  setTimeout(() => { const f = $('#xpf'); if (f) f.style.width = (xp1 % 100) + '%'; }, 350);
 };
 
 /* ===== profile ===== */

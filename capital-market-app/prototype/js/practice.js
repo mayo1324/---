@@ -200,7 +200,7 @@ screens.practice = (idx = 0) => {
 screens.feedback = ({ idx, st, sim }) => {
   const sc = SCEN[idx], P = buildScen(sc), ev = evaluate(sc, P, st), ok = ev.fails === 0;
   const ac = A(), prev = ac.practiceDone[sc.id] || 0;
-  if (ev.stars > prev) { ac.stars += ev.stars - prev; ac.practiceDone[sc.id] = ev.stars; save(); }
+  if (ev.stars > prev) { ac.stars += ev.stars - prev; ac.xp = (ac.xp || 0) + (ev.stars - prev) * 10; ac.practiceDone[sc.id] = ev.stars; save(); }
   let result = '', alt = '', title, sub;
   const pl = st.plan;
   if (pl) {
@@ -220,7 +220,7 @@ screens.feedback = ({ idx, st, sim }) => {
   if (!title) { title = ok ? 'החלטה מצוינת!' : ev.stars === 2 ? 'כמעט!' : 'לא הפעם'; sub = ok ? 'הכול נכון.' : 'יש כאן משהו לתקן, וזה בסדר. הכי חשוב להבין למה.'; }
   $('#tabbar').hidden = true;
   scr.innerHTML = `${ok ? confetti() : ''}<div class="fb ${ok ? 'ok' : 'no'} anim">
-    <div class="big-ic" style="color:${ok ? 'var(--green)' : 'var(--red)'}">${ok ? ic.check : ic.x}</div>
+    <div class="fb-m">${mascot(ok ? 'cheer' : (ev.stars >= 2 ? 'think' : 'oops'), 150)}</div>
     <h1 style="font-size:24px;padding:0 10px">${title}</h1><p class="muted" style="margin:0 24px;line-height:1.55">${sub}</p>
     <div class="stars">${[0, 1, 2].map(k => `<span class="${k < ev.stars ? 'pop' : ''}" style="animation-delay:${k * .18}s">${starSvg(k < ev.stars)}</span>`).join('')}</div>
     <p class="muted" style="font-size:12.5px">הכוכבים על החשיבה שלכם, לא על המזל</p>
