@@ -46,7 +46,7 @@ const term = (id, label) => `<button class="term" data-term="${id}">${label || G
 const learn = (ids) => `<div class="learn"><span>לא בטוחים?</span>${ids.map(i => `<button class="lchip" data-term="${i}">מה זה ${GLOSS[i].t}?</button>`).join('')}</div>`;
 function openTerm(id) {
   const g = GLOSS[id]; if (!g) return;
-  const L = g.lesson && LESSONS.find(l => l.id === g.lesson), done = L && lessonsDone().includes(L.id), vis = g.v ? lessonVis(g.v) : '';
+  const L = g.lesson && LESSONS.find(l => l.id === g.lesson), done = L && lessonsDone().includes(L.id), vis = g.v ? sceneSVG(g.v) : '';
   openSheet(`<span class="tag">מילון</span><h3 style="margin-top:8px">${g.t}</h3><p class="def">${g.def}</p>${vis ? `<div class="vis">${vis}</div>` : ''}<div class="ex"><b>דוגמה:</b> ${g.ex}</div>
     ${L ? `<button class="btn ghost small" data-go="lesson" data-arg="${L.id}" style="margin-top:12px">${done ? 'לחזור על השיעור' : 'לשיעור המלא'}: ${L.title}</button>` : ''}
     <button class="btn primary small" data-close="1" style="margin-top:8px">הבנתי</button>`, 'term');
@@ -68,10 +68,10 @@ screens.onboarding = (i = 0) => {
     ['לומדים להחליט, לא לנחש', 'קוראים גרף, מחליטים אם בכלל לקנות, ובונים תוכנית עם סטופ ויעד. בלי כסף אמיתי.', 'think'],
     ['חוקרים ומתאמנים בתיק וירטואלי', 'אחרי השיעורים מקבלים 5,000 ש"ח וירטואליים לתרגול. הכול לימודי, בלי המלצות השקעה.', 'cheer']
   ];
-  const [h, p, mood] = slides[i];
+  const [h, p] = slides[i];
   scr.innerHTML = `<div class="ob anim">
     <div class="ob-top"><button class="link" id="lg">יש לי חשבון</button><button class="link" id="skip">דלג</button></div>
-    <div class="ob-art">${obScene(i)}<div class="ob-mascot">${mascot(mood, 168)}</div><div class="ob-bubble">${['היי! אני שורי. בואו נלמד ביחד.', 'אני אעזור לכם בכל שלב.', 'מוכנים להתחיל?'][i]}</div></div>
+    <div class="ob-art">${obScene(i)}</div>
     <h1>${h}</h1><p>${p}</p>
     <div class="dots">${slides.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('')}</div>
     <div class="grow"></div>
@@ -202,9 +202,9 @@ screens.lesson = (id) => {
       <div class="top"><button class="icon-btn" id="bk">${ic.x}</button><span class="muted" style="font-size:13px">${L.title}</span><span style="width:42px"></span></div>
       <div class="prog">${Array.from({ length: n }, (_, k) => `<i class="${k < i ? 'on' : k === i ? 'on cur' : ''}"></i>`).join('')}</div>
       <div class="slide ${dir > 0 ? 'in-r' : 'in-l'}">${quiz
-        ? `<div class="say"><div class="m" id="qmm">${mascot('think', 92)}</div><div class="bubble">בדיקה קטנה! אתם מוכנים?</div></div><h2>${L.q.q}</h2><div class="grow">${L.q.o.map((o, k) => `<button class="opt" data-k="${k}">${o}</button>`).join('')}</div><div id="qm" class="muted" style="margin-top:14px;min-height:22px"></div>`
+        ? `<span class="tag">בדיקה קטנה</span><h2>${L.q.q}</h2><div class="grow">${L.q.o.map((o, k) => `<button class="opt" data-k="${k}">${o}</button>`).join('')}</div><div id="qm" class="muted" style="margin-top:14px;min-height:22px"></div>`
         : `<div class="scene-card">${sceneSVG(sl.v)}<span class="cnt">${i + 1}/${L.slides.length}</span></div>
-           <div class="say"><div class="m">${mascot(i === L.slides.length - 1 ? 'happy' : (i % 2 ? 'wow' : 'happy'), 76)}</div><div class="bubble">${say[i] || 'שימו לב לציור!'}</div></div>
+           <div class="tip-note">${ic.bulb}<span>${say[i] || 'שימו לב לאיור.'}</span></div>
            <h2>${sl.t}</h2><p>${sl.b}</p>${toyHTML(sl.x)}${sl.w ? `<div class="warn">${sl.w}</div>` : ''}<div class="grow"></div>`}</div>
       <div class="nav2">${i > 0 && !quiz ? `<button class="btn ghost" id="pv" style="flex:none;width:90px">חזרה</button>` : ''}<button class="btn primary" id="nx" ${quiz ? 'disabled' : ''}>${quiz ? 'סיום שיעור' : 'הבא'}</button></div></div>`;
     scr.scrollTop = 0;
@@ -221,7 +221,6 @@ screens.lesson = (id) => {
       if (answered) return;
       const ok = +b.dataset.k === L.q.a;
       b.classList.add(ok ? 'ok' : 'bad');
-      $('#qmm').innerHTML = mascot(ok ? 'cheer' : 'oops', 92);
       if (ok) { answered = true; burst(e.clientX, e.clientY, '#ffc94d', 16); $('#qm').innerHTML = '<span class="up">נכון! כל הכבוד.</span>'; $('#nx').disabled = false; }
       else { $('#qm').innerHTML = '<span class="down">לא בדיוק, נסו שוב.</span>'; b.classList.add('shake'); }
     });
@@ -237,7 +236,7 @@ screens.lessonDone = (a) => {
   const ac = A(), all = ALL_DONE(), left = LESSONS.length - lessonsDone().length;
   const xp1 = ac.xp || 0, xp0 = a.before != null ? a.before : xp1, up = Math.floor(xp1 / 100) > Math.floor(xp0 / 100);
   scr.innerHTML = `${confetti(46)}<div class="done anim"><div class="rays"></div>
-    <div class="dm">${mascot('cheer', 190)}</div>
+    <div class="dm"><svg viewBox="0 0 120 120" width="150" height="150"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="8"/><circle class="ringp" cx="60" cy="60" r="50" fill="none" stroke="#1ff0b0" stroke-width="8" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314" transform="rotate(-90 60 60)" style="filter:drop-shadow(0 0 8px #1ff0b0)"/><path class="checkp" d="M38 62l16 16 30-34" fill="none" stroke="#1ff0b0" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="90" stroke-dashoffset="90"/></svg></div>
     <h1>סיימת את השיעור!</h1><p class="muted" style="margin:6px 20px 0">${L.title}</p>
     <div class="stars"><span class="pop">${starSvg(true)}</span></div>
     <div class="card xpc"><div class="xpt"><b data-cu="${gained}" data-pre="+" data-suf=" נק' ניסיון">+${gained}</b><span class="muted">רמה ${lvl(ac)}</span></div>

@@ -118,28 +118,28 @@ function initBg() {
   let W = 390, H = 844;
   const fit = () => { const r = cv.getBoundingClientRect(); W = r.width || 390; H = r.height || 844; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
   fit(); addEventListener('resize', fit);
-  const r = rng(5), SL = 20;
+  const r = rng(9), SL = 54;                 // big, calm candles
   let p = 0;
-  const mk = () => { const o = p; p = p * .985 + (r() - .47) * 16; return { o, c: p, h: Math.max(o, p) + r() * 9, l: Math.min(o, p) - r() * 9 }; };
-  const cs = []; for (let i = 0; i < 26; i++) cs.push(mk());
-  let off = 0, last = 0, line = [];
+  const mk = () => { const o = p; p = p * .94 + (r() - .46) * 30; return { o, c: p, h: Math.max(o, p) + 6 + r() * 14, l: Math.min(o, p) - 6 - r() * 14 }; };
+  const cs = []; for (let i = 0; i < Math.ceil(430 / SL) + 3; i++) cs.push(mk());
+  let off = 0, last = 0;
   function draw(t) {
     if (document.hidden) return requestAnimationFrame(draw);
     if (t - last < 33 && !reduceMotion) return requestAnimationFrame(draw);
     const dt = Math.min(60, t - last); last = t;
-    if (!reduceMotion) { off += dt * 0.012; if (off >= SL) { off -= SL; cs.shift(); cs.push(mk()); } }
+    if (!reduceMotion) { off += dt * 0.008; if (off >= SL) { off -= SL; cs.shift(); cs.push(mk()); } }
     ctx.clearRect(0, 0, W, H);
-    const base = H * .66, k = 1.5;
-    ctx.lineWidth = 1.6; ctx.lineJoin = 'round';
+    const base = H * .56, k = 1.7;
     cs.forEach((c, i) => {
-      const x = i * SL - off, up = c.c >= c.o, col = up ? '31,240,176' : '255,96,72', a = .11;
-      ctx.strokeStyle = `rgba(${col},${a + .05})`; ctx.fillStyle = `rgba(${col},${a})`;
+      const x = i * SL - off + 8, up = c.c >= c.o, col = up ? '31,240,176' : '255,96,72';
+      const g = ctx.createLinearGradient(0, base - c.h * k, 0, base - c.l * k);
+      g.addColorStop(0, `rgba(${col},.2)`); g.addColorStop(1, `rgba(${col},.05)`);
+      ctx.strokeStyle = `rgba(${col},.26)`; ctx.lineWidth = 2.2; ctx.lineCap = 'round';
       ctx.beginPath(); ctx.moveTo(x, base - c.h * k); ctx.lineTo(x, base - c.l * k); ctx.stroke();
-      const y1 = base - Math.max(c.o, c.c) * k, y2 = base - Math.min(c.o, c.c) * k;
-      ctx.fillRect(x - 5, y1, 10, Math.max(3, y2 - y1));
+      const y1 = base - Math.max(c.o, c.c) * k, y2 = base - Math.min(c.o, c.c) * k, bh = Math.max(6, y2 - y1);
+      ctx.fillStyle = g; ctx.strokeStyle = `rgba(${col},.3)`; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x - 13, y1, 26, bh, 6) : ctx.rect(x - 13, y1, 26, bh); ctx.fill(); ctx.stroke();
     });
-    ctx.strokeStyle = 'rgba(31,240,176,.22)'; ctx.lineWidth = 2; ctx.shadowColor = 'rgba(31,240,176,.6)'; ctx.shadowBlur = 12;
-    ctx.beginPath(); cs.forEach((c, i) => { const x = i * SL - off, y = base - c.c * k; i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.stroke(); ctx.shadowBlur = 0;
     if (!reduceMotion) requestAnimationFrame(draw);
   }
   requestAnimationFrame(draw);

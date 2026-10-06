@@ -27,7 +27,7 @@ input,select{font:inherit;color:inherit}
 @keyframes drift1{to{transform:translate(-90px,120px) scale(1.2)}}
 @keyframes drift2{to{transform:translate(140px,-90px) scale(1.15)}}
 @keyframes drift3{to{transform:translate(-110px,-70px) scale(1.25)}}
-#bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+#bg{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;-webkit-mask-image:linear-gradient(180deg,transparent 4%,#000 24%,#000 66%,transparent 92%);mask-image:linear-gradient(180deg,transparent 4%,#000 24%,#000 66%,transparent 92%)}
 .statusbar{position:relative;z-index:3;flex:none;height:44px;padding:14px 28px 0;display:flex;justify-content:space-between;font-weight:600;font-size:14px;direction:ltr}
 .sb-icons{display:flex;gap:5px;align-items:center}
 .sb-icons i{display:block;width:16px;height:9px;border-radius:2px;background:var(--text);opacity:.9}
@@ -493,3 +493,24 @@ bdi{unicode-bidi:isolate}
 .ob-bubble{left:0;right:0;margin:0 auto;transform:none;width:max-content;max-width:84%;white-space:normal;text-align:center}
 .ob-bubble::after{left:50%}
 .done .btns{width:100%;display:grid;gap:10px}
+
+/* ===== professional illustration language ===== */
+.cn{transform-origin:center bottom;transform-box:fill-box;animation:growc .7s cubic-bezier(.2,.9,.3,1) both}
+@keyframes growc{from{transform:scaleY(.1);opacity:0}to{transform:none;opacity:1}}
+.bar{animation:barin .8s cubic-bezier(.2,.9,.3,1) both}
+@keyframes barin{from{transform:scaleX(0);opacity:0}to{transform:none;opacity:1}}
+.flow{animation:flow 1.4s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-20}}
+.pulse-r{animation:pr 2.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pr{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.7);opacity:0}}
+.draw{stroke-dasharray:900;stroke-dashoffset:900;animation:draw 1.6s .2s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.seg{animation:seg 1.2s .2s ease both}
+@keyframes seg{from{stroke-dasharray:0 314}}
+.ob-art{padding:0;height:420px;background:#0d1424;box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 60px rgba(31,240,176,.08)}
+.tip-note{display:flex;gap:10px;align-items:center;margin:12px 0 4px;padding:10px 14px;border-radius:14px;background:rgba(255,201,77,.08);border:1px solid rgba(255,201,77,.22);color:#f2e3b5;font-size:13.5px;line-height:1.5}
+.tip-note svg{width:18px;height:18px;flex:none;color:var(--gold)}
+.toysvg{width:100%;height:auto;display:block;margin-bottom:6px}
+.dm{margin:6px 0 4px}
+.ringp{animation:ringp 1s .1s ease forwards}.checkp{animation:ringp .5s .9s ease forwards}
+@keyframes ringp{to{stroke-dashoffset:0}}
