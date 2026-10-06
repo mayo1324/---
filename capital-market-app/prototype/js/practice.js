@@ -36,19 +36,25 @@ function sizing(P, plan) {
 }
 function evaluate(sc, P, st) {
   const ch = [];
-  ch.push({ t: 'קריאת הגרף', ok: st.trend === sc.trend, good: `נכון, המגמה בגרף ${TREND_NAME[sc.trend]}. זה מה שקובע אם בכלל יש תוכנית.`, bad: `המגמה בגרף הזה ${TREND_NAME[sc.trend]}. כדאי להסתכל על הנקודות הנמוכות והגבוהות: האם הן עולות, יורדות או חוזרות על עצמן?` });
-  ch.push({ t: 'להיכנס או לחכות', ok: st.decision === sc.action, good: sc.action === 'wait' ? 'החלטתם לחכות, וזו ההחלטה הנכונה כאן. לא חייבים להיות בעסקה כל הזמן.' : 'זיהיתם שיש כאן סיבה אמיתית לבנות תוכנית.', bad: sc.why });
+  ch.push({ t: 'קריאת הגרף', term: 'trend', ok: st.trend === sc.trend, good: `נכון, המגמה בגרף ${TREND_NAME[sc.trend]}. זה מה שקובע אם בכלל יש תוכנית.`, bad: `המגמה בגרף הזה ${TREND_NAME[sc.trend]}. כדאי להסתכל על הנקודות הנמוכות והגבוהות: האם הן עולות, יורדות או חוזרות על עצמן?` });
+  ch.push({ t: 'להיכנס או לחכות', term: 'wait', ok: st.decision === sc.action, good: sc.action === 'wait' ? 'החלטתם לחכות, וזו ההחלטה הנכונה כאן. לא חייבים להיות בעסקה כל הזמן.' : 'זיהיתם שיש כאן סיבה אמיתית לבנות תוכנית.', bad: sc.why });
   if (st.decision === 'enter' && st.plan) {
     const pl = st.plan, rr = (pl.target - P.last) / (P.last - pl.stop), sz = sizing(P, pl);
-    ch.push({ t: 'אזור תמיכה', ok: Math.abs(pl.support - P.swingLow) <= .9 * P.atr, good: 'סימנתם את התמיכה במקום שבו המחיר באמת עצר בנקודות הנמוכות האחרונות.', bad: 'התמיכה צריכה להיות במקום שבו המחיר כבר עצר וחזר למעלה. חפשו את הנקודה הנמוכה האחרונה.' });
-    ch.push({ t: 'סטופ', ok: pl.stop <= P.swingLow && pl.stop >= P.swingLow - 2.5 * P.atr, good: 'הסטופ נמצא מתחת לתמיכה, עם מרווח סביר. אם המחיר מגיע אליו, התוכנית כנראה לא נכונה.', bad: pl.stop > P.swingLow ? 'הסטופ קרוב מדי: הוא נמצא מעל הנקודה הנמוכה האחרונה, ותנודה רגילה תוציא אתכם.' : 'הסטופ רחוק מדי, והפסד אפשרי גדול יותר מהצורך.' });
-    ch.push({ t: 'גודל הסיכון', ok: pl.risk <= 2, good: `סיכנתם ${pl.risk}% מהתיק, כלומר עד ${money(sz.riskMoney)}. כלל אצבע לימודי הוא עד 2%.`, bad: `סיכנתם ${pl.risk}% מהתיק, כלומר עד ${money(sz.riskMoney)}. זה גדול, וכמה הפסדים ברצף יפגעו בתיק. כלל אצבע לימודי הוא עד 2%.` });
-    ch.push({ t: 'יעד ויחס סיכוי וסיכון', ok: rr >= 1.5, good: `היחס הוא 1 ל-${fmt(rr, 1)}, כלומר הסיכוי גדול מהסיכון.`, bad: `היחס הוא 1 ל-${fmt(Math.max(rr, 0), 1)}. כדאי שהיעד יהיה רחוק מהכניסה לפחות פי 1.5 מהסטופ.` });
+    ch.push({ t: 'אזור תמיכה', term: 'support', ok: Math.abs(pl.support - P.swingLow) <= .9 * P.atr, good: 'סימנתם את התמיכה במקום שבו המחיר באמת עצר בנקודות הנמוכות האחרונות.', bad: 'התמיכה צריכה להיות במקום שבו המחיר כבר עצר וחזר למעלה. חפשו את הנקודה הנמוכה האחרונה.' });
+    ch.push({ t: 'סטופ', term: 'stop', ok: pl.stop <= P.swingLow && pl.stop >= P.swingLow - 2.5 * P.atr, good: 'הסטופ נמצא מתחת לתמיכה, עם מרווח סביר. אם המחיר מגיע אליו, התוכנית כנראה לא נכונה.', bad: pl.stop > P.swingLow ? 'הסטופ קרוב מדי: הוא נמצא מעל הנקודה הנמוכה האחרונה, ותנודה רגילה תוציא אתכם.' : 'הסטופ רחוק מדי, והפסד אפשרי גדול יותר מהצורך.' });
+    ch.push({ t: 'גודל הסיכון', term: 'risk', ok: pl.risk <= 2, good: `סיכנתם ${pl.risk}% מהתיק, כלומר עד ${money(sz.riskMoney)}. כלל אצבע לימודי הוא עד 2%.`, bad: `סיכנתם ${pl.risk}% מהתיק, כלומר עד ${money(sz.riskMoney)}. זה גדול, וכמה הפסדים ברצף יפגעו בתיק. כלל אצבע לימודי הוא עד 2%.` });
+    ch.push({ t: 'יעד ויחס סיכוי וסיכון', term: 'rr', ok: rr >= 1.5, good: `היחס הוא 1 ל-${fmt(rr, 1)}, כלומר הסיכוי גדול מהסיכון.`, bad: `היחס הוא 1 ל-${fmt(Math.max(rr, 0), 1)}. כדאי שהיעד יהיה רחוק מהכניסה לפחות פי 1.5 מהסטופ.` });
   }
   const fails = ch.filter(c => !c.ok).length;
   return { checks: ch, fails, stars: fails === 0 ? 3 : fails === 1 ? 2 : fails === 2 ? 1 : 0 };
 }
 
+
+function needBanner() {
+  const need = ['l4', 'l5', 'l7', 'l9'].map(id => LESSONS.find(l => l.id === id)).filter(l => !lessonsDone().includes(l.id));
+  if (!need.length) return '';
+  return `<div class="need"><b>חדשים בנושא?</b><span>מומלץ לראות קודם את השיעור: ${need[0].title}</span><button class="btn ghost small" data-go="lesson" data-arg="${need[0].id}">לשיעור</button></div>`;
+}
 /* ----- list ----- */
 screens.practiceHome = () => {
   const d = A().practiceDone;
@@ -120,21 +126,21 @@ screens.practice = (idx = 0) => {
   function panel() {
     dots(); const p = $('#panel'); let h = '', nextStep = null, label = '', dis = false;
     if (st.step === 'read') {
-      h = `<h3>מה אתם רואים בגרף?</h3><p class="muted">הסתכלו על הנקודות הנמוכות והגבוהות. לאן הן הולכות?</p><div class="opts">${[['up', 'מגמה עולה'], ['down', 'מגמה יורדת'], ['side', 'אין כיוון ברור']].map(([k, t]) => `<button class="opt${st.trend === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>`; nextStep = 'decide'; dis = !st.trend;
+      h = `${needBanner()}<h3>מה ה${term('trend')} בגרף?</h3><p class="muted">הסתכלו על הנקודות הנמוכות והגבוהות. האם הן עולות, יורדות או חוזרות על עצמן?</p><div class="opts">${[['up', 'מגמה עולה'], ['down', 'מגמה יורדת'], ['side', 'אין כיוון ברור']].map(([k, t]) => `<button class="opt${st.trend === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>${learn(['trend', 'candle'])}`; nextStep = 'decide'; dis = !st.trend;
     } else if (st.step === 'decide') {
-      h = `<h3>יש כאן סיבה להיכנס לעסקת קנייה?</h3><p class="muted">גם להחליט לחכות זו החלטה. לא חייבים להיות בעסקה כל הזמן.</p><div class="opts">${[['enter', 'כן, אפשר לבנות תוכנית'], ['wait', 'לא, מחכים']].map(([k, t]) => `<button class="opt${st.decision === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>`; dis = !st.decision; nextStep = st.decision === 'wait' ? 'run' : 'support'; label = st.decision === 'wait' ? 'ראו מה קרה' : 'הבא';
+      h = `<h3>יש כאן סיבה להיכנס לעסקת קנייה?</h3><p class="muted">קנייה היא להמר על עלייה. גם להחליט ${term('wait', 'לחכות')} זו החלטה, ולא חייבים להיות בעסקה כל הזמן.</p><div class="opts">${[['enter', 'כן, אפשר לבנות תוכנית'], ['wait', 'לא, מחכים']].map(([k, t]) => `<button class="opt${st.decision === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>${learn(['entry', 'wait'])}`; dis = !st.decision; nextStep = st.decision === 'wait' ? 'run' : 'support'; label = st.decision === 'wait' ? 'ראו מה קרה' : 'הבא';
     } else if (st.step === 'support') {
-      h = `<h3>סמנו את אזור התמיכה</h3><p class="muted">לחצו על הגרף במקום שבו המחיר ירד, עצר וחזר למעלה. הסימון נצמד לנקודה נמוכה קרובה.</p><div class="ro" id="ro">${st.support != null ? 'תמיכה: <b>' + fmt(st.support) + '</b>' : 'עוד לא סומן'}</div>`; nextStep = 'stop'; dis = st.support == null;
+      h = `<h3>סמנו את אזור ה${term('support')}</h3><p class="muted">${term('support')} היא אזור שבו המחיר ירד, עצר וחזר למעלה, כמו רצפה. לחצו על הגרף ליד אחת הנקודות הנמוכות. הסימון נצמד לנקודה קרובה.</p><div class="ro" id="ro">${st.support != null ? 'תמיכה: <b>' + fmt(st.support) + '</b>' : 'עוד לא סומן'}</div>${learn(['support', 'resistance'])}`; nextStep = 'stop'; dis = st.support == null;
     } else if (st.step === 'stop') {
-      h = `<h3>איפה הסטופ?</h3><p class="muted">מתחת לתמיכה, עם מרווח קטן. אם המחיר מגיע לשם, התוכנית כנראה לא נכונה.</p><div class="chips"><button class="chip" id="auto">מתחת לתמיכה</button></div><div class="ro" id="ro">${st.stop != null ? 'סטופ: <b>' + fmt(st.stop) + '</b> · סיכון ליחידה: <b>' + fmt(P.last - st.stop) + '</b>' : 'לחצו על הגרף או על הכפתור'}</div>`; nextStep = 'size'; dis = st.stop == null || st.stop >= P.last;
+      h = `<h3>איפה ה${term('stop')}?</h3><p class="muted">${term('stop')} הוא המחיר שבו יוצאים כדי להגביל הפסד. שמים אותו קצת מתחת לתמיכה: אם המחיר מגיע לשם, התוכנית כנראה לא נכונה.</p><div class="chips"><button class="chip" id="auto">מתחת לתמיכה</button></div><div class="ro" id="ro">${st.stop != null ? 'סטופ: <b>' + fmt(st.stop) + '</b> · סיכון ליחידה: <b>' + fmt(P.last - st.stop) + '</b>' : 'לחצו על הגרף או על הכפתור'}</div>${learn(['stop'])}`; nextStep = 'size'; dis = st.stop == null || st.stop >= P.last;
     } else if (st.step === 'size') {
       const sz = st.risk ? sizing(P, plan()) : null;
-      h = `<h3>כמה מהתיק מסכנים בעסקה?</h3><p class="muted">קודם מחליטים כמה מוכנים להפסיד, ורק אז מחשבים כמה לקנות. כלל אצבע לימודי: עד 2%.</p><div class="chips" id="rk">${RISK_OPTS.map(([v, t]) => `<button class="chip${st.risk === v ? ' on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
-        <div class="ro" id="ro">${sz ? `אם הסטופ יופעל תפסידו עד <b>${money(sz.riskMoney)}</b>. כמות לקנייה: <b>${sz.qty}</b> (${fmt(sz.pct, 0)}% מהתיק)${sz.capped ? '. הכמות הוגבלה לגודל התיק' : ''}` : 'בחרו אחוז סיכון'}</div>`; nextStep = 'target'; dis = !st.risk;
+      h = `<h3>כמה מהתיק מסכנים בעסקה?</h3><p class="muted">זה ${term('risk')}: קודם מחליטים כמה כסף מוכנים להפסיד, ורק אז מחשבים כמה לקנות. כלל אצבע לימודי: עד 2%.</p><div class="chips" id="rk">${RISK_OPTS.map(([v, t]) => `<button class="chip${st.risk === v ? ' on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
+        <div class="ro" id="ro">${sz ? `אם הסטופ יופעל תפסידו עד <b>${money(sz.riskMoney)}</b>. כמות לקנייה: <b>${sz.qty}</b> (${fmt(sz.pct, 0)}% מהתיק)${sz.capped ? '. הכמות הוגבלה לגודל התיק' : ''}` : 'בחרו אחוז סיכון'}</div>${learn(['risk'])}`; nextStep = 'target'; dis = !st.risk;
     } else if (st.step === 'target') {
       const risk = P.last - st.stop;
-      h = `<h3>איפה היעד?</h3><p class="muted">היעד צריך להיות רחוק מהכניסה לפחות פי 1.5 מהסטופ. אפשר ללחוץ על הגרף, או לבחור מהכפתורים.</p><div class="chips" id="tg"><button class="chip" data-t="${P.last + risk * 2}">יחס 1:2</button><button class="chip" data-t="${P.last + risk * 3}">יחס 1:3</button><button class="chip" data-t="${P.recentHigh}">הגבוה האחרון</button></div>
-        <div class="ro" id="ro">${roTarget()}</div>`; nextStep = 'run'; label = 'הרץ את הגרף'; dis = st.target == null || st.target <= P.last;
+      h = `<h3>איפה ה${term('target')}?</h3><p class="muted">${term('target')} הוא המחיר שבו לוקחים רווח. כדאי שיהיה רחוק מהכניסה לפחות פי 1.5 מהסטופ (${term('rr')}). אפשר ללחוץ על הגרף או לבחור מהכפתורים.</p><div class="chips" id="tg"><button class="chip" data-t="${P.last + risk * 2}">יחס 1:2</button><button class="chip" data-t="${P.last + risk * 3}">יחס 1:3</button><button class="chip" data-t="${P.recentHigh}">הגבוה האחרון</button></div>
+        <div class="ro" id="ro">${roTarget()}</div>${learn(['target', 'rr', 'resistance'])}`; nextStep = 'run'; label = 'הרץ את הגרף'; dis = st.target == null || st.target <= P.last;
     }
     p.innerHTML = h + nav(nextStep, label, dis);
     $$('.opt', p).forEach(b => b.onclick = () => { if (st.step === 'read') st.trend = b.dataset.k; else st.decision = b.dataset.k; draw(); panel(); });
@@ -194,7 +200,7 @@ screens.feedback = ({ idx, st, sim }) => {
     <div class="stars">${[0, 1, 2].map(k => `<span class="${k < ev.stars ? 'pop' : ''}" style="animation-delay:${k * .18}s">${starSvg(k < ev.stars)}</span>`).join('')}</div>
     <p class="muted" style="font-size:12.5px">הכוכבים על התהליך, לא על התוצאה</p>
     ${money_}${alt}
-    <div class="checks">${ev.checks.map(c => `<div class="ck ${c.ok ? 'ok' : 'no'}"><div class="m">${c.ok ? '✓' : '✕'}</div><div><b>${c.t}</b><span>${c.ok ? c.good : c.bad}</span></div></div>`).join('')}
+    <div class="checks">${ev.checks.map(c => `<div class="ck ${c.ok ? 'ok' : 'no'}"><div class="m">${c.ok ? '✓' : '✕'}</div><div><b>${c.term ? term(c.term, c.t) : c.t}</b><span>${c.ok ? c.good : c.bad}</span></div></div>`).join('')}
       <div class="ck ok"><div class="m" style="background:var(--card2);color:var(--text)">i</div><div><b>על המקרה: ${sc.name}</b><span>${sc.why}</span></div></div></div>
     <div class="btns">${ok ? `<button class="btn primary" data-go="practice" data-arg="${(idx + 1) % SCEN.length}">למקרה הבא</button>` : `<button class="btn primary" data-go="practice" data-arg="${idx}">לנסות שוב</button>`}<button class="btn ghost" data-go="practiceHome">לכל המקרים</button></div>
     <p class="disc">תרגיל לימודי על גרף הדגמה, בלי כסף אמיתי. אין כאן המלצת השקעה.</p></div>`;

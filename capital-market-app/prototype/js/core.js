@@ -52,9 +52,9 @@ const starSvg = (on) => `<svg viewBox="0 0 24 24"><path fill="${on ? '#ffc94d' :
 /* ===== toast / sheet ===== */
 let toastT;
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2400); }
-function openSheet(html) { const s = $('#sheet'); s.innerHTML = `<div class="sheet-bg" data-close="1"></div><div class="sheet-body">${html}</div>`; s.hidden = false; requestAnimationFrame(() => s.classList.add('open')); }
-function closeSheet() { const s = $('#sheet'); s.classList.remove('open'); setTimeout(() => { s.hidden = true; s.innerHTML = ''; }, 250); }
-document.addEventListener('click', (e) => { if (e.target.closest('[data-close]')) closeSheet(); });
+function openSheet(html, id = 'sheet') { const s = $('#' + id); s.innerHTML = `<div class="sheet-bg" data-close="1"></div><div class="sheet-body">${html}</div>`; s.hidden = false; requestAnimationFrame(() => s.classList.add('open')); }
+function closeSheet(id = 'sheet') { const s = $('#' + id); s.classList.remove('open'); setTimeout(() => { if (!s.classList.contains('open')) { s.hidden = true; s.innerHTML = ''; } }, 250); }
+document.addEventListener('click', (e) => { const c = e.target.closest('[data-close]'); if (c) { const sh = c.closest('.sheet'); closeSheet(sh ? sh.id : 'sheet'); } const t = e.target.closest('[data-term]'); if (t) openTerm(t.dataset.term); });
 
 /* ===== router ===== */
 const screens = {};
@@ -63,7 +63,7 @@ const ticks = [];
 const onTick = (fn) => ticks.push(fn);
 let cur = { name: '', arg: null };
 const NO_TABS = ['onboarding', 'login', 'signup', 'lesson', 'lessonDone', 'practice', 'feedback', 'asset'];
-const TAB_OF = { asset: 'market', practiceHome: 'practiceHome', profile: '' };
+const TAB_OF = { asset: 'market', practiceHome: 'practiceHome', profile: '', glossary: 'lessons' };
 function go(name, arg) {
   cur = { name, arg };
   ticks.length = 0;
@@ -79,7 +79,7 @@ function go(name, arg) {
   runCountUps();
   try { history.replaceState(null, '', '#' + name); } catch (e) { }
 }
-function closeSheetNow() { const s = $('#sheet'); s.hidden = true; s.classList.remove('open'); s.innerHTML = ''; }
+function closeSheetNow() { ['sheet', 'term'].forEach(id => { const s = $('#' + id); s.hidden = true; s.classList.remove('open'); s.innerHTML = ''; }); }
 function renderTabs(active) {
   const items = [['home', 'בית', ic.home], ['lessons', 'שיעורים', ic.book], ['practiceHome', 'תרגול', ic.chart, true], ['market', 'שוק', ic.trend], ['portfolio', 'תיק', ic.wallet]];
   $('#tabbar').innerHTML = items.map(([id, label, icon, mid]) => `<button class="tab${active === id ? ' on' : ''}${mid ? ' mid' : ''}" data-go="${id}">${icon}<span>${label}</span></button>`).join('');

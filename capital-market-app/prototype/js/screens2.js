@@ -6,6 +6,7 @@ screens.market = () => {
   scr.innerHTML = `<div class="anim"><div class="top"><h2>שוק <span class="live"></span></h2><span class="pill gold">${ic.star}${A().stars}</span></div>
     <div class="card mk-hero"><span class="eyebrow">${idx.n}</span>
       <div class="mk-row"><div><div class="mk-big gtext" data-px="${idx.id}">${fmt(idx.price)}</div><span class="${chgCls(idx.chg)}" data-chg="${idx.id}">${sgn(idx.chg)}%</span></div>${spark(idx.spark, idx.chg >= 0, 130, 56)}</div></div>
+    ${learn(['index', 'share', 'exchange'])}
     <label class="search">${ic.search}<input id="q" placeholder="חיפוש מדד או מניה" autocomplete="off"></label>
     <div class="filters" id="flt">${[['all', 'הכול'], ['index', 'מדדים'], ['stock', 'מניות'], ['watch', 'מעקב']].map(([k, t], i) => `<button class="chip${i ? '' : ' on'}" data-f="${k}">${t}</button>`).join('')}</div>
     <div class="rows card" id="mrows" style="padding:4px 16px;margin-top:10px"></div>
@@ -32,7 +33,8 @@ screens.asset = (id) => {
     <div class="tfs" id="tfs">${TF.map(t => `<button class="tf${t[0] === st.tf ? ' on' : ''}" data-tf="${t[0]}">${t[1]}</button>`).join('')}</div>
     <div class="cbox"><div class="tip" id="tip"></div><svg class="chart" id="ch"></svg>
       <div class="ctl"><div class="seg" id="seg"><button class="on" data-m="candle">נרות</button><button data-m="line">קו</button></div>
-        <button class="tg" id="tma">ממוצע נע</button><button class="tg" id="tvol">נפח</button></div></div>
+        <button class="tg" id="tma">ממוצע נע</button><button class="qm" data-term="ma" aria-label="מה זה ממוצע נע">?</button><button class="tg" id="tvol">נפח</button><button class="qm" data-term="volume" aria-label="מה זה נפח">?</button></div></div>
+    ${learn(['candle', 'volatility', 'support', 'resistance'])}
     <div class="stats" id="stats"></div>
     <div class="card" style="margin-top:14px"><b style="font-size:15px">על הנכס</b><p class="muted" style="font-size:14px;line-height:1.6;margin-top:6px">${a.about}</p></div>
     <p class="demo-note">גרף הדגמה שנוצר בקוד. אין כאן מחירים אמיתיים ואין המלצת השקעה.</p>
@@ -44,7 +46,7 @@ screens.asset = (id) => {
     const hi = Math.max(...cs.map(c => c.h)), lo = Math.min(...cs.map(c => c.l)), o = cs[0].o, l = cs[cs.length - 1].c, ch = (l / o - 1) * 100;
     const vl = a.vol < .9 ? 'נמוכה' : a.vol < 1.4 ? 'בינונית' : 'גבוהה';
     const row = (k, v, c) => `<div><span>${k}</span><b class="${c || ''}">${v}</b></div>`;
-    $('#stats').innerHTML = row('שינוי בתקופה', sgn(ch) + '%', chgCls(ch)) + row('פתיחת התקופה', fmt(o)) + row('הכי גבוה', fmt(hi)) + row('הכי נמוך', fmt(lo)) + row('תנודתיות', vl) + row('נפח ממוצע (הדגמה)', fmt(cs.reduce((s, c) => s + c.v, 0) / cs.length, 0));
+    $('#stats').innerHTML = row('שינוי בתקופה', sgn(ch) + '%', chgCls(ch)) + row('פתיחת התקופה', fmt(o)) + row('הכי גבוה', fmt(hi)) + row('הכי נמוך', fmt(lo)) + row(term('volatility'), vl) + row('נפח ממוצע (הדגמה)', fmt(cs.reduce((s, c) => s + c.v, 0) / cs.length, 0));
   }
   function tip() {
     const cs = series(a, st.tf), i = st.cross == null ? cs.length - 1 : st.cross, c = cs[i], up = c.c >= c.o;
@@ -116,9 +118,9 @@ function openTrade(a, side) {
         <label class="lbl" for="amt">כמה להשקיע: <b id="av">${money(st.amt)}</b></label>
         <input id="amt" type="range" min="50" max="${Math.max(50, Math.floor(P.cash))}" step="50" value="${st.amt}" ${P.cash < 50 ? 'disabled' : ''}>
         <div class="sumr"><span>כמות</span><b>${fmt(qty, 2)}</b><span>חלק מהתיק</span><b>${fmt(share, 0)}%</b></div>
-        <label class="lbl">סטופ (יציאה אוטומטית בהפסד)</label>
+        <label class="lbl">${term('stop')} (יציאה אוטומטית בהפסד)</label>
         <div class="chips" data-k="stop">${[[0, 'ללא'], [3, '3%-'], [5, '5%-'], [10, '10%-']].map(([v, t]) => `<button class="chip${st.stop === v ? ' on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
-        <label class="lbl">יעד (יציאה אוטומטית ברווח)</label>
+        <label class="lbl">${term('target')} (יציאה אוטומטית ברווח)</label>
         <div class="chips" data-k="tgt">${[[0, 'ללא'], [5, '5%+'], [10, '10%+'], [20, '20%+']].map(([v, t]) => `<button class="chip${st.tgt === v ? ' on' : ''}" data-v="${v}">${t}</button>`).join('')}</div>
         ${st.stop ? `<div class="info">אם הסטופ יופעל, ההפסד יהיה בערך ${money(risk)} (${fmt(risk / eq * 100, 1)}% מהתיק).</div>` : ''}
         ${warns.map(w => `<div class="hint">${w}</div>`).join('')}
@@ -167,12 +169,12 @@ screens.portfolio = () => {
   }
   const eq0 = equity(ac), pl0 = eq0 - START_CASH;
   const posList = Object.entries(P.pos);
-  scr.innerHTML = `<div class="anim"><div class="top"><h2>התיק שלי <span class="live"></span></h2><span class="vbadge">כסף וירטואלי</span></div>
+  scr.innerHTML = `<div class="anim"><div class="top"><h2>התיק שלי <span class="live"></span></h2><button class="vbadge" data-term="virtual">כסף וירטואלי ?</button></div>
     <div class="card pf-hero"><span class="eyebrow">שווי התיק</span><div class="wbig gtext" id="eqv">${money(eq0, 2)}</div>
       <div class="pf-row"><span id="eqp" class="chgchip ${chgCls(pl0)}">${sgn(pl0 / START_CASH * 100)}%</span><span id="eqs" class="muted" style="font-size:13px"><bdi dir="ltr">${sgn(pl0, 2)} ₪</bdi> מההתחלה</span></div>
       <svg class="chart eqc" id="eqc" viewBox="0 0 330 90"></svg></div>
-    <div class="mini"><div class="card"><span class="eyebrow">כסף פנוי</span><div class="mbig" id="cash">${money(P.cash)}</div></div><div class="card"><span class="eyebrow">מושקע</span><div class="mbig" id="inv">${money(eq0 - P.cash)}</div></div></div>
-    <div class="sec"><h3>פיזור התיק</h3></div><div class="card"><div class="alloc" id="alloc"></div><div class="legend" id="legend"></div></div>
+    <div class="mini"><div class="card"><span class="eyebrow">${term('cash', 'כסף פנוי')}</span><div class="mbig" id="cash">${money(P.cash)}</div></div><div class="card"><span class="eyebrow">מושקע</span><div class="mbig" id="inv">${money(eq0 - P.cash)}</div></div></div>
+    <div class="sec"><h3>${term('diversify', 'פיזור')} התיק</h3></div><div class="card"><div class="alloc" id="alloc"></div><div class="legend" id="legend"></div></div>${learn(['diversify', 'cash', 'risk'])}
     <div class="sec"><h3>פוזיציות</h3><button class="link" data-go="market">לחקור עוד</button></div>
     <div id="poss"></div>
     <div class="sec"><h3>היסטוריית עסקאות</h3></div><div class="card" id="hist" style="padding:4px 16px"></div>

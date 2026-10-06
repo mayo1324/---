@@ -41,6 +41,22 @@ function tickerHTML() {
   return `<div class="ticker"><div class="tr">${row}${row}</div></div>`;
 }
 const lessonsDone = () => A().lessonsDone;
+/* ===== glossary helpers: any term can be tapped for a plain explanation ===== */
+const term = (id, label) => `<button class="term" data-term="${id}">${label || GLOSS[id].t}</button>`;
+const learn = (ids) => `<div class="learn"><span>לא בטוחים?</span>${ids.map(i => `<button class="lchip" data-term="${i}">מה זה ${GLOSS[i].t}?</button>`).join('')}</div>`;
+function openTerm(id) {
+  const g = GLOSS[id]; if (!g) return;
+  const L = g.lesson && LESSONS.find(l => l.id === g.lesson), done = L && lessonsDone().includes(L.id), vis = g.v ? lessonVis(g.v) : '';
+  openSheet(`<span class="tag">מילון</span><h3 style="margin-top:8px">${g.t}</h3><p class="def">${g.def}</p>${vis ? `<div class="vis">${vis}</div>` : ''}<div class="ex"><b>דוגמה:</b> ${g.ex}</div>
+    ${L ? `<button class="btn ghost small" data-go="lesson" data-arg="${L.id}" style="margin-top:12px">${done ? 'לחזור על השיעור' : 'לשיעור המלא'}: ${L.title}</button>` : ''}
+    <button class="btn primary small" data-close="1" style="margin-top:8px">הבנתי</button>`, 'term');
+}
+screens.glossary = () => {
+  scr.innerHTML = `<div class="anim"><div class="top"><button class="icon-btn" data-go="lessons">${ic.back}</button><h2>מילון מונחים</h2><span style="width:42px"></span></div>
+    <p class="muted" style="margin-bottom:14px">כל מילה שלא ברורה, כאן בשפה פשוטה. לחצו על מונח כדי לראות הסבר ואיור.</p>
+    <div class="card" style="padding:4px 16px">${Object.entries(GLOSS).map(([id, g]) => `<button class="grow-row" data-term="${id}"><div><b>${g.t}</b><span>${g.def}</span></div>${ic.back}</button>`).join('')}</div></div>`;
+};
+
 const ALL_DONE = () => LESSONS.every(l => lessonsDone().includes(l.id));
 const portfolioOpen = () => ALL_DONE() || A().demoUnlock;
 
@@ -172,6 +188,7 @@ screens.lessons = () => {
   scr.innerHTML = `<div class="anim"><div class="top"><h2>שיעורים</h2><span class="pill gold">${ic.star}${A().stars}</span></div>
     <div class="card prog-card"><div style="display:flex;justify-content:space-between"><b>${d} מתוך ${LESSONS.length} שיעורים</b><span class="muted" style="font-size:13px">${portfolioOpen() ? 'התיק פתוח' : 'התיק נפתח בסיום'}</span></div>
       <div class="bar" style="margin-top:12px"><i style="width:${Math.round(d / LESSONS.length * 100)}%"></i></div></div>
+    <button class="card gl-link" data-go="glossary"><div>${ic.book}</div><div><b>מילון מונחים</b><span class="muted">תמיכה, התנגדות, סטופ ועוד, בשפה פשוטה</span></div></button>
     <div style="height:14px"></div>${LESSONS.map(lessonCard).join('')}</div>`;
 };
 screens.lesson = (id) => {
