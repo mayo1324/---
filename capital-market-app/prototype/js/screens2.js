@@ -25,7 +25,8 @@ screens.market = () => {
 /* ===== asset detail: chart you can explore ===== */
 screens.asset = (id) => {
   const a = byId(id) || ASSETS[0];
-  const st = { tf: '1M', mode: 'candle', ma: false, vol: false, cross: null };
+  const st = { tf: '1M', mode: 'candle', ma: false, vol: false, cross: null, tool: '', tmp: null };
+  const dkey = () => a.id + '|' + st.tf, lines = () => ((A().draws = A().draws || {})[dkey()] = (A().draws || {})[dkey()] || []);
   const held = () => A().portfolio.pos[a.id];
   scr.innerHTML = `<div class="anim as">
     <div class="top"><button class="icon-btn" id="bk">${ic.back}</button><div class="as-t"><b>${a.n}</b><span>${a.s} · ${a.sec}</span></div><button class="icon-btn" id="wt" aria-label="מעקב"></button></div>
@@ -34,7 +35,9 @@ screens.asset = (id) => {
     <div class="cbox"><div class="tip" id="tip"></div><svg class="chart" id="ch"></svg>
       <div class="ctl"><div class="seg" id="seg"><button class="on" data-m="candle">נרות</button><button data-m="line">קו</button></div>
         <button class="tg" id="tma">ממוצע נע</button><button class="qm" data-term="ma" aria-label="מה זה ממוצע נע">?</button><button class="tg" id="tvol">נפח</button><button class="qm" data-term="volume" aria-label="מה זה נפח">?</button></div></div>
-    ${learn(['candle', 'volatility', 'support', 'resistance'])}
+    <div class="dtools" id="dt"><span class="dl">ציור:</span>${[['', 'הצלבה'], ['trend', 'קו מגמה'], ['h', 'קו אופקי'], ['erase', 'מחיקה']].map(([k, t], i) => `<button class="dtb${i ? '' : ' on'}" data-t="${k}">${t}</button>`).join('')}</div>
+    <div class="dhint" id="dh">גררו על הגרף כדי לראות פרטי נר. בחרו כלי ציור כדי לנתח.</div>
+    ${learn(['trendline', 'candle', 'volatility', 'support', 'resistance'])}
     <div class="stats" id="stats"></div>
     <div class="card" style="margin-top:14px"><b style="font-size:15px">על הנכס</b><p class="muted" style="font-size:14px;line-height:1.6;margin-top:6px">${a.about}</p></div>
     <p class="demo-note">גרף הדגמה שנוצר בקוד. אין כאן מחירים אמיתיים ואין המלצת השקעה.</p>
@@ -73,22 +76,51 @@ screens.asset = (id) => {
     const last = cs[n - 1].c; el('line', { x1: 0, x2: pw, y1: y(last), y2: y(last), stroke: col, 'stroke-width': 1, 'stroke-dasharray': '2 3', 'stroke-opacity': .7 });
     el('rect', { x: W - AX + 1, y: y(last) - 10, width: AX - 2, height: 20, rx: 7, fill: col }); const lt = el('text', { x: W - AX / 2, y: y(last) + 4, fill: '#04140e', 'font-size': 10.5, 'font-weight': 700, 'text-anchor': 'middle', 'font-family': 'Heebo,sans-serif' }); lt.textContent = fmt(last, last > 500 ? 0 : 1);
     if (st.vol) { const mv = Math.max(...cs.map(c => c.v)); cs.forEach((c, i) => { const hh = c.v / mv * VH, u = c.c >= c.o; el('rect', { x: x(i) - Math.max(.5, slot * .33), y: ph + 8 + VH - hh, width: Math.max(1, slot * .66), height: hh, fill: u ? '#1ff0b0' : '#ff6048', opacity: .45 }); }); }
+    /* learner drawings */
+    st.view = { x, y, n, hi, lo, pw, ph, slot };
+    const all = lines().concat(st.tmp ? [st.tmp] : []);
+    all.forEach(l => {
+      if (l.t === 'h') { el('line', { x1: 0, x2: pw, y1: y(l.p), y2: y(l.p), stroke: '#fbbf24', 'stroke-width': 1.6, 'stroke-dasharray': '6 4' }); el('rect', { x: W - AX + 1, y: y(l.p) - 9, width: AX - 2, height: 18, rx: 6, fill: '#fbbf24' }); const t = el('text', { x: W - AX / 2, y: y(l.p) + 4, fill: '#1a1204', 'font-size': 10, 'font-weight': 700, 'text-anchor': 'middle', 'font-family': 'Heebo,sans-serif' }); t.textContent = fmt(l.p, l.p > 500 ? 0 : 1); }
+      else if (l.i2 !== l.i1) { const m = (l.p2 - l.p1) / (l.i2 - l.i1), yAt = (i) => y(l.p1 + m * (i - l.i1)), iEnd = n - 1 + Math.round((pw - x(n - 1)) / slot); el('line', { x1: x(l.i1), y1: yAt(l.i1), x2: x(l.i2), y2: yAt(l.i2), stroke: '#fbbf24', 'stroke-width': 2.4, 'stroke-linecap': 'round' }); el('line', { x1: x(l.i2), y1: yAt(l.i2), x2: x(iEnd), y2: yAt(iEnd), stroke: '#fbbf24', 'stroke-width': 1.5, 'stroke-dasharray': '5 5', opacity: .65 }); [l.i1, l.i2].forEach(i => el('circle', { cx: x(i), cy: yAt(i), r: 4, fill: '#fbbf24', stroke: '#0b0d10', 'stroke-width': 2 })); }
+    });
     if (st.cross != null) { const i = st.cross, c = cs[i]; el('line', { x1: x(i), x2: x(i), y1: 0, y2: tot, stroke: '#fff', 'stroke-opacity': .35, 'stroke-dasharray': '3 3' }); el('line', { x1: 0, x2: pw, y1: y(c.c), y2: y(c.c), stroke: '#fff', 'stroke-opacity': .25, 'stroke-dasharray': '3 3' }); el('circle', { cx: x(i), cy: y(c.c), r: 4.5, fill: '#fff', stroke: col, 'stroke-width': 2 }); }
-    tip(); stats(cs);
+    tip(); stats(cs); dhint();
   }
   function head() {
     const cs = series(a, st.tf); $('#pp').textContent = fmt(a.price);
     const ch = (cs[cs.length - 1].c / cs[0].o - 1) * 100; $('#pc').className = 'chgchip ' + chgCls(ch); $('#pc').textContent = `${sgn(ch)}% ב${TF.find(t => t[0] === st.tf)[1]}`;
     const on = A().watch.includes(a.id); $('#wt').innerHTML = on ? ic.star : ic.starO; $('#wt').style.color = on ? '#ffc94d' : '';
   }
+  function dhint() {
+    const h = $('#dh'); if (!h) return; const cs = series(a, st.tf), last = cs[cs.length - 1].c, L = lines(), hint = { '': 'גררו על הגרף כדי לראות פרטי נר. בחרו כלי ציור כדי לנתח.', trend: 'גררו על הגרף מנקודה לנקודה כדי למתוח קו מגמה.', h: 'לחצו על הגרף כדי לסמן קו אופקי (תמיכה או התנגדות).', erase: 'לחצו ליד קו כדי למחוק אותו.' }[st.tool];
+    const tl = [...L].reverse().find(l => l.t === 'trend'), hl = [...L].reverse().find(l => l.t === 'h'); let note = '';
+    if (!st.tool && tl) { const m = (tl.p2 - tl.p1) / (tl.i2 - tl.i1), at = tl.p1 + m * (cs.length - 1 - tl.i1); note = `קו המגמה ${m > 0 ? 'עולה' : 'יורד'}. המחיר עכשיו ${last >= at ? 'מעל הקו' : 'מתחת לקו'} (${fmt(Math.abs(last / at - 1) * 100, 1)}%). זו עדיין תצפית, לא תחזית.`; }
+    else if (!st.tool && hl) note = `המחיר עכשיו ${last >= hl.p ? 'מעל' : 'מתחת'} לקו האופקי ב-${fmt(Math.abs(last / hl.p - 1) * 100, 1)}%.`;
+    h.textContent = st.tool || !note ? hint : note;
+  }
+  function coord(e) { const r = svg.getBoundingClientRect(), v = st.view, tot = +svg.getAttribute('viewBox').split(' ')[3], px = (e.clientX - r.left) / r.width * W, py = (e.clientY - r.top) / r.height * tot; return { i: clamp(Math.round((px - 4 - v.slot / 2) / v.slot), 0, v.n - 1), p: v.hi - (py - 8) / (v.ph - 22) * (v.hi - v.lo), px, py }; }
+  function distLine(l, px, py) { const v = st.view; if (l.t === 'h') return Math.abs(v.y(l.p) - py); const m = (l.p2 - l.p1) / (l.i2 - l.i1), yy = v.y(l.p1 + m * ((px - 4 - v.slot / 2) / v.slot - l.i1)); return Math.abs(yy - py); }
   head(); draw();
   let down = false;
   const idxAt = (e) => { const r = svg.getBoundingClientRect(), n = series(a, st.tf).length, px = (e.clientX - r.left) / r.width * W, pw = W - AX, slot = (pw - 8) / n; return clamp(Math.floor((px - 4) / slot), 0, n - 1); };
-  svg.addEventListener('pointerdown', (e) => { down = true; try { svg.setPointerCapture(e.pointerId); } catch (_) { } st.cross = idxAt(e); draw(); });
-  svg.addEventListener('pointermove', (e) => { if (!down) return; const i = idxAt(e); if (i !== st.cross) { st.cross = i; draw(); } });
-  const up = () => { if (!down) return; down = false; st.cross = null; draw(); };
+  svg.addEventListener('pointerdown', (e) => {
+    down = true; try { svg.setPointerCapture(e.pointerId); } catch (_) { }
+    if (st.tool === 'trend') { const c = coord(e); st.tmp = { t: 'trend', i1: c.i, p1: c.p, i2: c.i, p2: c.p }; draw(); return; }
+    if (st.tool === 'h') { const c = coord(e); st.tmp = { t: 'h', p: c.p }; draw(); return; }
+    if (st.tool === 'erase') { const c = coord(e), L = lines(); let bi = -1, bd = 18; L.forEach((l, k) => { const d = distLine(l, c.px, c.py); if (d < bd) { bd = d; bi = k; } }); if (bi >= 0) { L.splice(bi, 1); save(); toast('הקו נמחק'); } draw(); return; }
+    st.cross = idxAt(e); draw();
+  });
+  svg.addEventListener('pointermove', (e) => { if (!down) return;
+    if (st.tool === 'trend' && st.tmp) { const c = coord(e); st.tmp.i2 = c.i; st.tmp.p2 = c.p; draw(); return; }
+    if (st.tool === 'h' && st.tmp) { st.tmp.p = coord(e).p; draw(); return; }
+    if (st.tool) return;
+    const i = idxAt(e); if (i !== st.cross) { st.cross = i; draw(); } });
+  const up = () => { if (!down) return; down = false; if (st.tool === 'trend' && st.tmp) { const t = st.tmp; st.tmp = null; if (Math.abs(t.i2 - t.i1) >= 3) { if (t.i2 < t.i1) Object.assign(t, { i1: t.i2, p1: t.p2, i2: t.i1, p2: t.p1 }); lines().push(t); save(); } else toast('מתחו קו ארוך יותר'); }
+    else if (st.tool === 'h' && st.tmp) { lines().push(st.tmp); st.tmp = null; save(); }
+    st.cross = null; draw(); };
   svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
   $('#tfs').onclick = (e) => { const b = e.target.closest('.tf'); if (!b) return; st.tf = b.dataset.tf; $$('.tf', $('#tfs')).forEach(x => x.classList.toggle('on', x === b)); head(); draw(); svg.classList.remove('swap'); void svg.getBoundingClientRect(); svg.classList.add('swap'); };
+  $('#dt').onclick = (e) => { const b = e.target.closest('.dtb'); if (!b) return; st.tool = b.dataset.t; $$('.dtb', $('#dt')).forEach(x => x.classList.toggle('on', x === b)); svg.classList.toggle('drawing', !!st.tool); dhint(); };
   $('#seg').onclick = (e) => { const b = e.target.closest('button'); if (!b) return; st.mode = b.dataset.m; $$('button', $('#seg')).forEach(x => x.classList.toggle('on', x === b)); draw(); };
   $('#tma').onclick = () => { st.ma = !st.ma; $('#tma').classList.toggle('on', st.ma); draw(); };
   $('#tvol').onclick = () => { st.vol = !st.vol; $('#tvol').classList.toggle('on', st.vol); draw(); };

@@ -4,7 +4,7 @@
    Entry is fixed at the market price, so nothing is a blind guess. Feedback scores the PROCESS. */
 const TREND_NAME = { up: 'עולה', down: 'יורדת', side: 'בלי כיוון' };
 const RISK_OPTS = [[.5, 'זהיר'], [1, 'מומלץ ללמידה'], [2, 'בסדר'], [5, 'גבוה מדי']];
-const STEPS = [['read', 'כיוון'], ['decide', 'החלטה'], ['support', 'רצפה'], ['stop', 'סטופ'], ['size', 'סכום'], ['target', 'יעד']];
+const STEPS = [['read', 'כיוון'], ['line', 'קו'], ['volume', 'נפח'], ['decide', 'החלטה'], ['support', 'רצפה'], ['stop', 'סטופ'], ['size', 'סכום'], ['target', 'יעד']];
 
 function buildScen(sc) {
   const r = rng(sc.seed), N = 26, M = 14;
@@ -16,6 +16,8 @@ function buildScen(sc) {
     if (k === N - 1) c = sc.past[sc.past.length - 1][1];
     candles.push({ o, c, h: Math.max(o, c) + r() * 1.5 + .3, l: Math.min(o, c) - r() * 1.5 - .3 }); prev = c;
   }
+  const vr = rng(sc.seed * 5 + 1);
+  candles.forEach((c, k) => { const up = c.c >= c.o; let v; if (sc.volk === 'pullback') v = up ? 95 + vr() * 30 : 32 + vr() * 20; else if (sc.volk === 'breakout') v = k >= N - 3 ? 115 + vr() * 30 : 40 + vr() * 20 + (up ? 8 : 0); else if (sc.volk === 'sell') v = up ? 35 + vr() * 20 : 100 + vr() * 30; else v = 38 + vr() * 22; c.v = Math.round(v); });
   const past = candles.slice(0, N), last = past[N - 1].c;
   return { candles, N, M, last, swingLow: Math.min(...past.slice(-10).map(c => c.l)), recentHigh: Math.max(...past.slice(-20).map(c => c.h)), atr: past.slice(-14).reduce((a, c) => a + (c.h - c.l), 0) / 14 };
 }
@@ -37,6 +39,11 @@ function sizing(P, plan) {
 function evaluate(sc, P, st) {
   const ch = [], nm = TREND_NAME[sc.trend];
   ch.push({ t: 'כיוון הגרף', term: 'trend', ok: st.trend === sc.trend, good: `נכון! המגמה כאן ${nm}.`, bad: `המגמה כאן ${nm}. כדאי לבדוק אם הנקודות הנמוכות הולכות ועולות, יורדות או נשארות באותו מקום.` });
+  if (st.line) {
+    const sl = (st.line.p2 - st.line.p1) / (st.line.i2 - st.line.i1), th = .15 * P.atr, cls = sl > th ? 'up' : sl < -th ? 'down' : 'side';
+    ch.push({ t: 'קו מגמה', term: 'trendline', ok: cls === sc.trend, good: `הקו שציירתם ${TREND_NAME[cls]}, בדיוק כמו המגמה בגרף.`, bad: `הקו שציירתם ${TREND_NAME[cls]}, אבל המגמה בגרף ${nm}. נסו לחבר נקודות נמוכות (או גבוהות) שבאמת באותו כיוון.` });
+  }
+  if (st.volAns) ch.push({ t: 'נפח', term: 'volume', ok: st.volAns === sc.volq.ans, good: sc.volq.why, bad: 'לא בדיוק. ' + sc.volq.why });
   ch.push({ t: 'לקנות או לחכות', term: 'wait', ok: st.decision === sc.action, good: sc.action === 'wait' ? 'נכון, כאן עדיף לחכות. לא חייבים לקנות כל הזמן.' : 'נכון, יש כאן סיבה טובה לבנות תוכנית.', bad: sc.why });
   if (st.decision === 'enter' && st.plan) {
     const pl = st.plan, rr = (pl.target - P.last) / (P.last - pl.stop), sz = sizing(P, pl);
@@ -69,14 +76,14 @@ screens.practiceHome = () => {
 screens.practice = (idx = 0) => {
   idx = (+idx || 0) % SCEN.length;
   const sc = SCEN[idx], P = buildScen(sc);
-  const W = 358, H = 300, AX = 46, plotW = W - AX, slot = (plotW - 8) / (P.N + P.M), bw = slot * .62;
+  const W = 358, H = 300, VH = 54, AX = 46, plotW = W - AX, slot = (plotW - 8) / (P.N + P.M), bw = slot * .62;
   const all = P.candles, lo = Math.min(...all.map(c => c.l)) - 3, hi = Math.max(...all.map(c => c.h)) + 3;
   const y = (v) => 8 + (hi - v) / (hi - lo) * (H - 24), priceAt = (py) => hi - (py - 8) / (H - 24) * (hi - lo), cx = (k) => 6 + k * slot + slot / 2;
-  const st = { step: 'read', trend: null, decision: null, support: null, stop: null, risk: null, target: null, hint: false, running: false, shown: P.N, mark: null };
+  const st = { step: 'read', line: null, drag: null, volAns: null, trend: null, decision: null, support: null, stop: null, risk: null, target: null, hint: false, running: false, shown: P.N, mark: null };
   scr.innerHTML = `<div class="anim">
     <div class="pr-head"><button class="icon-btn" id="bk">${ic.back}</button><div class="tt"><b>מקרה ${idx + 1}</b><span>גרף הדגמה, בלי כסף אמיתי</span></div><button class="icon-btn" id="hb" style="color:var(--gold)" aria-label="רמז">${ic.bulb}</button></div>
     <div class="pbox"><div class="meta"><div><span class="hl">מחיר עכשיו</span><div class="price" id="px">${fmt(P.last)}</div></div><div class="hl" style="text-align:left">תיק תרגול ${money(START_CASH)}</div></div>
-      <svg class="chart" id="ch" viewBox="0 0 ${W} ${H}"></svg></div>
+      <svg class="chart" id="ch" viewBox="0 0 ${W} ${H + VH + 6}"></svg></div>
     <div class="steps" id="dots"></div><div id="panel" class="panel task"></div><div id="hintBox"></div></div>`;
   const svg = $('#ch');
   const el = (n, a, p) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); (p || svg).appendChild(e); return e; };
@@ -92,6 +99,15 @@ screens.practice = (idx = 0) => {
     if (st.shown === P.N) txt(6 + P.N * slot + (plotW - 6 - P.N * slot) / 2, H / 2, 'העתיד', '#5d6571', 12, 'middle', 400);
     if (st.hint) { el('rect', { x: 0, y: y(P.swingLow + P.atr * .35), width: plotW, height: y(P.swingLow - P.atr * .6) - y(P.swingLow + P.atr * .35), fill: '#fbbf24', opacity: .13 }); txt(8, y(P.swingLow - P.atr * .6) + 13, 'הנקודות הנמוכות האחרונות', '#fbbf24', 11, 'start', 500); }
     for (let k = 0; k < st.shown; k++) { const c = P.candles[k], up = c.c >= c.o, col = up ? '#1ff0b0' : '#ff6048', x = cx(k); el('line', { x1: x, x2: x, y1: y(c.h), y2: y(c.l), stroke: col, 'stroke-width': 1.4, 'stroke-linecap': 'round' }); el('rect', { x: x - bw / 2, y: y(Math.max(c.o, c.c)), width: bw, height: Math.max(2, Math.abs(y(c.o) - y(c.c))), rx: 1.5, fill: col }); }
+    /* volume panel */
+    { const top = H + 6, vmax = 150; txt(8, top + 12, 'נפח', '#8b93a1', 10.5, 'start', 600);
+      if (st.step === 'volume') el('rect', { x: 2, y: top - 2, width: plotW + 2, height: VH + 4, rx: 8, fill: '#fbbf24', opacity: .1, stroke: '#fbbf24', 'stroke-opacity': .5 });
+      for (let k = 0; k < st.shown; k++) { const c = P.candles[k], hh = c.v / vmax * (VH - 6), up = c.c >= c.o; el('rect', { x: cx(k) - bw / 2, y: top + VH - hh, width: bw, height: hh, rx: 1.5, fill: up ? '#1ff0b0' : '#ff6048', opacity: .55 }); } }
+    /* trend line drawn by the learner (extends into the future as a dashed projection) */
+    { const ln = st.drag || st.line; if (ln && ln.i2 !== ln.i1) { const m = (ln.p2 - ln.p1) / (ln.i2 - ln.i1), last = P.N + P.M - 1, yAt = (i) => y(ln.p1 + m * (i - ln.i1));
+      el('line', { x1: cx(ln.i1), y1: yAt(ln.i1), x2: cx(ln.i2), y2: yAt(ln.i2), stroke: '#fbbf24', 'stroke-width': 2.4, 'stroke-linecap': 'round' });
+      el('line', { x1: cx(ln.i2), y1: yAt(ln.i2), x2: cx(last), y2: yAt(last), stroke: '#fbbf24', 'stroke-width': 1.6, 'stroke-dasharray': '5 5', opacity: .6 });
+      [ln.i1, ln.i2].forEach(i => el('circle', { cx: cx(i), cy: yAt(i), r: 4, fill: '#fbbf24', stroke: '#0b0d10', 'stroke-width': 2 })); } }
     const lv = [];
     if (st.decision === 'enter') lv.push(['entry', P.last, '#6aa8ff', 'קנייה עכשיו', '0']);
     if (st.support != null) lv.push(['support', st.support, '#fbbf24', 'רצפה', '2 4']);
@@ -103,14 +119,14 @@ screens.practice = (idx = 0) => {
       el('line', { x1: 0, x2: plotW, y1: y(v), y2: y(v), stroke: col, 'stroke-width': 1.8, 'stroke-dasharray': dash });
       el('rect', { x: W - AX + 2, y: y(v) - 11, width: AX - 4, height: 22, rx: 8, fill: col }); txt(W - AX / 2, y(v) + 4, fmt(v, 1), k === 'stop' ? '#fff' : '#04140e', 10.5, 'middle', 700); txt(8, y(v) - 5, label, col, 11, 'start', 700);
     });
-    if (tapStep() && st[st.step] == null) {
+    if ((tapStep() && st[st.step] == null) || (st.step === 'line' && !st.line && !st.drag)) {
       el('rect', { x: 70, y: 22, width: 190, height: 30, rx: 15, fill: '#1ff0b0', opacity: .16 });
-      txt(165, 42, 'לחצו כאן על הגרף', '#1ff0b0', 13, 'middle', 700, 'pulse');
+      txt(165, 42, st.step === 'line' ? 'גררו קו על הגרף' : 'לחצו כאן על הגרף', '#1ff0b0', 13, 'middle', 700, 'pulse');
     }
     if (st.mark) { const m = st.mark; el('circle', { cx: cx(m.at + P.N), cy: y(m.res === 'target' ? st.target : st.stop), r: 7, fill: m.res === 'target' ? '#1fd69b' : '#ff6048', stroke: '#0b0d10', 'stroke-width': 2 }); }
   }
   function setFromEvent(e) {
-    const rect = svg.getBoundingClientRect(), py = (e.clientY - rect.top) * (H / rect.height);
+    const rect = svg.getBoundingClientRect(), py = (e.clientY - rect.top) * ((H + VH + 6) / rect.height);
     let v = clamp(priceAt(py), lo + 1, hi - 1);
     const snap = (arr) => { let best = null, bd = 12; arr.forEach(p => { const d = Math.abs(y(p) - py); if (d < bd) { bd = d; best = p; } }); return best; };
     if (st.step === 'support') { const s = snap(P.candles.slice(0, P.N).map(c => c.l)); if (s != null) v = s; }
@@ -118,11 +134,12 @@ screens.practice = (idx = 0) => {
     v = Math.round(v * 10) / 10; st[st.step] = v; draw(); readout();
   }
   let dragging = false;
-  svg.addEventListener('pointerdown', (e) => { if (!tapStep()) return; dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) { } setFromEvent(e); });
-  svg.addEventListener('pointermove', (e) => { if (dragging) setFromEvent(e); });
-  const end = () => { dragging = false; }; svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+  const idxPrice = (e) => { const rect = svg.getBoundingClientRect(), px = (e.clientX - rect.left) * (W / rect.width); const i = clamp(Math.round((px - 6 - slot / 2) / slot), 0, P.N - 1); let v = clamp(priceAt((e.clientY - rect.top) * ((H + VH + 6) / rect.height)), lo + 1, hi - 1); const c = P.candles[i], yy = (e.clientY - rect.top) * ((H + VH + 6) / rect.height); [c.l, c.h].forEach(q => { if (Math.abs(y(q) - yy) < 12) v = q; }); return { i, v: Math.round(v * 10) / 10 }; };
+  svg.addEventListener('pointerdown', (e) => { if (st.step === 'line' && !st.running) { const q = idxPrice(e); st.drag = { i1: q.i, p1: q.v, i2: q.i, p2: q.v }; dragging = 'line'; try { svg.setPointerCapture(e.pointerId); } catch (_) { } draw(); return; } if (!tapStep()) return; dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) { } setFromEvent(e); });
+  svg.addEventListener('pointermove', (e) => { if (dragging === 'line' && st.drag) { const q = idxPrice(e); st.drag.i2 = q.i; st.drag.p2 = q.v; draw(); } else if (dragging) setFromEvent(e); });
+  const end = () => { if (dragging === 'line' && st.drag) { const d = st.drag; st.drag = null; if (Math.abs(d.i2 - d.i1) >= 6) { if (d.i2 < d.i1) Object.assign(d, { i1: d.i2, p1: d.p2, i2: d.i1, p2: d.p1 }); st.line = d; } else toast('מתחו קו ארוך יותר, לפחות 6 נרות'); draw(); panel(); } dragging = false; }; svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
 
-  const path = () => st.decision === 'wait' ? ['read', 'decide'] : STEPS.map(s => s[0]);
+  const path = () => st.decision === 'wait' ? ['read', 'line', 'volume', 'decide'] : STEPS.map(s => s[0]);
   const hd = (title, body) => { const p = path(), n = p.indexOf(st.step) + 1; return `<span class="tk-n">שלב ${n} מתוך ${p.length}</span><h3>${title}</h3><p>${body}</p>`; };
   function dots() { const p = path(), cur = p.indexOf(st.step); $('#dots').innerHTML = STEPS.filter(s => p.includes(s[0])).map((s, i) => `<span class="${i < cur ? 'done' : i === cur ? 'on' : ''}"><i>${i < cur ? '✓' : i + 1}</i>${s[1]}</span>`).join(''); }
   function nav(label, disabled) { return `<div class="pnav">${st.step !== 'read' ? '<button class="btn ghost small" id="pb" style="flex:none;width:84px">חזרה</button>' : ''}<button class="btn primary small" id="pn" ${disabled ? 'disabled' : ''}>${label || 'הבא'}</button></div>`; }
@@ -140,7 +157,13 @@ screens.practice = (idx = 0) => {
   function panel() {
     dots(); const p = $('#panel'); let h = '', next = null, label = '', dis = false;
     if (st.step === 'read') {
-      h = needBanner() + hd('לאן הגרף הולך?', 'הסתכלו על הנרות. האם המחיר בגדול <b>עולה</b>, <b>יורד</b>, או קופץ <b>בלי כיוון</b>?') + `<div class="opts">${[['up', 'עולה'], ['down', 'יורד'], ['side', 'בלי כיוון']].map(([k, t]) => `<button class="opt${st.trend === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>${learn(['trend', 'candle'])}`; next = 'decide'; dis = !st.trend;
+      h = needBanner() + hd('לאן הגרף הולך?', 'הסתכלו על הנרות. האם המחיר בגדול <b>עולה</b>, <b>יורד</b>, או קופץ <b>בלי כיוון</b>?') + `<div class="opts">${[['up', 'עולה'], ['down', 'יורד'], ['side', 'בלי כיוון']].map(([k, t]) => `<button class="opt${st.trend === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>${learn(['trend', 'candle'])}`; next = 'line'; dis = !st.trend;
+    } else if (st.step === 'line') {
+      const ln = st.line, sl = ln ? (ln.p2 - ln.p1) / (ln.i2 - ln.i1) : 0, cls = !ln ? '' : sl > .15 * P.atr ? 'עולה' : sl < -.15 * P.atr ? 'יורד' : 'כמעט ישר';
+      h = hd('מתחו קו מגמה', 'גררו עם האצבע על הגרף, מנקודה אחת לאחרת, <b>לאורך הנקודות הנמוכות</b> (או הגבוהות). הקו המקווקו ממשיך לעתיד. זה נקרא ' + term('trendline') + '.') + `<div class="chips"><button class="chip" id="clr">נקה קו</button></div><div class="ro" id="ro">${ln ? 'הקו שציירתם: <b>' + cls + '</b>' : 'עוד לא ציירתם קו'}</div>${learn(['trendline', 'trend'])}`; next = 'volume'; dis = !ln;
+    } else if (st.step === 'volume') {
+      const vq = sc.volq;
+      h = hd('מה אומר הנפח?', 'הסתכלו על העמודות בתחתית הגרף. כל עמודה היא כמה מסחר היה באותו נר. ' + vq.q) + `<div class="opts">${[['low', 'נמוך'], ['high', 'גבוה']].map(([k, t]) => `<button class="opt${st.volAns === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>${learn(['volume'])}`; next = 'decide'; dis = !st.volAns;
     } else if (st.step === 'decide') {
       h = hd('האם כדאי לקנות עכשיו?', 'קונים רק כשיש סיבה טובה. אם אין, <b>מחכים</b>, וגם זו תשובה נכונה לפעמים.') + `<div class="opts">${[['enter', 'כן, יש סיבה לקנות'], ['wait', 'לא, מחכים']].map(([k, t]) => `<button class="opt${st.decision === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>${learn(['wait', 'entry'])}`; dis = !st.decision; next = st.decision === 'wait' ? 'run' : 'support'; label = st.decision === 'wait' ? 'ראו מה קרה' : 'הבא';
     } else if (st.step === 'support') {
@@ -154,7 +177,8 @@ screens.practice = (idx = 0) => {
       h = hd('עד איזה מחיר מחכים לרווח?', 'בחרו מחיר שבו יוצאים עם רווח. הרווח האפשרי צריך להיות <b>גדול מההפסד האפשרי</b>, לפחות פי 1.5. זה נקרא ' + term('target') + '.') + `<div class="chips" id="tg"><button class="chip" data-t="${P.last + risk * 2}">רווח כפול מההפסד</button><button class="chip" data-t="${P.last + risk * 3}">רווח פי 3</button><button class="chip" data-t="${P.recentHigh}">הגבוה האחרון בגרף</button></div><div class="ro" id="ro">${roTarget()}</div>${learn(['target', 'rr', 'resistance'])}`; next = 'run'; label = 'הרץ את הגרף'; dis = st.target == null || st.target <= P.last;
     }
     p.innerHTML = h + nav(label, dis);
-    $$('.opt', p).forEach(b => b.onclick = () => { if (st.step === 'read') st.trend = b.dataset.k; else st.decision = b.dataset.k; draw(); panel(); });
+    $$('.opt', p).forEach(b => b.onclick = () => { if (st.step === 'read') st.trend = b.dataset.k; else if (st.step === 'volume') st.volAns = b.dataset.k; else st.decision = b.dataset.k; draw(); panel(); });
+    const cl = $('#clr'); if (cl) cl.onclick = () => { st.line = null; draw(); panel(); };
     const au = $('#auto'); if (au) au.onclick = () => { const base = st.support != null ? st.support : P.swingLow; st.stop = Math.round((base - P.atr * .5) * 10) / 10; draw(); panel(); };
     const rk = $('#rk'); if (rk) rk.onclick = (e) => { const b = e.target.closest('.rk'); if (!b) return; st.risk = +b.dataset.v; panel(); };
     const tg = $('#tg'); if (tg) tg.onclick = (e) => { const b = e.target.closest('.chip'); if (!b) return; st.target = Math.round(+b.dataset.t * 10) / 10; draw(); panel(); };
@@ -179,7 +203,7 @@ screens.practice = (idx = 0) => {
     const timer = setInterval(() => {
       if (st.shown - P.N > sim.at) {
         clearInterval(timer); if (sim.res !== 'none') st.mark = { res: sim.res, at: sim.at }; draw();
-        setTimeout(() => go('feedback', { idx, st: { trend: st.trend, decision: st.decision, plan: enter ? plan() : null }, sim }), 1100); return;
+        setTimeout(() => go('feedback', { idx, st: { trend: st.trend, decision: st.decision, line: st.line, volAns: st.volAns, plan: enter ? plan() : null }, sim }), 1100); return;
       }
       st.shown++; $('#px').textContent = fmt(P.candles[st.shown - 1].c); draw();
     }, 360);

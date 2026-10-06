@@ -476,10 +476,10 @@ bdi{unicode-bidi:isolate}
 .toy-b .chip{font-size:15px;padding:11px 20px}
 
 /* ===== lesson complete ===== */
-.done{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:14px}
+.ldone{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:14px}
 .rays{position:absolute;top:-60px;left:50%;width:520px;height:520px;margin-left:-260px;background:repeating-conic-gradient(from 0deg,rgba(255,201,77,.16) 0 10deg,transparent 10deg 24deg);-webkit-mask-image:radial-gradient(circle,#000 8%,transparent 62%);mask-image:radial-gradient(circle,#000 8%,transparent 62%);animation:spin 24s linear infinite;pointer-events:none}
 @keyframes spin{to{transform:rotate(360deg)}}
-.done>*:not(.rays){position:relative}
+.ldone>*:not(.rays){position:relative}
 .dm{margin:10px 0 4px;filter:drop-shadow(0 18px 24px rgba(0,0,0,.45))}
 .xpc{width:100%;margin-top:14px;text-align:right}
 .xpt{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
@@ -492,7 +492,7 @@ bdi{unicode-bidi:isolate}
 
 .ob-bubble{left:0;right:0;margin:0 auto;transform:none;width:max-content;max-width:84%;white-space:normal;text-align:center}
 .ob-bubble::after{left:50%}
-.done .btns{width:100%;display:grid;gap:10px}
+.ldone .btns{width:100%;display:grid;gap:10px}
 
 /* ===== professional illustration language ===== */
 .cn{transform-origin:center bottom;transform-box:fill-box;animation:growc .7s cubic-bezier(.2,.9,.3,1) both}
@@ -519,3 +519,15 @@ bdi{unicode-bidi:isolate}
 .scene-card{height:auto;aspect-ratio:320/200;background:#0d1424}
 .sheet-body .vis{height:auto;aspect-ratio:320/200;display:block}
 .sheet-body .vis svg{width:100%;height:100%}
+
+/* drawing tools */
+.dtools{display:flex;gap:6px;align-items:center;margin-top:12px;overflow-x:auto;scrollbar-width:none}
+.dtools::-webkit-scrollbar{display:none}
+.dl{font-size:12.5px;color:var(--muted);flex:none}
+.dtb{flex:none;padding:8px 14px;border-radius:12px;font-size:13px;font-weight:600;color:var(--muted);background:rgba(255,255,255,.06);border:1px solid var(--line);transition:.2s}
+.dtb.on{color:#1a1204;background:var(--gold);border-color:var(--gold);box-shadow:0 0 16px rgba(255,201,77,.35)}
+.dhint{margin-top:10px;font-size:13px;line-height:1.55;color:#d9dee6;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-height:40px}
+.chart.drawing{cursor:crosshair}
+.steps{align-items:flex-start;gap:0}
+.steps span{min-width:0;font-size:10.5px;text-align:center}
+.steps i{width:23px;height:23px;font-size:11px}
