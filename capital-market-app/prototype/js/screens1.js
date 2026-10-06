@@ -1,0 +1,237 @@
+'use strict';
+/* ===== shared bits ===== */
+let sid = 0;
+function sparkPath(vals, w, h) {
+  const mn = Math.min(...vals), mx = Math.max(...vals), pad = 3;
+  const pts = vals.map((v, i) => [i / (vals.length - 1) * w, h - pad - (v - mn) / (mx - mn || 1) * (h - pad * 2)]);
+  let d = 'M' + pts[0].map(n => n.toFixed(1)).join(',');
+  for (let i = 1; i < pts.length; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], cx = (x0 + x1) / 2; d += ` C${cx.toFixed(1)},${y0.toFixed(1)} ${cx.toFixed(1)},${y1.toFixed(1)} ${x1.toFixed(1)},${y1.toFixed(1)}`; }
+  return { d, area: d + ` L${w},${h} L0,${h} Z` };
+}
+function spark(vals, up, w = 74, h = 34) {
+  const c = up ? '#1ff0b0' : '#ff6048', id = 'sp' + (sid++), p = sparkPath(vals, w, h);
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" style="width:${w}px;height:${h}px"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c}" stop-opacity=".4"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></linearGradient></defs><path d="${p.area}" fill="url(#${id})"/><path d="${p.d}" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" style="filter:drop-shadow(0 0 3px ${c})"/></svg>`;
+}
+function artCandles(seed) {
+  const r = rng(seed); let p = 60, out = '<line x1="0" x2="400" y1="90" y2="90" stroke="#262b33" stroke-dasharray="4 5"/><line x1="0" x2="400" y1="170" y2="170" stroke="#262b33" stroke-dasharray="4 5"/><line x1="0" x2="400" y1="250" y2="250" stroke="#262b33" stroke-dasharray="4 5"/>';
+  for (let i = 0; i < 11; i++) {
+    const o = p, c = p + (r() - .46) * 48, hi = Math.max(o, c) + r() * 16, lo = Math.min(o, c) - r() * 16; p = c;
+    const y = (v) => 270 - v * 1.9, x = 40 + i * 31, up = c >= o, col = up ? '#1ff0b0' : '#ff6048';
+    out += `<g class="cn" style="animation-delay:${i * 80}ms"><line x1="${x}" x2="${x}" y1="${y(hi)}" y2="${y(lo)}" stroke="${col}" stroke-width="2.4" stroke-linecap="round"/><rect x="${x - 7}" y="${y(Math.max(o, c))}" width="14" height="${Math.max(5, Math.abs(y(o) - y(c)))}" rx="3" fill="${col}"/></g>`;
+  }
+  return `<svg viewBox="0 0 400 320" preserveAspectRatio="xMidYMid slice">${out}</svg>`;
+}
+const chgCls = (v) => v >= 0 ? 'up' : 'down';
+function assetRow(a) {
+  return `<button class="row" data-go="asset" data-arg="${a.id}"><div class="logo" style="background:${a.col}">${a.s.slice(0, 2)}</div>
+    <div class="nm"><b>${a.n}</b><span>${a.sec}</span></div>${spark(a.spark, a.chg >= 0)}
+    <div class="px"><b data-px="${a.id}">${fmt(a.price)}</b><span class="${chgCls(a.chg)}" data-chg="${a.id}">${sgn(a.chg)}%</span></div></button>`;
+}
+/* live-update prices inside rows / tickers */
+function livePrices() {
+  const flash = (el, cls) => { el.classList.remove('fu', 'fd'); void el.offsetWidth; el.classList.add(cls); };
+  onTick(() => {
+    $$('[data-px]').forEach(el => { const a = byId(el.dataset.px), t = fmt(a.price); if (el.textContent !== t) { const up = a.price > parseFloat(el.textContent.replace(/,/g, '')); el.textContent = t; flash(el, up ? 'fu' : 'fd'); } });
+    $$('[data-chg]').forEach(el => { const a = byId(el.dataset.chg); el.textContent = sgn(a.chg) + '%'; el.className = chgCls(a.chg); });
+  });
+}
+function tickerHTML() {
+  const item = (a) => `<span class="tk"><b>${a.s}</b><i data-px="${a.id}">${fmt(a.price)}</i><em class="${chgCls(a.chg)}" data-chg="${a.id}">${sgn(a.chg)}%</em></span>`;
+  const row = ASSETS.map(item).join('');
+  return `<div class="ticker"><div class="tr">${row}${row}</div></div>`;
+}
+const lessonsDone = () => A().lessonsDone;
+const ALL_DONE = () => LESSONS.every(l => lessonsDone().includes(l.id));
+const portfolioOpen = () => ALL_DONE() || A().demoUnlock;
+
+/* ===== onboarding ===== */
+screens.onboarding = (i = 0) => {
+  i = +i || 0;
+  const slides = [
+    ['למדו שוק הון בצורה אחרת', 'שיעורים קצרים של כ-10 דקות, ואחריהם תרגול על גרף נרות. בלי משעמם ובלי מילים מסובכות.', 11],
+    ['לומדים להחליט, לא לנחש', 'מתרגלים קריאת גרף, מחליטים אם בכלל להיכנס, ובונים תוכנית עם סטופ ויעד. בלי כסף אמיתי.', 23],
+    ['חוקרים ומתאמנים בתיק וירטואלי', 'אחרי השיעורים מקבלים 5,000 ש"ח וירטואליים לתרגול. הכול לימודי, בלי המלצות השקעה ובלי הבטחות לרווח.', 37]
+  ];
+  const [h, p, seed] = slides[i];
+  scr.innerHTML = `<div class="ob anim">
+    <div class="ob-top"><button class="link" id="lg">יש לי חשבון</button><button class="link" id="skip">דלג</button></div>
+    <div class="ob-art">${artCandles(seed)}<div class="ob-card"><span class="eyebrow">כוכבים</span><b>${'★'.repeat(i + 1)}</b></div></div>
+    <h1>${h}</h1><p>${p}</p>
+    <div class="dots">${slides.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('')}</div>
+    <div class="grow"></div>
+    <button class="btn primary" id="next">${i === 2 ? 'בואו נתחיל' : 'המשך'}</button></div>`;
+  const done = (to) => { loadDB().seenOnboarding = true; save(); go(to); };
+  $('#skip').onclick = () => done('signup');
+  $('#lg').onclick = () => done('login');
+  $('#next').onclick = () => { if (i === 2) done('signup'); else screens.onboarding(i + 1); };
+};
+
+/* ===== login ===== */
+screens.login = () => {
+  scr.innerHTML = `<div class="anim">
+    <div class="top"><button class="icon-btn" id="bk">${ic.back}</button><span></span></div>
+    <h1>טוב לראות אותך שוב</h1><p class="muted" style="margin-top:8px">התחברו כדי להמשיך מאיפה שעצרתם.</p>
+    <div class="field"><label for="em">אימייל</label><input class="inp" id="em" type="email" dir="ltr" style="text-align:right" placeholder="name@example.com" autocomplete="username"><div class="err-t" id="e-em"></div></div>
+    <div class="field"><label for="pw">סיסמה</label><input class="inp" id="pw" type="password" dir="ltr" style="text-align:right" placeholder="הסיסמה שלך" autocomplete="current-password"><div class="err-t" id="e-pw"></div></div>
+    <button class="link" id="fg" style="margin-top:12px">שכחתי סיסמה</button>
+    <div style="height:22px"></div>
+    <button class="btn primary" id="go">התחברות</button>
+    <p class="muted" style="text-align:center;margin-top:22px;font-size:14px">אין לך חשבון? <button class="link" id="su">יצירת חשבון</button></p>
+    <p class="demo-note" style="text-align:center">אב טיפוס: החשבונות נשמרים רק בדפדפן הזה.</p></div>`;
+  $('#bk').onclick = () => go('onboarding', 0);
+  $('#su').onclick = () => go('signup');
+  $('#fg').onclick = () => toast('באב הטיפוס אין איפוס סיסמה');
+  const setErr = (id, msg) => { $('#e-' + id).textContent = msg || ''; $('#' + id).classList.toggle('err', !!msg); return !!msg; };
+  const submit = () => {
+    const em = $('#em').value.trim().toLowerCase(), pw = $('#pw').value, acc = loadDB().accounts[em];
+    let bad = setErr('em', /^\S+@\S+\.\S+$/.test(em) ? (acc ? '' : 'לא מצאנו חשבון עם האימייל הזה') : 'כתבו אימייל תקין');
+    if (!bad) bad = setErr('pw', !pw ? 'כתבו סיסמה' : acc.pass !== hash(pw) ? 'הסיסמה לא נכונה' : '');
+    else setErr('pw', '');
+    if (bad) return;
+    loadDB().session = em; save(); toast('ברוך שובך, ' + acc.name); go('home');
+  };
+  $('#go').onclick = submit;
+  $('#pw').onkeydown = (e) => { if (e.key === 'Enter') submit(); };
+};
+
+/* ===== signup ===== */
+screens.signup = () => {
+  const st = { goal: 'להבין איך זה עובד', terms: false };
+  scr.innerHTML = `<div class="anim">
+    <div class="top"><button class="icon-btn" id="bk">${ic.back}</button><span></span></div>
+    <h1>יוצרים חשבון</h1><p class="muted" style="margin-top:8px">שנייה אחת ואתם בפנים. אין כסף אמיתי באפליקציה.</p>
+    <div class="field"><label for="nm">איך לקרוא לך?</label><input class="inp" id="nm" placeholder="השם שלך" autocomplete="off"><div class="err-t" id="e-nm"></div></div>
+    <div class="field"><label for="age">גיל</label><input class="inp" id="age" type="number" inputmode="numeric" placeholder="15 ומעלה" min="1" max="99"><div class="err-t" id="e-age"></div></div>
+    <div class="field"><label for="em">אימייל</label><input class="inp" id="em" type="email" dir="ltr" style="text-align:right" placeholder="name@example.com" autocomplete="username"><div class="err-t" id="e-em"></div></div>
+    <div class="field"><label for="pw">סיסמה</label><input class="inp" id="pw" type="password" dir="ltr" style="text-align:right" placeholder="לפחות 4 תווים" autocomplete="new-password"><div class="err-t" id="e-pw"></div></div>
+    <div class="field"><label>מה המטרה שלך?</label><div class="chips" id="goals">${['להבין איך זה עובד', 'ללמוד לקרוא גרפים', 'סתם סקרנות'].map(g => `<button class="chip${g === st.goal ? ' on' : ''}">${g}</button>`).join('')}</div></div>
+    <button class="check" id="terms"><i></i><span>אני מבין שהתוכן לימודי בלבד, אין בו המלצות השקעה והבטחות לרווח, ואין כסף אמיתי באפליקציה.</span></button>
+    <div class="err-t" id="e-t"></div>
+    <div style="height:18px"></div>
+    <button class="btn primary" id="go">יצירת חשבון</button>
+    <p class="muted" style="text-align:center;margin-top:20px;font-size:14px">כבר יש לך חשבון? <button class="link" id="li">התחברות</button></p></div>`;
+  $('#bk').onclick = () => go('onboarding', 0);
+  $('#li').onclick = () => go('login');
+  $('#goals').onclick = (e) => { const c = e.target.closest('.chip'); if (!c) return; $$('.chip', $('#goals')).forEach(x => x.classList.remove('on')); c.classList.add('on'); st.goal = c.textContent; };
+  $('#terms').onclick = () => { st.terms = !st.terms; $('#terms').classList.toggle('on', st.terms); };
+  const setErr = (id, msg, inp) => { $('#e-' + id).textContent = msg || ''; if (inp) $('#' + inp).classList.toggle('err', !!msg); return !!msg; };
+  $('#go').onclick = () => {
+    const nm = $('#nm').value.trim(), age = +$('#age').value, em = $('#em').value.trim().toLowerCase(), pw = $('#pw').value;
+    let bad = false;
+    bad = setErr('nm', nm.length < 2 ? 'כתבו שם של לפחות שתי אותיות' : '', 'nm') || bad;
+    bad = setErr('age', !age ? 'כתבו גיל' : age < 15 ? 'האפליקציה מיועדת לגיל 15 ומעלה' : '', 'age') || bad;
+    bad = setErr('em', !/^\S+@\S+\.\S+$/.test(em) ? 'כתבו אימייל תקין' : loadDB().accounts[em] ? 'כבר יש חשבון עם האימייל הזה. אפשר להתחבר' : '', 'em') || bad;
+    bad = setErr('pw', pw.length < 4 ? 'הסיסמה צריכה להיות לפחות 4 תווים' : '', 'pw') || bad;
+    bad = setErr('t', st.terms ? '' : 'צריך לאשר כדי להמשיך') || bad;
+    if (bad) return;
+    loadDB().accounts[em] = newAcct(nm, age, em, pw, st.goal); loadDB().session = em; save();
+    go('home');
+  };
+};
+
+/* ===== home ===== */
+screens.home = () => {
+  const s = A();
+  const nextL = LESSONS.find(l => !s.lessonsDone.includes(l.id));
+  const done = s.lessonsDone.length, total = LESSONS.length, open = portfolioOpen();
+  const eq = equity(s), pl = eq - START_CASH;
+  const movers = [...ASSETS].sort((a, b) => Math.abs(b.chg) - Math.abs(a.chg)).slice(0, 4);
+  scr.innerHTML = `<div class="anim">
+    <div class="hello"><button class="avatar" data-go="profile" aria-label="פרופיל">${s.name[0]}</button><div class="t"><span class="eyebrow">שלום</span><b>${s.name}</b></div>
+      <div class="pill">${ic.fire}${s.streak}</div><div class="pill gold">${ic.star}${s.stars}</div></div>
+    ${tickerHTML()}
+    <div class="hero">
+      <span class="tag">${nextL ? 'ממשיכים מאיפה שעצרת' : 'סיימת את כל השיעורים'}</span>
+      <h3>${nextL ? nextL.title : 'כל הכבוד!'}</h3><p>${nextL ? `שיעור של ${nextL.min} דקות, ואחריו תרגול.` : 'עכשיו אפשר לחקור את השוק ולתרגל בתיק הוירטואלי.'}</p>
+      <div class="row2"><div class="bar"><i style="width:${Math.round(done / total * 100)}%"></i></div><span class="muted" style="font-size:13px">${done}/${total}</span></div>
+      <button class="btn primary" data-go="${nextL ? 'lesson' : 'portfolio'}" ${nextL ? `data-arg="${nextL.id}"` : ''}>${nextL ? 'המשך לשיעור' : 'לתיק שלי'}</button></div>
+    <button class="card wcard ${open ? '' : 'locked'}" data-go="portfolio">
+      <div class="wl"><span class="eyebrow">${open ? 'התיק הוירטואלי שלי' : 'התיק הוירטואלי'}</span>
+        <div class="wbig gtext" ${open ? `data-cu="${eq}" data-pre="₪" data-d="0"` : ''}>${open ? money(eq) : money(START_CASH)}</div>
+        <span class="${open ? chgCls(pl) : 'muted'}" style="font-size:13px">${open ? `<bdi dir="ltr">${sgn(pl, 0)} ₪</bdi> מההתחלה` : `נפתח אחרי ${LESSONS.length - done} שיעורים`}</span></div>
+      <div class="wr">${open ? ic.wallet : ic.lock}</div></button>
+    <div class="mini"><div class="card"><span class="eyebrow">תרגול</span><div class="big">${ic.chart.replace('<svg', '<svg width="30" height="30" style="color:var(--green)"')}</div><button class="link" style="margin-top:8px" data-go="practiceHome">למקרי התרגול</button></div>
+      <div class="card"><span class="eyebrow">כוכבים שצברת</span><div class="big gold">${s.stars} ★</div><span class="muted" style="font-size:12px">עד 3 בכל תרגיל</span></div></div>
+    <div class="sec"><h3>זזים עכשיו <span class="live"></span></h3><button class="link" data-go="market">לשוק</button></div>
+    <div class="rows card" style="padding:4px 16px">${movers.map(assetRow).join('')}</div>
+    <p class="demo-note">נתוני הדגמה בדויים שנעים בזמן אמת, לא מחירים אמיתיים.</p>
+    <div class="sec"><h3>המסלול שלך</h3><button class="link" data-go="lessons">כל השיעורים</button></div>
+    ${LESSONS.slice(0, 3).map(lessonCard).join('')}</div>`;
+  livePrices();
+};
+function lessonCard(l) {
+  const done = lessonsDone().includes(l.id);
+  return `<button class="les ${done ? 'done' : ''}" data-go="lesson" data-arg="${l.id}">
+    <div class="ic" style="color:${done ? '#04251b' : l.color}">${done ? ic.check : ic.book}</div>
+    <div class="tx"><b>${l.title}</b><span>${l.min} דקות</span></div>${done ? '<span class="st">הושלם</span>' : ''}</button>`;
+}
+
+/* ===== lessons ===== */
+screens.lessons = () => {
+  const d = lessonsDone().length;
+  scr.innerHTML = `<div class="anim"><div class="top"><h2>שיעורים</h2><span class="pill gold">${ic.star}${A().stars}</span></div>
+    <div class="card prog-card"><div style="display:flex;justify-content:space-between"><b>${d} מתוך ${LESSONS.length} שיעורים</b><span class="muted" style="font-size:13px">${portfolioOpen() ? 'התיק פתוח' : 'התיק נפתח בסיום'}</span></div>
+      <div class="bar" style="margin-top:12px"><i style="width:${Math.round(d / LESSONS.length * 100)}%"></i></div></div>
+    <div style="height:14px"></div>${LESSONS.map(lessonCard).join('')}</div>`;
+};
+screens.lesson = (id) => {
+  const L = LESSONS.find(x => x.id === id) || LESSONS[0];
+  let i = 0, answered = false;
+  const n = L.slides.length + 1;
+  const draw = () => {
+    const quiz = i === L.slides.length, sl = L.slides[i];
+    scr.innerHTML = `<div class="anim">
+      <div class="top"><button class="icon-btn" id="bk">${ic.x}</button><span class="muted" style="font-size:13px">${L.title}</span><span style="width:42px"></span></div>
+      <div class="prog">${Array.from({ length: n }, (_, k) => `<i class="${k <= i ? 'on' : ''}"></i>`).join('')}</div>
+      <div class="slide">${quiz ? `<span class="tag">בדיקה קטנה</span><h2>${L.q.q}</h2><div class="grow">${L.q.o.map((o, k) => `<button class="opt" data-k="${k}">${o}</button>`).join('')}</div><div id="qm" class="muted" style="margin-top:14px;min-height:22px"></div>`
+        : `<span class="tag">${i + 1} מתוך ${L.slides.length}</span><h2>${sl.t}</h2><p>${sl.b}</p><div class="vis">${lessonVis(sl.v)}</div>${sl.w ? `<div class="warn">${sl.w}</div>` : ''}<div class="grow"></div>`}</div>
+      <div class="nav2">${i > 0 && !quiz ? `<button class="btn ghost" id="pv" style="flex:none;width:90px">חזרה</button>` : ''}<button class="btn primary" id="nx" ${quiz ? 'disabled' : ''}>${quiz ? 'סיום שיעור' : 'הבא'}</button></div></div>`;
+    $('#bk').onclick = () => go('lessons');
+    const pv = $('#pv'); if (pv) pv.onclick = () => { i--; draw(); };
+    $('#nx').onclick = () => {
+      if (!quiz) { i++; draw(); return; }
+      const s = A(); if (!s.lessonsDone.includes(L.id)) { s.lessonsDone.push(L.id); s.stars += 1; save(); }
+      go('lessonDone', L.id);
+    };
+    if (quiz) $$('.opt').forEach(b => b.onclick = () => {
+      if (answered) return;
+      const ok = +b.dataset.k === L.q.a;
+      b.classList.add(ok ? 'ok' : 'bad');
+      if (ok) { answered = true; $('#qm').innerHTML = '<span class="up">נכון! כל הכבוד.</span>'; $('#nx').disabled = false; }
+      else $('#qm').innerHTML = '<span class="down">לא בדיוק, נסו שוב.</span>';
+    });
+  };
+  draw();
+};
+function confetti(n = 30) {
+  if (reduceMotion) return '';
+  return `<div class="confetti">${Array.from({ length: n }, (_, k) => `<i style="left:${(k * 37) % 100}%;background:${['#1ff0b0', '#ffc94d', '#60a5fa', '#ff6048', '#a78bfa'][k % 5]};animation-delay:${(k % 7) * .12}s"></i>`).join('')}</div>`;
+}
+screens.lessonDone = (id) => {
+  const L = LESSONS.find(x => x.id === id) || LESSONS[0];
+  const all = ALL_DONE(), left = LESSONS.length - lessonsDone().length;
+  scr.innerHTML = `${confetti()}<div class="fb ok anim" style="padding-top:60px"><div class="big-ic" style="color:var(--green)">${ic.check}</div>
+    <h1>סיימת את השיעור!</h1><p class="muted" style="margin:6px 20px 0">${L.title}</p>
+    <div class="stars"><span class="pop">${starSvg(true)}</span></div><p class="muted">קיבלת כוכב אחד</p>
+    ${all ? `<div class="card unlock" style="margin-top:22px">${ic.wallet}<b>התיק הוירטואלי נפתח!</b><span class="muted">מחכים לך 5,000 ש"ח וירטואליים לתרגול</span></div>` : `<p class="muted" style="margin-top:18px">עוד ${left} שיעורים עד שהתיק הוירטואלי ייפתח</p>`}
+    <div class="btns" style="margin-top:28px"><button class="btn primary" data-go="${all ? 'portfolio' : 'practiceHome'}">${all ? 'לתיק שלי' : 'עכשיו לתרגול'}</button><button class="btn ghost" data-go="home">חזרה לבית</button></div></div>`;
+};
+
+/* ===== profile ===== */
+screens.profile = () => {
+  const s = A();
+  const bd = [['👣', 'צעד ראשון', s.lessonsDone.length > 0], ['⭐', '3 כוכבים', s.stars >= 3], ['🎯', 'תרגיל מושלם', Object.values(s.practiceDone).some(v => v === 3)], ['📚', 'כל השיעורים', ALL_DONE()], ['💼', 'עסקה ראשונה', s.portfolio.hist.length > 0], ['🧘', 'סבלנות', Object.entries(s.practiceDone).some(([k, v]) => v === 3 && SCEN.find(x => x.id === k && x.action === 'wait'))]];
+  scr.innerHTML = `<div class="anim"><div class="top"><button class="icon-btn" data-go="home">${ic.back}</button><h2>פרופיל</h2><span style="width:42px"></span></div>
+    <div class="pf"><div class="avatar big">${s.name[0]}</div><h1 style="font-size:24px">${s.name}</h1><span class="muted" dir="ltr">${s.email || ''}</span></div>
+    <div class="stat3"><div class="card"><b class="gold">${s.stars}</b><span>כוכבים</span></div><div class="card"><b>${s.streak}</b><span>ימים ברצף</span></div><div class="card"><b>${s.lessonsDone.length}/${LESSONS.length}</b><span>שיעורים</span></div></div>
+    <div class="sec"><h3>הישגים</h3></div><div class="badges">${bd.map(([e, t, on]) => `<div class="badge${on ? '' : ' off'}"><i>${e}</i>${t}</div>`).join('')}</div>
+    <div class="sec"><h3>כלי הדגמה</h3></div>
+    <button class="btn ghost" id="un" style="margin-bottom:10px">${portfolioOpen() ? 'התיק פתוח' : 'פתח את התיק בלי לסיים שיעורים'}</button>
+    <button class="btn ghost" id="lo" style="margin-bottom:10px">התנתקות</button>
+    <button class="btn ghost" id="rs">מחיקת החשבון הזה</button>
+    <p class="disc">התוכן באפליקציה לימודי בלבד. אין בו המלצות השקעה או הבטחות לרווח, ואין כסף אמיתי. ${WARN_DAY}</p></div>`;
+  $('#un').onclick = () => { if (!portfolioOpen()) { A().demoUnlock = true; save(); toast('התיק נפתח להדגמה'); go('profile'); } };
+  $('#lo').onclick = () => { loadDB().session = null; save(); go('login'); };
+  let sure = false;
+  $('#rs').onclick = () => { if (!sure) { sure = true; $('#rs').textContent = 'בטוח? לחצו שוב כדי למחוק'; return; } delete loadDB().accounts[loadDB().session]; loadDB().session = null; save(); go('onboarding', 0); };
+};

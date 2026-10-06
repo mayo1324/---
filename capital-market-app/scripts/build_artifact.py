@@ -5,7 +5,8 @@ root = Path(__file__).resolve().parent.parent / "prototype"
 out = Path(sys.argv[1])
 html = (root / "index.html").read_text(encoding="utf-8")
 css = (root / "style.css").read_text(encoding="utf-8")
-js = (root / "app.js").read_text(encoding="utf-8")
+order = ["core", "data", "screens1", "screens2", "practice", "boot"]
+js = "\n".join((root / "js" / f"{n}.js").read_text(encoding="utf-8") for n in order)
 body = re.search(r'<div class="stage">.*?</div>\s*</div>\s*(?=<script)', html, re.S).group(0)
 page = f'''<title>לומדים שוק הון</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
