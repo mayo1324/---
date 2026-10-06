@@ -41,7 +41,7 @@ const SCENES = {
   size: () => bgS() + `<rect x="24" y="64" width="272" height="30" rx="15" fill="#fff" fill-opacity=".08"/><rect x="24" y="64" width="31" height="30" rx="15" fill="${RD}" class="bar" style="transform-origin:24px 64px"/>` + T(160, 52, 'התיק: ‎5,000 ₪', '#fff', 14, 800) + pill(52, 112, '1% = 50 ₪', RD) + `<path d="M40 96v8" stroke="${RD}" stroke-width="1.6"/>` + [['מפסידים לכל היותר', '50 ₪', RD], ['קונים לפי הסטופ', 'לא לפי תחושה', GR]].map(([k, v, col], i) => `<g><rect x="${24 + i * 140}" y="134" width="132" height="46" rx="12" fill="#fff" fill-opacity=".06" stroke="#fff" stroke-opacity=".12"/>${T(90 + i * 140, 152, k, MUT, 10.5)}${T(90 + i * 140, 171, v, col, 14, 800)}</g>`).join('')
 };
 SCENES.candles = SCENES.riskline; SCENES.scale = SCENES.market; SCENES.coaster = SCENES.riskline;
-const sceneSVG = (key) => { const f = SCENES[key] || SCENES.candle1; return `<svg direction="ltr" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" class="scene">${f()}</svg>`; };
+const sceneSVG = (key) => { const f = SCENES[key] || SCENES.candle1; return `<svg direction="ltr" viewBox="0 0 320 200" preserveAspectRatio="xMidYMid meet" class="scene">${f()}</svg>`; };
 
 /* onboarding hero scenes (portrait) */
 function obScene(i) {

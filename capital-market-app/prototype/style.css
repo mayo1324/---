@@ -514,3 +514,8 @@ bdi{unicode-bidi:isolate}
 .dm{margin:6px 0 4px}
 .ringp{animation:ringp 1s .1s ease forwards}.checkp{animation:ringp .5s .9s ease forwards}
 @keyframes ringp{to{stroke-dashoffset:0}}
+
+/* illustrations always show in full: box keeps the drawing's 320x200 ratio */
+.scene-card{height:auto;aspect-ratio:320/200;background:#0d1424}
+.sheet-body .vis{height:auto;aspect-ratio:320/200;display:block}
+.sheet-body .vis svg{width:100%;height:100%}
