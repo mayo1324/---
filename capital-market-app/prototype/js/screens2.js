@@ -311,3 +311,75 @@ screens.portfolio = () => {
   let sure = false;
   $('#rs').onclick = () => { if (!sure) { sure = true; $('#rs').textContent = 'בטוח? לחצו שוב לאיפוס'; return; } ac.portfolio = { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] }; save(); toast('התיק אופס'); go('portfolio'); };
 };
+
+
+/* ===== subscription screen (prototype demo: no real charge, card details are never stored) ===== */
+const PLANS = [
+  { id: '1', name: 'חודש אחד', sub: 'לנסות ולהתחיל', price: 9.9, per: 'לחודש' },
+  { id: '3', name: '3 חודשים', sub: 'לבנות הרגל', price: 24.9, per: 'ל-3 חודשים', mo: 8.3 },
+  { id: '12', name: '12 חודשים', sub: 'שנה שלמה של למידה', price: 59.9, old: 118.8, per: 'לשנה', mo: 4.99, save: 50 }
+];
+const FEATS = [
+  ['∞', 'מקרי תרגול ללא הגבלה', 'מקרים חדשים כל הזמן'],
+  ['◢', 'כלי ניתוח מתקדמים', 'קווי מגמה, נפח וממוצעים'],
+  ['★', 'דוחות התקדמות', 'רואים איפה משתפרים'],
+  ['◎', 'תיק וירטואלי מורחב', 'כמה תיקים לתרגול']
+];
+screens.paywall = () => {
+  const ac = A(); let sel = '12';
+  if (ac.premium) {
+    const pl = PLANS.find(x => x.id === ac.premium.plan) || PLANS[2];
+    scr.innerHTML = `<div class="pay anim"><button class="icon-btn" id="x">${ic.x}</button>
+      <div class="payhero"><h1>המנוי <span>פעיל</span></h1><p class="muted">מסלול ${pl.name}. תודה שאתם איתנו!</p></div>
+      <div class="card" style="margin-top:6px"><b>מה כלול במנוי</b>${FEATS.map(f => `<div class="feat2"><i>${f[0]}</i><div><b>${f[1]}</b><span>${f[2]}</span></div></div>`).join('')}</div>
+      <button class="btn ghost" id="cn" style="margin-top:16px">ביטול מנוי (הדגמה)</button></div>`;
+    $('#x').onclick = () => go('profile');
+    $('#cn').onclick = () => { delete ac.premium; save(); toast('המנוי בוטל'); go('paywall'); };
+    return;
+  }
+  scr.innerHTML = `<div class="pay anim"><button class="icon-btn xb" id="x" aria-label="סגירה">${ic.x}</button>
+    <div class="payhero">
+      <svg class="scrib" viewBox="0 0 160 120" aria-hidden="true"><path class="draw" d="M20 90 C 40 20 90 10 120 40 C 140 60 100 100 70 80 C 40 60 110 20 145 30" fill="none" stroke="#c8ff3d" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" style="filter:drop-shadow(0 0 10px rgba(200,255,61,.5))"/></svg>
+      <div class="big50"><b>50%</b><span>הנחה</span></div>
+      <h1>ללמוד בלי גבולות</h1>
+      <p class="muted">במסלול השנתי. כל מה שצריך כדי להבין שוק הון בביטחון.</p></div>
+    <button class="inc" id="inc"><span>מה כלול</span>${ic.back}</button>
+    <div class="feats">${FEATS.slice(0, 2).map(f => `<div class="feat"><i>${f[0]}</i><b>${f[1]}</b><span>${f[2]}</span></div>`).join('')}</div>
+    <div class="feats" id="more" hidden>${FEATS.slice(2).map(f => `<div class="feat"><i>${f[0]}</i><b>${f[1]}</b><span>${f[2]}</span></div>`).join('')}</div>
+    <div class="plans" id="plans">${PLANS.map((p, i) => `<button class="plan${p.id === sel ? ' on' : ''}" data-p="${p.id}" style="animation-delay:${.1 + i * .08}s"><i class="rad"></i><div class="pn"><b>${p.name}</b><span>${p.sub}${p.mo ? ' · ' + money(p.mo, 2) + ' לחודש' : ''}</span></div><div class="pp"><b>${money(p.price, 2)}</b>${p.old ? `<s>${money(p.old, 2)}</s>` : ''}</div>${p.save ? `<em class="saveb">חיסכון ${p.save}%</em>` : ''}</button>`).join('')}</div>
+    <p class="demo-note" style="text-align:center">מחירי הדגמה בלבד. באב הטיפוס אין חיוב אמיתי, וכל התכנים פתוחים לכולם.</p>
+    <div class="paybar"><button class="btn primary" id="cta">להמשיך לתשלום</button><span>אפשר לבטל בכל זמן</span></div></div>`;
+  $('#x').onclick = () => go('profile');
+  $('#inc').onclick = () => { const m = $('#more'); m.hidden = !m.hidden; $('#inc').classList.toggle('open', !m.hidden); };
+  $('#plans').onclick = (e) => { const b = e.target.closest('.plan'); if (!b) return; sel = b.dataset.p; $$('.plan', $('#plans')).forEach(x => x.classList.toggle('on', x === b)); };
+  $('#cta').onclick = () => openPay(PLANS.find(x => x.id === sel));
+};
+function openPay(pl) {
+  openSheet(`<h3>תשלום</h3><p class="muted" style="font-size:13.5px">מסלול ${pl.name} · <b style="color:var(--text)">${money(pl.price, 2)}</b> ${pl.per}</p>
+    <div class="wallets"><button class="soc" data-w="apple"><i class="pm a">A</i>Apple Pay</button><button class="soc" data-w="google"><i class="pm g">G</i>Google Pay</button></div>
+    <div class="orline"><span>או כרטיס אשראי</span></div>
+    <div class="gf"><span class="lead">${fi.lock}</span><input class="gi" id="cn" inputmode="numeric" dir="ltr" style="text-align:right" placeholder="מספר כרטיס" maxlength="19" autocomplete="off"></div>
+    <div class="two2"><div class="gf"><input class="gi" id="ce" inputmode="numeric" dir="ltr" style="text-align:center;padding:0 12px" placeholder="MM/YY" maxlength="5" autocomplete="off"></div><div class="gf"><input class="gi" id="cv" inputmode="numeric" dir="ltr" style="text-align:center;padding:0 12px" placeholder="CVV" maxlength="4" autocomplete="off"></div></div>
+    <div class="err-t" id="pe"></div>
+    <button class="btn primary" id="pay" style="margin-top:12px">${fi.lock.replace('<svg', '<svg width="18" height="18"')} לשלם ${money(pl.price, 2)}</button>
+    <p class="demo-note" style="text-align:center">הדגמה: אין חיוב אמיתי, ופרטי הכרטיס לא נשמרים ולא נשלחים לשום מקום.</p>`);
+  const done = () => { const ac = A(); ac.premium = { plan: pl.id, at: Date.now() }; save(); closeSheet(); go('paysuccess', pl.id); };
+  $$('#sheet [data-w]').forEach(b => b.onclick = done);
+  $('#cn').oninput = (e) => { e.target.value = e.target.value.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim(); };
+  $('#ce').oninput = (e) => { let v = e.target.value.replace(/\D/g, '').slice(0, 4); if (v.length > 2) v = v.slice(0, 2) + '/' + v.slice(2); e.target.value = v; };
+  $('#pay').onclick = () => {
+    const n = $('#cn').value.replace(/\s/g, ''), e = $('#ce').value, c = $('#cv').value;
+    const mm = +e.slice(0, 2);
+    if (n.length < 12) return ($('#pe').textContent = 'כתבו מספר כרטיס תקין');
+    if (!/^\d\d\/\d\d$/.test(e) || mm < 1 || mm > 12) return ($('#pe').textContent = 'כתבו תוקף בפורמט MM/YY');
+    if (c.length < 3) return ($('#pe').textContent = 'כתבו קוד CVV');
+    done();
+  };
+}
+screens.paysuccess = (id) => {
+  const pl = PLANS.find(x => x.id === id) || PLANS[2];
+  scr.innerHTML = `${confetti(46)}<div class="ldone anim"><div class="rays"></div>
+    <div class="dm"><svg viewBox="0 0 120 120" width="150" height="150"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="8"/><circle class="ringp" cx="60" cy="60" r="50" fill="none" stroke="#c8ff3d" stroke-width="8" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314" transform="rotate(-90 60 60)" style="filter:drop-shadow(0 0 8px #c8ff3d)"/><path class="checkp" d="M38 62l16 16 30-34" fill="none" stroke="#c8ff3d" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="90" stroke-dashoffset="90"/></svg></div>
+    <h1>ברוכים הבאים לפרימיום!</h1><p class="muted" style="margin:6px 20px 0">מסלול ${pl.name}. זו הדגמה, ולא בוצע חיוב.</p>
+    <div class="btns" style="margin-top:26px"><button class="btn primary" data-go="home">להמשיך ללמוד</button><button class="btn ghost" data-go="profile">לפרופיל</button></div></div>`;
+};

@@ -62,7 +62,7 @@ const scr = $('#screen');
 const ticks = [];
 const onTick = (fn) => ticks.push(fn);
 let cur = { name: '', arg: null };
-const NO_TABS = ['onboarding', 'login', 'signup', 'lesson', 'lessonDone', 'practice', 'feedback', 'asset'];
+const NO_TABS = ['onboarding', 'login', 'signup', 'lesson', 'lessonDone', 'practice', 'feedback', 'asset', 'paywall', 'paysuccess'];
 const TAB_OF = { asset: 'market', practiceHome: 'practiceHome', profile: '', glossary: 'lessons' };
 let navToken = 0, booted = false;
 const TAB_ORDER = ['home', 'lessons', 'practiceHome', 'market', 'portfolio'];
