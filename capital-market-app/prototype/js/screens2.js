@@ -35,6 +35,7 @@ screens.asset = (id) => {
     <div class="cbox"><div class="tip" id="tip"></div><svg class="chart" id="ch"></svg>
       <div class="ctl"><div class="seg" id="seg"><button class="on" data-m="candle">נרות</button><button data-m="line">קו</button></div>
         <button class="tg" id="tma">ממוצע נע</button><button class="qm" data-term="ma" aria-label="מה זה ממוצע נע">?</button><button class="tg" id="tvol">נפח</button><button class="qm" data-term="volume" aria-label="מה זה נפח">?</button></div></div>
+    <div id="poscard"></div>
     <div class="dtools" id="dt"><span class="dl">ציור:</span>${[['', 'הצלבה'], ['trend', 'קו מגמה'], ['h', 'קו אופקי'], ['erase', 'מחיקה']].map(([k, t], i) => `<button class="dtb${i ? '' : ' on'}" data-t="${k}">${t}</button>`).join('')}</div>
     <div class="dhint" id="dh">גררו על הגרף כדי לראות פרטי נר. בחרו כלי ציור כדי לנתח.</div>
     ${learn(['trendline', 'candle', 'volatility', 'support', 'resistance'])}
@@ -58,7 +59,7 @@ screens.asset = (id) => {
   function draw() {
     const cs = series(a, st.tf), n = cs.length, ph = H, tot = H + (st.vol ? VH + 8 : 0);
     svg.setAttribute('viewBox', `0 0 ${W} ${tot}`); svg.innerHTML = '';
-    const mx = Math.max(...cs.map(c => c.h)), mn = Math.min(...cs.map(c => c.l)), pad = (mx - mn) * .08 || 1, hi = mx + pad, lo = mn - pad;
+    const pos = held(), lv = pos ? [pos.avg, pos.stop, pos.target].filter(Boolean) : [], mx = Math.max(...cs.map(c => c.h), ...lv), mn = Math.min(...cs.map(c => c.l), ...lv), pad = (mx - mn) * .08 || 1, hi = mx + pad, lo = mn - pad;
     const y = (v) => 8 + (hi - v) / (hi - lo) * (ph - 22), pw = W - AX, slot = (pw - 8) / n, x = (i) => 4 + i * slot + slot / 2;
     const up = cs[n - 1].c >= cs[0].o, col = up ? '#1ff0b0' : '#ff6048';
     for (let k = 0; k < 5; k++) { const v = lo + (hi - lo) * k / 4, yy = y(v); el('line', { x1: 0, x2: pw, y1: yy, y2: yy, stroke: '#ffffff', 'stroke-opacity': .06, 'stroke-dasharray': '3 5' }); const t = el('text', { x: W - 2, y: yy + 4, fill: '#6b7280', 'font-size': 10.5, 'text-anchor': 'end', 'font-family': 'Heebo,sans-serif' }); t.textContent = fmt(v, v > 500 ? 0 : 1); }
@@ -76,6 +77,18 @@ screens.asset = (id) => {
     const last = cs[n - 1].c; el('line', { x1: 0, x2: pw, y1: y(last), y2: y(last), stroke: col, 'stroke-width': 1, 'stroke-dasharray': '2 3', 'stroke-opacity': .7 });
     el('rect', { x: W - AX + 1, y: y(last) - 10, width: AX - 2, height: 20, rx: 7, fill: col }); const lt = el('text', { x: W - AX / 2, y: y(last) + 4, fill: '#04140e', 'font-size': 10.5, 'font-weight': 700, 'text-anchor': 'middle', 'font-family': 'Heebo,sans-serif' }); lt.textContent = fmt(last, last > 500 ? 0 : 1);
     if (st.vol) { const mv = Math.max(...cs.map(c => c.v)); cs.forEach((c, i) => { const hh = c.v / mv * VH, u = c.c >= c.o; el('rect', { x: x(i) - Math.max(.5, slot * .33), y: ph + 8 + VH - hh, width: Math.max(1, slot * .66), height: hh, fill: u ? '#1ff0b0' : '#ff6048', opacity: .45 }); }); }
+    /* the learner's open position: entry, stop and target */
+    if (pos) {
+      const L2 = [['avg', pos.avg, '#6aa8ff', 'כניסה', '0'], ['stop', pos.stop, '#ff6048', 'סטופ', '6 4'], ['target', pos.target, '#1fd69b', 'יעד', '6 4']].filter(l => l[1]);
+      if (pos.stop) el('rect', { x: 0, y: y(pos.avg), width: pw, height: Math.max(0, y(pos.stop) - y(pos.avg)), fill: '#ff6048', opacity: .1 });
+      if (pos.target) el('rect', { x: 0, y: y(pos.target), width: pw, height: Math.max(0, y(pos.avg) - y(pos.target)), fill: '#1fd69b', opacity: .1 });
+      L2.forEach(([k, v, col, label, dsh]) => {
+        el('line', { x1: 0, x2: pw, y1: y(v), y2: y(v), stroke: col, 'stroke-width': 1.8, 'stroke-dasharray': dsh });
+        el('rect', { x: W - AX + 1, y: y(v) - 10, width: AX - 2, height: 20, rx: 7, fill: col });
+        const t = el('text', { x: W - AX / 2, y: y(v) + 4, fill: k === 'stop' ? '#fff' : '#04140e', 'font-size': 10, 'font-weight': 700, 'text-anchor': 'middle', 'font-family': 'Heebo,sans-serif' }); t.textContent = fmt(v, v > 500 ? 0 : 1);
+        const t2 = el('text', { x: 6, y: y(v) - 5, fill: col, 'font-size': 11, 'font-weight': 700, 'font-family': 'Heebo,sans-serif' }); t2.textContent = label;
+      });
+    }
     /* learner drawings */
     st.view = { x, y, n, hi, lo, pw, ph, slot };
     const all = lines().concat(st.tmp ? [st.tmp] : []);
@@ -89,10 +102,29 @@ screens.asset = (id) => {
   function head() {
     const cs = series(a, st.tf); $('#pp').textContent = fmt(a.price);
     const ch = (cs[cs.length - 1].c / cs[0].o - 1) * 100; $('#pc').className = 'chgchip ' + chgCls(ch); $('#pc').textContent = `${sgn(ch)}% ב${TF.find(t => t[0] === st.tf)[1]}`;
+    posCard();
     const on = A().watch.includes(a.id); $('#wt').innerHTML = on ? ic.star : ic.starO; $('#wt').style.color = on ? '#ffc94d' : '';
   }
+  function posCard() {
+    const box = $('#poscard'); if (!box) return; const pos = held();
+    if (!pos) { box.innerHTML = ''; return; }
+    const v = pos.qty * a.price, g = pos.qty * (a.price - pos.avg), gp = (a.price / pos.avg - 1) * 100;
+    const sd = pos.stop ? (a.price - pos.stop) / a.price * 100 : null, td = pos.target ? (pos.target / a.price - 1) * 100 : null;
+    box.innerHTML = `<div class="card poscard"><div class="ph"><b>הפוזיציה שלך</b><span class="chgchip ${chgCls(g)}">${sgn(gp)}%</span></div>
+      <div class="pgrid"><div><span>כמות</span><b>${fmt(pos.qty, 2)}</b></div><div><span>מחיר כניסה</span><b>${fmt(pos.avg)}</b></div><div><span>שווי עכשיו</span><b>${money(v)}</b></div><div><span>רווח או הפסד</span><b class="${chgCls(g)}">${g >= 0 ? '+' : '-'}${money(Math.abs(g), 2)}</b></div></div>
+      <div class="plv"><div class="pl s"><i></i><span>סטופ</span><b>${pos.stop ? fmt(pos.stop) : 'לא נקבע'}</b><em>${sd != null ? 'עוד ' + fmt(sd, 1) + '% מתחת למחיר' : 'ההפסד פתוח'}</em></div>
+      <div class="pl t"><i></i><span>יעד</span><b>${pos.target ? fmt(pos.target) : 'לא נקבע'}</b><em>${td != null ? 'עוד ' + fmt(td, 1) + '% מעל המחיר' : ''}</em></div></div>
+      <div class="chips"><button class="chip${st.tool === 'pstop' ? ' on' : ''}" data-a="pstop">${pos.stop ? 'שנה סטופ' : 'קבע סטופ'}</button><button class="chip${st.tool === 'ptgt' ? ' on' : ''}" data-a="ptgt">${pos.target ? 'שנה יעד' : 'קבע יעד'}</button>${pos.stop ? '<button class="chip" data-a="xstop">הסר סטופ</button>' : ''}${pos.target ? '<button class="chip" data-a="xtgt">הסר יעד</button>' : ''}</div></div>`;
+    $$('[data-a]', box).forEach(b => b.onclick = () => {
+      const k = b.dataset.a;
+      if (k === 'xstop') { pos.stop = 0; save(); toast('הסטופ הוסר'); posCard(); draw(); return; }
+      if (k === 'xtgt') { pos.target = 0; save(); toast('היעד הוסר'); posCard(); draw(); return; }
+      st.tool = st.tool === k ? '' : k; $$('.dtb', $('#dt')).forEach(x => x.classList.toggle('on', x.dataset.t === st.tool)); svg.classList.toggle('drawing', !!st.tool); posCard(); dhint();
+      if (st.tool) { const cb = $('.cbox'); if (cb) cb.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' }); toast(st.tool === 'pstop' ? 'לחצו על הגרף במחיר הסטופ' : 'לחצו על הגרף במחיר היעד'); }
+    });
+  }
   function dhint() {
-    const h = $('#dh'); if (!h) return; const cs = series(a, st.tf), last = cs[cs.length - 1].c, L = lines(), hint = { '': 'גררו על הגרף כדי לראות פרטי נר. בחרו כלי ציור כדי לנתח.', trend: 'גררו על הגרף מנקודה לנקודה כדי למתוח קו מגמה.', h: 'לחצו על הגרף כדי לסמן קו אופקי (תמיכה או התנגדות).', erase: 'לחצו ליד קו כדי למחוק אותו.' }[st.tool];
+    const h = $('#dh'); if (!h) return; const cs = series(a, st.tf), last = cs[cs.length - 1].c, L = lines(), hint = { pstop: 'לחצו על הגרף במחיר שבו תרצו לצאת כדי להגביל הפסד (מתחת למחיר עכשיו).', ptgt: 'לחצו על הגרף במחיר שבו תרצו לצאת עם רווח (מעל המחיר עכשיו).', '': 'גררו על הגרף כדי לראות פרטי נר. בחרו כלי ציור כדי לנתח.', trend: 'גררו על הגרף מנקודה לנקודה כדי למתוח קו מגמה.', h: 'לחצו על הגרף כדי לסמן קו אופקי (תמיכה או התנגדות).', erase: 'לחצו ליד קו כדי למחוק אותו.' }[st.tool];
     const tl = [...L].reverse().find(l => l.t === 'trend'), hl = [...L].reverse().find(l => l.t === 'h'); let note = '';
     if (!st.tool && tl) { const m = (tl.p2 - tl.p1) / (tl.i2 - tl.i1), at = tl.p1 + m * (cs.length - 1 - tl.i1); note = `קו המגמה ${m > 0 ? 'עולה' : 'יורד'}. המחיר עכשיו ${last >= at ? 'מעל הקו' : 'מתחת לקו'} (${fmt(Math.abs(last / at - 1) * 100, 1)}%). זו עדיין תצפית, לא תחזית.`; }
     else if (!st.tool && hl) note = `המחיר עכשיו ${last >= hl.p ? 'מעל' : 'מתחת'} לקו האופקי ב-${fmt(Math.abs(last / hl.p - 1) * 100, 1)}%.`;
@@ -105,6 +137,9 @@ screens.asset = (id) => {
   const idxAt = (e) => { const r = svg.getBoundingClientRect(), n = series(a, st.tf).length, px = (e.clientX - r.left) / r.width * W, pw = W - AX, slot = (pw - 8) / n; return clamp(Math.floor((px - 4) / slot), 0, n - 1); };
   svg.addEventListener('pointerdown', (e) => {
     down = true; try { svg.setPointerCapture(e.pointerId); } catch (_) { }
+    if (st.tool === 'pstop' || st.tool === 'ptgt') { const c = coord(e), pos = held(), pr = Math.round(c.p * 100) / 100;
+      if (pos) { if (st.tool === 'pstop') { if (pr >= a.price) toast('הסטופ צריך להיות מתחת למחיר עכשיו'); else { pos.stop = pr; save(); toast('הסטופ נקבע ב-' + fmt(pr)); st.tool = ''; } } else { if (pr <= a.price) toast('היעד צריך להיות מעל המחיר עכשיו'); else { pos.target = pr; save(); toast('היעד נקבע ב-' + fmt(pr)); st.tool = ''; } } }
+      $$('.dtb', $('#dt')).forEach(x => x.classList.toggle('on', x.dataset.t === st.tool)); svg.classList.toggle('drawing', !!st.tool); posCard(); draw(); return; }
     if (st.tool === 'trend') { const c = coord(e); st.tmp = { t: 'trend', i1: c.i, p1: c.p, i2: c.i, p2: c.p }; draw(); return; }
     if (st.tool === 'h') { const c = coord(e); st.tmp = { t: 'h', p: c.p }; draw(); return; }
     if (st.tool === 'erase') { const c = coord(e), L = lines(); let bi = -1, bd = 18; L.forEach((l, k) => { const d = distLine(l, c.px, c.py); if (d < bd) { bd = d; bi = k; } }); if (bi >= 0) { L.splice(bi, 1); save(); toast('הקו נמחק'); } draw(); return; }
