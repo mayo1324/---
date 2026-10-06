@@ -65,7 +65,15 @@ let cur = { name: '', arg: null };
 const NO_TABS = ['onboarding', 'login', 'signup', 'lesson', 'lessonDone', 'practice', 'feedback', 'asset'];
 const TAB_OF = { asset: 'market', practiceHome: 'practiceHome', profile: '', glossary: 'lessons' };
 let navToken = 0, booted = false;
+const TAB_ORDER = ['home', 'lessons', 'practiceHome', 'market', 'portfolio'];
+let lastTap = null;
+document.addEventListener('pointerdown', (e) => { lastTap = { x: e.clientX, y: e.clientY, t: performance.now() }; }, true);
+function ripple() {
+  const r = $('#ripple'), ph = $('#phone').getBoundingClientRect(), t = lastTap && performance.now() - lastTap.t < 900 ? lastTap : { x: ph.left + ph.width / 2, y: ph.bottom - 44 };
+  r.style.left = (t.x - ph.left) + 'px'; r.style.top = (t.y - ph.top) + 'px'; r.classList.remove('run'); void r.offsetWidth; r.classList.add('run');
+}
 function go(name, arg) {
+  const from = cur.name;
   cur = { name, arg };
   const tok = ++navToken;
   const render = () => {
@@ -83,7 +91,8 @@ function go(name, arg) {
     try { history.replaceState(null, '', '#' + name); } catch (e) { }
   };
   if (!booted || reduceMotion) { booted = true; render(); return; }
-  const sw = $('#sweep'); sw.classList.remove('run'); void sw.offsetWidth; sw.classList.add('run');
+  const fi = TAB_ORDER.indexOf(from), ti = TAB_ORDER.indexOf(name), d = fi >= 0 && ti >= 0 ? (ti > fi ? 1 : -1) : 1;
+  scr.style.setProperty('--dx', (34 * d) + 'px'); ripple();
   scr.classList.add('leaving');
   setTimeout(() => { if (tok !== navToken) return; render(); scr.classList.add('entering'); setTimeout(() => scr.classList.remove('entering'), 520); }, 170);
 }
@@ -93,10 +102,29 @@ function markActive(ac) { ac.days = ac.days || {}; const k = dayKey(); ac.days[k
 function streakDays(ac) { const d = new Date(); let n = 0; if (!(ac.days || {})[dayKey(d)]) d.setDate(d.getDate() - 1); while ((ac.days || {})[dayKey(d)]) { n++; d.setDate(d.getDate() - 1); } return n; }
 const LVL_TITLE = ['מתחיל', 'סקרן', 'חוקר', 'אנליסט', 'מומחה'];
 function closeSheetNow() { ['sheet', 'term'].forEach(id => { const s = $('#' + id); s.hidden = true; s.classList.remove('open'); s.innerHTML = ''; }); }
+const TAB_ITEMS = [['home', 'בית', ic.home], ['lessons', 'שיעורים', ic.book], ['practiceHome', 'תרגול', ic.chart], ['market', 'שוק', ic.trend], ['portfolio', 'תיק', ic.wallet]];
 function renderTabs(active) {
-  const items = [['home', 'בית', ic.home], ['lessons', 'שיעורים', ic.book], ['practiceHome', 'תרגול', ic.chart, true], ['market', 'שוק', ic.trend], ['portfolio', 'תיק', ic.wallet]];
-  $('#tabbar').innerHTML = items.map(([id, label, icon, mid]) => `<button class="tab${active === id ? ' on' : ''}${mid ? ' mid' : ''}" data-go="${id}">${icon}<span>${label}</span></button>`).join('');
+  const tb = $('#tabbar'); let first = false;
+  if (!tb.dataset.built) {
+    first = true; tb.dataset.built = '1';
+    tb.innerHTML = `<button class="tb-prof" data-go="profile" aria-label="פרופיל"><span id="tbi"></span></button><div class="tb-pill" id="tbp"><svg class="tb-ind" id="tbind" aria-hidden="true"><path class="fillp"/><path class="linep"/></svg>${TAB_ITEMS.map(([id, l, i]) => `<button class="tb" data-go="${id}" data-id="${id}"><span class="ti">${i}</span><i class="td"></i><span class="tl">${l}</span></button>`).join('')}</div>`;
+  }
+  $('#tbi').textContent = (A().name || '?')[0];
+  $$('.tb', tb).forEach(b => b.classList.toggle('on', b.dataset.id === active));
+  requestAnimationFrame(() => moveInd(active, first));
 }
+/* the outlined bump that slides under the active tab */
+function moveInd(active, instant) {
+  const ind = $('#tbind'), b = $(`.tb[data-id="${active}"]`); if (!ind) return;
+  if (!b || !b.offsetWidth) { ind.style.opacity = 0; return; }
+  const w = b.offsetWidth + 48, H = 84, x0 = 24;
+  ind.style.opacity = 1; ind.style.width = w + 'px'; ind.setAttribute('viewBox', `0 0 ${w} ${H}`);
+  const line = `M0 82 C14 82 ${x0} 80 ${x0} 66 L${x0} 26 Q${x0} 4 ${x0 + 22} 4 L${w - x0 - 22} 4 Q${w - x0} 4 ${w - x0} 26 L${w - x0} 66 C${w - x0} 80 ${w - 14} 82 ${w} 82`;
+  $('.linep', ind).setAttribute('d', line); $('.fillp', ind).setAttribute('d', line + ` L${w} ${H} L0 ${H}Z`);
+  ind.classList.toggle('inst', !!instant);
+  ind.style.transform = `translateX(${b.offsetLeft - x0}px)`;
+}
+window.addEventListener('resize', () => { const on = $('.tb.on'); if (on && !$('#tabbar').hidden) moveInd(on.dataset.id, true); });
 document.addEventListener('click', (e) => {
   const g = e.target.closest('[data-go]');
   if (g) go(g.dataset.go, g.dataset.arg);

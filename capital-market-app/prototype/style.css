@@ -695,3 +695,34 @@ bdi{unicode-bidi:isolate}
 .les .ic[style*="--lime"]{background:var(--lime-bg)}
 .howto .how i{background:var(--lime-bg);color:var(--lime)}
 .unlock svg,.empty svg{color:var(--lime)}
+
+/* ===== floating capsule tab bar with a sliding raised tab ===== */
+.tabbar{left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));height:84px;padding:0;border:0;border-radius:0;background:none;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;display:flex;gap:10px;align-items:flex-end;justify-content:flex-start}
+.tabbar[hidden]{display:none}
+.tb-prof{flex:none;width:60px;height:60px;border-radius:50%;background:linear-gradient(180deg,#262626,#151515);border:1px solid rgba(255,255,255,.07);box-shadow:0 14px 24px rgba(0,0,0,.55),0 3px 0 #090909,inset 0 1px 0 rgba(255,255,255,.1);display:grid;place-items:center;margin-bottom:4px;transition:transform .2s}
+.tb-prof:active{transform:scale(.94)}
+.tb-prof span{font-size:22px;font-weight:800;color:var(--lime);text-shadow:0 0 14px rgba(200,255,61,.5)}
+.tb-pill{position:relative;flex:1;height:68px;display:flex;align-items:stretch;border-radius:34px;background:linear-gradient(180deg,#232323,#151515);border:1px solid rgba(255,255,255,.07);box-shadow:0 18px 30px rgba(0,0,0,.6),0 4px 0 #090909,inset 0 1px 0 rgba(255,255,255,.09)}
+.tb-ind{position:absolute;left:0;bottom:-1px;height:84px;z-index:1;overflow:visible;pointer-events:none;transition:transform .55s cubic-bezier(.3,1.35,.45,1),opacity .2s,width .3s;filter:drop-shadow(0 -2px 10px rgba(200,255,61,.25))}
+.tb-ind.inst{transition:none}
+.tb-ind .fillp{fill:#1d1d1d}.tb-ind .linep{fill:none;stroke:var(--lime);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.tb{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#8a8a8a;transition:color .25s,transform .45s cubic-bezier(.3,1.5,.5,1)}
+.tb .ti{display:grid;place-items:center;transition:transform .45s cubic-bezier(.3,1.5,.5,1)}
+.tb svg{width:24px;height:24px}
+.tb .td{width:4px;height:4px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px var(--lime);opacity:0;transform:scale(0);transition:.3s}
+.tb .tl{font-size:11px;font-weight:600}
+.tb.on{color:var(--lime);transform:translateY(-8px)}
+.tb.on .ti{transform:scale(1.12)}
+.tb.on .td{opacity:1;transform:scale(1)}
+.tb:active .ti{transform:scale(.88)}
+.screen.has-tabs{padding-bottom:124px}
+.toast{bottom:116px}
+
+/* ===== screen transitions: directional slide plus a soft ripple from the tapped spot ===== */
+.screen{transition:opacity .2s ease,transform .2s cubic-bezier(.4,0,.6,1),filter .2s ease}
+.screen.leaving{opacity:0;transform:translateX(var(--dx,0px)) scale(.965);filter:blur(5px)}
+.screen.entering{animation:enter2 .6s cubic-bezier(.2,.9,.25,1)}
+@keyframes enter2{from{opacity:0;transform:translateX(calc(var(--dx,0px) * -1)) scale(.965);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+.ripple{position:absolute;z-index:24;width:900px;height:900px;margin:-450px 0 0 -450px;border-radius:50%;pointer-events:none;opacity:0;transform:scale(0);background:radial-gradient(circle,rgba(200,255,61,.2) 0%,rgba(200,255,61,.07) 38%,transparent 66%)}
+.ripple.run{animation:ripple .75s cubic-bezier(.2,.7,.3,1)}
+@keyframes ripple{0%{opacity:.95;transform:scale(0)}100%{opacity:0;transform:scale(1)}}
