@@ -296,7 +296,8 @@ screens.profile = () => {
     <button class="btn ghost" id="un" style="margin-bottom:10px">${portfolioOpen() ? 'התיק פתוח' : 'פתח את התיק בלי לסיים שיעורים'}</button>
     <button class="btn ghost" id="lo" style="margin-bottom:10px">התנתקות</button>
     <button class="btn ghost" id="rs">מחיקת החשבון הזה</button>
-    <p class="disc">התוכן באפליקציה לימודי בלבד. אין בו המלצות השקעה או הבטחות לרווח, ואין כסף אמיתי. ${WARN_DAY}</p></div>`;
+    <p class="disc">התוכן באפליקציה לימודי בלבד. אין בו המלצות השקעה או הבטחות לרווח, ואין כסף אמיתי. ${WARN_DAY}</p>
+    <p class="disc">נתונים לבדיקה פרטית בלבד, לא להפצה.</p></div>`;
   $('#un').onclick = () => { if (!portfolioOpen()) { A().demoUnlock = true; save(); toast('התיק נפתח להדגמה'); go('profile'); } };
   $('#lo').onclick = () => { loadDB().session = null; save(); go('login'); };
   let sure = false;

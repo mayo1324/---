@@ -7,24 +7,12 @@ const RISK_OPTS = [[.5, 'זהיר'], [1, 'מומלץ ללמידה'], [2, 'בסד
 const STEPS = [['read', 'כיוון'], ['line', 'קו'], ['volume', 'נפח'], ['decide', 'החלטה'], ['support', 'רצפה'], ['stop', 'סטופ'], ['size', 'סכום'], ['target', 'יעד']];
 
 function buildScen(sc) {
-  const r = rng(sc.seed), N = 26, M = 14;
-  const interp = (pts, k) => { for (let j = 1; j < pts.length; j++) if (k <= pts[j][0]) { const [a, pa] = pts[j - 1], [b, pb] = pts[j]; return pa + (pb - pa) * (k - a) / (b - a); } return pts[pts.length - 1][1]; };
-  const candles = []; let prev = sc.past[0][1];
-  for (let k = 0; k < N + M; k++) {
-    const target = k < N ? interp(sc.past, k) : interp(sc.fut, k - N);
-    let c = k === 0 ? target : target + (r() - .5) * 2.2; const o = prev;
-    if (k === N - 1) c = sc.past[sc.past.length - 1][1];
-    candles.push({ o, c, h: Math.max(o, c) + r() * 1.5 + .3, l: Math.min(o, c) - r() * 1.5 - .3 }); prev = c;
-  }
-  const vr = rng(sc.seed * 5 + 1);
-  candles.forEach((c, k) => { const up = c.c >= c.o; let v; if (sc.volk === 'pullback') v = up ? 95 + vr() * 30 : 32 + vr() * 20; else if (sc.volk === 'breakout') v = k >= N - 3 ? 115 + vr() * 30 : 40 + vr() * 20 + (up ? 8 : 0); else if (sc.volk === 'sell') v = up ? 35 + vr() * 20 : 100 + vr() * 30; else v = 38 + vr() * 22; c.v = Math.round(v); });
+  /* real data, rebased so the decision price is 100 (hides the asset); volume scaled so the average of the shown past is 60 */
+  const raw = sc.raw, N = CASE_N, M = CASE_M, f = 100 / raw.c[raw.di][4];
+  const seg = raw.c.slice(raw.di - (N - 1), raw.di + 1 + M), avgV = seg.slice(0, N).reduce((a, r) => a + r[5], 0) / N;
+  const candles = seg.map(r => ({ o: r[1] * f, h: r[2] * f, l: r[3] * f, c: r[4] * f, v: Math.min(150, r[5] / avgV * 60) }));
   const past = candles.slice(0, N), last = past[N - 1].c;
-  return { candles, N, M, last, swingLow: Math.min(...past.slice(-10).map(c => c.l)), recentHigh: Math.max(...past.slice(-20).map(c => c.h)), atr: past.slice(-14).reduce((a, c) => a + (c.h - c.l), 0) / 14 };
-}
-function altFuture(P, seed, drift) {
-  const r = rng(seed); let p = P.last; const out = [];
-  for (let i = 0; i < P.M; i++) { const o = p, c = o + drift + (r() - .5) * 2 * P.atr * .95; out.push({ o, c, h: Math.max(o, c) + r() * P.atr * .4, l: Math.min(o, c) - r() * P.atr * .4 }); p = c; }
-  return out;
+  return { candles, N, M, last, swingLow: Math.min(...past.slice(-10).map(c => c.l)), recentHigh: Math.max(...past.slice(-20).map(c => c.h)), atr: past.slice(-14).reduce((a, c) => a + (c.h - c.l), 0) / 14, slopeTh: TREND_PCT / (N - 1) };
 }
 function simulate(cs, plan) {
   for (let k = 0; k < cs.length; k++) { if (cs[k].l <= plan.stop) return { res: 'stop', at: k }; if (cs[k].h >= plan.target) return { res: 'target', at: k }; }
@@ -40,7 +28,7 @@ function evaluate(sc, P, st) {
   const ch = [], nm = TREND_NAME[sc.trend];
   ch.push({ t: 'כיוון הגרף', term: 'trend', ok: st.trend === sc.trend, good: `נכון! המגמה כאן ${nm}.`, bad: `המגמה כאן ${nm}. כדאי לבדוק אם הנקודות הנמוכות הולכות ועולות, יורדות או נשארות באותו מקום.` });
   if (st.line) {
-    const sl = (st.line.p2 - st.line.p1) / (st.line.i2 - st.line.i1), th = .15 * P.atr, cls = sl > th ? 'up' : sl < -th ? 'down' : 'side';
+    const sl = (st.line.p2 - st.line.p1) / (st.line.i2 - st.line.i1), th = P.slopeTh, cls = sl > th ? 'up' : sl < -th ? 'down' : 'side';
     ch.push({ t: 'קו מגמה', term: 'trendline', ok: cls === sc.trend, good: `הקו שציירתם ${TREND_NAME[cls]}, בדיוק כמו המגמה בגרף.`, bad: `הקו שציירתם ${TREND_NAME[cls]}, אבל המגמה בגרף ${nm}. נסו לחבר נקודות נמוכות (או גבוהות) שבאמת באותו כיוון.` });
   }
   if (st.volAns) ch.push({ t: 'נפח', term: 'volume', ok: st.volAns === sc.volq.ans, good: sc.volq.why, bad: 'לא בדיוק. ' + sc.volq.why });
@@ -65,25 +53,27 @@ function needBanner() {
 screens.practiceHome = () => {
   const d = A().practiceDone;
   scr.innerHTML = `<div class="anim"><div class="top"><h2>תרגול</h2><span class="pill gold">${ic.star}${A().stars}</span></div>
-    <div class="card howto"><b>איך זה עובד?</b><div class="how">${['רואים גרף של מניה בדויה', 'מחליטים אם לקנות או לחכות', 'אם קונים: בונים תוכנית צעד אחרי צעד', 'מריצים את הגרף ורואים מה קרה'].map((t, i) => `<div><i>${i + 1}</i><span>${t}</span></div>`).join('')}</div>
+    <div class="card howto"><b>איך זה עובד?</b><div class="how">${['רואים גרף אמיתי מהעבר, בלי לדעת איזה נכס זה', 'מחליטים אם לקנות או לחכות', 'אם קונים: בונים תוכנית צעד אחרי צעד', 'מריצים את הגרף ורואים מה קרה'].map((t, i) => `<div><i>${i + 1}</i><span>${t}</span></div>`).join('')}</div>
       <span class="muted" style="font-size:13px;line-height:1.6">אין כאן כסף אמיתי. הנקודות והכוכבים הם על החשיבה שלכם ולא על המזל. לפעמים התשובה הנכונה היא לחכות.</span></div>
     <div style="height:14px"></div>
-    ${SCEN.map((s, i) => `<button class="les" data-go="practice" data-arg="${i}"><div class="ic" style="color:var(--lime)">${ic.chart}</div><div class="tx"><b>מקרה ${i + 1}</b><span>גרף הדגמה</span></div><span class="st" style="direction:ltr">${'★'.repeat(d[s.id] || 0)}${'☆'.repeat(3 - (d[s.id] || 0))}</span></button>`).join('')}
-    <p class="demo-note">הגרפים נוצרים בקוד ואינם נתוני שוק אמיתיים. אין כאן המלצת השקעה.</p></div>`;
+    ${SCEN.map((s, i) => `<button class="les" data-go="practice" data-arg="${i}"><div class="ic" style="color:var(--lime)">${ic.chart}</div><div class="tx"><b>מקרה ${i + 1}</b><span>נכס X</span></div><span class="st" style="direction:ltr">${'★'.repeat(d[s.id] || 0)}${'☆'.repeat(3 - (d[s.id] || 0))}</span></button>`).join('')}
+    <p class="demo-note">נתוני שוק אמיתיים מהעבר. העבר לא מבטיח את העתיד. אין כאן המלצת השקעה.</p>
+    <p class="demo-note">נתונים לבדיקה פרטית בלבד, לא להפצה.</p></div>`;
 };
 
 /* ----- the exercise ----- */
 screens.practice = (idx = 0) => {
   idx = (+idx || 0) % SCEN.length;
   const sc = SCEN[idx], P = buildScen(sc);
-  const W = 358, H = 300, VH = 54, AX = 46, plotW = W - AX, slot = (plotW - 8) / (P.N + P.M), bw = slot * .62;
+  const W = 358, H = 300, VH = 54, VBH = H + VH + 24, AX = 46, plotW = W - AX, slot = (plotW - 8) / (P.N + P.M), bw = Math.max(1.4, slot * .62);
   const all = P.candles, lo = Math.min(...all.map(c => c.l)) - 3, hi = Math.max(...all.map(c => c.h)) + 3;
   const y = (v) => 8 + (hi - v) / (hi - lo) * (H - 24), priceAt = (py) => hi - (py - 8) / (H - 24) * (hi - lo), cx = (k) => 6 + k * slot + slot / 2;
   const st = { step: 'read', line: null, drag: null, volAns: null, trend: null, decision: null, support: null, stop: null, risk: null, target: null, hint: false, running: false, shown: P.N, mark: null };
   scr.innerHTML = `<div class="anim">
-    <div class="pr-head"><button class="icon-btn" id="bk">${ic.back}</button><div class="tt"><b>מקרה ${idx + 1}</b><span>גרף הדגמה, בלי כסף אמיתי</span></div><button class="icon-btn" id="hb" style="color:var(--gold)" aria-label="רמז">${ic.bulb}</button></div>
+    <div class="pr-head"><button class="icon-btn" id="bk">${ic.back}</button><div class="tt"><b>מקרה ${idx + 1}</b><span>נכס X, בלי כסף אמיתי</span></div><button class="icon-btn" id="hb" style="color:var(--gold)" aria-label="רמז">${ic.bulb}</button></div>
     <div class="pbox"><div class="meta"><div><span class="hl">מחיר עכשיו</span><div class="price" id="px">${fmt(P.last)}</div></div><div class="hl" style="text-align:left">תיק תרגול ${money(START_CASH)}</div></div>
-      <svg class="chart" id="ch" viewBox="0 0 ${W} ${H + VH + 6}"></svg></div>
+      <svg class="chart" id="ch" viewBox="0 0 ${W} ${VBH}"></svg></div>
+    <p class="demo-note" style="margin:6px 4px 0">המחירים מותאמים כך שהמחיר עכשיו הוא 100, ולכן לא נחשף איזה נכס זה.</p>
     <div class="steps" id="dots"></div><div id="panel" class="panel task"></div><div id="hintBox"></div></div>`;
   const svg = $('#ch');
   const el = (n, a, p) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); (p || svg).appendChild(e); return e; };
@@ -98,11 +88,13 @@ screens.practice = (idx = 0) => {
     el('line', { x1: 6 + P.N * slot, x2: 6 + P.N * slot, y1: 0, y2: H, stroke: '#3a414b', 'stroke-dasharray': '2 4' });
     if (st.shown === P.N) txt(6 + P.N * slot + (plotW - 6 - P.N * slot) / 2, H / 2, 'העתיד', '#5d6571', 12, 'middle', 400);
     if (st.hint) { el('rect', { x: 0, y: y(P.swingLow + P.atr * .35), width: plotW, height: y(P.swingLow - P.atr * .6) - y(P.swingLow + P.atr * .35), fill: '#fbbf24', opacity: .13 }); txt(8, y(P.swingLow - P.atr * .6) + 13, 'הנקודות הנמוכות האחרונות', '#fbbf24', 11, 'start', 500); }
-    for (let k = 0; k < st.shown; k++) { const c = P.candles[k], up = c.c >= c.o, col = up ? '#1ff0b0' : '#ff6048', x = cx(k); el('line', { x1: x, x2: x, y1: y(c.h), y2: y(c.l), stroke: col, 'stroke-width': 1.4, 'stroke-linecap': 'round' }); el('rect', { x: x - bw / 2, y: y(Math.max(c.o, c.c)), width: bw, height: Math.max(2, Math.abs(y(c.o) - y(c.c))), rx: 1.5, fill: col }); }
+    for (let k = 0; k < st.shown; k++) { const c = P.candles[k], up = c.c >= c.o, col = up ? '#1ff0b0' : '#ff6048', x = cx(k); el('line', { x1: x, x2: x, y1: y(c.h), y2: y(c.l), stroke: col, 'stroke-width': slot < 4 ? 1 : 1.4, 'stroke-linecap': 'round' }); el('rect', { x: x - bw / 2, y: y(Math.max(c.o, c.c)), width: bw, height: Math.max(2, Math.abs(y(c.o) - y(c.c))), rx: 1.5, fill: col }); }
     /* volume panel */
     { const top = H + 6, vmax = 150; txt(8, top + 12, 'נפח', '#8b93a1', 10.5, 'start', 600);
       if (st.step === 'volume') el('rect', { x: 2, y: top - 2, width: plotW + 2, height: VH + 4, rx: 8, fill: '#fbbf24', opacity: .1, stroke: '#fbbf24', 'stroke-opacity': .5 });
       for (let k = 0; k < st.shown; k++) { const c = P.candles[k], hh = c.v / vmax * (VH - 6), up = c.c >= c.o; el('rect', { x: cx(k) - bw / 2, y: top + VH - hh, width: bw, height: hh, rx: 1.5, fill: up ? '#1ff0b0' : '#ff6048', opacity: .55 }); } }
+    /* time axis, relative only (no dates) */
+    { const ty = VBH - 3; txt(6, ty, 'לפני 60 ימים', '#5d6571', 10, 'start', 400); txt(cx(30), ty, 'לפני 30', '#5d6571', 10, 'middle', 400); txt(cx(P.N - 1), ty, 'עכשיו', '#5d6571', 10, 'middle', 400); }
     /* trend line drawn by the learner (extends into the future as a dashed projection) */
     { const ln = st.drag || st.line; if (ln && ln.i2 !== ln.i1) { const m = (ln.p2 - ln.p1) / (ln.i2 - ln.i1), last = P.N + P.M - 1, yAt = (i) => y(ln.p1 + m * (i - ln.i1));
       el('line', { x1: cx(ln.i1), y1: yAt(ln.i1), x2: cx(ln.i2), y2: yAt(ln.i2), stroke: '#fbbf24', 'stroke-width': 2.4, 'stroke-linecap': 'round' });
@@ -126,7 +118,7 @@ screens.practice = (idx = 0) => {
     if (st.mark) { const m = st.mark; el('circle', { cx: cx(m.at + P.N), cy: y(m.res === 'target' ? st.target : st.stop), r: 7, fill: m.res === 'target' ? '#1fd69b' : '#ff6048', stroke: '#0b0d10', 'stroke-width': 2 }); }
   }
   function setFromEvent(e) {
-    const rect = svg.getBoundingClientRect(), py = (e.clientY - rect.top) * ((H + VH + 6) / rect.height);
+    const rect = svg.getBoundingClientRect(), py = (e.clientY - rect.top) * (VBH / rect.height);
     let v = clamp(priceAt(py), lo + 1, hi - 1);
     const snap = (arr) => { let best = null, bd = 12; arr.forEach(p => { const d = Math.abs(y(p) - py); if (d < bd) { bd = d; best = p; } }); return best; };
     if (st.step === 'support') { const s = snap(P.candles.slice(0, P.N).map(c => c.l)); if (s != null) v = s; }
@@ -134,10 +126,10 @@ screens.practice = (idx = 0) => {
     v = Math.round(v * 10) / 10; st[st.step] = v; draw(); readout();
   }
   let dragging = false;
-  const idxPrice = (e) => { const rect = svg.getBoundingClientRect(), px = (e.clientX - rect.left) * (W / rect.width); const i = clamp(Math.round((px - 6 - slot / 2) / slot), 0, P.N - 1); let v = clamp(priceAt((e.clientY - rect.top) * ((H + VH + 6) / rect.height)), lo + 1, hi - 1); const c = P.candles[i], yy = (e.clientY - rect.top) * ((H + VH + 6) / rect.height); [c.l, c.h].forEach(q => { if (Math.abs(y(q) - yy) < 12) v = q; }); return { i, v: Math.round(v * 10) / 10 }; };
+  const idxPrice = (e) => { const rect = svg.getBoundingClientRect(), px = (e.clientX - rect.left) * (W / rect.width); const i = clamp(Math.round((px - 6 - slot / 2) / slot), 0, P.N - 1); let v = clamp(priceAt((e.clientY - rect.top) * (VBH / rect.height)), lo + 1, hi - 1); const c = P.candles[i], yy = (e.clientY - rect.top) * (VBH / rect.height); [c.l, c.h].forEach(q => { if (Math.abs(y(q) - yy) < 12) v = q; }); return { i, v: Math.round(v * 10) / 10 }; };
   svg.addEventListener('pointerdown', (e) => { if (st.step === 'line' && !st.running) { const q = idxPrice(e); st.drag = { i1: q.i, p1: q.v, i2: q.i, p2: q.v }; dragging = 'line'; try { svg.setPointerCapture(e.pointerId); } catch (_) { } draw(); return; } if (!tapStep()) return; dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) { } setFromEvent(e); });
   svg.addEventListener('pointermove', (e) => { if (dragging === 'line' && st.drag) { const q = idxPrice(e); st.drag.i2 = q.i; st.drag.p2 = q.v; draw(); } else if (dragging) setFromEvent(e); });
-  const end = () => { if (dragging === 'line' && st.drag) { const d = st.drag; st.drag = null; if (Math.abs(d.i2 - d.i1) >= 6) { if (d.i2 < d.i1) Object.assign(d, { i1: d.i2, p1: d.p2, i2: d.i1, p2: d.p1 }); st.line = d; } else toast('מתחו קו ארוך יותר, לפחות 6 נרות'); draw(); panel(); } dragging = false; }; svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
+  const end = () => { if (dragging === 'line' && st.drag) { const d = st.drag; st.drag = null; if (Math.abs(d.i2 - d.i1) >= 15) { if (d.i2 < d.i1) Object.assign(d, { i1: d.i2, p1: d.p2, i2: d.i1, p2: d.p1 }); st.line = d; } else toast('מתחו קו ארוך יותר, לפחות 15 נרות'); draw(); panel(); } dragging = false; }; svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
 
   const path = () => st.decision === 'wait' ? ['read', 'line', 'volume', 'decide'] : STEPS.map(s => s[0]);
   const hd = (title, body) => { const p = path(), n = p.indexOf(st.step) + 1; return `<span class="tk-n">שלב ${n} מתוך ${p.length}</span><h3>${title}</h3><p>${body}</p>`; };
@@ -159,11 +151,11 @@ screens.practice = (idx = 0) => {
     if (st.step === 'read') {
       h = needBanner() + hd('לאן הגרף הולך?', 'הסתכלו על הנרות. האם המחיר בגדול <b>עולה</b>, <b>יורד</b>, או קופץ <b>בלי כיוון</b>?') + `<div class="opts">${[['up', 'עולה'], ['down', 'יורד'], ['side', 'בלי כיוון']].map(([k, t]) => `<button class="opt${st.trend === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>${learn(['trend', 'candle'])}`; next = 'line'; dis = !st.trend;
     } else if (st.step === 'line') {
-      const ln = st.line, sl = ln ? (ln.p2 - ln.p1) / (ln.i2 - ln.i1) : 0, cls = !ln ? '' : sl > .15 * P.atr ? 'עולה' : sl < -.15 * P.atr ? 'יורד' : 'כמעט ישר';
+      const ln = st.line, sl = ln ? (ln.p2 - ln.p1) / (ln.i2 - ln.i1) : 0, cls = !ln ? '' : sl > P.slopeTh ? 'עולה' : sl < -P.slopeTh ? 'יורד' : 'כמעט ישר';
       h = hd('מתחו קו מגמה', 'גררו עם האצבע על הגרף, מנקודה אחת לאחרת, <b>לאורך הנקודות הנמוכות</b> (או הגבוהות). הקו המקווקו ממשיך לעתיד. זה נקרא ' + term('trendline') + '.') + `<div class="chips"><button class="chip" id="clr">נקה קו</button></div><div class="ro" id="ro">${ln ? 'הקו שציירתם: <b>' + cls + '</b>' : 'עוד לא ציירתם קו'}</div>${learn(['trendline', 'trend'])}`; next = 'volume'; dis = !ln;
     } else if (st.step === 'volume') {
       const vq = sc.volq;
-      h = hd('מה אומר הנפח?', 'הסתכלו על העמודות בתחתית הגרף. כל עמודה היא כמה מסחר היה באותו נר. ' + vq.q) + `<div class="opts">${[['low', 'נמוך'], ['high', 'גבוה']].map(([k, t]) => `<button class="opt${st.volAns === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>${learn(['volume'])}`; next = 'decide'; dis = !st.volAns;
+      h = hd('מה אומר הנפח?', 'הסתכלו על העמודות בתחתית הגרף. כל עמודה היא כמה מסחר היה באותו נר. ' + vq.q) + `<div class="opts">${[['low', 'נמוך'], ['normal', 'רגיל'], ['high', 'גבוה']].map(([k, t]) => `<button class="opt${st.volAns === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>${learn(['volume'])}`; next = 'decide'; dis = !st.volAns;
     } else if (st.step === 'decide') {
       h = hd('האם כדאי לקנות עכשיו?', 'קונים רק כשיש סיבה טובה. אם אין, <b>מחכים</b>, וגם זו תשובה נכונה לפעמים.') + `<div class="opts">${[['enter', 'כן, יש סיבה לקנות'], ['wait', 'לא, מחכים']].map(([k, t]) => `<button class="opt${st.decision === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>${learn(['wait', 'entry'])}`; dis = !st.decision; next = st.decision === 'wait' ? 'run' : 'support'; label = st.decision === 'wait' ? 'ראו מה קרה' : 'הבא';
     } else if (st.step === 'support') {
@@ -206,14 +198,14 @@ screens.practice = (idx = 0) => {
         setTimeout(() => go('feedback', { idx, st: { trend: st.trend, decision: st.decision, line: st.line, volAns: st.volAns, plan: enter ? plan() : null }, sim }), 1100); return;
       }
       st.shown++; $('#px').textContent = fmt(P.candles[st.shown - 1].c); draw();
-    }, 360);
+    }, 110);
   }
   window.__P = P; window.__st = st; window.__SC = sc;
   draw(); panel();
   if (!A().seenIntro) {
     A().seenIntro = true; save();
     openSheet(`<span class="tag">לפני שמתחילים</span><h3 style="margin-top:8px">מה עושים בתרגיל?</h3>
-      <p class="def">זה גרף של מניה בדויה. אתם מחליטים מה לעשות, כמו בחיים אבל בלי כסף אמיתי.</p>
+      <p class="def">זה גרף אמיתי מהעבר של נכס שלא נגלה לכם עד הסוף. אתם מחליטים מה לעשות, כמו בחיים אבל בלי כסף אמיתי.</p>
       <div class="steps2"><div><i>1</i><span>קוראים את הגרף ורואים לאן הוא הולך</span></div><div><i>2</i><span>מחליטים: לקנות או לחכות</span></div><div><i>3</i><span>אם קונים, בונים תוכנית: איפה הרצפה, מתי יוצאים אם טעינו, כמה מוכנים להפסיד, ועד איפה מחכים לרווח</span></div><div><i>4</i><span>מריצים את הגרף ורואים מה קרה</span></div></div>
       <div class="info">לא מקבלים נקודות על מזל. מקבלים נקודות על חשיבה נכונה. בכל שלב יש כפתור "מה זה...?" אם משהו לא ברור.</div>
       <button class="btn primary" data-close="1" style="margin-top:14px">הבנתי, מתחילים</button>`);
@@ -226,18 +218,23 @@ screens.feedback = ({ idx, st, sim }) => {
   const ac = A(), prev = ac.practiceDone[sc.id] || 0;
   if (ev.stars > prev) { ac.stars += ev.stars - prev; ac.xp = (ac.xp || 0) + (ev.stars - prev) * 10; ac.practiceDone[sc.id] = ev.stars; save(); }
   markActive(ac);
+  const raw = sc.raw, fut0 = P.candles.slice(P.N), S = sc.S;
+  const rel = (v) => `${fmt(Math.abs(v), 1)}% ${v < 0 ? 'מתחת' : 'מעל'} למחיר ההחלטה`;
+  const trendWhy = S.trend === 'side' ? `שינוי של ${fmt(Math.abs(S.ch60), 1)}% בלבד, פחות מ-${TREND_PCT}%, ולכן בלי כיוון` : `${S.ch60 > 0 ? 'עלייה' : 'ירידה'} של ${fmt(Math.abs(S.ch60), 1)}%, יותר מ-${TREND_PCT}%`;
+  const reveal = `<div class="card pnl"><span class="eyebrow">עכשיו מגלים איזה נכס זה היה</span><div class="wbig" style="font-size:22px">${sc.asset}</div>
+    <span class="muted" style="display:block;font-size:13.5px;line-height:1.6;margin-top:6px">נקודת ההחלטה: ${fmtDate(raw.c[raw.di][0])}. הגרף נמשך עד ${fmtDate(raw.c[raw.c.length - 1][0])}.</span>
+    <span class="muted" style="display:block;font-size:13.5px;line-height:1.6;margin-top:6px">מה קרה בפועל ב-${P.M} ימי המסחר אחרי נקודת ההחלטה: השפל היה ${rel(Math.min(...fut0.map(c => c.l)) - 100)}, השיא היה ${rel(Math.max(...fut0.map(c => c.h)) - 100)}, והמחיר בסוף התקופה היה ${rel(fut0[fut0.length - 1].c - 100)}.</span>
+    <span class="muted" style="display:block;font-size:13.5px;line-height:1.6;margin-top:6px">איך קבענו את המגמה: הנר הראשון מול האחרון ב-${P.N} הנרות שלפני ההחלטה. ${trendWhy}.</span>
+    <span class="muted" style="display:block;font-size:12.5px;margin-top:8px">נתוני שוק אמיתיים מהעבר. העבר לא מבטיח את העתיד.</span></div>`;
   let result = '', alt = '', title, sub;
   const pl = st.plan;
   if (pl) {
-    const sz = sizing(P, pl), fut = P.candles.slice(P.N), rrv = (pl.target - P.last) / (P.last - pl.stop);
+    const sz = sizing(P, pl), fut = P.candles.slice(P.N);
     const pnl = sim.res === 'target' ? sz.qty * (pl.target - P.last) : sim.res === 'stop' ? -sz.qty * (P.last - pl.stop) : sz.qty * (fut[sim.at].c - P.last);
     const outcome = { target: 'המחיר הגיע ליעד, יצאתם עם רווח', stop: 'המחיר ירד לסטופ, יצאתם והפסדתם סכום קטן שהחלטתם עליו מראש', none: 'המחיר לא הגיע לא ליעד ולא לסטופ' }[sim.res];
     result = `<div class="card pnl"><span class="eyebrow">מה קרה בגרף הזה (כסף וירטואלי)</span><div class="wbig ${chgCls(pnl)}">${pnl >= 0 ? '+' : '-'}${money(Math.abs(pnl))}</div><span class="muted" style="font-size:13.5px;line-height:1.5">${outcome}.</span></div>`;
-    const drift = (sc.drift || 0.6) * .5, res = [];
-    for (let k = 0; k < 7; k++) res.push(simulate(altFuture(P, sc.seed * 31 + k * 17 + 5, drift), { stop: pl.stop, target: pl.target }).res);
-    const w = res.filter(r => r === 'target').length, l = res.filter(r => r === 'stop').length;
-    alt = `<div class="card alt"><b>בדיקה נוספת: אותה תוכנית, 7 גרפים אחרים</b><div class="altrow">${res.map(r => `<i class="${r}">${r === 'target' ? '✓' : r === 'stop' ? '✕' : '·'}</i>`).join('')}</div>
-      <span class="muted" style="font-size:13.5px;line-height:1.65">${w} הגיעו ליעד, ${l} ירדו לסטופ. זה בסדר! כשהרווח האפשרי גדול מההפסד, מספיק להצליח בערך 1 מכל ${Math.round(1 + rrv)} פעמים כדי לא להפסיד בסך הכול. תוצאה אחת לא מוכיחה כלום, ולכן בודקים את התוכנית ולא רק את התוצאה. (סימולציה אקראית עם הנחה של עלייה קלה. זו הדגמה, ולא תחזית ולא סטטיסטיקה אמיתית.)</span></div>`;
+    alt = `<div class="card alt"><b>עתיד אחד בלבד</b>
+      <span class="muted" style="font-size:13.5px;line-height:1.65">זה העתיד האמיתי היחיד שיש כרגע לנכס הזה. תוצאה אחת לא מוכיחה כלום, ולכן בודקים את התוכנית ולא רק את התוצאה.</span></div>`;
     if (ok) { title = sim.res === 'target' ? 'תוכנית מצוינת!' : sim.res === 'stop' ? 'תוכנית טובה, אבל הפעם לא הצליח' : 'תוכנית טובה'; sub = sim.res === 'stop' ? 'זה קורה גם לתוכניות טובות. הסטופ עשה את שלו: ההפסד נשאר קטן.' : 'כל החלקים בתוכנית נכונים.'; }
   } else if (st.decision === 'wait') {
     result = `<div class="card pnl"><span class="eyebrow">מה קרה בגרף</span><div class="wbig" style="font-size:20px">${sc.action === 'wait' ? 'לא הפסדתם כלום' : 'לא קניתם'}</div><span class="muted" style="font-size:13.5px;line-height:1.5">${sc.why}</span></div>`;
@@ -250,9 +247,10 @@ screens.feedback = ({ idx, st, sim }) => {
     <div class="stars">${[0, 1, 2].map(k => `<span class="${k < ev.stars ? 'pop' : ''}" style="animation-delay:${k * .18}s">${starSvg(k < ev.stars)}</span>`).join('')}</div>
     <p class="muted" style="font-size:12.5px">הכוכבים על החשיבה שלכם, לא על המזל</p>
     ${result}
+    ${reveal}
     <div class="checks"><b style="display:block;margin:6px 2px 10px;font-size:16px">מה עשיתם טוב ומה לתקן</b>${ev.checks.map(c => `<div class="ck ${c.ok ? 'ok' : 'no'}"><div class="m">${c.ok ? '✓' : '✕'}</div><div><b>${c.term ? term(c.term, c.t) : c.t}</b><span>${c.ok ? c.good : c.bad}</span></div></div>`).join('')}
       <div class="ck ok"><div class="m" style="background:var(--card2);color:var(--text)">i</div><div><b>על המקרה</b><span>${sc.why}</span></div></div></div>
     ${alt}
     <div class="btns">${ok ? `<button class="btn primary" data-go="practice" data-arg="${(idx + 1) % SCEN.length}">למקרה הבא</button>` : `<button class="btn primary" data-go="practice" data-arg="${idx}">לנסות שוב</button>`}<button class="btn ghost" data-go="practiceHome">לכל המקרים</button></div>
-    <p class="disc">תרגיל לימודי על גרף הדגמה, בלי כסף אמיתי. אין כאן המלצת השקעה.</p></div>`;
+    <p class="disc">תרגיל לימודי על נתוני שוק אמיתיים מהעבר, בלי כסף אמיתי. אין כאן המלצת השקעה.</p></div>`;
 };

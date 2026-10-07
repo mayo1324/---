@@ -6,7 +6,7 @@ out = Path(sys.argv[1])
 standalone = "--standalone" in sys.argv
 html = (root / "index.html").read_text(encoding="utf-8")
 css = (root / "style.css").read_text(encoding="utf-8")
-order = ["core", "data", "art", "screens1", "screens2", "practice", "boot"]
+order = ["core", "data", "art", "cases-data", "cases", "screens1", "screens2", "practice", "boot"]
 js = "\n".join((root / "js" / f"{n}.js").read_text(encoding="utf-8") for n in order)
 body = re.search(r'<div class="stage">.*?</div>\s*</div>\s*(?=<script)', html, re.S).group(0)
 page = f'''<title>לומדים שוק הון</title>
