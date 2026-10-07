@@ -377,6 +377,7 @@ function openPay(pl) {
   };
 }
 screens.paysuccess = (id) => {
+  SFX.play('win');
   const pl = PLANS.find(x => x.id === id) || PLANS[2];
   scr.innerHTML = `${confetti(46)}<div class="ldone anim"><div class="rays"></div>
     <div class="dm"><svg viewBox="0 0 120 120" width="150" height="150"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="8"/><circle class="ringp" cx="60" cy="60" r="50" fill="none" stroke="#c8ff3d" stroke-width="8" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314" transform="rotate(-90 60 60)" style="filter:drop-shadow(0 0 8px #c8ff3d)"/><path class="checkp" d="M38 62l16 16 30-34" fill="none" stroke="#c8ff3d" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="90" stroke-dashoffset="90"/></svg></div>

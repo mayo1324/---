@@ -63,7 +63,7 @@ const ticks = [];
 const onTick = (fn) => ticks.push(fn);
 let cur = { name: '', arg: null };
 const NO_TABS = ['onboarding', 'login', 'signup', 'lesson', 'lessonDone', 'practice', 'feedback', 'asset', 'paywall', 'paysuccess'];
-const TAB_OF = { asset: 'market', practiceHome: 'practiceHome', profile: '', glossary: 'lessons' };
+const TAB_OF = { asset: 'market', practiceHome: 'practiceHome', profile: '', glossary: 'lessons', community: '' };
 let navToken = 0, booted = false;
 const TAB_ORDER = ['home', 'lessons', 'practiceHome', 'market', 'portfolio'];
 let lastTap = null;
@@ -86,6 +86,7 @@ function go(name, arg) {
     scr.scrollTop = 0;
     const tb = $('#tabbar');
     tb.hidden = !tabs;
+    const bf = $('#botfab'); if (bf) bf.hidden = !tabs;
     if (tabs) renderTabs(name in TAB_OF ? TAB_OF[name] : name);
     runCountUps();
     try { history.replaceState(null, '', '#' + name); } catch (e) { }
@@ -127,7 +128,10 @@ function moveInd(active, instant) {
 window.addEventListener('resize', () => { const on = $('.tb.on'); if (on && !$('#tabbar').hidden) moveInd(on.dataset.id, true); });
 document.addEventListener('click', (e) => {
   const g = e.target.closest('[data-go]');
-  if (g) go(g.dataset.go, g.dataset.arg);
+  if (g) {
+    if (g.closest('#tabbar') && g.dataset.go === cur.name) { if (scr.scrollTo) scr.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }); else scr.scrollTop = 0; return; }
+    go(g.dataset.go, g.dataset.arg);
+  }
   if (e.target.closest('[data-soon]')) toast('בקרוב');
 });
 

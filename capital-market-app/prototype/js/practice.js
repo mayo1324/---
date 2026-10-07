@@ -218,6 +218,7 @@ screens.feedback = ({ idx, st, sim }) => {
   const ac = A(), prev = ac.practiceDone[sc.id] || 0;
   if (ev.stars > prev) { ac.stars += ev.stars - prev; ac.xp = (ac.xp || 0) + (ev.stars - prev) * 10; ac.practiceDone[sc.id] = ev.stars; save(); }
   markActive(ac);
+  SFX.play(ev.stars === 3 ? 'win' : ev.stars > 0 ? 'good' : 'oops');
   const raw = sc.raw, fut0 = P.candles.slice(P.N), S = sc.S;
   const rel = (v) => `${fmt(Math.abs(v), 1)}% ${v < 0 ? 'מתחת' : 'מעל'} למחיר ההחלטה`;
   const trendWhy = S.trend === 'side' ? `שינוי של ${fmt(Math.abs(S.ch60), 1)}% בלבד, פחות מ-${TREND_PCT}%, ולכן בלי כיוון` : `${S.ch60 > 0 ? 'עלייה' : 'ירידה'} של ${fmt(Math.abs(S.ch60), 1)}%, יותר מ-${TREND_PCT}%`;

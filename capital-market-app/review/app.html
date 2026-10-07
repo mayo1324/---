@@ -850,6 +850,46 @@ bdi{unicode-bidi:isolate}
 
 .dtag{display:inline-block;font-size:10.5px;font-weight:700;line-height:1;padding:3px 7px;border-radius:999px;background:rgba(200,255,61,.14);color:var(--lime);margin-inline-start:8px;vertical-align:middle}
 
+/* ===== lesson slide motion: leave, then arrive with a soft spring; swipe to move ===== */
+.slide{touch-action:pan-y}
+.slide.in-r{animation:inr .55s cubic-bezier(.22,1,.36,1)}
+.slide.in-l{animation:inl .55s cubic-bezier(.22,1,.36,1)}
+@keyframes inr{from{opacity:0;transform:translateX(-64px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes inl{from{opacity:0;transform:translateX(64px) scale(.97)}to{opacity:1;transform:none}}
+.slide.out-f{animation:outf .18s cubic-bezier(.4,0,1,1) forwards}
+.slide.out-b{animation:outb .18s cubic-bezier(.4,0,1,1) forwards}
+@keyframes outf{to{opacity:0;transform:translateX(56px) scale(.98)}}
+@keyframes outb{to{opacity:0;transform:translateX(-56px) scale(.98)}}
+.slide.in-r>*,.slide.in-l>*{animation:kidin .5s cubic-bezier(.22,1,.36,1) both}
+.slide.in-r>*:nth-child(2),.slide.in-l>*:nth-child(2){animation-delay:.04s}
+.slide.in-r>*:nth-child(3),.slide.in-l>*:nth-child(3){animation-delay:.08s}
+.slide.in-r>*:nth-child(n+4),.slide.in-l>*:nth-child(n+4){animation-delay:.12s}
+@keyframes kidin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.in-r,.slide.in-l,.slide.in-r>*,.slide.in-l>*{animation:none}}
+
+/* ===== helper bot, "take me there" pop-up, community ===== */
+.botfab{position:absolute;left:14px;bottom:104px;z-index:21;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#0b0d10;background:linear-gradient(135deg,#d9ff6a,#b6f21a);box-shadow:0 8px 22px rgba(0,0,0,.45),0 0 0 4px rgba(200,255,61,.14);transition:transform .2s}
+.botfab:active{transform:scale(.92)}.botfab[hidden]{display:none}
+.navpop{position:absolute;top:58px;left:12px;right:12px;z-index:45;background:linear-gradient(160deg,rgba(32,38,47,.96),rgba(17,21,27,.97));border:1px solid rgba(200,255,61,.35);border-radius:20px;padding:14px;box-shadow:0 18px 40px rgba(0,0,0,.55);opacity:0;transform:translateY(-16px);transition:.3s cubic-bezier(.22,1,.36,1)}
+.navpop.show{opacity:1;transform:none}.navpop[hidden]{display:none}
+.navpop .np-t b{display:block;font-size:15.5px}.navpop .np-t span{font-size:13px;color:var(--muted,#8b93a1)}
+.navpop .np-b{display:flex;gap:8px;margin-top:10px}.navpop .np-b .btn{flex:1}
+.botbox .bothead h3{margin:0 0 4px}.botbox .bothead .muted{font-size:12.5px;line-height:1.5;display:block}
+.botmsgs{display:flex;flex-direction:column;gap:8px;margin:12px 0;max-height:300px;min-height:140px;overflow-y:auto}
+.bm{max-width:86%;padding:10px 13px;border-radius:16px;font-size:14.5px;line-height:1.55;animation:kidin .3s both}
+.bm.bot{align-self:flex-start;background:rgba(255,255,255,.08);border:1px solid var(--line);border-bottom-right-radius:4px}
+.bm.me{align-self:flex-end;background:rgba(200,255,61,.16);border:1px solid rgba(200,255,61,.3);border-bottom-left-radius:4px}
+.bm.typing{display:flex;gap:4px;padding:12px 14px}.bm.typing i{width:6px;height:6px;border-radius:50%;background:#8b93a1;animation:tdot 1s infinite}
+.bm.typing i:nth-child(2){animation-delay:.15s}.bm.typing i:nth-child(3){animation-delay:.3s}
+@keyframes tdot{0%,60%,100%{opacity:.3;transform:none}30%{opacity:1;transform:translateY(-3px)}}
+.botchips{margin-bottom:10px}
+.botform{display:flex;gap:8px;align-items:center}.botform .gi{flex:1;height:46px;padding:0 14px;border-radius:14px}.botform .btn{flex:none;width:76px}
+.cq{width:100%;resize:none;padding:12px 14px;border-radius:14px;line-height:1.5;font-family:inherit}
+.cpost{margin-bottom:10px}.cpost p{margin:8px 0;line-height:1.6;font-size:15px}
+.cp-h{display:flex;align-items:center;gap:8px}.cp-h i{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:rgba(200,255,61,.16);color:var(--lime);font-style:normal;font-weight:700;font-size:13px}
+.cp-h b{font-size:14px;flex:1}.cp-rep{font-size:12px}
+.cp-a{margin-top:8px;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.05);font-size:13.5px;line-height:1.55}.cp-a b{display:block;font-size:12.5px;color:var(--lime);margin-bottom:2px}
+
 body{background:#0b0d10}
 @media (min-width:481px){body{background:#d9dde3}}
 </style>
@@ -936,7 +976,7 @@ const ticks = [];
 const onTick = (fn) => ticks.push(fn);
 let cur = { name: '', arg: null };
 const NO_TABS = ['onboarding', 'login', 'signup', 'lesson', 'lessonDone', 'practice', 'feedback', 'asset', 'paywall', 'paysuccess'];
-const TAB_OF = { asset: 'market', practiceHome: 'practiceHome', profile: '', glossary: 'lessons' };
+const TAB_OF = { asset: 'market', practiceHome: 'practiceHome', profile: '', glossary: 'lessons', community: '' };
 let navToken = 0, booted = false;
 const TAB_ORDER = ['home', 'lessons', 'practiceHome', 'market', 'portfolio'];
 let lastTap = null;
@@ -959,6 +999,7 @@ function go(name, arg) {
     scr.scrollTop = 0;
     const tb = $('#tabbar');
     tb.hidden = !tabs;
+    const bf = $('#botfab'); if (bf) bf.hidden = !tabs;
     if (tabs) renderTabs(name in TAB_OF ? TAB_OF[name] : name);
     runCountUps();
     try { history.replaceState(null, '', '#' + name); } catch (e) { }
@@ -1000,7 +1041,10 @@ function moveInd(active, instant) {
 window.addEventListener('resize', () => { const on = $('.tb.on'); if (on && !$('#tabbar').hidden) moveInd(on.dataset.id, true); });
 document.addEventListener('click', (e) => {
   const g = e.target.closest('[data-go]');
-  if (g) go(g.dataset.go, g.dataset.arg);
+  if (g) {
+    if (g.closest('#tabbar') && g.dataset.go === cur.name) { if (scr.scrollTo) scr.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }); else scr.scrollTop = 0; return; }
+    go(g.dataset.go, g.dataset.arg);
+  }
   if (e.target.closest('[data-soon]')) toast('בקרוב');
 });
 
@@ -1049,6 +1093,56 @@ function initBg() {
   }
   requestAnimationFrame(draw);
 }
+
+'use strict';
+/* ===== sound: small synthesized sounds (Web Audio, no files). Quiet on purpose, with an on/off switch. ===== */
+const SFX = (() => {
+  const KEY = 'cm_sound';
+  let ctx = null, master = null, on = true;
+  try { on = localStorage.getItem(KEY) !== '0'; } catch (e) { }
+  const ensure = () => {
+    if (ctx) return ctx;
+    try { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null; ctx = new AC(); master = ctx.createGain(); master.gain.value = .16; master.connect(ctx.destination); } catch (e) { ctx = null; }
+    return ctx;
+  };
+  /* one note: soft attack, exponential fade */
+  const note = (f, t, d, type = 'sine', g = .5, to) => {
+    const o = ctx.createOscillator(), v = ctx.createGain(), t0 = ctx.currentTime + t;
+    o.type = type; o.frequency.setValueAtTime(f, t0); if (to) o.frequency.exponentialRampToValueAtTime(to, t0 + d);
+    v.gain.setValueAtTime(.0001, t0); v.gain.exponentialRampToValueAtTime(g, t0 + .012); v.gain.exponentialRampToValueAtTime(.0001, t0 + d);
+    o.connect(v); v.connect(master); o.start(t0); o.stop(t0 + d + .03);
+  };
+  const N = { C4: 262, G4: 392, E4: 330, C5: 523, E5: 659, G5: 784, A5: 880, C6: 1047, E6: 1319, G6: 1568 };
+  const S = {
+    tap: () => note(520, 0, .06, 'sine', .22),
+    tab: () => note(660, 0, .07, 'sine', .25, 760),
+    pick: () => note(440, 0, .07, 'triangle', .3, 520),
+    correct: () => { note(N.E5, 0, .14, 'triangle', .5); note(N.A5, .09, .22, 'triangle', .5); },
+    wrong: () => note(230, 0, .2, 'sine', .45, 175),
+    pop: () => { note(700, 0, .08, 'sine', .35, 920); },
+    star: () => { note(N.A5, 0, .12, 'triangle', .4); note(N.E6, .07, .2, 'sine', .3); },
+    good: () => { [N.C5, N.E5, N.G5].forEach((f, k) => note(f, k * .09, .22, 'triangle', .5)); },
+    oops: () => { note(N.G4, 0, .2, 'sine', .4); note(N.E4, .14, .3, 'sine', .4); },
+    win: () => { [N.C5, N.E5, N.G5, N.C6].forEach((f, k) => note(f, k * .1, .32, 'triangle', .5)); note(N.E6, .42, .55, 'sine', .35); note(N.G6, .5, .6, 'sine', .22); note(N.C5, .4, .7, 'sine', .25); },
+    level: () => { [N.C5, N.E5, N.G5, N.C6, N.E6].forEach((f, k) => note(f, k * .08, .3, 'triangle', .45)); note(N.G6, .5, .6, 'sine', .3); }
+  };
+  return {
+    get on() { return on; },
+    set(v) { on = !!v; try { localStorage.setItem(KEY, on ? '1' : '0'); } catch (e) { } if (on) this.play('pop'); },
+    unlock() { const c = ensure(); if (c && c.state === 'suspended') c.resume(); },
+    play(name) {
+      if (!on || !S[name]) return;
+      try { const c = ensure(); if (!c) return; if (c.state === 'suspended') c.resume(); S[name](); } catch (e) { }
+    }
+  };
+})();
+document.addEventListener('pointerdown', () => SFX.unlock(), { capture: true });
+/* light feedback for taps; quiz answers and results have their own sounds */
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.tb, .tb-prof')) SFX.play('tab');
+  else if (e.target.closest('.opt, .chip, .rk') && !e.target.closest('.lp')) SFX.play('pick');
+  else if (e.target.closest('.btn.primary')) SFX.play('tap');
+}, true);
 
 'use strict';
 /* ===== fictional market (NOT real quotes). Prices move live, in memory only. ===== */
@@ -1615,6 +1709,7 @@ screens.home = () => {
     <div class="rail">${xcards.map(([go, t, d, v, cls], i) => `<button class="xcard ${cls}" data-go="${go}" style="animation-delay:${.15 + i * .07}s"><div class="xart">${sceneSVG(v)}${cls ? `<div class="xlock">${ic.lock}</div>` : ''}</div><b>${t}</b><span>${d}</span></button>`).join('')}</div>
     <div class="sec2"><h3>זזים עכשיו <span class="live"></span></h3><button class="link" data-go="market">הכול</button></div>
     <div class="rail arail">${movers.map(a => `<button class="acard" data-go="asset" data-arg="${a.id}"><div class="ah"><div class="logo" style="background:${a.col}">${a.s.slice(0, 2)}</div><span>${a.s}</span></div>${spark(a.spark, a.chg >= 0, 128, 40)}<b data-px="${a.id}">${fmt(a.price)}</b><em class="${chgCls(a.chg)}" data-chg="${a.id}">${sgn(a.chg)}%</em></button>`).join('')}</div>
+    <button class="card gl-link" data-go="community" style="margin-top:14px"><div>${ic.user}</div><div><b>קהילה</b><span class="muted">שואלים ועונים על הלמידה, עם אחרים באפליקציה</span></div></button>
     <p class="demo-note" style="text-align:center">נתוני הדגמה בדויים שנעים בזמן אמת.</p></div>`;
   livePrices();
 };
@@ -1637,6 +1732,32 @@ screens.lessons = () => {
 screens.lesson = (id) => {
   const L = LESSONS.find(x => x.id === id) || LESSONS[0];
   let i = 0, answered = false, dir = 1;
+  let busy = false;
+  /* leave the current slide first, then bring the next one in (RTL: forward comes from the left) */
+  const step = (d, fromX) => {
+    if (busy) return; const el = $('.slide');
+    if (!el || reduceMotion) { i += d; dir = d; draw(); return; }
+    busy = true;
+    if (fromX == null) { el.style.animation = 'none'; el.classList.remove('in-r', 'in-l'); el.classList.add(d > 0 ? 'out-f' : 'out-b'); }
+    else { el.style.transition = 'transform .18s ease-in, opacity .18s ease-in'; el.style.transform = `translateX(${d > 0 ? 90 : -90}px)`; el.style.opacity = 0; }
+    setTimeout(() => { i += d; dir = d; busy = false; draw(); }, 180);
+  };
+  const swipe = (el, quiz) => {
+    let sx = 0, dx = 0, on = false;
+    el.addEventListener('pointerdown', (e) => { if (busy || e.target.closest('button,input,.toy,.opt')) return; on = true; sx = e.clientX; dx = 0; el.style.transition = 'none'; });
+    el.addEventListener('pointermove', (e) => {
+      if (!on) return; dx = e.clientX - sx;
+      const fwdOk = !quiz && dx > 0, backOk = i > 0 && !quiz && dx < 0, k = (fwdOk || backOk) ? .7 : .18;
+      el.style.transform = `translateX(${dx * k}px) rotate(${dx * k * .02}deg)`; el.style.opacity = 1 - Math.min(.5, Math.abs(dx) / 420);
+    });
+    const end = () => {
+      if (!on) return; on = false;
+      const d = dx > 0 ? 1 : -1, ok = d > 0 ? !quiz : (i > 0 && !quiz);
+      if (Math.abs(dx) > 70 && ok) step(d, dx);
+      else { el.style.transition = 'transform .4s cubic-bezier(.34,1.56,.64,1), opacity .3s'; el.style.transform = ''; el.style.opacity = ''; }
+    };
+    el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
+  };
   const ord = L.q.o.map((_, k) => k); for (let k = ord.length - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [ord[k], ord[j]] = [ord[j], ord[k]]; }
   const n = L.slides.length + 1, say = SAY[L.id] || [];
   const draw = () => {
@@ -1652,10 +1773,11 @@ screens.lesson = (id) => {
       <div class="nav2">${i > 0 && !quiz ? `<button class="btn ghost" id="pv" style="flex:none;width:90px">חזרה</button>` : ''}<button class="btn primary" id="nx" ${quiz ? 'disabled' : ''}>${quiz ? 'סיום שיעור' : 'הבא'}</button></div></div>`;
     scr.scrollTop = 0;
     $('#bk').onclick = () => go('lessons');
-    const pv = $('#pv'); if (pv) pv.onclick = () => { i--; dir = -1; draw(); };
+    const pv = $('#pv'); if (pv) pv.onclick = () => step(-1);
     if (!quiz) bindToy(sl.x, scr);
+    swipe($('.slide'), quiz);
     $('#nx').onclick = () => {
-      if (!quiz) { i++; dir = 1; draw(); return; }
+      if (!quiz) { step(1); return; }
       const s = A(), first = !s.lessonsDone.includes(L.id);
       if (first) { s.lessonsDone.push(L.id); s.stars += 1; s.xp = (s.xp || 0) + 20; save(); }
       markActive(s);
@@ -1665,6 +1787,7 @@ screens.lesson = (id) => {
       if (answered) return;
       const ok = +b.dataset.k === L.q.a;
       b.classList.add(ok ? 'ok' : 'bad');
+      SFX.play(ok ? 'correct' : 'wrong');
       if (ok) { answered = true; burst(e.clientX, e.clientY, '#ffc94d', 16); $('#qm').innerHTML = '<span class="up">נכון! כל הכבוד.</span>'; $('#nx').disabled = false; }
       else { $('#qm').innerHTML = '<span class="down">לא בדיוק, נסו שוב.</span>'; b.classList.add('shake'); }
     });
@@ -1679,6 +1802,7 @@ screens.lessonDone = (a) => {
   const id = a.id || a, L = LESSONS.find(x => x.id === id) || LESSONS[0], gained = a.gained || 0;
   const ac = A(), all = ALL_DONE(), left = LESSONS.length - lessonsDone().length;
   const xp1 = ac.xp || 0, xp0 = a.before != null ? a.before : xp1, up = Math.floor(xp1 / 100) > Math.floor(xp0 / 100);
+  SFX.play(up ? 'level' : 'win');
   scr.innerHTML = `${confetti(46)}<div class="ldone anim"><div class="rays"></div>
     <div class="dm"><svg viewBox="0 0 120 120" width="150" height="150"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="8"/><circle class="ringp" cx="60" cy="60" r="50" fill="none" stroke="#1ff0b0" stroke-width="8" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314" transform="rotate(-90 60 60)" style="filter:drop-shadow(0 0 8px #1ff0b0)"/><path class="checkp" d="M38 62l16 16 30-34" fill="none" stroke="#1ff0b0" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="90" stroke-dashoffset="90"/></svg></div>
     <h1>סיימת את השיעור!</h1><p class="muted" style="margin:6px 20px 0">${L.title}</p>
@@ -1699,12 +1823,15 @@ screens.profile = () => {
     <div class="stat3"><div class="card"><b class="gold">${s.stars}</b><span>כוכבים</span></div><div class="card"><b>${streakDays(s)}</b><span>ימים ברצף</span></div><div class="card"><b>${s.lessonsDone.length}/${LESSONS.length}</b><span>שיעורים</span></div></div>
     <div class="sec"><h3>הישגים</h3></div><div class="badges">${bd.map(([e, t, on]) => `<div class="badge${on ? '' : ' off'}"><i>${e}</i>${t}</div>`).join('')}</div>
     <button class="premcard" data-go="paywall"><div class="pmi">${s.premium ? '✓' : '★'}</div><div><b>${s.premium ? 'המנוי פעיל' : 'שדרוג לפרימיום'}</b><span>${s.premium ? 'אפשר לראות מה כלול' : 'ללמוד בלי גבולות. עד 50% הנחה'}${s.premium ? '' : '<span class="dtag">הדגמה</span>'}</span></div>${ic.back}</button>
+    <div class="sec"><h3>הגדרות</h3></div>
+    <button class="btn ghost" id="snd" style="margin-bottom:10px">${SFX.on ? 'סאונד: פעיל' : 'סאונד: כבוי'}</button>
     <div class="sec"><h3>כלי הדגמה</h3></div>
     <button class="btn ghost" id="un" style="margin-bottom:10px">${portfolioOpen() ? 'התיק פתוח' : 'פתח את התיק בלי לסיים שיעורים'}</button>
     <button class="btn ghost" id="lo" style="margin-bottom:10px">התנתקות</button>
     <button class="btn ghost" id="rs">מחיקת החשבון הזה</button>
     <p class="disc">התוכן באפליקציה לימודי בלבד. אין בו המלצות השקעה או הבטחות לרווח, ואין כסף אמיתי. ${WARN_DAY}</p>
     <p class="disc">נתונים לבדיקה פרטית בלבד, לא להפצה.</p></div>`;
+  $('#snd').onclick = () => { SFX.set(!SFX.on); $('#snd').textContent = SFX.on ? 'סאונד: פעיל' : 'סאונד: כבוי'; };
   $('#un').onclick = () => { if (!portfolioOpen()) { A().demoUnlock = true; save(); toast('התיק נפתח להדגמה'); go('profile'); } };
   $('#lo').onclick = () => { loadDB().session = null; save(); go('login'); };
   let sure = false;
@@ -2090,6 +2217,7 @@ function openPay(pl) {
   };
 }
 screens.paysuccess = (id) => {
+  SFX.play('win');
   const pl = PLANS.find(x => x.id === id) || PLANS[2];
   scr.innerHTML = `${confetti(46)}<div class="ldone anim"><div class="rays"></div>
     <div class="dm"><svg viewBox="0 0 120 120" width="150" height="150"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="8"/><circle class="ringp" cx="60" cy="60" r="50" fill="none" stroke="#c8ff3d" stroke-width="8" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314" transform="rotate(-90 60 60)" style="filter:drop-shadow(0 0 8px #c8ff3d)"/><path class="checkp" d="M38 62l16 16 30-34" fill="none" stroke="#c8ff3d" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="90" stroke-dashoffset="90"/></svg></div>
@@ -2317,6 +2445,7 @@ screens.feedback = ({ idx, st, sim }) => {
   const ac = A(), prev = ac.practiceDone[sc.id] || 0;
   if (ev.stars > prev) { ac.stars += ev.stars - prev; ac.xp = (ac.xp || 0) + (ev.stars - prev) * 10; ac.practiceDone[sc.id] = ev.stars; save(); }
   markActive(ac);
+  SFX.play(ev.stars === 3 ? 'win' : ev.stars > 0 ? 'good' : 'oops');
   const raw = sc.raw, fut0 = P.candles.slice(P.N), S = sc.S;
   const rel = (v) => `${fmt(Math.abs(v), 1)}% ${v < 0 ? 'מתחת' : 'מעל'} למחיר ההחלטה`;
   const trendWhy = S.trend === 'side' ? `שינוי של ${fmt(Math.abs(S.ch60), 1)}% בלבד, פחות מ-${TREND_PCT}%, ולכן בלי כיוון` : `${S.ch60 > 0 ? 'עלייה' : 'ירידה'} של ${fmt(Math.abs(S.ch60), 1)}%, יותר מ-${TREND_PCT}%`;
@@ -2352,6 +2481,112 @@ screens.feedback = ({ idx, st, sim }) => {
     ${alt}
     <div class="btns">${ok ? `<button class="btn primary" data-go="practice" data-arg="${(idx + 1) % SCEN.length}">למקרה הבא</button>` : `<button class="btn primary" data-go="practice" data-arg="${idx}">לנסות שוב</button>`}<button class="btn ghost" data-go="practiceHome">לכל המקרים</button></div>
     <p class="disc">תרגיל לימודי על נתוני שוק אמיתיים מהעבר, בלי כסף אמיתי. אין כאן המלצת השקעה.</p></div>`;
+};
+
+'use strict';
+/* ===== app helper bot + community (demo) =====
+   The bot is rule-based (ready-made answers, no AI model, no server). It only answers questions about using this app
+   and where things are. It does not answer questions about what to buy or sell. After an answer a pop-up offers to open the place. */
+const BOT_ADVICE = /תמליץ|המלצ|מה (כדאי )?(לקנות|למכור|להשקיע)|האם (כדאי|לקנות|למכור|להשקיע)|להשקיע ב|תחזית|יעלה|יירד|תרוויח|איזו מניה|איזה מניה|איזה נכס כדאי|כדאי לי לקנות|כדאי לקנות|כדאי למכור/;
+const BOT_INTENTS = [
+  { k: ['שכחתי סיסמה', 'איפוס סיסמה'], a: 'בגרסת הניסוי אי אפשר לאפס סיסמה. אפשר להירשם עם אימייל חדש. החשבונות נשמרים בדפדפן בלבד.', go: ['profile', 0, 'פרופיל'] },
+  { k: ['קהילה', 'להתייעץ', 'לשאול אנשים', 'אנשים אחרים', 'משתמשים אחרים', 'חברים באפליקציה'], a: 'בקהילה אפשר לשאול שאלות על הלמידה ועל האפליקציה ולראות מה שואלים אחרים. אין שם המלצות השקעה. כרגע זו הדגמה עם דוגמאות.', go: ['community', 0, 'קהילה'] },
+  { k: ['סאונד', 'צליל', 'קול', 'שקט', 'להשתיק', 'מוזיקה'], a: 'אפשר להפעיל או לכבות את הצלילים בפרופיל, תחת "הגדרות".', go: ['profile', 0, 'פרופיל'] },
+  { k: ['מנוי', 'פרימיום', 'תשלום', 'לשלם', 'מחיר'], a: 'מסך המנוי נמצא בפרופיל, בכרטיס "שדרוג לפרימיום". בגרסת הניסוי זו הדגמה: אין חיוב אמיתי וכל התכנים פתוחים.', go: ['paywall', 0, 'מסך המנוי'] },
+  { k: ['מחק', 'להתנתק', 'התנתק', 'יציאה', 'חשבון', 'פרופיל', 'הגדרות', 'שם שלי'], a: 'הפרופיל נמצא בעיגול בצד המסך. שם אפשר לראות סטטיסטיקות והישגים, לכבות סאונד, להתנתק או למחוק את החשבון.', go: ['profile', 0, 'פרופיל'] },
+  { k: ['רצף', 'כוכב', 'כוכבים', 'נקודות', 'רמה', 'הישג', 'xp'], a: 'רצף הימים עולה כשמסיימים שיעור או תרגיל באותו יום. כוכבים מקבלים על שיעורים ועל חשיבה נכונה בתרגול, והנקודות מעלות רמה.', go: ['profile', 0, 'פרופיל'] },
+  { k: ['מילון', 'מונח', 'מושג', 'מילה', 'מה זה', 'הגדרה', 'סטופ', 'תמיכה', 'התנגדות', 'נפח', 'נר'], a: 'כל המונחים מוסברים במילון בשפה פשוטה, עם איור ודוגמה. אפשר גם ללחוץ על כל מונח עם קו מקווקו כדי לראות הסבר.', go: ['glossary', 0, 'מילון'] },
+  { k: ['תרגול', 'תרגיל', 'לתרגל', 'מקרה', 'מקרים'], a: 'התרגול נמצא בלשונית "תרגול". יש 10 מקרים: מסתכלים על גרף אמיתי מהעבר בלי לדעת מה הנכס, מחליטים אם לקנות או לחכות, ובונים תוכנית. הציון הוא על החשיבה ולא על המזל.', go: ['practiceHome', 0, 'תרגול'] },
+  { k: ['תיק', 'ארנק', 'וירטואלי', 'כסף פנוי'], a: 'התיק הוירטואלי נמצא בלשונית "תיק". יש בו כסף לתרגול בלבד, ואפשר לראות שם פוזיציות והיסטוריה. הוא נפתח אחרי סיום השיעורים, או מהפרופיל בכלי ההדגמה.', go: ['portfolio', 0, 'תיק'] },
+  { k: ['לקנות', 'קנייה', 'קונים', 'למכור', 'מכירה', 'מוכרים', 'עסקה', 'סטופ לוס'], a: 'קונים ומוכרים בכסף וירטואלי במסך של נכס: נכנסים ללשונית "שוק", בוחרים נכס ולוחצים על "קנייה". אפשר גם לקבוע סטופ ויעד. התיק צריך להיות פתוח.', go: ['market', 0, 'שוק'] },
+  { k: ['שוק', 'מניה', 'מניות', 'מדד', 'מדדים', 'נכס', 'נכסים', 'מחירים', 'גרף'], a: 'בלשונית "שוק" אפשר לחפש מדדים ומניות, לראות גרפים עם כלי ציור ולהוסיף למעקב. הנתונים שם בדויים ומיועדים להדגמה.', go: ['market', 0, 'שוק'] },
+  { k: ['שיעור', 'שיעורים', 'ללמוד', 'לימוד', 'לימודים', 'חידון', 'מתחילים', 'להתחיל', 'מאיפה', 'איפה אני מתחיל', 'עזרה'], a: 'הכי טוב להתחיל מהשיעורים: כל שיעור קצר, עם איורים ובדיקה קטנה בסוף. אחריהם אפשר לעבור לתרגול.', go: ['lessons', 0, 'שיעורים'] },
+  { k: ['בית', 'ראשי', 'דף הבית', 'מסך ראשי'], a: 'מסך הבית מראה איפה עצרת, את הרצף והכוכבים שלך, ואת הצעדים הבאים.', go: ['home', 0, 'מסך הבית'] },
+  { k: ['שלום', 'היי', 'הי', 'מה נשמע', 'תודה'], a: 'היי! אני עוזר אוטומטי לאפליקציה. אפשר לשאול אותי איפה דברים נמצאים ומה עושים, למשל "איפה המילון?" או "איך מתרגלים?".' }
+];
+const BOT_CHIPS = ['איפה אני מתחיל?', 'איך מתרגלים?', 'איפה המילון?', 'איך קונים באפליקציה?', 'איפה הקהילה?'];
+const botNorm = (s) => String(s || '').toLowerCase().replace(/[֑-ׇ]/g, '').replace(/["'׳״.,!?;:()\-]/g, ' ').replace(/\s+/g, ' ').trim();
+function botAnswer(q) {
+  const t = botNorm(q);
+  if (!t) return { a: 'כתבו שאלה על האפליקציה.' };
+  if (BOT_ADVICE.test(t)) return { a: 'אני עוזר רק בשאלות על האפליקציה: איפה דברים נמצאים ומה עושים. אני לא נותן המלצות השקעה או ייעוץ, ולא אומר מה לקנות או למכור. לשאלות על הלמידה אפשר לעבור לשיעורים או לשאול בקהילה.', go: ['lessons', 0, 'שיעורים'] };
+  const hit = BOT_INTENTS.find(it => it.k.some(w => t.includes(botNorm(w))));
+  if (hit) return hit;
+  return { a: 'לא הבנתי. אני עוזר רק בשאלות על האפליקציה. אפשר לשאול למשל: "איפה המילון?", "איך מתרגלים?" או "איפה הקהילה?".' };
+}
+
+/* ----- floating button, chat sheet, "take me there" pop-up ----- */
+const botLog = [];
+(function initBot() {
+  const ph = $('#phone');
+  const fab = document.createElement('button');
+  fab.id = 'botfab'; fab.className = 'botfab'; fab.hidden = true; fab.setAttribute('aria-label', 'עוזר האפליקציה');
+  fab.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M9 11h.01M12 11h.01M15 11h.01"/></svg>';
+  const pop = document.createElement('div'); pop.id = 'navpop'; pop.className = 'navpop'; pop.hidden = true;
+  ph.appendChild(fab); ph.appendChild(pop);
+  let popT = 0;
+  const hidePop = () => { clearTimeout(popT); pop.classList.remove('show'); setTimeout(() => { if (!pop.classList.contains('show')) pop.hidden = true; }, 250); };
+  window.botAskGo = (label, name, arg) => {
+    pop.innerHTML = `<div class="np-t"><b>רוצה שאקח אותך ל${label}?</b><span>אפשר לעבור לשם ישר.</span></div><div class="np-b"><button class="btn primary small" id="np-go">קח אותי</button><button class="btn ghost small" id="np-no">לא עכשיו</button></div>`;
+    pop.hidden = false; requestAnimationFrame(() => pop.classList.add('show'));
+    $('#np-go').onclick = () => { hidePop(); closeSheet(); go(name, arg); };
+    $('#np-no').onclick = hidePop;
+    clearTimeout(popT); popT = setTimeout(hidePop, 12000);
+  };
+  const bubble = (who, text) => `<div class="bm ${who}">${text}</div>`;
+  const addMsg = (who, text, asText) => {
+    const box = $('#botmsgs'); if (!box) return;
+    const d = document.createElement('div'); d.className = 'bm ' + who; if (asText) d.textContent = text; else d.innerHTML = text;
+    box.appendChild(d); box.scrollTop = box.scrollHeight;
+  };
+  const ask = (q) => {
+    q = String(q || '').trim().slice(0, 200); if (!q) return;
+    botLog.push({ who: 'me', t: q }); addMsg('me', q, true);
+    const r = botAnswer(q);
+    const box = $('#botmsgs'), typing = document.createElement('div'); typing.className = 'bm bot typing'; typing.innerHTML = '<i></i><i></i><i></i>'; box.appendChild(typing); box.scrollTop = box.scrollHeight;
+    setTimeout(() => {
+      typing.remove(); botLog.push({ who: 'bot', t: r.a }); addMsg('bot', r.a, true); SFX.play('pop');
+      if (r.go) setTimeout(() => botAskGo(r.go[2], r.go[0], r.go[1]), 500);
+    }, reduceMotion ? 0 : 650);
+  };
+  fab.onclick = () => {
+    hidePop();
+    openSheet(`<div class="botbox"><div class="bothead"><div><h3>עוזר האפליקציה</h3><span class="muted">עוזר אוטומטי עם תשובות מוכנות. עונה רק על שאלות על האפליקציה, בלי המלצות השקעה.</span></div></div>
+      <div class="botmsgs" id="botmsgs"></div>
+      <div class="chips botchips">${BOT_CHIPS.map(c => `<button class="chip" data-bq="${c}">${c}</button>`).join('')}</div>
+      <form class="botform" id="botform"><input class="gi" id="botq" placeholder="שאלו על האפליקציה" maxlength="200" autocomplete="off"><button class="btn primary small" type="submit">שלח</button></form></div>`);
+    const box = $('#botmsgs');
+    if (!botLog.length) botLog.push({ who: 'bot', t: 'היי! אני עוזר אוטומטי. אפשר לשאול אותי איפה דברים נמצאים באפליקציה ומה עושים. לשאלות על מה לקנות או למכור אני לא עונה.' });
+    botLog.forEach(m => addMsg(m.who, m.t, true));
+    $('#botform').onsubmit = (e) => { e.preventDefault(); const i = $('#botq'); const v = i.value; i.value = ''; ask(v); };
+    $$('[data-bq]', $('#sheet')).forEach(b => b.onclick = () => ask(b.dataset.bq));
+  };
+})();
+
+/* ----- community (demo: sample posts only, new posts stay in this browser) ----- */
+const COMM_DEMO = [
+  { n: 'נועם', age: 16, q: 'איך אני יודע אם התרגיל הלך טוב אם יצא לי הפסד?', a: [['מיכל', 17, 'הציון הוא על התהליך. אפשר לקבל 3 כוכבים גם כשהסטופ נפגע, כי ההפסד נשאר קטן.']] },
+  { n: 'תומר', age: 15, q: 'איפה אני רואה שוב את המונחים שלמדתי?', a: [['יעל', 16, 'במילון. הוא בלשונית שיעורים, בכרטיס "מילון מונחים".']] },
+  { n: 'שירה', age: 17, q: 'מישהו יודע איך מציירים קו מגמה בתרגול? נתקעתי בשלב 2.', a: [] }
+];
+const COMM_BLOCK = /תמליץ|המלצ|מה (כדאי )?(לקנות|למכור|להשקיע)|כדאי (לי )?(לקנות|למכור)|להשקיע ב|תחזית|יעלה|יירד|תרוויח|\d{7,}|@|https?:|www\./;
+screens.community = () => {
+  const ac = A(); ac.posts = ac.posts || [];
+  const post = (n, age, q, a, mine) => `<div class="card cpost"><div class="cp-h"><i>${n[0]}</i><b>${n}${age ? `, ${age}` : ''}</b>${mine ? '' : '<button class="link cp-rep" data-rep="1">דיווח</button>'}</div><p>${q}</p>${a.map(([an, aa, at]) => `<div class="cp-a"><b>${an}, ${aa}</b><span>${at}</span></div>`).join('') || '<span class="muted" style="font-size:13px">עוד אין תשובות</span>'}</div>`;
+  const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  scr.innerHTML = `<div class="anim"><div class="top"><h2>קהילה <span class="dtag">הדגמה</span></h2></div>
+    <div class="card howto"><b style="display:block;margin-bottom:6px">כללי הקהילה</b><span class="muted" style="font-size:13.5px;line-height:1.7">שואלים ועונים על הלמידה ועל האפליקציה. לא כותבים המלצות על מה לקנות או למכור, ולא משתפים פרטים אישיים.</span>
+      <span class="muted" style="font-size:12.5px;line-height:1.6">זו הדגמה: הפוסטים הקיימים הם דוגמאות, ופוסט חדש נשמר רק בדפדפן שלך. בגרסה האמיתית יהיו כאן משתמשים אמיתיים והשגחה.</span></div>
+    <div class="card" style="margin-top:12px"><textarea class="gi cq" id="cq" rows="3" maxlength="200" placeholder="מה רוצים לשאול?"></textarea><button class="btn primary small" id="cpost" style="margin-top:10px">פרסום</button></div>
+    <div id="clist" style="margin-top:12px">${ac.posts.slice().reverse().map(p => post('את.ה', '', esc(p.q), [], true)).join('')}${COMM_DEMO.map(p => post(p.n, p.age, p.q, p.a, false)).join('')}</div>
+    <p class="demo-note" style="text-align:center">הקהילה היא להתייעצות על הלמידה בלבד, לא ייעוץ השקעות.</p></div>`;
+  $('#cpost').onclick = () => {
+    const q = $('#cq').value.trim();
+    if (q.length < 5) return toast('כתבו שאלה קצת יותר ארוכה');
+    if (COMM_BLOCK.test(botNorm(q)) || COMM_BLOCK.test(q)) return toast('כאן שואלים על הלמידה והאפליקציה, בלי המלצות השקעה ובלי פרטים אישיים');
+    ac.posts.push({ q, t: Date.now() }); save(); SFX.play('pop'); screens.community();
+  };
+  scr.onclick = (e) => { if (e.target.closest('[data-rep]')) toast('תודה, הדיווח נשלח לבדיקה (הדגמה)'); };
 };
 
 'use strict';

@@ -842,3 +842,43 @@ bdi{unicode-bidi:isolate}
 .two2 .gf{margin-top:0}
 
 .dtag{display:inline-block;font-size:10.5px;font-weight:700;line-height:1;padding:3px 7px;border-radius:999px;background:rgba(200,255,61,.14);color:var(--lime);margin-inline-start:8px;vertical-align:middle}
+
+/* ===== lesson slide motion: leave, then arrive with a soft spring; swipe to move ===== */
+.slide{touch-action:pan-y}
+.slide.in-r{animation:inr .55s cubic-bezier(.22,1,.36,1)}
+.slide.in-l{animation:inl .55s cubic-bezier(.22,1,.36,1)}
+@keyframes inr{from{opacity:0;transform:translateX(-64px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes inl{from{opacity:0;transform:translateX(64px) scale(.97)}to{opacity:1;transform:none}}
+.slide.out-f{animation:outf .18s cubic-bezier(.4,0,1,1) forwards}
+.slide.out-b{animation:outb .18s cubic-bezier(.4,0,1,1) forwards}
+@keyframes outf{to{opacity:0;transform:translateX(56px) scale(.98)}}
+@keyframes outb{to{opacity:0;transform:translateX(-56px) scale(.98)}}
+.slide.in-r>*,.slide.in-l>*{animation:kidin .5s cubic-bezier(.22,1,.36,1) both}
+.slide.in-r>*:nth-child(2),.slide.in-l>*:nth-child(2){animation-delay:.04s}
+.slide.in-r>*:nth-child(3),.slide.in-l>*:nth-child(3){animation-delay:.08s}
+.slide.in-r>*:nth-child(n+4),.slide.in-l>*:nth-child(n+4){animation-delay:.12s}
+@keyframes kidin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.in-r,.slide.in-l,.slide.in-r>*,.slide.in-l>*{animation:none}}
+
+/* ===== helper bot, "take me there" pop-up, community ===== */
+.botfab{position:absolute;left:14px;bottom:104px;z-index:21;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#0b0d10;background:linear-gradient(135deg,#d9ff6a,#b6f21a);box-shadow:0 8px 22px rgba(0,0,0,.45),0 0 0 4px rgba(200,255,61,.14);transition:transform .2s}
+.botfab:active{transform:scale(.92)}.botfab[hidden]{display:none}
+.navpop{position:absolute;top:58px;left:12px;right:12px;z-index:45;background:linear-gradient(160deg,rgba(32,38,47,.96),rgba(17,21,27,.97));border:1px solid rgba(200,255,61,.35);border-radius:20px;padding:14px;box-shadow:0 18px 40px rgba(0,0,0,.55);opacity:0;transform:translateY(-16px);transition:.3s cubic-bezier(.22,1,.36,1)}
+.navpop.show{opacity:1;transform:none}.navpop[hidden]{display:none}
+.navpop .np-t b{display:block;font-size:15.5px}.navpop .np-t span{font-size:13px;color:var(--muted,#8b93a1)}
+.navpop .np-b{display:flex;gap:8px;margin-top:10px}.navpop .np-b .btn{flex:1}
+.botbox .bothead h3{margin:0 0 4px}.botbox .bothead .muted{font-size:12.5px;line-height:1.5;display:block}
+.botmsgs{display:flex;flex-direction:column;gap:8px;margin:12px 0;max-height:300px;min-height:140px;overflow-y:auto}
+.bm{max-width:86%;padding:10px 13px;border-radius:16px;font-size:14.5px;line-height:1.55;animation:kidin .3s both}
+.bm.bot{align-self:flex-start;background:rgba(255,255,255,.08);border:1px solid var(--line);border-bottom-right-radius:4px}
+.bm.me{align-self:flex-end;background:rgba(200,255,61,.16);border:1px solid rgba(200,255,61,.3);border-bottom-left-radius:4px}
+.bm.typing{display:flex;gap:4px;padding:12px 14px}.bm.typing i{width:6px;height:6px;border-radius:50%;background:#8b93a1;animation:tdot 1s infinite}
+.bm.typing i:nth-child(2){animation-delay:.15s}.bm.typing i:nth-child(3){animation-delay:.3s}
+@keyframes tdot{0%,60%,100%{opacity:.3;transform:none}30%{opacity:1;transform:translateY(-3px)}}
+.botchips{margin-bottom:10px}
+.botform{display:flex;gap:8px;align-items:center}.botform .gi{flex:1;height:46px;padding:0 14px;border-radius:14px}.botform .btn{flex:none;width:76px}
+.cq{width:100%;resize:none;padding:12px 14px;border-radius:14px;line-height:1.5;font-family:inherit}
+.cpost{margin-bottom:10px}.cpost p{margin:8px 0;line-height:1.6;font-size:15px}
+.cp-h{display:flex;align-items:center;gap:8px}.cp-h i{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:rgba(200,255,61,.16);color:var(--lime);font-style:normal;font-weight:700;font-size:13px}
+.cp-h b{font-size:14px;flex:1}.cp-rep{font-size:12px}
+.cp-a{margin-top:8px;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.05);font-size:13.5px;line-height:1.55}.cp-a b{display:block;font-size:12.5px;color:var(--lime);margin-bottom:2px}

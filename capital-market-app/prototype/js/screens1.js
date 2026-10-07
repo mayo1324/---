@@ -208,6 +208,7 @@ screens.home = () => {
     <div class="rail">${xcards.map(([go, t, d, v, cls], i) => `<button class="xcard ${cls}" data-go="${go}" style="animation-delay:${.15 + i * .07}s"><div class="xart">${sceneSVG(v)}${cls ? `<div class="xlock">${ic.lock}</div>` : ''}</div><b>${t}</b><span>${d}</span></button>`).join('')}</div>
     <div class="sec2"><h3>זזים עכשיו <span class="live"></span></h3><button class="link" data-go="market">הכול</button></div>
     <div class="rail arail">${movers.map(a => `<button class="acard" data-go="asset" data-arg="${a.id}"><div class="ah"><div class="logo" style="background:${a.col}">${a.s.slice(0, 2)}</div><span>${a.s}</span></div>${spark(a.spark, a.chg >= 0, 128, 40)}<b data-px="${a.id}">${fmt(a.price)}</b><em class="${chgCls(a.chg)}" data-chg="${a.id}">${sgn(a.chg)}%</em></button>`).join('')}</div>
+    <button class="card gl-link" data-go="community" style="margin-top:14px"><div>${ic.user}</div><div><b>קהילה</b><span class="muted">שואלים ועונים על הלמידה, עם אחרים באפליקציה</span></div></button>
     <p class="demo-note" style="text-align:center">נתוני הדגמה בדויים שנעים בזמן אמת.</p></div>`;
   livePrices();
 };
@@ -230,6 +231,32 @@ screens.lessons = () => {
 screens.lesson = (id) => {
   const L = LESSONS.find(x => x.id === id) || LESSONS[0];
   let i = 0, answered = false, dir = 1;
+  let busy = false;
+  /* leave the current slide first, then bring the next one in (RTL: forward comes from the left) */
+  const step = (d, fromX) => {
+    if (busy) return; const el = $('.slide');
+    if (!el || reduceMotion) { i += d; dir = d; draw(); return; }
+    busy = true;
+    if (fromX == null) { el.style.animation = 'none'; el.classList.remove('in-r', 'in-l'); el.classList.add(d > 0 ? 'out-f' : 'out-b'); }
+    else { el.style.transition = 'transform .18s ease-in, opacity .18s ease-in'; el.style.transform = `translateX(${d > 0 ? 90 : -90}px)`; el.style.opacity = 0; }
+    setTimeout(() => { i += d; dir = d; busy = false; draw(); }, 180);
+  };
+  const swipe = (el, quiz) => {
+    let sx = 0, dx = 0, on = false;
+    el.addEventListener('pointerdown', (e) => { if (busy || e.target.closest('button,input,.toy,.opt')) return; on = true; sx = e.clientX; dx = 0; el.style.transition = 'none'; });
+    el.addEventListener('pointermove', (e) => {
+      if (!on) return; dx = e.clientX - sx;
+      const fwdOk = !quiz && dx > 0, backOk = i > 0 && !quiz && dx < 0, k = (fwdOk || backOk) ? .7 : .18;
+      el.style.transform = `translateX(${dx * k}px) rotate(${dx * k * .02}deg)`; el.style.opacity = 1 - Math.min(.5, Math.abs(dx) / 420);
+    });
+    const end = () => {
+      if (!on) return; on = false;
+      const d = dx > 0 ? 1 : -1, ok = d > 0 ? !quiz : (i > 0 && !quiz);
+      if (Math.abs(dx) > 70 && ok) step(d, dx);
+      else { el.style.transition = 'transform .4s cubic-bezier(.34,1.56,.64,1), opacity .3s'; el.style.transform = ''; el.style.opacity = ''; }
+    };
+    el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
+  };
   const ord = L.q.o.map((_, k) => k); for (let k = ord.length - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [ord[k], ord[j]] = [ord[j], ord[k]]; }
   const n = L.slides.length + 1, say = SAY[L.id] || [];
   const draw = () => {
@@ -245,10 +272,11 @@ screens.lesson = (id) => {
       <div class="nav2">${i > 0 && !quiz ? `<button class="btn ghost" id="pv" style="flex:none;width:90px">חזרה</button>` : ''}<button class="btn primary" id="nx" ${quiz ? 'disabled' : ''}>${quiz ? 'סיום שיעור' : 'הבא'}</button></div></div>`;
     scr.scrollTop = 0;
     $('#bk').onclick = () => go('lessons');
-    const pv = $('#pv'); if (pv) pv.onclick = () => { i--; dir = -1; draw(); };
+    const pv = $('#pv'); if (pv) pv.onclick = () => step(-1);
     if (!quiz) bindToy(sl.x, scr);
+    swipe($('.slide'), quiz);
     $('#nx').onclick = () => {
-      if (!quiz) { i++; dir = 1; draw(); return; }
+      if (!quiz) { step(1); return; }
       const s = A(), first = !s.lessonsDone.includes(L.id);
       if (first) { s.lessonsDone.push(L.id); s.stars += 1; s.xp = (s.xp || 0) + 20; save(); }
       markActive(s);
@@ -258,6 +286,7 @@ screens.lesson = (id) => {
       if (answered) return;
       const ok = +b.dataset.k === L.q.a;
       b.classList.add(ok ? 'ok' : 'bad');
+      SFX.play(ok ? 'correct' : 'wrong');
       if (ok) { answered = true; burst(e.clientX, e.clientY, '#ffc94d', 16); $('#qm').innerHTML = '<span class="up">נכון! כל הכבוד.</span>'; $('#nx').disabled = false; }
       else { $('#qm').innerHTML = '<span class="down">לא בדיוק, נסו שוב.</span>'; b.classList.add('shake'); }
     });
@@ -272,6 +301,7 @@ screens.lessonDone = (a) => {
   const id = a.id || a, L = LESSONS.find(x => x.id === id) || LESSONS[0], gained = a.gained || 0;
   const ac = A(), all = ALL_DONE(), left = LESSONS.length - lessonsDone().length;
   const xp1 = ac.xp || 0, xp0 = a.before != null ? a.before : xp1, up = Math.floor(xp1 / 100) > Math.floor(xp0 / 100);
+  SFX.play(up ? 'level' : 'win');
   scr.innerHTML = `${confetti(46)}<div class="ldone anim"><div class="rays"></div>
     <div class="dm"><svg viewBox="0 0 120 120" width="150" height="150"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="8"/><circle class="ringp" cx="60" cy="60" r="50" fill="none" stroke="#1ff0b0" stroke-width="8" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314" transform="rotate(-90 60 60)" style="filter:drop-shadow(0 0 8px #1ff0b0)"/><path class="checkp" d="M38 62l16 16 30-34" fill="none" stroke="#1ff0b0" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="90" stroke-dashoffset="90"/></svg></div>
     <h1>סיימת את השיעור!</h1><p class="muted" style="margin:6px 20px 0">${L.title}</p>
@@ -292,12 +322,15 @@ screens.profile = () => {
     <div class="stat3"><div class="card"><b class="gold">${s.stars}</b><span>כוכבים</span></div><div class="card"><b>${streakDays(s)}</b><span>ימים ברצף</span></div><div class="card"><b>${s.lessonsDone.length}/${LESSONS.length}</b><span>שיעורים</span></div></div>
     <div class="sec"><h3>הישגים</h3></div><div class="badges">${bd.map(([e, t, on]) => `<div class="badge${on ? '' : ' off'}"><i>${e}</i>${t}</div>`).join('')}</div>
     <button class="premcard" data-go="paywall"><div class="pmi">${s.premium ? '✓' : '★'}</div><div><b>${s.premium ? 'המנוי פעיל' : 'שדרוג לפרימיום'}</b><span>${s.premium ? 'אפשר לראות מה כלול' : 'ללמוד בלי גבולות. עד 50% הנחה'}${s.premium ? '' : '<span class="dtag">הדגמה</span>'}</span></div>${ic.back}</button>
+    <div class="sec"><h3>הגדרות</h3></div>
+    <button class="btn ghost" id="snd" style="margin-bottom:10px">${SFX.on ? 'סאונד: פעיל' : 'סאונד: כבוי'}</button>
     <div class="sec"><h3>כלי הדגמה</h3></div>
     <button class="btn ghost" id="un" style="margin-bottom:10px">${portfolioOpen() ? 'התיק פתוח' : 'פתח את התיק בלי לסיים שיעורים'}</button>
     <button class="btn ghost" id="lo" style="margin-bottom:10px">התנתקות</button>
     <button class="btn ghost" id="rs">מחיקת החשבון הזה</button>
     <p class="disc">התוכן באפליקציה לימודי בלבד. אין בו המלצות השקעה או הבטחות לרווח, ואין כסף אמיתי. ${WARN_DAY}</p>
     <p class="disc">נתונים לבדיקה פרטית בלבד, לא להפצה.</p></div>`;
+  $('#snd').onclick = () => { SFX.set(!SFX.on); $('#snd').textContent = SFX.on ? 'סאונד: פעיל' : 'סאונד: כבוי'; };
   $('#un').onclick = () => { if (!portfolioOpen()) { A().demoUnlock = true; save(); toast('התיק נפתח להדגמה'); go('profile'); } };
   $('#lo').onclick = () => { loadDB().session = null; save(); go('login'); };
   let sure = false;
