@@ -42,11 +42,12 @@ const botLog = [];
   let popT = 0;
   const hidePop = () => { clearTimeout(popT); pop.classList.remove('show'); setTimeout(() => { if (!pop.classList.contains('show')) pop.hidden = true; }, 250); };
   window.botAskGo = (label, name, arg) => {
-    pop.innerHTML = `<div class="np-t"><b>רוצה שאקח אותך ל${label}?</b><span>אפשר לעבור לשם ישר.</span></div><div class="np-b"><button class="btn primary small" id="np-go">קח אותי</button><button class="btn ghost small" id="np-no">לא עכשיו</button></div>`;
+    pop.innerHTML = `<div class="np-card" role="dialog" aria-modal="true"><div class="np-ic">${fab.innerHTML}</div><div class="np-t"><b>רוצה שאקח אותך ל${label}?</b><span>אפשר לעבור לשם ישר.</span></div><div class="np-b"><button class="btn primary" id="np-go">קח אותי</button><button class="btn ghost" id="np-no">לא עכשיו</button></div></div>`;
     pop.hidden = false; requestAnimationFrame(() => pop.classList.add('show'));
     $('#np-go').onclick = () => { hidePop(); closeSheet(); go(name, arg); };
     $('#np-no').onclick = hidePop;
-    clearTimeout(popT); popT = setTimeout(hidePop, 12000);
+    pop.onclick = (e) => { if (e.target === pop) hidePop(); };
+    clearTimeout(popT);
   };
   const bubble = (who, text) => `<div class="bm ${who}">${text}</div>`;
   const addMsg = (who, text, asText) => {

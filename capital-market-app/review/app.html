@@ -890,6 +890,18 @@ bdi{unicode-bidi:isolate}
 .cp-h b{font-size:14px;flex:1}.cp-rep{font-size:12px}
 .cp-a{margin-top:8px;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.05);font-size:13.5px;line-height:1.55}.cp-a b{display:block;font-size:12.5px;color:var(--lime);margin-bottom:2px}
 
+/* "take me there" message: big, centered, with the screen blurred behind it */
+.navpop{inset:0;top:0;left:0;right:0;padding:24px;display:flex;align-items:center;justify-content:center;background:rgba(5,8,12,.42);-webkit-backdrop-filter:blur(14px) saturate(.9);backdrop-filter:blur(14px) saturate(.9);border:0;border-radius:0;box-shadow:none;transform:none;transition:opacity .28s}
+.navpop[hidden]{display:none}
+.np-card{width:100%;max-width:330px;text-align:center;background:linear-gradient(160deg,rgba(36,43,53,.97),rgba(16,20,26,.98));border:1px solid rgba(200,255,61,.4);border-radius:28px;padding:26px 22px 22px;box-shadow:0 30px 70px rgba(0,0,0,.6),0 0 0 6px rgba(200,255,61,.07);transform:translateY(18px) scale(.94);transition:transform .38s cubic-bezier(.22,1,.36,1)}
+.navpop.show .np-card{transform:none}
+.np-ic{width:60px;height:60px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;color:#0b0d10;background:linear-gradient(135deg,#d9ff6a,#b6f21a);box-shadow:0 8px 24px rgba(200,255,61,.28)}
+.np-ic svg{width:30px;height:30px}
+.navpop .np-t b{font-size:21px;line-height:1.35;margin-bottom:6px}
+.navpop .np-t span{font-size:14.5px}
+.navpop .np-b{flex-direction:column;gap:10px;margin-top:20px}
+.navpop .np-b .btn{flex:none;width:100%;height:54px;font-size:16.5px}
+
 body{background:#0b0d10}
 @media (min-width:481px){body{background:#d9dde3}}
 </style>
@@ -2527,11 +2539,12 @@ const botLog = [];
   let popT = 0;
   const hidePop = () => { clearTimeout(popT); pop.classList.remove('show'); setTimeout(() => { if (!pop.classList.contains('show')) pop.hidden = true; }, 250); };
   window.botAskGo = (label, name, arg) => {
-    pop.innerHTML = `<div class="np-t"><b>רוצה שאקח אותך ל${label}?</b><span>אפשר לעבור לשם ישר.</span></div><div class="np-b"><button class="btn primary small" id="np-go">קח אותי</button><button class="btn ghost small" id="np-no">לא עכשיו</button></div>`;
+    pop.innerHTML = `<div class="np-card" role="dialog" aria-modal="true"><div class="np-ic">${fab.innerHTML}</div><div class="np-t"><b>רוצה שאקח אותך ל${label}?</b><span>אפשר לעבור לשם ישר.</span></div><div class="np-b"><button class="btn primary" id="np-go">קח אותי</button><button class="btn ghost" id="np-no">לא עכשיו</button></div></div>`;
     pop.hidden = false; requestAnimationFrame(() => pop.classList.add('show'));
     $('#np-go').onclick = () => { hidePop(); closeSheet(); go(name, arg); };
     $('#np-no').onclick = hidePop;
-    clearTimeout(popT); popT = setTimeout(hidePop, 12000);
+    pop.onclick = (e) => { if (e.target === pop) hidePop(); };
+    clearTimeout(popT);
   };
   const bubble = (who, text) => `<div class="bm ${who}">${text}</div>`;
   const addMsg = (who, text, asText) => {
