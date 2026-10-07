@@ -895,7 +895,7 @@ function loadDB() {
 }
 function save() { try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) { } }
 const START_CASH = 5000;
-const newAcct = (name, age, email, pass, goal) => ({ name, age, email, pass: hash(pass), goal, stars: 0, xp: 0, streak: 1, lessonsDone: [], practiceDone: {}, watch: ['ALFA', 'IDX100'], portfolio: { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] }, demoUnlock: false });
+const newAcct = (name, age, email, pass, goal) => ({ name, age, email, pass: hash(pass), goal, stars: 0, xp: 0, lessonsDone: [], practiceDone: {}, watch: ['ALFA', 'IDX100'], portfolio: { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] }, demoUnlock: false });
 const GUEST = newAcct('אורח', 16, '', 'x', '');
 const A = () => { const d = loadDB(); return (d.session && d.accounts[d.session]) || GUEST; };
 const loggedIn = () => { const d = loadDB(); return !!(d.session && d.accounts[d.session]); };
@@ -1208,7 +1208,7 @@ const LESSONS = [
     id: 'l8', title: 'סיכוי מול סיכון', min: 6, color: '#fb7185', slides: [
       { t: 'כמה מרוויחים מול כמה מפסידים', b: 'סיכון הוא כמה אפשר להפסיד (מהכניסה עד הסטופ). סיכוי הוא כמה אפשר להרוויח (מהכניסה עד היעד).', v: 'rr' },
       { t: 'דוגמה', b: 'קונים ב-100. סטופ ב-95, יעד ב-110. מפסידים עד 5, מרוויחים עד 10. כלומר הרווח האפשרי כפול מההפסד. זה נקרא יחס 1 ל-2.', v: 'rr' },
-      { t: 'גם תוכנית טובה מפסידה לפעמים', b: 'יחס טוב לא מבטיח ניצחון. כשהרווח האפשרי כפול מההפסד האפשרי (יחס 1 ל-2), צריך להצליח לפחות בערך בכשליש מהעסקאות כדי לא להפסיד בסך הכול, ועוד לפני עמלות. לכן בודקים את התוכנית ולא רק את התוצאה של עסקה אחת.', v: 'coaster' }
+      { t: 'גם תוכנית טובה מפסידה לפעמים', b: 'יחס טוב לא מבטיח ניצחון. אפשר לטעות הרבה פעמים ועדיין להרוויח, אבל רק אם הרווח בכל הצלחה גדול מההפסד בכל טעות. אחרת מפסידים. לכן בודקים את התוכנית ולא רק את התוצאה של עסקה אחת.', v: 'coaster' }
     ],
     q: { q: 'קונים ב-100, סטופ ב-95, יעד ב-110. מה היחס?', o: ['1 ל-2', '1 ל-1', '2 ל-1'], a: 0 }
   },
@@ -2289,7 +2289,7 @@ screens.feedback = ({ idx, st, sim }) => {
     for (let k = 0; k < 7; k++) res.push(simulate(altFuture(P, sc.seed * 31 + k * 17 + 5, drift), { stop: pl.stop, target: pl.target }).res);
     const w = res.filter(r => r === 'target').length, l = res.filter(r => r === 'stop').length;
     alt = `<div class="card alt"><b>בדיקה נוספת: אותה תוכנית, 7 גרפים אחרים</b><div class="altrow">${res.map(r => `<i class="${r}">${r === 'target' ? '✓' : r === 'stop' ? '✕' : '·'}</i>`).join('')}</div>
-      <span class="muted" style="font-size:13.5px;line-height:1.65">${w} הגיעו ליעד, ${l} ירדו לסטופ. זה בסדר! כשהרווח האפשרי גדול מההפסד, מספיק להצליח בערך 1 מכל ${Math.round(1 + rrv)} פעמים כדי לא להפסיד בסך הכול. תוצאה אחת לא מוכיחה כלום, ולכן בודקים את התוכנית ולא רק את התוצאה. (גרפים אקראיים בדויים, עם הנחה של עלייה קלה. זו הדגמה ולא סטטיסטיקה אמיתית.)</span></div>`;
+      <span class="muted" style="font-size:13.5px;line-height:1.65">${w} הגיעו ליעד, ${l} ירדו לסטופ. זה בסדר! כשהרווח האפשרי גדול מההפסד, מספיק להצליח בערך 1 מכל ${Math.round(1 + rrv)} פעמים כדי לא להפסיד בסך הכול. תוצאה אחת לא מוכיחה כלום, ולכן בודקים את התוכנית ולא רק את התוצאה. (סימולציה אקראית עם הנחה של עלייה קלה. זו הדגמה, ולא תחזית ולא סטטיסטיקה אמיתית.)</span></div>`;
     if (ok) { title = sim.res === 'target' ? 'תוכנית מצוינת!' : sim.res === 'stop' ? 'תוכנית טובה, אבל הפעם לא הצליח' : 'תוכנית טובה'; sub = sim.res === 'stop' ? 'זה קורה גם לתוכניות טובות. הסטופ עשה את שלו: ההפסד נשאר קטן.' : 'כל החלקים בתוכנית נכונים.'; }
   } else if (st.decision === 'wait') {
     result = `<div class="card pnl"><span class="eyebrow">מה קרה בגרף</span><div class="wbig" style="font-size:20px">${sc.action === 'wait' ? 'לא הפסדתם כלום' : 'לא קניתם'}</div><span class="muted" style="font-size:13.5px;line-height:1.5">${sc.why}</span></div>`;

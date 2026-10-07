@@ -22,7 +22,7 @@ function loadDB() {
 }
 function save() { try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) { } }
 const START_CASH = 5000;
-const newAcct = (name, age, email, pass, goal) => ({ name, age, email, pass: hash(pass), goal, stars: 0, xp: 0, streak: 1, lessonsDone: [], practiceDone: {}, watch: ['ALFA', 'IDX100'], portfolio: { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] }, demoUnlock: false });
+const newAcct = (name, age, email, pass, goal) => ({ name, age, email, pass: hash(pass), goal, stars: 0, xp: 0, lessonsDone: [], practiceDone: {}, watch: ['ALFA', 'IDX100'], portfolio: { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] }, demoUnlock: false });
 const GUEST = newAcct('אורח', 16, '', 'x', '');
 const A = () => { const d = loadDB(); return (d.session && d.accounts[d.session]) || GUEST; };
 const loggedIn = () => { const d = loadDB(); return !!(d.session && d.accounts[d.session]); };
