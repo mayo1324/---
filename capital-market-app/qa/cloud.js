@@ -29,7 +29,7 @@ const { launch, APP } = require('./lib');
  await p.evaluate(()=>go('profile')); await p.waitForTimeout(400); await p.click('#lo'); await p.waitForTimeout(500);
  ok(await p.evaluate(()=>loadDB().session)===null,'logout clears session'); ok(await p.evaluate(()=>__log.includes('out')),'firebase signOut called');
  // sign in again -> cloud progress restored even if local wiped
- await p.evaluate(()=>{ delete loadDB().accounts['g:u9']; save(); __store.u9.lessonsDone=['l1','l2','l3']; });
+ await p.evaluate(()=>{ delete loadDB().accounts['a@b.co']; save(); __store.u9.lessonsDone=['l1','l2','l3']; });
  await p.evaluate(()=>go('login')); await p.waitForTimeout(400); await p.click('[data-prov=google]'); await p.waitForTimeout(900);
  ok(await p.evaluate(()=>A().lessonsDone.length)===3,'cloud progress restored on new device: '+await p.evaluate(()=>A().lessonsDone));
  // errors
@@ -43,8 +43,8 @@ const { launch, APP } = require('./lib');
  // delete with failure keeps account, success removes
  await p.evaluate(()=>{__mode='ok';loadDB().session=null;save();go('login')}); await p.waitForTimeout(400); await p.click('[data-prov=google]'); await p.waitForTimeout(800);
  await p.evaluate(()=>{closeSheetNow();go('profile')}); await p.waitForTimeout(400); await p.evaluate(()=>{__mode='delfail'}); await p.click('#rs'); await p.click('#rs'); await p.waitForTimeout(600);
- ok(await p.evaluate(()=>!!loadDB().accounts['g:u9']),'failed cloud delete must keep local account');
+ ok(await p.evaluate(()=>!!loadDB().accounts['a@b.co']),'failed cloud delete must keep local account');
  await p.evaluate(()=>{__mode='ok'}); await p.click('#rs'); await p.waitForTimeout(700);
- ok(await p.evaluate(()=>!loadDB().accounts['g:u9']&&!__store.u9),'delete removes local+cloud');
+ ok(await p.evaluate(()=>!loadDB().accounts['a@b.co']&&!__store.u9),'delete removes local+cloud');
  const u=[...new Set(errs)].filter(e=>!/ERR_FAILED/.test(e)); if(u.length) issues.push('errors '+u.join('|').slice(0,300));
  console.log('ISSUES',issues.length); issues.forEach(i=>console.log(' -',i)); await b.close(); })();

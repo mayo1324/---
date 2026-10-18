@@ -159,7 +159,7 @@ screens.login = () => {
   const submit = () => {
     const em = $('#em').value.trim().toLowerCase(), pw = $('#pw').value, acc = loadDB().accounts[em];
     let bad = setErr('em', /^\S+@\S+\.\S+$/.test(em) ? (acc ? '' : 'לא מצאנו חשבון עם האימייל הזה') : 'כתבו אימייל תקין');
-    if (!bad) bad = setErr('pw', !pw ? 'כתבו סיסמה' : acc.pass !== hash(pw) ? 'הסיסמה לא נכונה' : ''); else setErr('pw', '');
+    if (!bad) bad = setErr('pw', !pw ? 'כתבו סיסמה' : acc.noPass ? 'החשבון הזה נוצר עם Google. התחברו עם הכפתור של Google' : acc.pass !== hash(pw) ? 'הסיסמה לא נכונה' : ''); else setErr('pw', '');
     if (bad) return;
     loadDB().session = em; save(); toast('ברוך שובך, ' + acc.name); go('home');
   };
@@ -189,7 +189,7 @@ screens.signup = () => {
     let bad = false;
     bad = setErr('nm', nm.length < 2 ? 'כתבו שם של לפחות שתי אותיות' : '') || bad;
     bad = setErr('age', !age ? 'כתבו גיל' : age < 15 ? 'האפליקציה מיועדת לגיל 15 ומעלה' : '') || bad;
-    bad = setErr('em', !/^\S+@\S+\.\S+$/.test(em) ? 'כתבו אימייל תקין' : loadDB().accounts[em] ? 'כבר יש חשבון עם האימייל הזה. אפשר להתחבר' : '') || bad;
+    bad = setErr('em', !/^\S+@\S+\.\S+$/.test(em) ? 'כתבו אימייל תקין' : loadDB().accounts[em] ? (loadDB().accounts[em].noPass ? 'כבר יש חשבון עם האימייל הזה, שנוצר עם Google. התחברו עם Google' : 'כבר יש חשבון עם האימייל הזה. אפשר להתחבר') : '') || bad;
     bad = setErr('pw', pw.length < 4 ? 'הסיסמה צריכה להיות לפחות 4 תווים' : '') || bad;
     if (bad) return;
     loadDB().accounts[em] = newAcct(nm, age, em, pw, st.goal); loadDB().session = em; save();
