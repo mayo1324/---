@@ -20,7 +20,7 @@ function loadDB() {
   if (!DB || !DB.accounts) DB = { accounts: {}, session: null, seenOnboarding: false };
   return DB;
 }
-function save() { try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) { } }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) { } if (typeof cloudPush === 'function') cloudPush(); }
 const START_CASH = 5000;
 const newAcct = (name, age, email, pass, goal) => ({ name, age, email, pass: hash(pass), goal, stars: 0, xp: 0, lessonsDone: [], practiceDone: {}, watch: ['ALFA', 'IDX100'], portfolio: { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] }, demoUnlock: false });
 const GUEST = newAcct('אורח', 16, '', 'x', '');

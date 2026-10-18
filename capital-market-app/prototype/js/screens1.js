@@ -110,13 +110,19 @@ const fi = {
 };
 const authLogo = () => `<div class="authlogo"><div class="lgi">${fi.candle}</div><h1><span>לומדים</span> <b>שוק הון</b></h1><p>ללמוד, לתרגל, להבין</p></div>`;
 const gfield = (id, icon, ph, extra = '', type = 'text', dirLtr = false) => `<div class="gf"><span class="lead">${icon}</span><input class="gi" id="${id}" type="${type}" placeholder="${ph}" ${dirLtr ? 'dir="ltr" style="text-align:right"' : ''} ${extra}>${type === 'password' ? `<button type="button" class="eye" data-eye="${id}" aria-label="הצגת סיסמה">${fi.eye}</button>` : ''}</div><div class="err-t" id="e-${id}"></div>`;
-const socials = (verb) => `<div class="orline"><span>או</span></div><button class="soc" data-prov="google"><i class="pm g">G</i>${verb} עם Google<span class="dtag">הדגמה</span></button><button class="soc" data-prov="apple"><i class="pm a">A</i>${verb} עם Apple<span class="dtag">הדגמה</span></button>`;
+const realProv = (k) => typeof CLOUD_ON !== 'undefined' && CLOUD_ON && CLOUD_PROVIDERS[k];
+const socials = (verb) => `<div class="orline"><span>או</span></div><button class="soc" data-prov="google"><i class="pm g">G</i>${verb} עם Google${realProv('google') ? '' : '<span class="dtag">הדגמה</span>'}</button><button class="soc" data-prov="apple"><i class="pm a">A</i>${verb} עם Apple${realProv('apple') ? '' : '<span class="dtag">הדגמה</span>'}</button>`;
 function bindAuth(root) {
   $$('[data-eye]', root).forEach(b => b.onclick = () => { const i = $('#' + b.dataset.eye); i.type = i.type === 'password' ? 'text' : 'password'; b.classList.toggle('on', i.type === 'text'); });
-  $$('[data-prov]', root).forEach(b => b.onclick = () => providerFlow(b.dataset.prov));
+  $$('[data-prov]', root).forEach(b => b.onclick = () => providerFlow(b.dataset.prov, b));
 }
 /* demo only: there is no real Google or Apple connection in the prototype */
-function providerFlow(kind) {
+/* real sign-in when the provider is enabled, otherwise the demo flow */
+function providerFlow(kind, btn) {
+  if (typeof CLOUD_ON !== 'undefined' && CLOUD_ON && CLOUD_PROVIDERS[kind]) return cloudSignIn(kind, btn);
+  return demoProviderFlow(kind);
+}
+function demoProviderFlow(kind) {
   const nm = kind === 'google' ? 'Google' : 'Apple', old = Object.values(loadDB().accounts).find(a => a.provider === kind);
   openSheet(`<div class="prov"><i class="pm big ${kind === 'google' ? 'g' : 'a'}">${kind === 'google' ? 'G' : 'A'}</i><h3>המשך עם ${nm}</h3>
     <p class="muted" style="font-size:13.5px;line-height:1.6;margin:6px 0 14px">בגרסת ההדגמה אין חיבור אמיתי ל-${nm}. בגרסה האמיתית השם והאימייל יגיעו משם, ונצטרך רק את הגיל.</p>
@@ -375,7 +381,7 @@ screens.profile = () => {
   $('#snd').onclick = () => { SFX.set(!SFX.on); $('#snd').textContent = SFX.on ? 'סאונד ורטט: פעיל' : 'סאונד ורטט: כבוי'; };
   $('#ua').onclick = () => { A().openAll = !A().openAll; save(); toast(A().openAll ? 'כל הנושאים פתוחים להדגמה' : 'הנושאים ננעלו שוב'); go('profile'); };
   $('#un').onclick = () => { if (!portfolioOpen()) { A().demoUnlock = true; save(); toast('התיק נפתח להדגמה'); go('profile'); } };
-  $('#lo').onclick = () => { loadDB().session = null; save(); go('login'); };
+  $('#lo').onclick = async () => { await cloudSignOut(); loadDB().session = null; save(); go('login'); };
   let sure = false;
-  $('#rs').onclick = () => { if (!sure) { sure = true; $('#rs').textContent = 'בטוח? לחצו שוב כדי למחוק'; return; } delete loadDB().accounts[loadDB().session]; loadDB().session = null; save(); go('onboarding', 0); };
+  $('#rs').onclick = async () => { if (!sure) { sure = true; $('#rs').textContent = 'בטוח? לחצו שוב כדי למחוק'; return; } try { await cloudDeleteAccount(); } catch (e) { toast('לא הצלחנו למחוק את החשבון בענן. נסו שוב מאוחר יותר.'); return; } delete loadDB().accounts[loadDB().session]; loadDB().session = null; save(); go('onboarding', 0); };
 };

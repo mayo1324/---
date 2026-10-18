@@ -1224,7 +1224,7 @@ function loadDB() {
   if (!DB || !DB.accounts) DB = { accounts: {}, session: null, seenOnboarding: false };
   return DB;
 }
-function save() { try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) { } }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) { } if (typeof cloudPush === 'function') cloudPush(); }
 const START_CASH = 5000;
 const newAcct = (name, age, email, pass, goal) => ({ name, age, email, pass: hash(pass), goal, stars: 0, xp: 0, lessonsDone: [], practiceDone: {}, watch: ['ALFA', 'IDX100'], portfolio: { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] }, demoUnlock: false });
 const GUEST = newAcct('אורח', 16, '', 'x', '');
@@ -3696,13 +3696,19 @@ const fi = {
 };
 const authLogo = () => `<div class="authlogo"><div class="lgi">${fi.candle}</div><h1><span>לומדים</span> <b>שוק הון</b></h1><p>ללמוד, לתרגל, להבין</p></div>`;
 const gfield = (id, icon, ph, extra = '', type = 'text', dirLtr = false) => `<div class="gf"><span class="lead">${icon}</span><input class="gi" id="${id}" type="${type}" placeholder="${ph}" ${dirLtr ? 'dir="ltr" style="text-align:right"' : ''} ${extra}>${type === 'password' ? `<button type="button" class="eye" data-eye="${id}" aria-label="הצגת סיסמה">${fi.eye}</button>` : ''}</div><div class="err-t" id="e-${id}"></div>`;
-const socials = (verb) => `<div class="orline"><span>או</span></div><button class="soc" data-prov="google"><i class="pm g">G</i>${verb} עם Google<span class="dtag">הדגמה</span></button><button class="soc" data-prov="apple"><i class="pm a">A</i>${verb} עם Apple<span class="dtag">הדגמה</span></button>`;
+const realProv = (k) => typeof CLOUD_ON !== 'undefined' && CLOUD_ON && CLOUD_PROVIDERS[k];
+const socials = (verb) => `<div class="orline"><span>או</span></div><button class="soc" data-prov="google"><i class="pm g">G</i>${verb} עם Google${realProv('google') ? '' : '<span class="dtag">הדגמה</span>'}</button><button class="soc" data-prov="apple"><i class="pm a">A</i>${verb} עם Apple${realProv('apple') ? '' : '<span class="dtag">הדגמה</span>'}</button>`;
 function bindAuth(root) {
   $$('[data-eye]', root).forEach(b => b.onclick = () => { const i = $('#' + b.dataset.eye); i.type = i.type === 'password' ? 'text' : 'password'; b.classList.toggle('on', i.type === 'text'); });
-  $$('[data-prov]', root).forEach(b => b.onclick = () => providerFlow(b.dataset.prov));
+  $$('[data-prov]', root).forEach(b => b.onclick = () => providerFlow(b.dataset.prov, b));
 }
 /* demo only: there is no real Google or Apple connection in the prototype */
-function providerFlow(kind) {
+/* real sign-in when the provider is enabled, otherwise the demo flow */
+function providerFlow(kind, btn) {
+  if (typeof CLOUD_ON !== 'undefined' && CLOUD_ON && CLOUD_PROVIDERS[kind]) return cloudSignIn(kind, btn);
+  return demoProviderFlow(kind);
+}
+function demoProviderFlow(kind) {
   const nm = kind === 'google' ? 'Google' : 'Apple', old = Object.values(loadDB().accounts).find(a => a.provider === kind);
   openSheet(`<div class="prov"><i class="pm big ${kind === 'google' ? 'g' : 'a'}">${kind === 'google' ? 'G' : 'A'}</i><h3>המשך עם ${nm}</h3>
     <p class="muted" style="font-size:13.5px;line-height:1.6;margin:6px 0 14px">בגרסת ההדגמה אין חיבור אמיתי ל-${nm}. בגרסה האמיתית השם והאימייל יגיעו משם, ונצטרך רק את הגיל.</p>
@@ -3961,9 +3967,9 @@ screens.profile = () => {
   $('#snd').onclick = () => { SFX.set(!SFX.on); $('#snd').textContent = SFX.on ? 'סאונד ורטט: פעיל' : 'סאונד ורטט: כבוי'; };
   $('#ua').onclick = () => { A().openAll = !A().openAll; save(); toast(A().openAll ? 'כל הנושאים פתוחים להדגמה' : 'הנושאים ננעלו שוב'); go('profile'); };
   $('#un').onclick = () => { if (!portfolioOpen()) { A().demoUnlock = true; save(); toast('התיק נפתח להדגמה'); go('profile'); } };
-  $('#lo').onclick = () => { loadDB().session = null; save(); go('login'); };
+  $('#lo').onclick = async () => { await cloudSignOut(); loadDB().session = null; save(); go('login'); };
   let sure = false;
-  $('#rs').onclick = () => { if (!sure) { sure = true; $('#rs').textContent = 'בטוח? לחצו שוב כדי למחוק'; return; } delete loadDB().accounts[loadDB().session]; loadDB().session = null; save(); go('onboarding', 0); };
+  $('#rs').onclick = async () => { if (!sure) { sure = true; $('#rs').textContent = 'בטוח? לחצו שוב כדי למחוק'; return; } try { await cloudDeleteAccount(); } catch (e) { toast('לא הצלחנו למחוק את החשבון בענן. נסו שוב מאוחר יותר.'); return; } delete loadDB().accounts[loadDB().session]; loadDB().session = null; save(); go('onboarding', 0); };
 };
 
 'use strict';
@@ -4827,7 +4833,7 @@ function openAbout() {
     <div class="about"><p><b>מה זה?</b> אב טיפוס של אפליקציה שמלמדת שוק הון לבני 15 ומעלה, עם שיעורים ותרגול על גרפים. אין כאן ייעוץ השקעות, המלצות או כסף אמיתי.</p>
     <p><b>מה אמיתי ומה הדגמה?</b> מקרי התרגול הם נתוני שוק אמיתיים מהעבר (מ-Yahoo Finance), לבדיקה פרטית בלבד ולא להפצה. לשונית "שוק", המנוי, התשלום, הקהילה וההתחברות עם Google ו-Apple הם הדגמה.</p>
     <p><b>תוכן השיעורים:</b> טיוטה שנכתבה לפי מקורות (בעיקר Investor.gov של ה-SEC והגדרות מויקיפדיה). עדיין לא נבדקה על ידי מומחה, ואין בה תוכן ישראלי ספציפי כמו מסים וחוקים.</p>
-    <p><b>הפרטיות שלכם:</b> הכול נשמר רק בדפדפן שלכם. אין שרת ואין איסוף נתונים. משוב נשלח רק אם תבחרו לשלוח אותו.</p></div>
+    <p><b>הפרטיות שלכם:</b> ההתקדמות נשמרת בדפדפן שלכם. רק אם תתחברו עם Google, היא תישמר גם בענן של Google, באזור תל אביב. אין פרסומות ואין אנליטיקה. משוב נשלח רק אם תבחרו לשלוח אותו.</p></div>
     <button class="btn ghost" id="abfb" style="margin-top:12px">משוב על האפליקציה</button>
     <button class="btn ghost danger" id="abrs" style="margin-top:10px">מחיקת כל הנתונים במכשיר הזה</button>`);
   $('#abfb').onclick = () => { closeSheet(); setTimeout(openFeedback, 280); };
@@ -4860,13 +4866,124 @@ const _homeScreen = screens.home; screens.home = (a) => { _homeScreen(a); showWe
 })();
 
 'use strict';
+/* ===== cloud sign-in and sync (Firebase) =====
+   Google works when FIREBASE_CONFIG is set. Apple stays a demo until it is enabled in CLOUD_PROVIDERS.
+   Progress is also kept in this browser; signed-in users get it saved to their own document in the cloud.
+   The Firebase SDK is loaded from Google's CDN only when needed. */
+const CLOUD_ON = typeof FIREBASE_CONFIG !== 'undefined' && !!FIREBASE_CONFIG.apiKey;
+const CLOUD_PROVIDERS = { google: true, apple: false };
+const FB_SDK = '10.12.2';
+const CLOUD_FIELDS = ['name', 'goal', 'stars', 'xp', 'lessonsDone', 'practiceDone', 'skills', 'days', 'watch', 'portfolio', 'posts', 'seenIntro', 'seenWelcome'];
+
+/* adapter: the real one talks to Firebase; tests can put a fake one in window.__FBMOCK */
+const FBA = window.__FBMOCK || (() => {
+  let A, F, auth, db, ready = null;
+  const base = `https://www.gstatic.com/firebasejs/${FB_SDK}/`;
+  const init = () => ready || (ready = (async () => {
+    const [AppM, AuthM, FsM] = await Promise.all([import(base + 'firebase-app.js'), import(base + 'firebase-auth.js'), import(base + 'firebase-firestore.js')]);
+    A = AuthM; F = FsM; const app = AppM.initializeApp(FIREBASE_CONFIG); auth = A.getAuth(app); auth.languageCode = 'he'; db = F.getFirestore(app);
+    try { await auth.authStateReady(); } catch (e) { }
+  })());
+  const prov = (k) => { if (k === 'google') { const p = new A.GoogleAuthProvider(); p.setCustomParameters({ prompt: 'select_account' }); return p; } const p = new A.OAuthProvider('apple.com'); p.addScope('email'); p.addScope('name'); return p; };
+  const u2 = (u) => u && { uid: u.uid, name: u.displayName || '', email: u.email || '' };
+  return {
+    init,
+    async signIn(kind) {
+      await init(); const p = prov(kind);
+      try { const r = await A.signInWithPopup(auth, p); return u2(r.user); }
+      catch (e) { if (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment') { try { localStorage.setItem('cm_redirect', '1'); } catch (_) { } await A.signInWithRedirect(auth, p); return null; } throw e; }
+    },
+    async redirectUser() { await init(); const r = await A.getRedirectResult(auth); return r && u2(r.user); },
+    async currentUser() { await init(); return u2(auth.currentUser); },
+    async signOut() { await init(); await A.signOut(auth); },
+    async getDoc(uid) { await init(); const s = await F.getDoc(F.doc(db, 'users', uid)); return s.exists() ? s.data() : null; },
+    async setDoc(uid, data) { await init(); await F.setDoc(F.doc(db, 'users', uid), data, { merge: true }); },
+    async deleteAccount(uid) {
+      await init(); await F.deleteDoc(F.doc(db, 'users', uid));
+      try { await A.deleteUser(auth.currentUser); }
+      catch (e) { if (e.code === 'auth/requires-recent-login') { await A.reauthenticateWithPopup(auth.currentUser, prov('google')); await A.deleteUser(auth.currentUser); } else throw e; }
+    }
+  };
+})();
+
+const clean = (x) => JSON.parse(JSON.stringify(x));
+/* merge what is saved in the cloud into the local account: keep the best of both */
+function mergeProgress(local, cloud) {
+  if (!cloud) return local;
+  const uni = (a, b) => Array.from(new Set([...(a || []), ...(b || [])]));
+  local.lessonsDone = uni(local.lessonsDone, cloud.lessonsDone);
+  local.practiceDone = Object.assign({}, cloud.practiceDone || {}, local.practiceDone || {});
+  Object.keys(cloud.practiceDone || {}).forEach(k => { local.practiceDone[k] = Math.max(local.practiceDone[k] || 0, cloud.practiceDone[k] || 0); });
+  local.stars = Math.max(local.stars || 0, cloud.stars || 0); local.xp = Math.max(local.xp || 0, cloud.xp || 0);
+  local.days = Object.assign({}, cloud.days || {}, local.days || {});
+  local.skills = Object.assign({}, cloud.skills || {}, local.skills || {});
+  Object.keys(cloud.skills || {}).forEach(k => { const a = local.skills[k], b = cloud.skills[k]; if (a && b && b.n > a.n) local.skills[k] = b; });
+  local.watch = uni(local.watch, cloud.watch);
+  if (cloud.portfolio && (cloud.updatedAt || 0) > (local.cloudAt || 0)) local.portfolio = cloud.portfolio;
+  ['name', 'goal'].forEach(k => { if (!local[k] && cloud[k]) local[k] = cloud[k]; });
+  local.seenIntro = local.seenIntro || cloud.seenIntro; local.seenWelcome = local.seenWelcome || cloud.seenWelcome;
+  if (cloud.posts) local.posts = (local.posts && local.posts.length >= cloud.posts.length) ? local.posts : cloud.posts;
+  return local;
+}
+let pushT = 0, pushing = false;
+function cloudPush() {
+  const ac = A(); if (!ac || !ac.uid) return;
+  clearTimeout(pushT); pushT = setTimeout(async () => {
+    if (pushing) return cloudPush(); pushing = true;
+    try { const data = {}; CLOUD_FIELDS.forEach(k => { if (ac[k] !== undefined) data[k] = ac[k]; }); data.updatedAt = Date.now(); await FBA.setDoc(ac.uid, clean(data)); ac.cloudAt = data.updatedAt; try { localStorage.setItem(KEY, JSON.stringify(loadDB())); } catch (e) { } }
+    catch (e) { /* offline or blocked: keep working locally, try again on the next save */ }
+    pushing = false;
+  }, 1500);
+}
+async function onCloudUser(u) {
+  const d = loadDB(), key = 'g:' + u.uid; let cloud = null, warn = false;
+  try { cloud = await FBA.getDoc(u.uid); } catch (e) { warn = true; }
+  let ac = d.accounts[key];
+  if (!ac) { ac = newAcct(u.name || 'משתמש', 15, u.email || '', 'cloud:' + u.uid, 'להבין איך זה עובד'); ac.uid = u.uid; ac.provider = 'google'; ac.seenIntro = false; }
+  mergeProgress(ac, cloud);
+  ac.name = ac.name && ac.name !== 'משתמש' ? ac.name : (u.name || 'משתמש'); ac.email = u.email || ac.email;
+  d.accounts[key] = ac; d.session = key; d.seenOnboarding = true; save(); cloudPush();
+  if (warn) toast('לא הצלחנו לטעון התקדמות מהענן. ממשיכים מקומית.');
+  return ac;
+}
+const CLOUD_ERR = {
+  'auth/unauthorized-domain': 'הכתובת הזאת עדיין לא מורשית להתחברות. אפשר להמשיך בלי Google.',
+  'auth/network-request-failed': 'אין חיבור לאינטרנט. נסו שוב.',
+  'auth/operation-not-allowed': 'ההתחברות הזאת עדיין לא הופעלה.',
+  'auth/account-exists-with-different-credential': 'כבר יש חשבון עם האימייל הזה בדרך אחרת.'
+};
+async function cloudSignIn(kind, btn) {
+  const lab = btn && btn.innerHTML; if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spin"></span> מתחברים...'; }
+  try {
+    const u = await FBA.signIn(kind); if (!u) return; /* redirect in progress */
+    const ac = await onCloudUser(u); SFX.play('pop'); toast('שלום, ' + ac.name); go('home');
+  } catch (e) {
+    if (e && (e.code === 'auth/popup-closed-by-user' || e.code === 'auth/cancelled-popup-request')) { /* closed on purpose */ }
+    else { toast(CLOUD_ERR[e && e.code] || 'ההתחברות נכשלה. אפשר לנסות שוב או להמשיך בלי Google.'); try { FB_ERRORS.push('auth ' + ((e && e.code) || e)); } catch (_) { } }
+  } finally { if (btn) { btn.disabled = false; btn.innerHTML = lab; } }
+}
+/* at start: finish a redirect login, and pull the latest progress for a signed-in user */
+async function cloudResume() {
+  if (!CLOUD_ON) return;
+  const ac = loggedIn() ? A() : null; let redirected = false;
+  try { redirected = localStorage.getItem('cm_redirect') === '1'; localStorage.removeItem('cm_redirect'); } catch (e) { }
+  if (!ac && !redirected) return; if (ac && !ac.uid && !redirected) return;
+  try {
+    if (redirected) { const u = await FBA.redirectUser(); if (u) { await onCloudUser(u); go('home'); return; } }
+    if (ac && ac.uid) { const cloud = await FBA.getDoc(ac.uid); if (cloud) { mergeProgress(ac, cloud); save(); if (cur.name === 'home') go('home'); } }
+  } catch (e) { }
+}
+async function cloudSignOut() { const ac = A(); if (ac && ac.uid) { try { await FBA.signOut(); } catch (e) { } } }
+async function cloudDeleteAccount() { const ac = A(); if (ac && ac.uid) { await FBA.deleteAccount(ac.uid); } }
+
+'use strict';
 /* ===== terms of use and privacy: shown on the first visit, must be approved to continue =====
    DRAFT for the test version. It was NOT reviewed by a lawyer. Have a lawyer review it before any public launch. */
-const TERMS_VERSION = 1;
+const TERMS_VERSION = 2;
 const TERMS_SUMMARY = [
   ['לימוד בלבד', 'התוכן באפליקציה לימודי. אין בו ייעוץ השקעות או המלצות.'],
   ['כסף וירטואלי', 'התרגול הוא על נתוני שוק אמיתיים מהעבר, בלי כסף אמיתי.'],
-  ['הנתונים אצלכם', 'ההתקדמות נשמרת בדפדפן שלכם בלבד, בלי שרת.'],
+  ['הנתונים אצלכם', 'ההתקדמות נשמרת בדפדפן. אם מתחברים עם Google, היא נשמרת גם בענן של Google.'],
   ['מגיל 15', 'מי שמתחת ל-18 משתמש בידיעת הורה או אפוטרופוס.']
 ];
 const TERMS_TEXT = [
@@ -4876,7 +4993,7 @@ const TERMS_TEXT = [
   ['תרגול וכסף וירטואלי', 'התיק והתרגול באפליקציה הם סימולציה בכסף וירטואלי. אין בהם כסף אמיתי, והתוצאות בהם אינן מעידות על תוצאות אמיתיות. בתרגול משתמשים בנתוני שוק אמיתיים מהעבר, בלי שם הנכס והתאריך עד סוף המקרה. החלטה "נכונה" בתרגול נקבעת לפי כללי לימוד שהוגדרו מראש ולא לפי התוצאה בדיעבד, והיא אינה המלצה לפעול כך במציאות.'],
   ['נתונים ומקורות', 'נתוני השוק בתרגול הם נתוני עבר שהתקבלו משירות Yahoo Finance. הם נועדו לבדיקה פרטית בלבד, לא להפצה, ועלולים להכיל אי דיוקים. לשונית "שוק" מציגה נתוני הדגמה בדויים. תוכן השיעורים נכתב על סמך מקורות ציבוריים, בעיקר אתר Investor.gov של רשות ניירות הערך האמריקאית וערכים בוויקיפדיה. הוא טיוטה שלא נבדקה על ידי מומחה, ואינו כולל כללים ספציפיים לישראל כגון מסים. המנוי והתשלום באפליקציה הם הדגמה בלבד.'],
   ['גיל ושימוש', 'השימוש מיועד לבני 15 ומעלה. מי שטרם מלאו לו 18 מצהיר שהוריו או אפוטרופסו מודעים לשימוש שלו באפליקציה. אין להשתמש באפליקציה לשום מטרה בלתי חוקית, ואין לנסות לשבש את פעולתה.'],
-  ['פרטיות ונתונים אישיים', 'בהרשמה אפשר להזין שם, גיל, אימייל וסיסמה. הפרטים האלה, וההתקדמות שלכם (שיעורים, כוכבים, תוצאות תרגול), נשמרים רק בדפדפן שלכם, במכשיר שלכם. אין שרת, ולכן אנחנו לא מקבלים אותם ולא אוספים אותם. הסיסמה נשמרת בצורה פשוטה שאינה מאובטחת באמת, ולכן אל תשתמשו בסיסמה שאתם משתמשים בה במקום אחר. אפשר למחוק את הכול בכל עת דרך "על גרסת הניסוי" בפרופיל, או בניקוי נתוני האתר בדפדפן. ההתחברות עם Google ו-Apple היא הדגמה ואינה מחוברת לחשבונות אמיתיים.'],
+  ['פרטיות ונתונים אישיים', 'בהרשמה רגילה אפשר להזין שם, גיל, אימייל וסיסמה. אלה נשמרים רק בדפדפן שלכם, והסיסמה נשמרת בצורה פשוטה שאינה מאובטחת באמת, ולכן אל תשתמשו בסיסמה שאתם משתמשים בה במקום אחר. אם תתחברו עם Google, נקבל מהחשבון שלכם את השם והאימייל, ונשמור אותם יחד עם ההתקדמות (שיעורים, כוכבים, תוצאות תרגול) בשירותי Firebase של Google, במסד נתונים באזור תל אביב. הנתונים האלה משמשים רק כדי שההתקדמות תישמר בין מכשירים. אנחנו לא מוכרים אותם ולא משתמשים בהם לפרסום. אפשר למחוק את החשבון והנתונים בענן בכל עת דרך "על גרסת הניסוי" בפרופיל. ההתחברות עם Apple היא הדגמה ואינה מחוברת לחשבון אמיתי.'],
   ['עוגיות ואחסון מקומי', 'האפליקציה אינה משתמשת בעוגיות פרסום או מעקב. היא משתמשת באחסון המקומי של הדפדפן (Local Storage) כדי לזכור את ההתקדמות, את ההגדרות (כמו צליל) ואת אישור התנאים האלה. האפליקציה טוענת גופנים משירות Google Fonts, ולכן כתובת ה-IP שלכם עשויה להיחשף לגוגל בעת הטעינה, בכפוף למדיניות הפרטיות שלה. אין באפליקציה אנליטיקה או פרסומות.'],
   ['משוב', 'כפתור המשוב מכין הודעה קצרה ופותח את וואטסאפ. ההודעה לא נשלחת עד שתלחצו על "שלח", והשימוש בוואטסאפ כפוף לתנאים ולמדיניות הפרטיות שלו.'],
   ['קניין רוחני', 'העיצוב, האיורים, הטקסטים והקוד של האפליקציה שייכים למפעיליה, ואין להעתיקם או להפיצם ללא רשות. מקורות חיצוניים ונתוני שוק שייכים לבעליהם ומשמשים כאן בהתאם לאמור בסעיף "נתונים ומקורות".'],
@@ -4936,6 +5053,7 @@ function bootRoute() {
 (function boot() {
   initBg();
   if (!termsOk()) go('terms'); else bootRoute();
+  if (termsOk()) cloudResume();
 })();
 
 </script>

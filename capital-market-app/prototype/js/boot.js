@@ -9,4 +9,5 @@ function bootRoute() {
 (function boot() {
   initBg();
   if (!termsOk()) go('terms'); else bootRoute();
+  if (termsOk()) cloudResume();
 })();
