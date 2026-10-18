@@ -1191,6 +1191,17 @@ const BUILD_DATE = '18.10.2026';
 const FEEDBACK_EMAIL = '';
 const FEEDBACK_WHATSAPP = '972584363245';
 
+/* Firebase web app settings (public identifiers, not secrets; access is protected by authorized domains and Firestore rules).
+   Analytics is NOT used. */
+const FIREBASE_CONFIG = {
+  apiKey: 'AIzaSyDJablsF0GQ1xNTHiedOM6cFKCjTWVXsT8',
+  authDomain: 'learn-markets.firebaseapp.com',
+  projectId: 'learn-markets',
+  storageBucket: 'learn-markets.firebasestorage.app',
+  messagingSenderId: '228220691798',
+  appId: '1:228220691798:web:5c3d6002085c61ab0222f7'
+};
+
 'use strict';
 /* ===== helpers ===== */
 const $ = (s, r = document) => r.querySelector(s);
