@@ -17,6 +17,8 @@ const CASE_META = {
   9: { asset: 'מניית טסלה (TSLA)', action: 'enter', vol: [5, 'low'], why: (S) => `המחיר ירד כ-${S.fromHigh}% מהשיא של 60 הנרות האחרונים, והוא כ-${S.sw}% מעל הנקודה הנמוכה של 10 הנרות האחרונים, ולכן יש רצפה ברורה. הנכס תנודתי: הטווח הממוצע של נר הוא כ-${S.atrPct}% מהמחיר, ולכן סטופ צמוד מדי עלול להיפגע גם כשהכיוון נכון.` },
   10: { asset: 'מדד ת"א 125', action: 'wait', vol: [5, 'high'], why: (S) => `המחיר עלה כ-${S.up}% בלבד ב-60 הנרות האחרונים, בלי מגמה ברורה, והוא כ-${S.fromHigh}% מתחת לשיא שלהם. אין סיבה ברורה לקנות, ולכן אפשר לחכות.` }
 };
+const CASE_LEVEL = { 1: 1, 3: 1, 4: 1, 2: 2, 5: 2, 8: 2, 10: 2, 6: 3, 7: 3, 9: 3 };
+const LEVELS = [{ n: 1, t: 'צעדים ראשונים', d: 'מצבים ברורים יחסית' }, { n: 2, t: 'מתקדמים', d: 'גרפים פחות חד משמעיים' }, { n: 3, t: 'אתגר', d: 'מגמה נגדית ותנודתיות' }];
 const VOL_WORD = { low: 'נמוך', normal: 'רגיל', high: 'גבוה' };
 const fmtDate = (iso) => { const [y, m, d] = iso.split('-'); return `${+d}.${+m}.${y}`; };
 
@@ -37,7 +39,7 @@ const SCEN = REAL_CASES.map(raw => {
   if (V.ans !== expect) console.warn('volume answer changed for case', raw.id, V.ans, expect);
   const wl = { 5: 'חמשת', 8: 'שמונת' }[w] + ' הנרות האחרונים';
   return {
-    id: 'r' + raw.id, raw, asset: m.asset, trend: S.trend, action: m.action, S, why: m.why(S),
+    id: 'r' + raw.id, level: CASE_LEVEL[raw.id] || 1, raw, asset: m.asset, trend: S.trend, action: m.action, S, why: m.why(S),
     volq: { q: `ב${wl} הנפח היה, בהשוואה לממוצע של כל הגרף:`, ans: V.ans, why: `ב${wl} הנפח היה בערך ${Math.round(V.ratio * 100)}% מהממוצע של הגרף, כלומר ${VOL_WORD[V.ans]}. (נפח גבוה: לפחות 115% מהממוצע. נמוך: עד 85%. בין לבין: רגיל.)` }
   };
 });

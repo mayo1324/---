@@ -50,13 +50,28 @@ function needBanner() {
   if (!need.length) return '';
   return `<div class="need"><b>חדשים בנושא?</b><span>מומלץ לראות קודם את השיעור: ${need[0].title}</span><button class="btn ghost small" data-go="lesson" data-arg="${need[0].id}">לשיעור</button></div>`;
 }
+/* skills tracked from the checks of every finished case */
+const SKILLS = { trend: ['כיוון הגרף', 'l4'], trendline: ['קו מגמה', 'l4'], volume: ['נפח', 'l3'], wait: ['קנייה או המתנה', 'l9'], support: ['רצפה', 'l5'], stop: ['סטופ', 'l7'], risk: ['גודל סיכון', 'l9'], rr: ['יעד', 'l8'] };
+function trackSkills(ac, checks) {
+  ac.skills = ac.skills || {};
+  checks.forEach(c => { if (!c.term || !SKILLS[c.term]) return; const k = ac.skills[c.term] = ac.skills[c.term] || { ok: 0, n: 0 }; k.n++; if (c.ok) k.ok++; });
+}
 screens.practiceHome = () => {
-  const d = A().practiceDone;
+  const ac = A(), d = ac.practiceDone, sk = ac.skills || {}, played = Object.keys(sk).length > 0;
+  const total = SCEN.reduce((a, s) => a + (d[s.id] || 0), 0), max = SCEN.length * 3;
+  const rated = Object.entries(sk).filter(([, v]) => v.n >= 2).map(([k, v]) => [k, v.ok / v.n, v]).sort((a, b) => a[1] - b[1]);
+  const weak = rated.length && rated[0][1] < .75 ? rated[0] : null;
+  const nextCase = SCEN.findIndex(s => (d[s.id] || 0) < 3);
+  const skillBars = Object.entries(SKILLS).filter(([k]) => sk[k]).map(([k, [t]]) => { const v = sk[k], pc = Math.round(v.ok / v.n * 100); return `<div class="sk"><span>${t}</span><div class="bar"><i style="width:${pc}%"></i></div><b>${pc}%</b></div>`; }).join('');
   scr.innerHTML = `<div class="anim"><div class="top"><h2>תרגול</h2><span class="pill gold">${ic.star}${A().stars}</span></div>
-    <div class="card howto"><b>איך זה עובד?</b><div class="how">${['רואים גרף אמיתי מהעבר, בלי לדעת איזה נכס זה', 'מחליטים אם לקנות או לחכות', 'אם קונים: בונים תוכנית צעד אחרי צעד', 'מריצים את הגרף ורואים מה קרה'].map((t, i) => `<div><i>${i + 1}</i><span>${t}</span></div>`).join('')}</div>
-      <span class="muted" style="font-size:13px;line-height:1.6">אין כאן כסף אמיתי. הנקודות והכוכבים הם על החשיבה שלכם ולא על המזל. לפעמים התשובה הנכונה היא לחכות.</span></div>
-    <div style="height:14px"></div>
-    ${SCEN.map((s, i) => `<button class="les" data-go="practice" data-arg="${i}"><div class="ic" style="color:var(--lime)">${ic.chart}</div><div class="tx"><b>מקרה ${i + 1}</b><span>נכס X</span></div><span class="st" style="direction:ltr">${'★'.repeat(d[s.id] || 0)}${'☆'.repeat(3 - (d[s.id] || 0))}</span></button>`).join('')}
+    <div class="card prog-card"><div style="display:flex;justify-content:space-between"><b>${total} מתוך ${max} כוכבים</b><span class="muted" style="font-size:13px">${SCEN.filter(s => (d[s.id] || 0) > 0).length} מתוך ${SCEN.length} מקרים</span></div><div class="bar" style="margin-top:12px"><i style="width:${Math.round(total / max * 100)}%"></i></div></div>
+    ${played ? '' : `<div class="card howto"><b>איך זה עובד?</b><div class="how">${['רואים גרף אמיתי מהעבר, בלי לדעת איזה נכס זה', 'מחליטים אם לקנות או לחכות', 'אם קונים: בונים תוכנית צעד אחרי צעד', 'מריצים את הגרף ורואים מה קרה'].map((t, i) => `<div><i>${i + 1}</i><span>${t}</span></div>`).join('')}</div>
+      <span class="muted" style="font-size:13px;line-height:1.6">אין כאן כסף אמיתי. הנקודות והכוכבים הם על החשיבה שלכם ולא על המזל. לפעמים התשובה הנכונה היא לחכות.</span></div>`}
+    ${nextCase >= 0 ? `<button class="card rec" data-go="practice" data-arg="${nextCase}"><span class="eyebrow">${played ? 'המשך מכאן' : 'מתחילים כאן'}</span><b>מקרה ${nextCase + 1}</b><span class="muted">${LEVELS[SCEN[nextCase].level - 1].t} · ${d[SCEN[nextCase].id] ? 'כדאי לשפר את הציון' : 'עוד לא ניסיתם'}</span>${ic.back}</button>` : ''}
+    ${weak ? `<div class="card weak"><span class="eyebrow">כדאי לחזק</span><b>${SKILLS[weak[0]][0]}</b><span class="muted">הצלחתם ב-${Math.round(weak[1] * 100)}% מהפעמים. שיעור קצר יכול לעזור.</span><button class="btn ghost small" data-go="lesson" data-arg="${SKILLS[weak[0]][1]}">לשיעור</button></div>` : ''}
+    ${skillBars ? `<div class="card skills"><b>החוזקות שלכם</b>${skillBars}<span class="muted" style="font-size:12px">אחוז הפעמים שהחלק היה נכון, מכל המקרים שעשיתם.</span></div>` : ''}
+    ${LEVELS.map(lv => `<div class="sec2" style="margin-top:18px"><h3>${lv.t}</h3><span class="muted" style="font-size:13px">${lv.d}</span></div>
+      ${SCEN.map((s, i) => [s, i]).filter(([s]) => s.level === lv.n).map(([s, i]) => `<button class="les" data-go="practice" data-arg="${i}"><div class="ic" style="color:var(--lime)">${ic.chart}</div><div class="tx"><b>מקרה ${i + 1}</b><span>נכס X</span></div><span class="st" style="direction:ltr">${'★'.repeat(d[s.id] || 0)}${'☆'.repeat(3 - (d[s.id] || 0))}</span></button>`).join('')}`).join('')}
     <p class="demo-note">נתוני שוק אמיתיים מהעבר. העבר לא מבטיח את העתיד. אין כאן המלצת השקעה.</p>
     <p class="demo-note">נתונים לבדיקה פרטית בלבד, לא להפצה.</p></div>`;
 };
@@ -218,6 +233,7 @@ screens.feedback = ({ idx, st, sim }) => {
   const ac = A(), prev = ac.practiceDone[sc.id] || 0;
   if (ev.stars > prev) { ac.stars += ev.stars - prev; ac.xp = (ac.xp || 0) + (ev.stars - prev) * 10; ac.practiceDone[sc.id] = ev.stars; save(); }
   markActive(ac);
+  trackSkills(ac, ev.checks); save();
   SFX.play(ev.stars === 3 ? 'win' : ev.stars > 0 ? 'good' : 'oops');
   const raw = sc.raw, fut0 = P.candles.slice(P.N), S = sc.S;
   const rel = (v) => `${fmt(Math.abs(v), 1)}% ${v < 0 ? 'מתחת' : 'מעל'} למחיר ההחלטה`;
@@ -227,6 +243,17 @@ screens.feedback = ({ idx, st, sim }) => {
     <span class="muted" style="display:block;font-size:13.5px;line-height:1.6;margin-top:6px">מה קרה בפועל ב-${P.M} ימי המסחר אחרי נקודת ההחלטה: השפל היה ${rel(Math.min(...fut0.map(c => c.l)) - 100)}, השיא היה ${rel(Math.max(...fut0.map(c => c.h)) - 100)}, והמחיר בסוף התקופה היה ${rel(fut0[fut0.length - 1].c - 100)}.</span>
     <span class="muted" style="display:block;font-size:13.5px;line-height:1.6;margin-top:6px">איך קבענו את המגמה: הנר הראשון מול האחרון ב-${P.N} הנרות שלפני ההחלטה. ${trendWhy}.</span>
     <span class="muted" style="display:block;font-size:12.5px;margin-top:8px">נתוני שוק אמיתיים מהעבר. העבר לא מבטיח את העתיד.</span></div>`;
+  const replay = (() => {
+    const W = 358, H = 210, AX = 6, n = P.candles.length, slot = (W - 2 * AX) / n, bw = Math.max(1.3, slot * .6);
+    const hi = Math.max(...P.candles.map(c => c.h)) + 3, lo = Math.min(...P.candles.map(c => c.l)) - 3, y = (v) => 6 + (hi - v) / (hi - lo) * (H - 12), x = (k) => AX + k * slot + slot / 2, pl = st.plan;
+    let g = P.candles.map((c, k) => { const up = c.c >= c.o, col = up ? '#1ff0b0' : '#ff6048'; return `<line x1="${x(k)}" x2="${x(k)}" y1="${y(c.h)}" y2="${y(c.l)}" stroke="${col}" stroke-width="${slot < 4 ? 1 : 1.4}"/><rect x="${x(k) - bw / 2}" y="${y(Math.max(c.o, c.c))}" width="${bw}" height="${Math.max(1.5, Math.abs(y(c.o) - y(c.c)))}" fill="${col}"/>`; }).join('');
+    g += `<rect x="${x(P.N - 1)}" y="0" width="${W - x(P.N - 1)}" height="${H}" fill="#fff" opacity=".04"/><line x1="${x(P.N - 1)}" x2="${x(P.N - 1)}" y1="0" y2="${H}" stroke="#8b93a1" stroke-dasharray="3 4"/>`;
+    const L = (v, col, label, dash) => `<line x1="${x(P.N - 1) - 70}" x2="${W - AX}" y1="${y(v)}" y2="${y(v)}" stroke="${col}" stroke-width="1.6" stroke-dasharray="${dash}"/><text x="${W - AX - 2}" y="${y(v) - 4}" fill="${col}" font-size="10.5" font-weight="700" text-anchor="end" font-family="Heebo,sans-serif">${label}</text>`;
+    if (pl) { g += L(P.last, '#6aa8ff', 'קנייה', '0') + L(pl.stop, '#ff6048', 'סטופ', '6 4') + L(pl.target, '#1fd69b', 'יעד', '6 4'); if (pl.support != null) g += L(pl.support, '#fbbf24', 'רצפה', '2 4'); }
+    if (st.line) { const ln = st.line, m = (ln.p2 - ln.p1) / (ln.i2 - ln.i1), yy = (i) => y(ln.p1 + m * (i - ln.i1)); g += `<line x1="${x(ln.i1)}" y1="${yy(ln.i1)}" x2="${x(ln.i2)}" y2="${yy(ln.i2)}" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round"/>`; }
+    if (pl && sim && sim.res !== 'none') g += `<circle cx="${x(P.N + sim.at)}" cy="${y(sim.res === 'target' ? pl.target : pl.stop)}" r="6" fill="${sim.res === 'target' ? '#1fd69b' : '#ff6048'}" stroke="#0b0d10" stroke-width="2"/>`;
+    return `<div class="card replay"><b>איך זה נראה בגרף</b><svg viewBox="0 0 ${W} ${H}" class="chart" direction="ltr">${g}</svg><div class="rlegend"><span>הקו המקווקו: נקודת ההחלטה</span>${st.line ? '<span style="color:#fbbf24">קו המגמה שלכם</span>' : ''}</div></div>`;
+  })();
   let result = '', alt = '', title, sub;
   const pl = st.plan;
   if (pl) {
@@ -249,6 +276,7 @@ screens.feedback = ({ idx, st, sim }) => {
     <p class="muted" style="font-size:12.5px">הכוכבים על החשיבה שלכם, לא על המזל</p>
     ${result}
     ${reveal}
+    ${replay}
     <div class="checks"><b style="display:block;margin:6px 2px 10px;font-size:16px">מה עשיתם טוב ומה לתקן</b>${ev.checks.map(c => `<div class="ck ${c.ok ? 'ok' : 'no'}"><div class="m">${c.ok ? '✓' : '✕'}</div><div><b>${c.term ? term(c.term, c.t) : c.t}</b><span>${c.ok ? c.good : c.bad}</span></div></div>`).join('')}
       <div class="ck ok"><div class="m" style="background:var(--card2);color:var(--text)">i</div><div><b>על המקרה</b><span>${sc.why}</span></div></div></div>
     ${alt}
