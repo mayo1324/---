@@ -1,0 +1,643 @@
+URL: https://en.wikipedia.org/wiki/Income_statement
+FETCHED: 2026-10-18
+
+Income statement - Wikipedia
+
+Jump to content
+
+From Wikipedia, the free encyclopedia
+
+Type of financial statement
+
+"Profit and loss" redirects here. For other uses, see Profit and Loss (disambiguation).
+
+"Top line" redirects here. For the Italian film, see Alien Terminator (1988 film). For the term in dancing, see Glossary of partner dance terms § Top line.
+
+Part of a series on
+
+Accounting
+
+Constant purchasing power
+
+Historical cost
+
+Management
+
+Tax
+
+Major types
+
+Audit
+
+Budget
+
+Cost
+
+Forensic
+
+Financial
+
+Fund
+
+Governmental
+
+Management
+
+Social
+
+Tax
+
+Key concepts
+
+Accounting period
+
+Accrual
+
+Constant purchasing power
+
+Economic entity
+
+Fair value
+
+Going concern
+
+Historical cost
+
+Matching principle
+
+Materiality
+
+Revenue recognition
+
+Unit of account
+
+Selected accounts
+
+Assets
+
+Cash
+
+Cost of goods sold
+
+Depreciation / Amortization (accounting)
+
+Equity
+
+Expenses
+
+Goodwill
+
+Liabilities
+
+Profit
+
+Revenue
+
+Accounting standards
+
+Generally-accepted principles
+
+Generally Accepted Auditing Standards
+
+Convergence
+
+International Financial Reporting Standards
+
+International Standards on Auditing
+
+Management Accounting Principles
+
+Financial statements
+
+Annual report
+
+Balance sheet
+
+Cash-flow
+
+Equity
+
+Income
+
+Management discussion
+
+Financial statement analysis
+
+Bookkeeping
+
+Bank reconciliation
+
+Debits and credits
+
+Double-entry system
+
+FIFO and LIFO
+
+Journal
+
+Ledger / General ledger
+
+Trial balance
+
+Auditing
+
+Financial
+
+Internal
+
+Firms
+
+Report
+
+Sarbanes–Oxley Act
+
+People and organizations
+
+Accountants
+
+Accounting organizations
+
+Luca Pacioli
+
+Development
+
+History
+
+Research
+
+Positive accounting
+
+Sarbanes–Oxley Act
+
+Misconduct
+
+Creative
+
+Earnings management
+
+Error account
+
+Hollywood
+
+Off-balance-sheet
+
+Two sets of books
+
+v
+
+t
+
+e
+
+This article has multiple issues. Please help improve it or discuss these issues on the talk page. (Learn how and when to remove these messages)
+
+The examples and perspectives in this article may not represent a worldwide view of the subject. You may improve this article, discuss the issue on the talk page, or create a new article, as appropriate. (December 2009) (Learn how and when to remove this message)
+
+This article needs more citations. Please help improve this article by adding citations to reliable sources. Unsourced material may be challenged and removed.
+
+Find sources: "Income statement" – news · newspapers · books · scholar · JSTOR (December 2009) (Learn how and when to remove this message)
+
+(Learn how and when to remove this message)
+
+Sankey diagram - income statement (by Adrián Chiogna)
+An income statement or profit and loss (P&L) account[1][note 1] is one of the financial statements of a company and shows the company's revenues and expenses during a particular period.[1]
+
+It indicates how the revenues (also known as the “top line”) are transformed into the net income or net profit (the result after all revenues and expenses have been accounted for). The purpose of the income statement is to show managers and investors whether the company made money (profit) or lost money (loss) during the period being reported.
+
+An income statement represents a period of time (as does the cash flow statement). This contrasts with the balance sheet, which represents a single moment in time.
+
+Charitable organizations that are required to publish financial statements do not produce an income statement. Instead, they produce a similar statement that reflects funding sources compared against program expenses, administrative costs, and other operating commitments. This statement is commonly referred to as the statement of activities.[2] Revenues and expenses are further categorized in the statement of activities by the donor restrictions on the funds received and expended.
+
+The income statement can be prepared in one of two methods.[3] The single step income statement totals revenues and subtracts expenses to find the bottom line. The multi-step income statement takes several steps to find the bottom line: starting with the gross profit, then calculating operating expenses. Then when deducted from the gross profit, yields income from operations.
+
+Adding to income from operations is the difference of other revenues and other expenses. When combined with income from operations, this yields income before taxes. The final step is to deduct taxes, which finally produces the net income for the period measured.[4]
+
+Usefulness and limitations of income statement
+[edit]
+
+Income statements may help investors and creditors determine the past financial performance of the enterprise, predict the future performance, and assess the capability of generating future cash flows using the report of income and expenses. It is very important for the business.
+
+However, information of an income statement has several limitations:
+
+Items that might be relevant but cannot be reliably measured are not reported (e.g., brand recognition and loyalty).
+
+Some numbers depend on accounting methods used (e.g., using FIFO or LIFO accounting to measure inventory level).
+
+Some numbers depend on judgments and estimates (e.g., depreciation expense depends on estimated useful life and salvage value).
+
+- INCOME STATEMENT GREENHARBOR LLC -
+For the year ended DECEMBER 31 2010
+
+€ €
+Debit Credit
+Revenues
+GROSS REVENUES (including INTEREST income) 296,397
+--------
+Expenses:
+ADVERTISING 6,300
+BANK & CREDIT CARD FEES 144
+BOOKKEEPING 2,350
+SUBCONTRACTORS 88,000
+ENTERTAINMENT 5,550
+INSURANCE 750
+LEGAL & PROFESSIONAL SERVICES 1,575
+LICENSES 632
+PRINTING, POSTAGE & STATIONERY 320
+RENT 13,000
+MATERIALS 74,400
+TELEPHONE 1,000
+UTILITIES 1,494
+--------
+TOTAL EXPENSES (195,515)
+--------
+NET INCOME 100,882
+
+Guidelines for statements of comprehensive income and income statements of business entities are formulated by the International Accounting Standards Board and numerous country-specific organizations, for example the FASB in the U.S..
+
+Names and usage of different accounts in the income statement depend on the type of organization, industry practices and the requirements of different jurisdictions.
+
+If applicable to the business, summary values for the following items should be included in the income statement:[5]
+
+Operating section
+[edit]
+
+Revenue - Cash inflows or other enhancements of assets (including accounts receivable) of an entity during a period from delivering or producing goods, rendering services, or other activities that constitute the entity's ongoing major operations. It is usually presented as sales minus sales discounts, returns, and allowances. Every time a business sells a product or performs a service, it obtains revenue. This often is referred to as gross revenue or sales revenue.[6]
+
+Expenses - Cash outflows or other using-up of assets or incurrence of liabilities (including accounts payable) during a period from delivering or producing goods, rendering services, or carrying out other activities that constitute the entity's ongoing major operations.
+
+Cost of goods sold (COGS) / cost of sales - represents the direct costs attributable to goods produced and sold by a business (manufacturing or merchandizing). It includes material costs, direct labour, and overhead costs (as in absorption costing), and excludes operating costs (period costs) such as selling, administrative, advertising or R&D, etc.
+
+Selling, general and administrative expenses (SG&A or SGA) - consist of the combined payroll costs. SGA is usually understood as a major portion of non-production related costs, in contrast to production costs such as direct labour.
+
+Selling expenses - represent expenses needed to sell products (e.g., salaries of sales people, commissions and travel expenses, advertising, freight, shipping, depreciation of sales store buildings and equipment, etc.).
+
+General and administrative (G&A) expenses - represent expenses to manage the business (salaries of officers / executives, legal and professional fees, utilities, insurance, depreciation of office building and equipment, office rents, office supplies, etc.).
+
+Depreciation / amortisation - the charge with respect to fixed assets / intangible assets that have been capitalised on the balance sheet for a specific (accounting) period. It is a systematic and rational allocation of cost rather than the recognition of market value decrement.
+
+Research & development (R&D) expenses - represent expenses included in research and development.
+
+Expenses recognised in the income statement should be analysed either by nature (raw materials, transport costs, staffing costs, depreciation, employee benefit etc.) or by function (cost of sales, selling, administrative, etc.). (IAS 1.99) If an entity categorises by function, then additional information on the nature of expenses, at least, – depreciation, amortisation and employee benefits expense – must be disclosed. (IAS 1.104)
+The major exclusive of costs of goods sold, are classified as operating expenses. These represent the resources expended, except for inventory purchases, in generating the revenue for the period. Expenses often are divided into two broad sub classifications selling expenses and administrative expenses.[6]
+
+Non-operating section
+[edit]
+
+Other revenues or gains - revenues and gains from other than primary business activities (e.g., rent, income from patents, goodwill). It also includes unusual gains that are either unusual or infrequent, but not both (e.g., gain from sale of securities or gain from disposal of fixed assets)
+
+Other expenses or losses - expenses or losses not related to primary business operations, (e.g., foreign exchange loss).
+
+Finance costs - costs of borrowing from various creditors (e.g., interest expenses, bank charges).
+
+Income tax expense - sum of the amount of tax payable to tax authorities in the current reporting period (current tax liabilities/ tax payable) and the amount of deferred tax liabilities (or assets).
+
+Irregular items
+[edit]
+
+They are reported separately because this way users can better predict future cash flows - irregular items most likely will not recur. These are reported net of taxes.
+
+Discontinued operations is the most common type of irregular items. Shifting business location(s), stopping production temporarily, or changes due to technological improvement do not qualify as discontinued operations. Discontinued operations must be shown separately.
+
+Cumulative effect of changes in accounting policies (principles) is the difference between the book value of the affected assets (or liabilities) under the old policy (principle) and what the book value would have been if the new principle had been applied in the prior periods. For example, valuation of inventories using LIFO instead of weighted average method. The changes should be applied retrospectively and shown as adjustments to the beginning balance of affected components in equity. All comparative financial statements should be restated. (IAS 8)
+
+However, changes in estimates (e.g., estimated useful life of a fixed asset) only requires prospective changes. (IAS 8)
+
+No items may be presented in the income statement as extraordinary items under IFRS regulations or (as of ASU No. 2015-01[7]) under US GAAP. Extraordinary items are both unusual (abnormal) and infrequent, for example, unexpected natural disaster, expropriation, prohibitions under new regulations. [Note: natural disaster might not qualify depending on location (e.g., frost damage would not qualify in Canada but would in the tropics).]
+
+Additional items may be needed to fairly present the entity's results of operations. (IAS 1.85)
+
+Disclosures
+[edit]
+
+Certain items must be disclosed separately in the notes (or the statement of comprehensive income), if material, including:[5] (IAS 1.98)
+
+Write-downs of inventories to net realisable value or of property, plant and equipment to recoverable amount, as well as reversals of such write-downs
+
+Restructurings of the activities of an entity and reversals of any provisions for the costs of restructuring
+
+Disposals of items of property, plant and equipment
+
+Disposals of investments
+
+Discontinued operations
+
+Litigation settlements
+
+Other reversals of provisions
+
+Earnings per share
+[edit]
+
+Because of its importance, earnings per share (EPS) are required to be disclosed on the face of the income statement. A company which reports any of the irregular items must also report EPS for these items either in the statement or in the notes.
+
+Earnings per share
+
+=
+
+Net income
+
+−
+
+Preferred stock dividends
+
+Weighted average of common stock shares outstanding
+
+{\displaystyle {\text{Earnings per share}}={\frac {{\text{Net income}}-{\text{Preferred stock dividends}}}{\text{Weighted average of common stock shares outstanding}}}}
+
+There are two forms of EPS reported:
+
+Basic: in this case “weighted average of shares outstanding” includes only actual stocks outstanding.
+
+Diluted: in this case “weighted average of shares outstanding” is calculated as if all stock options, warrants, convertible bonds, and other securities that could be transformed into shares are transformed. This increases the number of shares and so EPS decreases. Diluted EPS is considered to be a more reliable way to measure EPS.
+
+Sample income statement
+[edit]
+
+The following income statement is a very brief example prepared in accordance with IFRS. It does not show all possible kinds of accounts, but it shows the most usual ones. Differences between IFRS and US GAAP would affect the interpretation of the following sample income statements.
+
+1. Fitness Equipment Limited (IFRS)
+[edit]
+
+Full income statement data
+
+Line Item
+2019 (£)
+2020 (£)
+2021 (£)
+Analysis / description
+
+Revenue14,580.211,900.48,290.3Total sales of fitness gear.
+
+Cost of sales(6,740.2)(5,650.1)(4,524.2)Direct production costs.
+
+Gross profit7,840.06,250.33,766.1Core trading margin.
+
+SGA expenses(3,624.6)(3,296.3)(3,034.0)Overheads and admin.
+
+Operating profit4,215.42,954.0732.1EBIT (Core operations).
+
+Gains (fixed assets)46.3——One-time asset sale profit.
+
+Interest expense(119.7)(124.1)(142.8)Finance costs on debt.
+
+Profit before tax4,142.02,829.9589.3EBT.
+
+Income tax expense(1,656.8)(1,132.0)(235.7)Corporate tax obligation.
+
+Profit for the year2,485.21,697.9353.6Final net income.
+
+2. Dexterity Inc. and Subsidiaries (US GAAP)
+[edit]
+
+Full consolidated statement of operations
+
+Line Item
+2019 ($)
+2020 ($)
+2021 ($)
+Analysis / description
+
+Revenue36,525.929,827.621,186.8Group sales revenue.
+
+Cost of sales(18,545.8)(15,858.8)(11,745.5)Manufacturing COGS.
+
+Gross profit17,980.113,968.89,441.3Sales minus direct costs.
+
+SG&A Expenses(4,142.1)(3,732.3)(3,498.6)Sales & Admin overheads.
+
+Depreciation(602.4)(584.5)(562.3)Physical asset wear/tear.
+
+Amortisation(209.9)(141.9)(111.8)Intangible asset write-down.
+
+Impairment loss(17,997.1)——2019 massive write-down.
+
+Operating profit(4,971.4)9,510.15,268.6EBIT (incl. 2019 loss).
+
+Interest (Net)(693.6)(731.2)(787.1)Net finance costs.
+
+Profit continuing ops(7,348.7)5,263.82,651.0Ongoing business result.
+
+Discontinued ops(1,090.3)(802.4)164.6Results from closed units.
+
+Profit for the year(8,439.0)4,461.42,486.4Final consolidated result.
+
+3. Interpretation comparison (IFRS vs. US GAAP)
+[edit]
+
+Comparison of interpretive logic & profit impact
+
+Area
+IFRS (Fitness equipment)
+US GAAP (Dexterity)
+Analytical impact & profit effect
+
+R&D costs
+Development costs can be capitalized.
+Most must be expensed immediately.
+IFRS profit ↑ (Costs hidden in balance sheet) / US GAAP profit ↓ (immediate hit).
+
+Inventory
+LIFO method prohibited.
+LIFO method allowed.
+IFRS profit ↑ (during inflation) / US GAAP profit ↓ (tax shielding via LIFO).
+
+Impairment
+Reversal is allowed if value recovers.
+Reversal is strictly forbidden.
+IFRS profit ↑ (potential "income" from write-backs) / US GAAP profit ↓ (permanent loss).
+
+Extraordinary items
+Not recognized separately.
+Separately classified if infrequent.
+IFRS EBIT (more inclusive) vs US GAAP EBIT (cleaner focus on recurring items).
+
+Requirements of IFRS
+[edit]
+
+On 6 September 2007, the International Accounting Standards Board issued a revised IAS 1: Presentation of Financial Statements, which is effective for annual periods beginning on or after 1 January 2009.
+
+A business entity adopting IFRS must include:
+
+a statement of comprehensive income or
+
+two separate statements comprising:
+
+an income statement displaying components of profit or loss and
+
+a statement of comprehensive income that begins with profit or loss (bottom line of the income statement) and displays the items of other comprehensive income for the reporting period. (IAS1.81)
+
+All non-owner changes in equity (i.e., comprehensive income) shall be presented either in the statement of comprehensive income or in a separate income statement and a statement of comprehensive income. Components of comprehensive income may not be presented in the statement of changes in equity.
+
+Comprehensive income for a period includes profit or loss (net income) for that period and other comprehensive income recognised in that period.
+
+All items of income and expense recognised in a period must be included in profit or loss unless a Standard or an Interpretation requires otherwise. (IAS 1.88) Some IFRSs require or permit that some components to be excluded from profit or loss and instead to be included in other comprehensive income. (IAS 1.89)
+
+Items and disclosures
+[edit]
+
+The statement of comprehensive income should include:[5] (IAS 1.82)
+
+Revenue
+
+Finance costs (including interest expenses)
+
+Share of the profit or loss of associates and joint ventures accounted for using the equity method
+
+Tax expense
+
+A single amount comprising the total of (1) the post-tax profit or loss of discontinued operations and (2) the post-tax gain or loss recognised on the disposal of the assets or disposal group(s) constituting the discontinued operation
+
+Profit or loss
+
+Each component of other comprehensive income classified by nature
+
+Share of the other comprehensive income of associates and joint ventures accounted for using the equity method
+
+Total comprehensive income
+
+The following items must also be disclosed in the statement of comprehensive income as allocations for the period: (IAS 1.83)
+
+Profit or loss for the period attributable to non-controlling interests and owners of the parent
+
+Total comprehensive income attributable to non-controlling interests and owners of the parent
+
+No items may be presented in the statement of comprehensive income (or in the income statement, if separately presented) or in the notes as extraordinary items.
+
+See also
+[edit]
+
+Comprehensive income
+
+Cash flow
+
+Trading statement
+
+Profit model
+
+Statement of changes in equity
+
+Model audit
+
+International Financial Reporting Standards (and their requirements)
+
+Notes
+[edit]
+
+↑ also referred to as a profit and loss statement, statement of profit and loss, revenue statement, statement of financial performance, earnings statement, statement of earnings, operating statement, or statement of operations
+
+References
+[edit]
+
+1 2 Professional English in Use - Finance, Cambridge University Press, p. 10
+
+↑ "ANALYSIS OF FASB 117 (Financial Accounting Standards Board) "FINANCIAL STATEMENTS OF NOT-FOR-PROFIT ORGANIZATIONS"". Archived from the original on 2010-03-10. Retrieved 2009-11-16.
+
+↑ Warren, Carl (2008). Survey of Accounting. Cincinnati: South-Western College Pub. pp. 128–132. ISBN 978-0-324-65826-2.
+
+↑ Bragg, Steven (2025-02-11). "Income statement definition". AccountingTools. Retrieved 2025-10-15.
+
+1 2 3 "Presentation of Financial Statements" International Accounting Standards Board. Accessed 17 July 2010.
+
+1 2 [citation needed]
+
+↑ "Heads Up — FASB issues ASU on extraordinary items" Accessed 22 August 2023.
+
+Harry I. Wolk, James L. Dodd, Michael G. Tearney. Accounting Theory: Conceptual Issues in a Political and Economic Environment (2004). ISBN 0-324-18623-1.
+
+Angelico A. Groppelli, Ehsan Nikbakht. Finance (2000). ISBN 0-7641-1275-9.
+
+Barry J. Epstein, Eva K. Jermakowicz. Interpretation and Application of International Financial Reporting Standards (2007). ISBN 978-0-471-79823-1.
+
+Jan R. Williams, Susan F. Haka, Mark S. Bettner, Joseph V. Carcello. Financial & Managerial Accounting (2008). ISBN 978-0-07-299650-0.
+
+v
+
+t
+
+e
+
+Accounting
+
+Type
+
+Financial accounting
+
+Cost accounting
+
+Management accounting
+
+Forensic accounting
+
+Fund accounting
+
+Governmental accounting
+
+Social accounting
+
+Tax accounting
+
+Statements
+
+Income statement
+
+Balance sheet
+
+Statement of changes in equity
+
+Cash flow statement
+
+Terms
+
+Debits and credits
+
+Revenue
+
+Cost of goods sold
+
+Operating expense
+
+Capital expenditure
+
+Depreciation
+
+Gross income
+
+Net income
+
+Authority control databases
+
+International
+
+GND
+
+National
+
+Japan
+
+Retrieved from "https://en.wikipedia.org/w/index.php?title=Income_statement&oldid=1376200373"
+
+Categories:
+Income statement
+
+Accounting terminology
+
+Hidden categories:
+Articles with short description
+
+Short description is different from Wikidata
+
+Articles with limited geographic scope from December 2009
+
+Articles needing additional references from December 2009
+
+All articles needing additional references
+
+Articles with multiple maintenance issues
+
+All articles with unsourced statements
+
+Articles with unsourced statements from February 2018
+
+Income statement
+
+Add topic

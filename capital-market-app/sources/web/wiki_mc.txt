@@ -1,0 +1,919 @@
+URL: https://en.wikipedia.org/wiki/Market_capitalization
+FETCHED: 2026-10-18
+
+Market capitalization - Wikipedia
+
+Jump to content
+
+From Wikipedia, the free encyclopedia
+
+Total value of a public company's outstanding shares
+
+The New York Stock Exchange on Wall Street, the world's largest stock exchange in terms of total market capitalization of its listed companies, as of 2010[1]
+
+Market capitalization, sometimes referred to as market cap, is the total value of a publicly traded company's outstanding common shares owned by stockholders.[2]
+
+Market capitalization is equal to the market price per common share multiplied by the number of common shares outstanding.[2][3][4]
+
+Description
+[edit]
+
+Market capitalization is sometimes used to rank the size of companies. It measures only the equity component of a company's capital structure, and does not reflect management's decision as to how much debt (or leverage) is used to finance the firm. A more comprehensive measure of a firm's size is enterprise value (EV), which gives effect to outstanding debt, preferred stock, and other factors. For insurance firms, a value called the embedded value (EV) has been used.
+
+It is also used in ranking the relative size of stock exchanges, being a measure of the sum of the market capitalizations of all companies listed on each stock exchange. The total capitalization of stock markets or economic regions may be compared with other economic indicators (e.g. the Buffett indicator).
+
+Calculation
+[edit]
+
+Market cap is given by the formula
+
+MC
+
+=
+N
+×
+P
+
+{\textstyle {\text{MC}}=N\times P}
+
+, where MC is the market capitalization, N is the number of common shares outstanding, and P is the market price per common share.[2]
+
+For example, if a company has 4 million common shares outstanding, and the closing price per share is $20, its market capitalization is then $80 million. If the closing price per share rises to $21, the market cap becomes $84 million. If it drops to $19 per share, the market cap falls to $76 million. This is in contrast to mercantile pricing where purchase price, average price and sale price may differ due to transaction costs.
+
+Not all of the outstanding shares trade on the open market. The number of shares trading on the open market is called the float. It is equal to or less than N because N includes shares that are restricted from trading. The free-float market cap uses just the floating number of shares in the calculation, generally resulting in a smaller number.
+
+Market cap terms
+[edit]
+
+Traditionally, companies were divided into large-cap, mid-cap, and small-cap.[5][3] The terms mega-cap and micro-cap have since come into common use,[6][7] and nano-cap is sometimes heard. Large caps have a slow growth rate as compared to small caps.[2] Different numbers are used by different indexes;[8] there is no official definition of, or full consensus agreement about, the exact cutoff values.[9][10] The cutoffs may be defined as percentiles rather than in nominal dollars. The definitions expressed in nominal dollars need to be adjusted over decades due to inflation, population change, and overall market valuation (for example, $1 billion was a large market cap in 1950, but it is not very large now), and market caps are likely to be different country to country.
+
+In the United States
+[edit]
+
+Regulatory agencies
+[edit]
+
+FINRA's investor education materials state that the following is a typical (not official) categorization of stocks by market capitalization:[11]
+
+Market cap categories per FINRA[11]
+
+Category
+Market capitalization of individual stock
+
+(US$ billions)
+
+(FINRA, 2022)
+(GDP deflator adjusted to 2024 US$)[12]
+
+Mega-cap≥ $200≥ $213
+
+Large-cap$10 – $200$11 – $213
+
+Mid-cap$2 – $10$2 – $11
+
+Small-cap$0.25 – $2$0.27 – $2
+
+Micro-cap< $0.25< $0.27
+
+The U.S. Securities and Exchange Commission notes that nano-cap stocks, in cases when they're separated from micro-caps, are typically defined as stocks with a market capitalization less than $50 million (as of 2013);[13] which is equivalent to less than $66 million in 2024.[12]
+
+S&P Dow Jones Indices
+[edit]
+
+S&P Dow Jones Indices (S&P DJI) defines 3 major US indices segmented by market capitalization. The components of these indices are selected by committee, but in order to be eligible, among other requirements,[14] a stock's market capitalization at the time of addition must be within the respective range in the following table:
+
+Market cap requirements for major S&P indices, as of 2025[15]
+
+IndexSegmentMarket capitalization required for addition
+
+S&P 500Large-cap≥ US$20.5 billion
+
+S&P 400Mid-cap$7.4 billion – $20.5 billion
+
+S&P 600Small-cap$1 billion – $7.4 billion
+
+These market cap eligibility criteria are only for addition to these indices, not for continued membership in an index. As a result, an S&P index constituent that appears to violate criteria for addition to that index is not removed unless ongoing conditions warrant an index change.[15]
+
+Although there is no micro-cap S&P index, S&P DJI does offer two Dow Jones micro-cap indices:
+
+Market cap statistics of Dow Jones microcap indices, as of September 30, 2026[update]
+
+Index
+Constituents
+Market capitalization of constituents
+
+(in US$ millions)
+Source
+
+SmallestMedianMeanLargest
+
+Dow Jones U.S. Micro-Cap Total Stock Market Index
+1316
+0.04
+73.29
+142.26
+832.48
+[16]
+
+Dow Jones Select Micro-Cap Index
+135
+167.74
+499.45
+510.46
+1,164.56
+[17]
+
+The Dow Jones U.S. Micro-Cap Total Stock Market Index "is designed to provide a comprehensive measure of the micro-cap segment of the US stock market",[16] and consists of eligible stocks with market caps smaller than the largest 3000.[18] The Dow Jones Select Micro-Cap Index consists of microcaps with relatively high liquidity and better fundamentals.[17]
+
+Morningstar Indexes
+[edit]
+
+Another index provider, Morningstar, Inc., defines its segments conceptually in terms of target ranges of top percentages of total US investable equity market capitalization, calculating actual, precise dollar-value breakpoints between the segments on a quarterly basis:
+
+Morningstar market capitalization segments
+
+Segment
+Top market cap
+
+percentage range
+Minimum market cap
+
+(Q2 2026)[19]
+Companies
+
+(as of Sept 30, 2025)
+Notes
+
+Core cap[20]
+Large cap[21]
+Mega cap
+0 – 70%[22]
+$94,234,256,812
+179
+Top 70% of total market cap
+
+Mid cap
+70 – 85%[23]
+$29,546,026,000
+285
+Next 15% of total market cap
+
+Small cap
+85 – 98%[24]
+$2,984,336,260
+1,309
+Next 13% of total market cap
+
+Micro cap
+98 – 100%
+None
+1,819
+Last/bottom 2% of total market cap[25]
+
+Morningstar defines its "large cap" segment as simply the combination of its mega cap and mid cap segments (i.e. top 85% of total market cap), rather than as a disjoint segment.[21] Morningstar also defines a "core cap" segment, consisting of all segments above micro-cap (i.e. the top 98% of total market cap).[20]
+
+Russell Indexes
+[edit]
+
+Index provider FTSE Russell defines its segments by sorting all eligible companies by market cap, and then taking the top or bottom N companies (by count) from the list (or from another segment), where N is a fixed constant for each index which is often included in the index's name:
+
+Russell Indexes market cap segments, as of August 31, 2026[update]
+
+Index
+Segment
+Holdings
+Market cap of holdings
+
+(US$ billions)
+Notes
+Source
+
+TargetActual
+MedianMeanLargest
+
+Russell Top 200
+Megacap
+200
+201
+125
+1,817.5
+5,365
+Approx. 200 largest companies in the Russell 1000
+[26]
+
+Russell 1000
+Large-cap
+1,000
+1,017
+17.7
+1,467.5
+5,365
+Approx. 1,000 largest companies in the Russell 3000
+[27]
+
+Russell Midcap Index
+Mid-cap
+800
+816
+13.4
+33.4
+114.6
+Approx. 800 smallest companies in the Russell 1000,
+
+i.e. excluding the Russell Top 200
+[28]
+
+Russell 2000
+Small-cap
+2,000
+1,953
+1.14
+4.05
+12.1
+Approx. 2,000 smallest companies in the Russell 3000
+[29]
+
+Russell Microcap Index
+Microcap
+2,000
+1,341
+0.267
+0.889
+3.42
+Approx. 1,000 smallest companies in the Russell 2000,
+
+combined with 1,000 smallest eligible companies in the Russell 3000E Index
+[30]
+
+However, the Russell Indexes also apply banding to decrease transient changes to their membership,[31] thus making the target holding numbers only approximate.
+
+Similar to Morningstar, Russell's "large cap" segment is basically the combination of its megacap and mid-cap segments. Also, roughly the largest half of Russell's microcap segment overlaps with the smallest half of its small-cap segment.
+
+In the United Kingdom
+[edit]
+
+Market cap statistics for major FTSE indices, as of May 29, 2026[update]
+
+Index
+Category
+Constituents
+Market capitalization of constituents
+
+(in GBP millions)
+Source
+
+SmallestMedianMeanLargest
+
+FTSE 100Large-cap1002,0068,20624,920239,090[32]
+
+FTSE 250Mid-cap2501249131,1964,466[33]
+
+FTSE SmallCapSmall-cap17622191200488[34]
+
+FTSE FledglingMicro-cap361172277[35]
+
+Significance for investing
+[edit]
+
+Very generally speaking, a corporation's market cap correlates to how far it has progressed in its development journey.[36] Small cap companies are generally younger, more focused companies, with more potential for faster growth in their future.[36] By contrast, large cap companies are generally more mature companies, with more diverse income streams; thus, their incomes and stock prices tend to be more stable, but they also tend to have less future growth potential.[36] High-quality large caps are sometimes termed blue chips.[36]
+
+Small caps may be subject to the uncertainties of new or growing markets, and may be in niche or emerging industries.[36] Due to this relative instability, small caps are generally less able to weather negative macroeconomic situations than large caps are.[36]
+
+Therefore, broadly speaking, when investing in stocks, there is risk–return spectrum related to market cap. Small cap stocks have greater volatility, but greater potential return; whereas large caps have lower volatility, but also lower potential return.[36] In factor investing, this historical observation is known as the size premium. Small caps are thus generally categorized as riskier or more aggressive investments than large caps, which are seen as less risky, more conservative investments.[36]
+
+Historical data
+[edit]
+
+The approximate total market capitalization of all publicly traded companies in the USA was:
+
+2023: US$48.98 trillion[37]
+
+2024: US$62.19 trillion
+
+October 3rd 2025: US$69.244 trillion[38]
+
+Historical estimates of world market cap
+[edit]
+
+Total market capitalization of all publicly traded companies in the world from 1975:
+
+Year
+World market cap
+Number of
+
+listed
+
+companies[39]
+
+(in bn. US$)[40]
+(% of GDP)[41]
+
+1975
+1,149
+27.1
+14,577
+
+1980
+2,525
+29.4
+17,273
+
+1985
+4,684
+46.7
+20,555
+
+1990
+9,519
+50.4
+23,732
+
+1991
+11,340
+56.4
+24,666
+
+1992
+10,819
+49.9
+24,947
+
+1993
+13,897
+61.3
+28,300
+
+1994
+14,639
+60.3
+30,290
+
+1995
+17,263
+63.2
+33,379
+
+1996
+19,806
+71.2
+35,617
+
+1997
+22,029
+79.6
+36,946
+
+1998
+24,555
+88.5
+37,928
+
+1999
+33,181
+114
+38,414
+
+2000
+30,925
+100
+39,892
+
+2001
+26,792
+87.8
+40,157
+
+2002
+22,802
+72.2
+38,894
+
+2003
+31,107
+84.3
+41,051
+
+2004
+36,540
+88.6
+38,724
+
+2005
+40,512
+91.9
+39,096
+
+2006
+50,074
+105
+43,104
+
+2007
+60,456
+113
+44,034
+
+2008
+32,418
+55.6
+43,949
+
+2009
+47,471
+83.0
+42,669
+
+2010
+54,259
+86.4
+43,427
+
+2011
+47,521
+68.0
+44,323
+
+2012
+54,503
+77.6
+43,772
+
+2013
+64,367
+88.0
+44,853
+
+2014
+67,177
+89.3
+45,743
+
+2015
+62,268
+93.6
+43,983
+
+2016
+65,117
+96
+43,806
+
+2017
+79,501
+110
+43,440
+
+2018
+68,893
+93.4
+44,910
+
+2019
+78,825
+108
+49,792
+
+2020
+93,686
+132
+50,055
+
+2021
+111,159
+130
+52,292
+
+2022
+93,688
+105
+51,026
+
+2023
+102,950
+116
+48,748
+
+2024
+115,090
+130
+47,980
+
+2025
+141,300
+
+53,087
+
+See also
+[edit]
+
+Authorised capital
+
+List of countries by stock market capitalization
+
+List of public corporations by market capitalization
+
+Market price
+
+Share repurchase
+
+Treasury stock
+
+References
+[edit]
+
+↑ "Market highlights for first half-year 2010" (PDF). World Federation of Exchanges. July 2010. Archived from the original (PDF) on July 22, 2013. Retrieved May 29, 2013.
+
+1 2 3 4 Graham, John R; Smart, Scott B.; Megginson, William J. (2010). Corporate Finance (3rd ed.). Mason OH: South-Western Cengage Learning. p. 387. ISBN 9780324782967.
+
+1 2 Fernando, Jason (March 5, 2024). "Market Capitalization: What It Means for Investors". Investopedia. People Inc. Retrieved February 25, 2025.
+
+↑ "Definition of market capitalisation". Financial Times Lexicon. Financial Times. Archived from the original on September 25, 2016. Retrieved February 19, 2013.
+
+↑ Collin, Victoria (July 2, 2021). "Large Cap, Mid Cap, and Small Cap Stocks". Financial Edge. Retrieved February 25, 2025.
+
+↑ Chen, James (April 27, 2022). "Mega Cap: Companies With Market Caps Above $200 Billion". Investopedia. People Inc. Retrieved February 25, 2025.
+
+↑ Chen, James (July 12, 2022). "Micro-Cap: Definition in Stock Investing, Risks Vs. Larger Caps". Investopedia. People Inc. Retrieved February 25, 2025.
+
+↑ "What is Market Capitalization? definition and meaning". InvestorWords. WebFinance, Inc. 2020. Archived from the original on October 1, 2020. Retrieved August 3, 2008.
+
+↑ Owens, Deborah (2001). Confident Investing. Alpha Books. p. 104. ISBN 9780028640105. Be careful as you use these descriptors because it seems that everyone has a different definition of each cap size
+
+↑ Imperiale, Richard (2005). The Micro Cap Investor. Hoboken: John Wiley & Sons. p. 2. ISBN 9780471715979. It should be no surprise that [...] the threshold sizes for large, mid, and small capitalization stocks are also subject to debate.
+
+1 2 "Market Cap Explained". FINRA. September 30, 2022. Archived from the original on February 4, 2025. Retrieved February 25, 2025.
+
+1 2 Johnston, Louis; Williamson, Samuel H. (2023). "What Was the U.S. GDP Then?". MeasuringWorth. Retrieved November 30, 2023. United States Gross Domestic Product deflator figures follow the MeasuringWorth series.
+
+↑ "Microcap Stock: A Guide for Investors". U.S. Securities and Exchange Commission. September 18, 2013. Retrieved February 25, 2025.
+
+↑ "S&P U.S. Indices Methodology" (PDF). S&P Dow Jones Indices. February 20, 2025. Retrieved February 27, 2025.
+
+1 2 "S&P Dow Jones Indices Announces Update to S&P Composite 1500 Market Cap Guidelines" (PDF). S&P Dow Jones Indices. January 2, 2025. Retrieved January 7, 2025.
+
+1 2 "Dow Jones U.S. Micro-Cap Total Stock Market Index". S&P Dow Jones Indices. S&P Global. September 30, 2026. Retrieved October 10, 2026.
+
+1 2 "Dow Jones Select Micro-Cap Index". S&P Dow Jones Indices. S&P Global. September 30, 2026. Retrieved October 10, 2026.
+
+↑ "Dow Jones U.S. Total Stock Market Indices Methodology" (PDF). S&P Dow Jones Indices. September 2026. p. 8. Retrieved October 10, 2026.
+
+↑ "Breakpoints Chart: Quarter ending June 30, 2026". Morningstar, Inc. 2026. Retrieved June 13, 2026.
+
+1 2 "Morningstar US Core Cap Index". Morningstar, Inc. 2026. Retrieved June 13, 2026.
+
+1 2 "Morningstar US Large Cap Index". Morningstar, Inc. 2026. Retrieved June 13, 2026.
+
+↑ "Morningstar US Mega Cap". Morningstar, Inc. 2026. Retrieved June 13, 2026.
+
+↑ "Morningstar US Mid Cap Index". Morningstar, Inc. 2026. Retrieved June 13, 2026.
+
+↑ "Morningstar US Small Cap Index". Morningstar, Inc. 2026. Retrieved June 13, 2026.
+
+↑ "Morningstar US Micro Cap Index". Morningstar, Inc. 2026. Retrieved June 13, 2026.
+
+↑ "Index factsheet: Russell Top 200 Index" (PDF). FTSE Russell Research Portal. FTSE Russell. August 31, 2026. Retrieved September 25, 2026. The Russell Top 200® Index measures the performance of the mega cap segment of the US equity market.
+
+↑ "Index factsheet: Russell 1000 Index" (PDF). FTSE Russell Research Portal. FTSE Russell. August 31, 2026. Retrieved September 25, 2026. The Russell 1000® Index measures the performance of the large cap segment of the US equity market.
+
+↑ "Index factsheet: Russell Midcap Index" (PDF). FTSE Russell Research Portal. FTSE Russell. August 31, 2026. Retrieved September 25, 2026. The Russell Midcap® Index measures the performance of the mid cap segment of the US equity market.
+
+↑ "Index factsheet: Russell 2000 Index" (PDF). FTSE Russell Research Portal. FTSE Russell. August 31, 2026. Retrieved September 25, 2026. The Russell 2000® Index measures the performance of the small cap segment of the US equity market.
+
+↑ "Index factsheet: Russell Microcap Index" (PDF). FTSE Russell Research Portal. FTSE Russell. August 31, 2026. Retrieved September 25, 2026. The Russell Microcap® Index measures the performance of the micro cap segment of the US equity market.
+
+↑ Yoshimoto, Catherine (May 2024). "Four Decades of Russell US Indexes Reconstitution" (PDF). FTSE Russell. p. 7.
+
+↑ "FTSE 100 Index" (PDF). FTSE Russell Research Portal. FTSE Russell. May 29, 2026. Retrieved June 12, 2026.
+
+↑ "FTSE 250 Index" (PDF). FTSE Russell Research Portal. FTSE Russell. May 29, 2026. Retrieved June 12, 2026.
+
+↑ "FTSE SmallCap Index" (PDF). FTSE Russell Research Portal. FTSE Russell. May 29, 2026. Retrieved June 12, 2026.
+
+↑ "FTSE Fledgling" (PDF). FTSE Russell Research Portal. FTSE Russell. May 29, 2026. Retrieved June 12, 2026.
+
+1 2 3 4 5 6 7 8 DST Systems, Inc. (2013). "Why market cap matters". Fidelity Investments. Retrieved June 20, 2026.
+
+↑ "Market capitalization of listed domestic companies (current US$)". The World Bank. Retrieved October 3, 2025.
+
+↑ "Largest American companies by market capitalization". Companies Market Cap. October 3, 2025. Retrieved October 3, 2025.
+
+↑ "Listed domestic companies, total". World Bank Open Data. Retrieved April 19, 2026.
+
+↑ "Market capitalization of listed domestic companies (current US$)". World Bank Open Data. Retrieved April 18, 2026.
+
+↑ "Market capitalization of listed domestic companies (% of GDP)". World Bank Open Data. Retrieved April 19, 2026.
+
+External links
+[edit]
+
+Look up market capitalization in Wiktionary, the free dictionary.
+
+Market capitalization of listed domestic companies (current US$) by country since 1975 – World Bank dataset
+
+v
+
+t
+
+e
+
+Financial markets
+
+Types of markets
+
+Primary market
+
+Secondary market
+
+Third market
+
+Fourth market
+
+Types of stocks
+
+Common stock
+
+Golden share
+
+Preferred stock
+
+Restricted stock
+
+Tracking stock
+
+Share capital
+
+Authorised capital
+
+Issued shares
+
+Shares outstanding
+
+Treasury stock
+
+Participants
+
+Broker
+
+Floor broker
+
+Inter-dealer broker
+
+Broker-dealer
+
+Market maker
+
+Trader
+
+Floor trader
+
+Proprietary trader
+
+Quantitative analyst
+
+Investor
+
+Hedger
+
+Speculator
+
+Arbitrager
+
+Scalper
+
+Regulator
+
+Trading venues
+
+Exchange
+
+List of major stock exchanges
+
+Over-the-counter (off-exchange)
+
+Alternative trading system (ATS)
+
+Multilateral trading facility (MTF)
+
+Electronic communication network (ECN)
+
+Direct market access (DMA)
+
+Straight-through processing (STP)
+
+Dark pool (private exchange)
+
+Crossing network
+
+Liquidity aggregator
+
+Stock valuation
+
+Alpha
+
+Arbitrage pricing theory (APT)
+
+Beta
+
+Buffett indicator (Cap-to-GDP)
+
+Book value (BV)
+
+Capital asset pricing model (CAPM)
+
+Capital market line (CML)
+
+Dividend discount model (DDM)
+
+Dividend yield
+
+Earnings yield
+
+EV/EBITDA
+
+Fed model
+
+Net asset value (NAV)
+
+Security characteristic line
+
+Security market line (SML)
+
+T-model
+
+Trading theories
+
+and strategies
+
+Algorithmic trading
+
+Buy and hold
+
+Contrarian investing
+
+Dollar cost averaging
+
+Efficient-market hypothesis (EMH)
+
+Fundamental analysis
+
+Growth stock
+
+Market timing
+
+Modern portfolio theory (MPT)
+
+Momentum investing
+
+Mosaic theory
+
+Pairs trade
+
+Post-modern portfolio theory (PMPT)
+
+Random walk hypothesis (RMH)
+
+Sector rotation
+
+Style investing
+
+Swing trading
+
+Technical analysis
+
+Trend following
+
+Value averaging
+
+Value investing
+
+Quantitative analysis (finance)
+
+Related terms
+
+Bid–ask spread
+
+Block trade
+
+Cross listing
+
+Dividend
+
+Dual-listed company
+
+DuPont analysis
+
+Efficient frontier
+
+Financial law
+
+Flight-to-quality
+
+Government bond
+
+Greenspan put
+
+Haircut
+
+Initial public offering (IPO)
+
+Long
+
+Mandatory offer
+
+Margin
+
+Market anomaly
+
+Market capitalization
+
+Market depth
+
+Market manipulation
+
+Market trend
+
+Mean reversion
+
+Momentum
+
+Open outcry
+
+Order book
+
+Position
+
+Public float
+
+Public offering
+
+Rally
+
+Returns-based style analysis
+
+Reverse stock split
+
+Share repurchase
+
+Shareholder value
+
+Short selling
+
+Short squeeze
+
+Slippage
+
+Speculation
+
+Squeeze-out
+
+Stock dilution
+
+Stock exchange
+
+Stock market index
+
+Stock split
+
+Stock swap
+
+Trade
+
+Tender offer
+
+Uptick rule
+
+Volatility
+
+Voting interest
+
+Yield
+
+Retrieved from "https://en.wikipedia.org/w/index.php?title=Market_capitalization&oldid=1379635015"
+
+Categories:
+Publicly traded companies
+
+Business terms
+
+Hidden categories:
+Articles with short description
+
+Short description matches Wikidata
+
+Use American English from December 2022
+
+All Wikipedia articles written in American English
+
+Use mdy dates from February 2015
+
+Articles containing potentially dated statements from September 2026
+
+All articles containing potentially dated statements
+
+Articles containing potentially dated statements from August 2026
+
+Articles containing potentially dated statements from May 2026
+
+Market capitalization
+
+Add topic

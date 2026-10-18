@@ -170,6 +170,20 @@ const LESSONS = [
     q: { q: 'בתיק של 5,000 ש"ח מסכנים 1%. כמה ש"ח זה?', o: ['50 ש"ח', '500 ש"ח', '5 ש"ח'], a: 0 }
   }
 ];
+/* learning path: five modules. Lessons added later (lessons-extra.js) join by their "module" field. */
+const MODULES = [
+  { id: 'A', title: 'יסודות', sub: 'מה זה שוק ההון ואיך הוא עובד', color: '#c8ff3d' },
+  { id: 'B', title: 'קריאת גרפים', sub: 'נרות, נפח, מגמה, תמיכה והתנגדות', color: '#60a5fa' },
+  { id: 'C', title: 'ניהול סיכון', sub: 'לא מהמרים: שולטים בהפסד', color: '#fb923c' },
+  { id: 'D', title: 'להבין חברה', sub: 'דוחות, שווי ומה משפיע על המחיר', color: '#a78bfa' },
+  { id: 'E', title: 'ראש בשוק', sub: 'רגשות, הרגלים ותוכנית אישית', color: '#fb7185' }
+];
+const MODULE_OF = { l1: 'A', l2: 'B', l3: 'B', l4: 'B', l5: 'B', l6: 'B', l7: 'C', l8: 'C', l9: 'C' };
+const PLAN_ORDER = ['l1', 'l10', 'l11', 'l12', 'l13', 'l14', 'l15', 'l16', 'l2', 'l3', 'l4', 'l5', 'l6', 'l17', 'l7', 'l8', 'l9', 'l18', 'l19', 'l20', 'l21', 'l22', 'l23', 'l24', 'l25', 'l26', 'l27'];
+LESSONS.forEach(l => { l.module = l.module || MODULE_OF[l.id]; });
+function orderLessons() { const r = new Map(PLAN_ORDER.map((id, k) => [id, k])); LESSONS.sort((a, b) => (r.has(a.id) ? r.get(a.id) : 999) - (r.has(b.id) ? r.get(b.id) : 999)); }
+orderLessons();
+
 /* ===== glossary: plain words ===== */
 const GLOSS = {
   share: { t: 'מניה', lesson: 'l1', v: 'pie', def: 'חתיכה קטנה מחברה. מי שקונה מניה הוא בעלים של חלק קטן מהחברה.', ex: 'אם החברה מצליחה, המניה שלכם שווה יותר.' },

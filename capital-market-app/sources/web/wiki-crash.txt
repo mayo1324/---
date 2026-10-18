@@ -1,0 +1,1780 @@
+URL: https://en.wikipedia.org/wiki/Stock_market_crash
+FETCHED: 2026-10-18
+
+Stock market crash - Wikipedia
+
+Jump to content
+
+From Wikipedia, the free encyclopedia
+
+Sudden widespread decline of stock prices
+
+Stock price graph illustrating the 2020 stock market crash, showing a sharp drop in stock price, followed by a recovery
+
+Part of a series on
+
+Financial markets
+
+Public market
+
+Exchange · Securities
+
+Bond market
+
+Bond valuation
+
+Corporate bond
+
+Fixed income
+
+Government bond
+
+High-yield debt
+
+Municipal bond
+
+Securitization
+
+Stock market
+
+Common stock
+
+Growth stock
+
+Preferred stock
+
+Registered share
+
+Shareholder
+
+Stock
+
+Stockbroker
+
+Stock certificate
+
+Stock exchange
+
+Watered stock
+
+Other markets
+
+Derivatives
+
+(Credit derivative
+
+Futures exchange
+
+Hybrid security)
+
+Foreign exchange
+
+(Currency
+
+Exchange rate)
+
+Commodity
+
+ETF
+
+Money
+
+Mutual fund
+
+Option
+
+Real estate
+
+Reinsurance
+
+Structured product
+
+Swap (finance)
+
+Alternative investment
+
+Private equity
+
+Private credit
+
+Leveraged buyout
+
+Venture
+
+Growth
+
+Secondaries
+
+SPAC
+
+Carried interest
+
+Leveraged finance
+
+Over-the-counter (off-exchange)
+
+Forwards
+
+Options
+
+Spot market
+
+Swaps
+
+Trading
+
+Participants
+
+Regulation
+
+Clearing
+
+Related areas
+
+Asset management
+
+Banks and banking
+
+Bulls and Bears
+
+Diversification
+
+ESG
+
+Climate finance
+
+Eco-investing
+
+Impact investing
+
+Sustainable finance
+
+Greenwashing
+
+Financial technology
+
+Investment management
+
+Market risk
+
+Market trend
+
+Speculative attack
+
+v
+
+t
+
+e
+
+A stock market crash is a sudden dramatic decline of stock prices across a major cross-section of a stock market, resulting in a significant loss of paper wealth. Crashes are driven by panic selling and underlying economic factors. They often follow speculation and economic bubbles.
+
+A stock market crash is a social phenomenon where external economic events combine with crowd psychology in a positive feedback loop where selling by some market participants drives more market participants to sell. Generally speaking, crashes usually occur under the following conditions: a prolonged period of rising stock prices (a bull market) and excessive economic optimism, a market where price–earnings ratios exceed long-term averages, and extensive use of margin debt and leverage by market participants. Other aspects such as wars, large corporate hacks, changes in federal laws and regulations, and natural disasters within economically productive areas may also influence a significant decline in the stock market value of a wide range of stocks. Stock prices for corporations competing against the affected corporations may rise despite the crash.[1]
+
+There is no numerically specific definition of a stock market crash but the term commonly applies to declines of over 10% in a stock market index over a period of several days. Crashes are often distinguished from bear markets (periods of declining stock market prices that are measured in months or years) as crashes include panic selling and abrupt, dramatic price declines. Crashes are often associated with bear markets; however, they do not necessarily occur simultaneously. Black Monday (1987), for example, did not lead to a bear market. Likewise, the bursting of the Japanese asset price bubble occurred over several years without any notable crashes. Stock market crashes are not common.
+
+Crashes are generally unexpected. As Niall Ferguson stated, "Before the crash, our world seems almost stationary, deceptively so, balanced, at a set point. So that when the crash finally hits – as inevitably it will – everyone seems surprised. And our brains keep telling us it’s not time for a crash."[2]
+
+Examples
+[edit]
+
+Tulip Mania
+[edit]
+
+Main articles: Financial history of the Dutch Republic and Tulip Mania
+
+Tulip Mania (1634–1637), in which some single tulip bulbs allegedly sold for more than 10 times the annual income of a skilled artisan, is often considered to be the first recorded economic bubble.
+
+Panic of 1907
+[edit]
+
+Main article: Panic of 1907
+
+In 1907 and in 1908, stock prices fell by nearly 50% due to a variety of factors, led by the manipulation of copper stocks by the Knickerbocker Trust Company.[3] Shares of United Copper rose gradually up to October, and thereafter crashed, leading to panic.[4][5] Several investment trusts and banks that had invested their money in the stock market fell and started to close down. Further bank runs were prevented due to the intervention of J. P. Morgan.[6] The panic continued to 1908 and led to the formation of the Federal Reserve in 1913.[7]
+
+Wall Street Crash of 1929
+[edit]
+
+Main article: Wall Street Crash of 1929
+
+After large market declines on October 28 and 29, The New York Times described the financial community's response to "the most disastrous trading day in the stock market's history". Margin requirements were reduced to 25%, banking leaders expressed assurance of their support, and the sentiment on Wall Street was said to be "more cheerful" after earlier declines.[8]
+
+Crowd gathering on Wall Street the day after the 1929 crash
+
+The economy grew for most of the Roaring Twenties. It was a technological golden age, as innovations such as the radio, automobile, aviation, telephone, and the electric power transmission grid were deployed and adopted. Companies that had pioneered these advances, including Radio Corporation of America (RCA) and General Motors, saw their stocks soar. Financial corporations also did well, as Wall Street bankers floated mutual fund companies (then known as investment trusts) like the Goldman Sachs Trading Corporation. Investors were infatuated with the returns available in the stock market, especially by the use of leverage through margin debt (i.e., borrowing money from your stockbroker to finance part of your purchase of stocks, using the bought securities as collateral).
+
+On August 24, 1921, the Dow Jones Industrial Average (DJIA) was at 63.9. By September 3, 1929, it had risen more than sixfold to 381.2. It did not regain this level for another 25 years. By the summer of 1929, it was clear that the economy was contracting, and the stock market went through a series of unsettling price declines. These declines fed investor anxiety, and events came to a head on October 24, 28, and 29 (known respectively as Black Thursday, Black Monday, and Black Tuesday).
+
+On Black Monday, the DJIA fell 38.33 points to 260, a drop of 12.8%. The deluge of selling overwhelmed the ticker tape system that normally gave investors the current prices of their shares. Telephone lines and telegraphs were clogged and were unable to cope. This information vacuum only led to more fear and panic. The technology of the New Era, previously much celebrated by investors, now deepened their suffering.
+
+The following day, Black Tuesday, was a day of chaos. Forced to liquidate their stocks because of margin calls, overextended investors flooded the exchange with sell orders. The Dow fell 30.57 points to close at 230.07 on that day. The glamour stocks of the age saw their values plummet. Across the two days, the DJIA fell 23%.
+
+By the end of the weekend of November 11, 1929, the index stood at 228, a cumulative drop of 40% from the September high. The markets rallied in succeeding months, but it was a temporary recovery that led unsuspecting investors into further losses. The DJIA lost 89% of its value before finally bottoming out in July 1932. The crash was followed by the Great Depression, the worst economic crisis of modern times, which plagued the stock market and Wall Street throughout the 1930s.
+
+October 19, 1987
+[edit]
+
+Main article: Black Monday (1987)
+
+DJIA (19 July 1987 through 19 January 1988)
+
+The mid-1980s were a time of strong economic optimism. From August 1982 to its peak in August 1987, the Dow Jones Industrial Average (DJIA) rose from 776 to 2722. The rise in market indices for the 19 largest markets in the world averaged 296% during this period. The average number of shares traded on the New York Stock Exchange rose from 65 million shares to 181 million shares.[9]
+
+The crash on October 19, 1987, Black Monday, was the climactic culmination of a market decline that had begun five days before on October 14. The DJIA fell 3.81% on October 14, followed by another 4.60% drop on Friday, October 16. On Black Monday, the DJIA plummeted 508 points, losing 22.6% of its value in one day. The S&P 500 dropped 20.4%, falling from 282.7 to 225.06. The NASDAQ Composite lost only 11.3%, not because of restraint on the part of sellers, but because the NASDAQ market system failed. Deluged with sell orders, many stocks on the NYSE faced trading halts and delays. Of the 2,257 NYSE-listed stocks, there were 195 trading delays and halts during the day.[10] The NASDAQ market fared much worse. Because of its reliance on a "market making" system that allowed market makers to withdraw from trading, liquidity in NASDAQ stocks dried up. Trading in many stocks encountered a pathological condition where the bid price for a stock exceeded the ask price. These "locked" conditions severely curtailed trading. On October 19, trading in Microsoft shares on the NASDAQ lasted a total of 54 minutes.
+
+The crash was the greatest single-day loss that Wall Street had ever suffered in continuous trading up to that point. Between the start of trading on October 14 to the close on October 19, the DJIA lost 760 points, a decline of over 31%.
+
+In October 1987, all major world markets crashed or declined substantially. The FTSE 100 Index lost 10.8% on that Monday and a further 12.2% the following day. The least affected was Austria (a fall of 11.4%) while the most affected was Hong Kong with a drop of 45.8%. Out of 23 major industrial countries, 19 had a decline greater than 20%.[11]
+
+Despite fears of a repeat of the Great Depression, the market rallied immediately after the crash, posting a record one-day gain of 102.27 the very next day and 186.64 points on Thursday, October 22. It took only two years for the Dow to recover completely; by September 1989, the market had regained all of the value it had lost in the 1987 crash. The DJIA gained 0.6% during calendar year 1987.
+
+No definitive conclusions have been reached on the reasons behind the 1987 Crash. Stocks had been in a multi-year bull run and market price–earnings ratios in the U.S. were above the post-war average. The S&P 500 was trading at 23 times earnings, a postwar high and well above the average of 14.5 times earnings.[12] Herd behavior and psychological feedback loops play a critical part in all stock market crashes but analysts have also tried to look for external triggering events. Aside from the general worries of stock market overvaluation, blame for the collapse has been apportioned to such factors as program trading, portfolio insurance and derivatives, and prior news of worsening economic indicators (i.e. a large U.S. merchandise trade deficit and a falling U.S. dollar, which seemed to imply future interest rate hikes).[13]
+
+One of the consequences of the 1987 Crash was the introduction of the circuit breaker or trading curb on the NYSE. Based upon the idea that a cooling-off period would help dissipate panic selling, these mandatory market shutdowns are triggered whenever a large pre-defined market decline occurs during the trading day.
+
+2008 financial crisis
+[edit]
+
+Main article: 2008 financial crisis
+
+The collapse of Lehman Brothers was a symbol of the Crash of 2008.
+OMX Iceland 15 closing prices during the five trading weeks from September 29, 2008, to October 31, 2008
+During the 2008 financial crisis, the BSE Sensex experienced a sharp decline. It dropped from over 21,000 points in January 2008 to below 8,000 points in October 2008.[14]
+
+On September 15, 2008, the bankruptcy of Lehman Brothers and the collapse of Merrill Lynch along with a liquidity crisis of American International Group, all primarily due to exposure to packaged subprime loans and credit default swaps issued to insure these loans and their issuers, rapidly devolved into a global crisis. This resulted in several bank failures in Europe and sharp reductions in the value of stocks and commodities worldwide. The failure of banks in Iceland resulted in a devaluation of the Icelandic króna and threatened the government with bankruptcy. Iceland obtained an emergency loan from the International Monetary Fund in November.[15] In the United States, 15 banks failed in 2008, while several others were rescued through government intervention or acquisitions by other banks.[16] On October 11, 2008, the head of the International Monetary Fund (IMF) warned that the world financial system was teetering on the "brink of systemic meltdown".[17]
+
+The economic crisis caused countries to close their markets temporarily.
+
+On October 8, the Indonesian stock market halted trading, after a 10% drop in one day.
+
+The Times of London reported that the meltdown was being called the Crash of 2008, and older traders were comparing it with Black Monday in 1987. The fall that week of 21% compared to a 28.3% fall 21 years earlier, but some traders were saying it was worse. "At least then it was a short, sharp, shock on one day. This has been relentless all week."[18] Other media also referred to the events as the "Crash of 2008".[19]
+
+From October 6–10, 2008, the Dow Jones Industrial Average (DJIA) closed lower in all five sessions. Volume levels were record-breaking. The DJIA fell over 1,874 points, or 18%, in its worst weekly decline ever on both a points and percentage basis. The S&P 500 fell more than 20%.[20] The week also set three top-ten NYSE Group Volume Records with October 8 at #5, October 9 at #10, and October 10 at #1.
+
+Having been suspended for three successive trading days (October 9, 10, and 13), the Icelandic stock market reopened on 14 October, with the main index, the OMX Iceland 15, closing at 678.4, which was about 77% lower than the 3,004.6 at the close on October 8. This reflected that the value of the three big banks, which had formed 73.2% of the value of the OMX Iceland 15, had been set to zero.
+
+On October 24, 2008, many of the world's stock exchanges experienced the worst declines in their history, with drops of around 10% in most indices.[21] In the U.S., the DJIA fell 3.6%, although not as much as other markets.[22] The United States dollar and Japanese yen soared against other major currencies, particularly the British pound and Canadian dollar, as world investors sought safe havens. Later that day, the deputy governor of the Bank of England, Charlie Bean, suggested that "This is a once in a lifetime crisis, and possibly the largest financial crisis of its kind in human history."[23]
+
+By March 6, 2009, the DJIA had dropped 54% to 6,469 from its peak of 14,164 on October 9, 2007, over a span of 17 months, before beginning to recover.[24]
+
+2010 Flash Crash
+[edit]
+
+Main article: 2010 flash crash
+
+Amidst the Greek debt crisis, stock indices fell nearly 7% in minutes, with the Dow Jones Industrial Average losing almost 600 points and falling almost 1000 points (about 9%), from its previous close, with almost $1 trillion leaving the market, before recovering most of its decline within 20 minutes. The crash was blamed on a mutual fund company Waddell & Reed selling a large amount of S&P 500 E-Mini contracts. Following the crash, the SEC reduced the amount needed to trigger a circuit breaker from a 10% decline to a 7% decline.
+
+2011 Market Crash
+[edit]
+
+Main article: Black Monday (2011)
+
+Following Standard & Poor's downgrade of the United States' credit rating on August 5th, 2011, the S&P 500 plunged 6.68%, wiping out nearly $2.5 trillion in market value.
+
+COVID-19 pandemic (2020)
+[edit]
+
+Main article: 2020 stock market crash
+
+Further information: 2020 Russia–Saudi Arabia oil price war
+
+Indices: S&P BSE 500 (January 2015 to November 2020). Blue highlight reflects COVID-19 period (taken to start from March 2020 as per first lockdown).
+Indices: S&P BSE 500 (Period Jan – 2015 to May – 2020). Open, High, Low, Close visible. Fall depicted in black. Rise depicted in white.
+
+During the week of February 24–28, 2020, stock markets dropped as the COVID-19 pandemic spread globally. The FTSE 100 dropped 13%, while the DJIA and S&P 500 Index dropped 11–12% in the biggest downward weekly drop since the 2008 financial crisis.
+
+On Monday, March 9, 2020, after the launch of the 2020 Russia–Saudi Arabia oil price war, the FTSE and other major European stock market indices fell by nearly 8%. Asian markets fell sharply and the S&P 500 dropped 7.60%.[25] The Italian FTSE MIB fell 2,323.98 points, or 11.17%.[26]
+
+On March 12, 2020, a day after US President Donald Trump announced a travel ban from Europe, stock prices again fell sharply. The DJIA declined 9.99% – the largest daily decline since Black Monday (1987) – despite the Federal Reserve announcing it would inject $1.5 trillion into money markets.[27] The S&P 500 and the Nasdaq each dropped by approximately 9.5%. The major European stock market indexes all fell over 10%.[28]
+
+On March 16, 2020, after it became clear that a recession was inevitable, the DJIA dropped 12.93%, or 2,997 points, the largest point drop since Black Monday (1987), surpassing the drop in the prior week, the Nasdaq Composite dropped 12.32%, and the S&P 500 dropped 11.98%.[29]
+
+By the end of May 2020, the stock market indices briefly recovered to their levels at the end of February 2020.[citation needed]
+
+In June 2020, the Nasdaq surpassed its pre-crash high followed by the S&P 500 in August and the Dow in November.
+
+2025 stock market crash
+[edit]
+
+Main article: 2025 stock market crash
+
+The 2025 stock market crash began on April 2, 2025 as a result of the worldwide tariffs put in place by US President Donald Trump. The crash is the largest decline in the US stock market since the 2022 stock market decline.
+
+On March 21, Trump announced "Liberation Day", a day meant for imposing universal tariffs on all imported goods excluding pharmaceuticals, semiconductors, and lumber.[30][31] On April 2, Trump announced his trade policy with 10% tariffs on all imported goods, with additional reciprocal tariffs targeting 90 countries such as China with a 34% tariff on all goods imported and a 20% tariff on all E.U imports. These measures took effect on April 9, 2025. The following day after this announcement at the opening bell, the Dow lost over 1,344.50 points and was down 3.22% and the S&P 500 lost 176.96 points and was down 3.15%.
+
+Shortly after the tariffs were announced, the US stock market lost more than $3 trillion. By the second week of May 2025, the market had recovered.[32]
+
+Mathematical theory
+[edit]
+
+Random walk theory
+[edit]
+
+The conventional assumption is that stock markets behave according to a random log-normal distribution.[33] This implies that the expected volatility is the same all the time. Among others, mathematician Benoit Mandelbrot suggested as early as 1963 that the statistics prove this assumption incorrect.[34] Mandelbrot observed that large movements in prices (i.e. crashes) are much more common than would be predicted from a log-normal distribution. Mandelbrot and others suggested that the nature of market moves is generally much better explained using non-linear analysis and concepts of chaos theory.[35] This has been expressed in non-mathematical terms by George Soros in his discussions of what he calls reflexivity of markets and their non-linear movement.[36] George Soros said in late October 1987, "Mr. Robert Prechter's reversal proved to be the crack that started the avalanche."[37][38]
+
+Self-organized criticality
+[edit]
+
+Research at the Massachusetts Institute of Technology suggests that there is evidence that the frequency of stock market crashes follows an inverse cubic power law.[39] This and other studies such as Didier Sornette's work suggest that stock market crashes are a sign of self-organized criticality in financial markets.[40]
+
+Lévy flight
+[edit]
+
+In 1963, Mandelbrot proposed that instead of following a strict random walk, stock price variations executed a Lévy flight.[41] A Lévy flight is a random walk that is occasionally disrupted by large movements. In 1995, Rosario Mantegna and Gene Stanley analyzed a million records of the S&P 500, calculating the returns over a five-year period.[42] Researchers continue to study this theory, particularly using computer simulation of crowd behavior, and the applicability of models to reproduce crash-like phenomena.
+
+Result of investor imitation
+[edit]
+
+In 2011, using statistical analysis tools of complex systems, research at the New England Complex Systems Institute found that the panics that lead to crashes come from a dramatic increase in imitation among investors, which always occurred during the year before each market crash. When investors closely follow each other's cues, it is easier for panic to take hold and affect the market. This work is a mathematical demonstration of a significant advance warning sign of impending market crashes.[43][44]
+
+Trading curbs and trading halts
+[edit]
+
+One mitigation strategy has been the introduction of trading curbs, also known as "circuit breakers", which are a trading halt in the cash market and the corresponding trading halt in the derivative markets triggered by the halt in the cash market, all of which are affected based on substantial movements in a broad market indicator. Since their inception after Black Monday (1987), trading curbs have been modified to prevent both speculative gains and dramatic losses within a small time frame.
+
+United States
+[edit]
+
+There are three thresholds, which represent different levels of decline in the S&P 500: 7% (Level 1), 13% (Level 2), and 20% (Level 3).[45]
+
+If Threshold Level 1 (a 7% drop) is breached before 3:25pm, trading halts for a minimum of 15 minutes. At or after 3:25 pm, trading continues unless there is a Level 3 halt.
+
+If Threshold Level 2 (a 13% drop) is breached before 1 pm, the market closes for two hours. If such a decline occurs between 1 pm and 2 pm, there is a one-hour pause. The market would close for the day if stocks sank to that level after 2 pm
+
+If Threshold Level 3 (a 20% drop) is breached, the market would close for the day, regardless of the time.[46]
+
+France
+[edit]
+
+For the CAC 40 stock market index in France, daily price limits are implemented in cash and derivative markets. Securities traded on the markets are divided into three categories according to the number and volume of daily transactions. Price limits for each security vary by category. For instance, for the most liquid category, when the price movement of a security from the previous day's closing price exceeds 10%, trading is suspended for 15 minutes. If the price then goes up or down by more than 5%, transactions are again suspended for 15 minutes. The 5% threshold may apply once more before transactions are halted for the rest of the day. When such a suspension occurs, transactions on options based on the underlying security are also suspended. Further, when stocks representing more than 35% of the capitalization of the CAC40 Index are halted, the calculation of the CAC40 Index is suspended and the index is replaced by a trend indicator. When stocks representing less than 25% of the capitalization of the CAC40 Index are halted, trading on the derivative markets are suspended for half an hour or one hour, and additional margin deposits are requested.
+
+See also
+[edit]
+
+2010 flash crash
+
+Asset allocation
+
+Behavioral finance
+
+Business cycle
+
+Economic bubble
+
+Economic collapse
+
+Financial crisis
+
+Financial market
+
+Financial risk management
+
+Financial stability
+
+Flash crash
+
+List of stock market crashes and bear markets
+
+Market trend
+
+Mass hysteria
+
+Modeling and analysis of financial markets
+
+Risk management
+
+Stock market bubble
+
+Stock market crashes in India
+
+References
+[edit]
+
+↑ Galbraith, J. The Great Crash 1929, 1988 ed., Houghton Mifflin Co. Boston, pp. xii–xvii
+
+↑ Farrell, Paul B. (February 19, 2014). "Crash of 2014: Like 1929, you'll never hear it coming". Marketwatch.
+
+↑ "American Banks 'In The Jungle'". The Advertiser. Adelaide. March 16, 1933. p. 8 – via National Library of Australia.
+
+↑ "Born of a Panic: Forming the Fed System". Federal Reserve Bank of Minneapolis.
+
+↑ Tucker, Abigail (October 9, 2008). "The Financial Panic of 1907: Running from History". Smithsonian Magazine.
+
+↑ "Panic of 1907: J.P. Morgan Saves the Day".
+
+↑ NO, Tom. Stock market swings and the value of innovation. Boston: Harvard Business School.
+
+↑ "STOCKS COLLAPSE IN 16,410,030-SHARE DAY, BUT RALLY AT CLOSE CHEERS BROKERS; BANKERS OPTIMISTIC, TO CONTINUE AID". The New York Times. October 30, 1929.
+
+↑ "Preliminary Observations on the October 1987 Crash" (PDF). Government Accountability Office. January 1988.
+
+↑ U.S. GAO op. cit. p. 55
+
+↑ Sornette, Didier Sornette (2003). "Critical Market Crashes". Physics Reports. 378 (1): 1–98. arXiv:cond-mat/0301543. Bibcode:2003PhR...378....1S. doi:10.1016/S0370-1573(02)00634-8. S2CID 12847333.
+
+↑ U.S. GAO op. cit. p. 37
+
+↑ – What caused the Stock Market Crash of 1987?
+
+↑
+"The Sensex journey: From 2008 to 2013". NDTV Profit. 1 November 2013.
+
+↑ "BBC News – Business – IMF approves $2.1bn Iceland loan". BBC News. November 20, 2008.
+
+↑ Letzing, John (October 10, 2008). "Two banks fold, bringing total to 15 failures this year". MarketWatch.
+
+↑ Wroughton, Lesley; Murphy, Francois (October 11, 2008). "IMF warns of financial meltdown". Reuters.
+
+↑ Wighton, David (October 11, 2008). "It's irrational fear. The markets will trash anything that walks". The Times.
+
+↑ Surowiecki, James (January 5, 2009). "What Precipitated The Stock Market Crash of 2008?". The New Yorker.
+
+↑ "Financial crisis: US stock markets suffer worst week on record". The Daily Telegraph. October 10, 2008. Archived from the original on 2022-01-12.
+
+↑ Kumar, V. Phani (October 24, 2008). "Indexes fall hard on bloody Friday". Marketwatch.
+
+↑ Twin, Alexandra (October 24, 2008). "Stocks can't shake the blues". CNN. Archived from the original on October 25, 2008.
+
+↑ "Financial crisis may be worst in history-BoE's Bean". Reuters. October 24, 2008.
+
+↑ Dempsey, Alison L. (2017). Evolutions in Corporate Governance: Towards an Ethical Framework for Business Conduct. Routledge. ISBN 9781351277389.
+
+↑ "Global shares plunge in worst day since financial crisis". BBC News. March 9, 2020.
+
+↑ "Coronavirus: Milan bourse plunges, spread soars". Agenzia Nazionale Stampa Associata. 9 March 2020.
+
+↑ Lynch, David J.; Heath, Thomas; Telford, Taylor; Long, Heather (March 12, 2020). "U.S. stock market suffers worst crash since 1987, as Americans wake up to a new normal of life". The Washington Post.
+
+↑ Wearden, Graeme; Jolly (now), Jasper (March 12, 2020). "Wall Street and FTSE 100 plunge on worst day since 1987 – as it happened". The Guardian.
+
+↑ Imbert, Fred (March 15, 2020). "Dow drops nearly 3,000 points, as coronavirus collapse continues; worst day since '87". CNBC.
+
+↑ "Trump has dubbed April 2 'Liberation Day' for his tariffs. Here's what to expect". AP News. 2025-03-31. Retrieved 2025-04-04.
+
+↑ Saul, Derek. "Here's What To Know About 'Liberation Day'—From Announcement Time To What Trump May Target". Forbes. Retrieved 2025-04-04.
+
+↑ "U.S. Stocks Fall, Wiping Out More Than $3 Trillion in Market Value - What's News - WSJ Podcasts". WSJ. Retrieved 2025-04-04.
+
+↑ Malkiel, Burton G. (1973). A Random Walk Down Wall Street (6th ed.). W.W. Norton & Company, Inc. ISBN 978-0-393-06245-8.
+
+↑ "The (Mis)behavior of Markets". bearcave.com.
+
+↑ Gammon, Katharine Stoel (November 16, 2006). "'Father of Fractals' takes on the stock market". Massachusetts Institute of Technology.
+
+↑ Soros, George (1988). Alchemy of Finance. Simon & Schuster. ISBN 9780671662387.
+
+↑ Hulbert, Mark (November 25, 2009). "Short term vs. long-term". Marketwatch.
+
+↑ Thomas Jr, Landon (October 13, 2007). "The Man Who Won as Others Lost". The New York Times.
+
+↑ Gavaix, Xavier (May 14, 2003). "Stock trade patterns could predict financial earthquakes". Massachusetts Institute of Technology.
+
+↑ Sornette, Didier (29 June 1999). "Self-Organized Percolation Model for Stock Market Fluctuations". Physica A: Statistical Mechanics and Its Applications. 271 (3–4): 496–506. arXiv:cond-mat/9906434. Bibcode:1999PhyA..271..496S. doi:10.1016/S0378-4371(99)00290-3. S2CID 18641082.
+
+↑ Mandelbrot, Benoit (1 January 1963). "The Variation of Certain Speculative Prices". The Journal of Business. 36 ([object Attr]): 394. doi:10.1086/294632 – via RePEc – IDEAS.
+
+↑ Mantegna, Rosario N.; Stanley, H. Eugene (6 July 1995). "Scaling behaviour in the dynamics of an economic index". Nature. 376 (6535): 46–49. Bibcode:1995Natur.376...46M. doi:10.1038/376046a0. S2CID 4326594.
+
+↑ Harmon, Dion; de Aguiar, Marcus A. M.; Chinellato, David D.; Braha, Dan; Epstein, Irving R.; Bar-Yam, Yaneer (13 February 2011). "Predicting economic market crises using measures of collective panic". arXiv:1102.2620 [q-fin.ST].
+
+↑ Keim, Brandon (March 18, 2011). "Possible Early Warning Sign for Market Crashes". Wired.
+
+↑ "Trading Information". New York Stock Exchange.
+
+↑ Guzman, Zack; Koba, Mark (January 7, 2016). "When do circuit breakers kick in? CNBC Explains". CNBC.
+
+Further reading
+[edit]
+
+Gartley, H.M. (1935). Profits in the Stock Market. Lambert Gann Pub. p. 305. ISBN 978-0-939093-07-6. Retrieved May 26, 2017. {{cite book}}: ISBN / Date incompatibility (help)
+
+Ord, T. (2012). The Secret Science of Price and Volume: Techniques for Spotting Market Trends, Hot Sectors, and the Best Stocks. Wiley Trading. Wiley. pp. pt49–52. ISBN 978-1-118-42894-8. Retrieved May 26, 2017.
+
+Dickson, R.A.; Knudsen, T.L. (2011). Mastering Market Timing: Using the Works of L.M. Lowry and R.D. Wyckoff to Identify Key Market Turning Points. Pearson Education. p. pt65. ISBN 978-0-13-261343-9. Retrieved May 26, 2017.
+
+Downes, J.; Goodman, J.E. (2003). Barron's Finance & Investment Handbook. Barron's Finance and Investment Handbook. Barron's. p. 794. ISBN 978-0-7641-5554-3. Retrieved May 26, 2017.
+
+Siegel, J.G.; Shim, J.K.; Qureshi, A.A.; Brauchler, J. (2014). International Encyclopedia of Technical Analysis. Taylor & Francis. p. 314. ISBN 978-1-135-93086-8. Retrieved May 26, 2017.
+
+Scott Nations (2018). A History of the United States in Five Crashes: Stock Market Meltdowns That Defined a Nation. William Morrow Paperbacks. ISBN 978-0062467287.
+
+External links
+[edit]
+
+Wikiquote has quotations related to Stock market crash.
+
+Le Bris, David. "What is a market crash?" The Economic History Review
+
+v
+
+t
+
+e
+
+Financial crises
+
+Bank run
+
+Commodity price shocks
+
+Credit crunch
+
+Credit cycle
+
+Currency crisis
+
+Debt crisis
+
+Energy crisis
+
+Financial contagion
+
+social contagion
+
+Flash crash
+
+Hyperinflation
+
+Liquidity crisis
+
+accounting
+
+capital
+
+funding
+
+market
+
+Minsky moment
+
+Social crisis
+
+Stock market crash
+
+Pre-1000
+
+Financial crisis of 33 CE
+
+Crisis of the Third Century (235–284 CE)
+
+Commercial revolution
+
+(1000–1760)
+
+Great Bullion Famine (c. 1400–c. 1500)
+
+The Great Debasement (1544–1551)
+
+Spanish Price Revolution (c. 1550–c. 1650)
+
+Dutch Republic stock market crashes (c. 1600–1760)
+
+Kipper und Wipper (1621–1623)
+
+Tulip mania (1637)
+
+South Sea bubble (1720)
+
+Mississippi bubble (1720)
+
+1st Industrial Revolution
+
+(1760–1840)
+
+Amsterdam banking crisis of 1763
+
+Bengal Bubble of 1769 (1769–1784)
+
+British credit crisis of 1772–1773
+
+Dutch Republic financial collapse (c. 1780–1795)
+
+Copper Panic of 1789
+
+Panic of 1792
+
+Panic of 1796–1797
+
+Danish state bankruptcy of 1813
+
+Post-Napoleonic Irish grain price and land use shocks (1815–1816)
+
+Panic of 1819
+
+Panic of 1825
+
+Panic of 1837
+
+1840–1870
+
+European potato failure (1845–1856)
+
+Great Irish Famine
+
+Highland Potato Famine
+
+Panic of 1847
+
+Panic of 1857
+
+Panic of 1866
+
+Black Friday (1869)
+
+2nd Industrial Revolution
+
+(1870–1914)
+
+Panic of 1873
+
+Paris Bourse crash of 1882
+
+Panic of 1884
+
+Arendal crash (1886)
+
+Baring crisis (1890)
+
+Encilhamento (1890–1893)
+
+Panic of 1893
+
+Australian banking crisis of 1893
+
+Black Monday (1894)
+
+Panic of 1896
+
+Panic of 1901
+
+Panic of 1907
+
+Shanghai rubber stock market crisis (1910)
+
+Panic of 1910–11
+
+Financial crisis of 1914
+
+Interwar period
+
+(1918–1939)
+
+Early Soviet hyperinflation (1917–1924)
+
+Weimar Republic hyperinflation (1921–1923)
+
+Shōwa financial crisis (1927)
+
+Wall Street crash of 1929
+
+Panic of 1930
+
+Chinese hyperinflation (1937–1950)
+
+Wartime period
+
+(1939–1945)
+
+Greek hyperinflation (1941–1946)
+
+Chinese hyperinflation (1937–1950)
+
+Post–WWII expansion
+
+(1945–1973)
+
+Hungarian pengő hyperinflation (1945–1946)
+
+Kennedy Slide of 1962
+
+Chinese hyperinflation (1937–1950)
+
+Great Inflation
+
+(1973–1982)
+
+1970s energy crisis (1973–1980)
+
+1973 oil crisis
+
+1973–1974 stock market crash
+
+Secondary banking crisis of 1973–1975
+
+Steel crisis (1973–1982)
+
+Latin American debt crisis (1975–1982)
+
+1976 sterling crisis
+
+1979 oil crisis
+
+Brazilian hyperinflation (1980–1982)
+
+Great Moderation/
+
+Great Regression
+
+(1982–2007)
+
+Brazilian hyperinflation (1982–1994)
+
+Souk Al-Manakh stock market crash (1982)
+
+Chilean crisis of 1982
+
+1983 Israel bank stock crisis
+
+Black Saturday (1983)
+
+Savings and loan crisis (1986–1995)
+
+Cameroonian economic crisis (1987–2000s)
+
+Black Monday (1987)
+
+1988–1992 Norwegian banking crisis
+
+Japanese asset price bubble crash (1990–1992)
+
+Rhode Island banking crisis (1990–1992)
+
+1991 Indian economic crisis
+
+1990–1994 Swedish financial crisis
+
+1990s Finnish banking crisis
+
+1990s Armenian energy crisis
+
+Cuban Special Period (1991–2000)
+
+Black Wednesday (1992 Sterling crisis)
+
+Hyperinflation in Serbia and Montenegro (1992–1994)
+
+1994 bond market crisis
+
+Venezuelan banking crisis of 1994
+
+1994 Papua New Guinea financial crisis
+
+Mexican peso crisis (1994–1996)
+
+1997 Asian financial crisis
+
+October 27, 1997, mini-crash
+
+1998 Russian financial crisis
+
+1998–1999 Ecuador economic crisis
+
+1998–2002 Argentine great depression
+
+Samba effect (1999)
+
+Dot-com bubble (2000–2004)
+
+9/11 stock market crash (2001)
+
+2001 Turkish economic crisis
+
+South American economic crisis of 2002
+
+Stock market downturn of 2002
+
+2002 Uruguay banking crisis
+
+2003 Myanmar banking crisis
+
+2000s energy crisis (2003–2008)
+
+2004 Argentine energy crisis
+
+Chinese stock bubble of 2007
+
+Hyperinflation in Zimbabwe (2007–present)
+
+Great Recession
+
+(2007–2009)
+
+2008 financial crisis
+
+September 2008
+
+October 2008
+
+November 2008
+
+December 2008
+
+2009
+
+Subprime mortgage crisis
+
+2000s U.S. housing market correction
+
+U.S. bear market of 2007–2009
+
+2008 Latvian financial crisis
+
+2008–2009 Belgian financial crisis
+
+Great Recession in Russia
+
+2008–2009 Ukrainian financial crisis
+
+2008–2011 Icelandic financial crisis
+
+Post-2008 Irish banking crisis
+
+2008–2014 Spanish financial crisis
+
+Blue Monday Crash 2009
+
+Eurozone crisis
+
+Greek government-debt crisis
+
+Information Age
+
+(2009–present)
+
+2009 Dubai debt standstill
+
+Venezuelan banking crisis of 2009–2010
+
+2010–2014 Portuguese financial crisis
+
+Energy crisis in Venezuela (2010–present)
+
+Syrian economic crisis (2011–present)
+
+August 2011 stock markets fall
+
+2011 Bangladesh share market scam
+
+2012–2013 Cypriot financial crisis
+
+Chinese Banking Liquidity Crisis of 2013
+
+Venezuela economic crisis (2013–present)
+
+2014 Brazilian economic crisis
+
+Puerto Rican government-debt crisis (2014–2022)
+
+Russian financial crisis (2014–2016)
+
+2015–16 Nepal blockade
+
+2015–2016 Chinese stock market turbulence
+
+2015–2016 stock market selloff
+
+Brexit stock market crash (2016)
+
+Hyperinflation in Venezuela (2016–2022)
+
+2017 Sri Lankan fuel crisis
+
+Ghana banking crisis (2017–2018)
+
+Turkish economic crisis (2018–current)
+
+Lebanese liquidity crisis (2019–present)
+
+Sri Lankan economic crisis (2019–2024)
+
+COVID-19 pandemic
+
+Financial market impact
+
+2020 stock market crash
+
+Recession
+
+Chinese real estate crisis (2020–present)
+
+2021–2023 inflation surge
+
+2022 Russian financial crisis
+
+Pakistani economic crisis (2021–2024)
+
+2022 stock market decline
+
+German economic crisis (2022–present)
+
+2023 United States banking crisis
+
+2023–2024 Egyptian financial crisis
+
+2025 stock market crash
+
+List of banking crises
+
+List of economic crises
+
+List of sovereign debt crises
+
+List of stock market crashes and bear markets
+
+v
+
+t
+
+e
+
+Economic history of the United States and Commonwealth of Nations countries
+
+Commercial revolution
+
+(1000–1760)
+
+Great Bullion Famine (c. 1400–c. 1500)
+
+Great Slump (1430–1490)
+
+The Great Debasement (1544–1551)
+
+Financial Revolution (1690–1800)
+
+Slump of 1706
+
+Great Frost of 1709
+
+South Sea bubble (1713–1720)
+
+Mississippi bubble (1717–1720)
+
+Economic impact of the Seven Years' War (1754–1763)
+
+1st Industrial Revolution/
+
+Market Revolution
+
+(1760–1870)
+
+Industrial Revolution
+
+Scotland
+
+United States
+
+Wales
+
+Bengal Bubble of 1769 (1769–1784)
+
+British credit crisis of 1772–1773
+
+American Revolutionary War inflation (1775–1783)
+
+Panic of 1785 (1785–1788)
+
+Copper Panic of 1789/Panic of 1792 (1789–1793)
+
+Canal Mania (c. 1790–c. 1810)
+
+Panic of 1796–1797 (1796–1799)
+
+1802–1804 recession
+
+Carolina gold rush (1802–1825)
+
+Depression of 1807 (1807–1810)
+
+1810s Alabama real estate bubble
+
+Alabama Fever
+
+1812 recession
+
+Post-Napoleonic Depression (1815–1821)
+
+1822–23 recession
+
+Panic of 1825
+
+Panic of 1826
+
+1828–29 recession
+
+Georgia Gold Rush (1828–c. 1840)
+
+1830s Chicago real estate bubble
+
+1833–34 recession
+
+Panic of 1837 (1836–1838 and 1839–1843)
+
+U.S. state defaults in the 1840s
+
+Railway Mania (c. 1840–c. 1850)
+
+Plank Road Boom (1844–c. 1855)
+
+1845–46 recession
+
+Panic of 1847 (1847–1848)
+
+California gold rush (1848–1855)
+
+British Columbia gold rushes
+
+Queen Charlottes Gold Rush, 1851
+
+Fraser Canyon Gold Rush, 1858
+
+Rock Creek Gold Rush, 1859
+
+Similkameen Gold Rush, 1860
+
+Stikine Gold Rush, 1861
+
+Cariboo Gold Rush, 1861–1867
+
+Wild Horse Creek Gold Rush, 1863–1870
+
+Leechtown Gold Rush, 1864–1865
+
+Big Bend Gold Rush, c. 1865
+
+Omineca Gold Rush, 1869
+
+Victorian gold rush (1851–c. 1870)
+
+New South Wales gold rush (1851–1880)
+
+Australian gold rushes (1851–1914)
+
+1853–54 recession
+
+Panic of 1857 (1857–1858)
+
+Pike's Peak gold rush (1858–1861)
+
+Pennsylvania oil rush (1859–1891)
+
+1860–61 recession
+
+Colorado River mining boom (1861–1864)
+
+Otago gold rush (1861–1864)
+
+U.S. Civil War economy (1861–1865)
+
+First Nova Scotia Gold Rush (1861–1874)
+
+West Coast Gold Rush (1864–1867)
+
+Panic of 1866 (1865–1867)
+
+Vermilion Lake gold rush (1865–1867)
+
+Kildonan Gold Rush (1869)
+
+Black Friday (1869–1870)
+
+Gilded Age/
+
+2nd Industrial Revolution
+
+(1870–1914)
+
+Coromandel Gold Rushes (c. 1870–c. 1890)
+
+Cassiar Gold Rush (c. 1870–c. 1890)
+
+Long Depression
+
+1873–1879; Panic of 1873
+
+Black Hills gold rush (1874–1880)
+
+Colorado Silver Boom (1879–1893)
+
+Western Australian gold rushes (c. 1880–c. 1900)
+
+Indiana gas boom (c. 1880–1903)
+
+Ohio oil rush (c. 1880–c. 1930)
+
+Depression of 1882–1885
+
+Panic of 1884
+
+Cayoosh Gold Rush (1884)
+
+Witwatersrand Gold Rush (1886)
+
+1887–88 recession
+
+Baring crisis (1890–1891)
+
+Cripple Creek Gold Rush (c. 1890–c. 1910)
+
+Panic of 1893 (1893–1897)
+
+Australian banking crisis of 1893
+
+Black Monday (1894)
+
+Panic of 1896
+
+Klondike Gold Rush (1896–1899)
+
+Second Nova Scotia Gold Rush (1896–1903)
+
+Kobuk River Stampede (1897–1899)
+
+Mount Baker gold rush (1897–c. 1925)
+
+1899–1900 recession
+
+Nome Gold Rush (1899–1909)
+
+Fairbanks Gold Rush (c. 1900–c. 1930)
+
+Texas oil boom (1901–c. 1950)
+
+Panic of 1901 (1902–1904)
+
+Cobalt silver rush (1903–c. 1930)
+
+Panic of 1907 (1907–1908)
+
+Porcupine Gold Rush (1909–c. 1960)
+
+Panic of 1910–11 (1910–1912)
+
+Financial crisis of 1914 (1913–14)
+
+World War home fronts/
+
+Interwar period
+
+(1914–1945)
+
+World War I economy and home fronts
+
+Australia
+
+Canada
+
+United Kingdom
+
+United States
+
+Post–World War I recession (1918–1919)
+
+Recession of 1920–1921
+
+1920s Florida land boom (c. 1920–1925)
+
+Roaring Twenties
+
+1923–1924 recession
+
+1926–1927 recession
+
+Great Depression
+
+1929–1939; Wall Street crash of 1929
+
+Panic of 1930
+
+Great Contraction, 1929–1933
+
+Recession of 1937–1938
+
+Australia
+
+Canada
+
+India
+
+South Africa
+
+United Kingdom
+
+United States
+
+1930s Kakamega Gold Rush
+
+Third Nova Scotia Gold Rush (1932–1942)
+
+World War II home front
+
+Australia
+
+Canada
+
+United Kingdom
+
+United States
+
+Post–WWII expansion/
+
+1970s stagflation
+
+(1945–1982)
+
+Great Compression
+
+1945 recession
+
+Recession of 1949 (1948–1949)
+
+Hong Kong and Singapore Asian Tiger expansions (1950–1990)
+
+1951 Canada recession
+
+Recession of 1953 (1953–1954)
+
+Recession of 1958 (1957–1958)
+
+Recession of 1960–1961
+
+Kennedy Slide of 1962
+
+Poseidon bubble (1969–1970)
+
+Recession of 1969–1970
+
+1970s commodities boom
+
+1973–1975 recession
+
+1973–1974 stock market crash
+
+Secondary banking crisis of 1973–1975
+
+1970s energy crisis
+
+1973–1980; 1973 oil crisis
+
+1979 oil crisis
+
+Steel crisis (1973–1982)
+
+1976 sterling crisis
+
+Silver Thursday (1980)
+
+Early 1980s recession
+
+1980–1982; United States
+
+Computer Age/
+
+Second Gilded Age
+
+(1982–present)
+
+Great Moderation (1982–2007)
+
+1980s oil glut
+
+Black Saturday (1983)
+
+New Zealand property bubble (c. 1985–)
+
+Savings and loan crisis (1986–1995)
+
+Black Monday (1987)
+
+Friday the 13th mini-crash (1989)
+
+Early 1990s recession
+
+1990–1991; Australia
+
+United States
+
+1990 oil price shock
+
+Rhode Island banking crisis (1990–1992)
+
+1991 Indian economic crisis
+
+1990s United States boom (1991–2001)
+
+1990s India economic boom
+
+Hyperinflation in Zimbabwe (1991–present)
+
+Black Wednesday (1992)
+
+1994 bond market crisis
+
+1994 Papua New Guinea financial crisis
+
+Dot-com bubble
+
+1995–2004; Stock market downturn of 2002
+
+1997 Asian financial crisis
+
+October 27, 1997, mini-crash
+
+Early 2000s recession
+
+2001; 9/11 stock market crash
+
+2000s commodities boom (2000–2014)
+
+United States housing bubble (2002–2006)
+
+Canadian property bubble (2002–)
+
+2003 Myanmar banking crisis
+
+2000s energy crisis (2003–2008)
+
+North Dakota oil boom (2006–2015)
+
+Uranium bubble of 2007
+
+Great Recession
+
+2007–2009; Australia and New Zealand
+
+Bangladesh, India, Malaysia, Pakistan, and Sri Lanka
+
+British West Indies
+
+Canada
+
+South Africa
+
+United Kingdom
+
+United States
+
+2008 financial crisis
+
+September
+
+October
+
+November
+
+December
+
+2009
+
+Subprime mortgage crisis
+
+2000s U.S. housing market correction
+
+U.S. bear market of 2007–2009
+
+2007–2010 U.S. bank failures
+
+Corporate debt bubble (2008–)
+
+Blue Monday Crash 2009
+
+2010 flash crash
+
+Malaysia Tiger Cub expansion (2010s)
+
+Australian property bubble (2010–)
+
+August 2011 stock markets fall
+
+Black Monday
+
+2011 Bangladesh share market scam
+
+Cryptocurrency bubble (2011–)
+
+Puerto Rican government-debt crisis (2014–2022)
+
+2015–2016 stock market selloff
+
+Brexit stock market crash (2016)
+
+2017 Sri Lankan fuel crisis
+
+Ghana banking crisis (2017–2018)
+
+Sri Lankan economic crisis (2019–2024)
+
+COVID-19 recession
+
+2020–2022; 2020 stock market crash
+
+financial market impact
+
+sectoral impacts
+
+shortages
+
+Canada
+
+India
+
+Malaysia
+
+New Zealand
+
+United Kingdom
+
+United States
+
+2020s commodities boom
+
+Global energy crisis
+
+2021–2023; 2021 United Kingdom natural gas supplier crisis
+
+regional effects
+
+2021–2023 global supply chain crisis
+
+2021–2023 inflation surge
+
+Pakistani economic crisis (2021–2024)
+
+2022 stock market decline
+
+2022–2023 global food crises
+
+2023 United Kingdom recession
+
+2023 United States banking crisis
+
+2025 stock market crash
+
+Countries and sectors
+
+Australia
+
+rail transport
+
+slavery
+
+whaling/Western Australia
+
+Canada
+
+agriculture
+
+currencies
+
+early banking system
+
+list of recessions
+
+petroleum industry
+
+rail transport
+
+slavery
+
+technological and industrial
+
+whaling/Pacific Northwest
+
+Ghana
+
+India
+
+agriculture
+
+Company rule
+
+maritime
+
+British Raj
+
+Deindustrialisation
+
+salt tax
+
+slavery
+
+Malaysia
+
+New Zealand
+
+whaling
+
+Nigeria
+
+slavery
+
+Pakistan
+
+maritime
+
+rail transport
+
+South Africa
+
+slavery
+
+whaling
+
+Uganda
+
+United Kingdom
+
+Agricultural Revolution
+
+Atlantic slave trade
+
+banking
+
+British Empire
+
+English fiscal system
+
+Interwar unemployment and poverty
+
+list of recessions
+
+maritime/England/Scotland
+
+Middle Ages England/agriculture
+
+national debt
+
+Scotland/agriculture/Middle Ages
+
+rail transport/pre–1830/1830–1922/1923–1947/1948–1994/1995–present
+
+slavery
+
+trade unions
+
+Victorian era
+
+Wales
+
+whaling/Scotland
+
+United States
+
+agriculture
+
+banking/colonial-era credit/cooperatives/investment banking/wildcat banking
+
+business
+
+central banking
+
+coal mining
+
+indentured servitude
+
+iron and steel industry
+
+labor
+
+list of economic expansions
+
+list of recessions
+
+lumber industry
+
+maritime/colonial-era/1776–1799/1800–1899/1900–1999/2000–present
+
+monetary policy
+
+poverty
+
+petroleum industry/oil shale
+
+public debt
+
+rail transportation
+
+slavery/colonial-era slavery/forced labor/slave trade/slave markets
+
+tariffs
+
+taxation
+
+technological and industrial
+
+United States dollar
+
+whaling
+
+Zimbabwe
+
+Business cycle topics
+
+Aggregate demand/Supply
+
+Effective demand
+
+General glut
+
+Model
+
+Overproduction
+
+Paradox of thrift
+
+Price-and-wage stickiness
+
+Underconsumption
+
+Inflation and unemployment
+
+Chronic
+
+Classical dichotomy
+
+Debasement
+
+Debt monetization
+
+Demand-pull/cost-push/built-in inflation
+
+Deflation
+
+Disinflation
+
+Full employment
+
+Hyperinflation
+
+Money supply/demand
+
+NAIRU
+
+Natural rate of unemployment
+
+Neutrality of money
+
+Phillips curve
+
+Price level
+
+Real and nominal value
+
+Sahm rule
+
+Velocity of money
+
+Expansion
+
+Miracle
+
+Recovery
+
+Stagnation
+
+Interest rate
+
+Nominal interest rate
+
+Real interest rate
+
+Yield curve/Inverted
+
+Recession
+
+Balance sheet
+
+Depression
+
+Global
+
+Rolling
+
+Shapes
+
+Stagflation
+
+Shock
+
+Demand
+
+Supply
+
+Credit cycle topics
+
+Financial bubble
+
+Commodity booms/diamond rush/gold rush/oil boom
+
+Real-estate bubble/housing bubble/boomtown/ghost town
+
+Speculation
+
+Stock market bubble
+
+Financial crisis
+
+Bank run/bank failure
+
+Commodity price shocks
+
+Credit crunch
+
+Currency crisis
+
+Debt crisis
+
+Energy crisis
+
+Liquidity crisis/accounting/capital/funding/market
+
+Minsky moment/leverage cycle
+
+Stock market crash/Flash crash
+
+Social contagion
+
+Financial contagion
+
+Irrational exuberance
+
+Market trend
+
+Proposed bubbles
+
+AI bubble/AI boom/Fourth Industrial Revolution/Imagination Age
+
+Carbon bubble/Age of Oil/Peak oil
+
+Everything bubble
+
+Green bubble
+
+Social media stock bubble
+
+Unicorn bubble
+
+U.S. higher education bubble
+
+Retrieved from "https://en.wikipedia.org/w/index.php?title=Stock_market_crash&oldid=1378465190"
+
+Categories:
+Stock market crashes
+
+Business failures
+
+Hidden categories:
+Articles with short description
+
+Short description is different from Wikidata
+
+Pages using multiple image with auto scaled images
+
+All articles with unsourced statements
+
+Articles with unsourced statements from July 2020
+
+CS1 errors: ISBN date
+
+Stock market crash
+
+Add topic

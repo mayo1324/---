@@ -1,0 +1,2413 @@
+URL: https://en.wikipedia.org/wiki/Economic_bubble
+FETCHED: 2026-10-18
+
+Economic bubble - Wikipedia
+
+Jump to content
+
+From Wikipedia, the free encyclopedia
+
+Temporary spike in asset prices
+
+Part of a series on
+
+Economics
+
+Outline
+
+Index
+
+Glossary
+
+Economists
+
+Principles of Economics
+
+Tools and methodology
+
+Economic theory
+
+Mathematical modeling
+
+Game theory
+
+Rational choice
+
+Cognitive science (Behavioral)
+
+Economic equilibrium
+
+Empirical methods
+
+Experimental
+
+Econometrics
+
+Time series
+
+Spatial
+
+Causal inference
+
+Quasi-experiments
+
+Prescriptive and policy
+
+Welfare analysis
+
+Social choice theory
+
+Rational choice theory
+
+Cost–benefit analysis
+
+Branches and subfields
+
+Applied
+
+Econometrics
+
+Econophysics
+
+International
+
+Heterodox
+
+Micro
+
+Macro
+
+Mainstream
+
+Mathematical
+
+Mech. design
+
+Methodology
+
+Political
+
+Industrial org.
+
+Market design
+
+Applications
+
+Agriculture
+
+Business
+
+Cultural
+
+Demographic
+
+Development
+
+Ecological
+
+Education
+
+Engineering
+
+Environmental
+
+Evolutionary
+
+Financial
+
+Geographic
+
+Happiness
+
+Health
+
+History
+
+Information
+
+Infrastructure
+
+Institutions
+
+Labour
+
+Law
+
+Management
+
+Non-monetary
+
+Organization
+
+Participation
+
+Personnel
+
+Planning
+
+Policy
+
+Public sector
+
+Public choice
+
+Social choice
+
+Regional
+
+Regulatory
+
+Resources
+
+Rural
+
+Service
+
+Transport
+
+Urban
+
+Welfare
+
+Economics portal
+
+v
+
+t
+
+e
+
+An economic bubble (also called a speculative bubble, asset bubble, or simply financial bubble) is a period when current asset prices greatly exceed their intrinsic valuation, being the valuation that the underlying long-term fundamentals justify. Bubbles can be caused by overly optimistic projections about the scale and sustainability of growth (e.g. dot-com bubble), and/or by the belief that intrinsic valuation is no longer relevant when making an investment (e.g. Tulip mania). They have appeared in most asset classes, including stocks (e.g. Roaring Twenties), commodities (e.g. 2007 uranium bubble), real estate (e.g. 2000s US housing bubble), and even esoteric assets (e.g. cryptocurrency bubble). Bubbles usually form as a result of either excess liquidity in markets, and/or changed investor psychology. Large multi-asset bubbles (e.g. 1980s Japanese asset bubble and the 2020–21 Everything bubble) are attributed to central banking liquidity (e.g. overuse of the Fed put).[citation needed]
+
+In the early stages of a bubble, many investors do not recognise the bubble for what it is, often thinking that the increase in asset prices is justified. Therefore, bubbles are often conclusively identified only in retrospect, after the bubble has already "popped" (or "burst") and prices have crashed.[1]
+
+Origin of term
+[edit]
+
+Jan Brueghel the Younger's A Satire of Tulip Mania (c. 1640)
+A card from the South Sea Bubble
+
+The term "bubble", in reference to financial crisis, originated in the 1711–1720 British South Sea Bubble, and originally referred to the companies themselves, and their inflated stock, rather than to the crisis itself. This was one of the earliest modern financial crises; other episodes were referred to as "manias", as in the Dutch tulip mania. The metaphor indicated that the prices of the stock were inflated and fragile – expanded based on nothing but air, and vulnerable to a sudden burst, as in fact occurred.
+
+Some later commentators have extended the metaphor to emphasize the suddenness, suggesting that economic bubbles end "All at once, and nothing first, / Just as bubbles do when they burst,"[2] though theories of financial crises such as debt deflation and the Financial Instability Hypothesis suggest instead that bubbles burst progressively, with the most vulnerable (most highly-leveraged) assets failing first, and then the collapse spreading throughout the economy.[3][4]
+
+Types
+[edit]
+
+There are different types of bubbles,[5] with economists primarily interested in two major types of bubbles: The equity bubble and the debt bubble.
+
+Equity bubble
+[edit]
+
+An equity bubble[5] is characterised by tangible investments and the unsustainable desire to satisfy a legitimate market in high demand. These kind of bubbles are characterised by easy liquidity, tangible and real assets, and an actual innovation that boosts confidence. The injection of funds into the business cycle is capable of accelerating the innovation process and propelling faster productivity growth.[6][7][8] Examples of an equity bubble are the Tulip Mania, the cryptocurrency bubble, the dot-com bubble, and the Roaring Twenties[9]
+.
+
+Debt bubble
+[edit]
+
+A debt bubble[5] is characterised by intangible or credit based investments with little ability to satisfy growing demand in a non-existent market. These bubbles are not backed by real assets and are based on frivolous lending in the hope of returning a profit or security. These bubbles usually end in debt deflation causing bank runs or a currency crisis when the government can no longer maintain the fiat currency. Examples are the Roaring Twenties stock market bubble (which caused the Great Depression) and the United States housing bubble (which caused the Great Recession).
+
+Impact
+[edit]
+
+The impact of economic bubbles is debated within and between schools of economic thought; they are not generally considered beneficial, but it is debated how harmful their formation and bursting is.
+
+Within mainstream economics, many[who?] believe that bubbles cannot be identified in advance, cannot be prevented from forming, that attempts to "prick" the bubble may cause financial crisis, and that instead authorities should wait for bubbles to burst of their own accord, dealing with the aftermath via monetary policy and fiscal policy.[citation needed]
+
+Political economist Robert E. Wright argues that bubbles can be identified before the fact with high confidence.[10]
+
+In addition, the crash which usually follows an economic bubble can destroy a large amount of wealth and cause continuing economic malaise; this view is particularly associated with the debt-deflation theory of Irving Fisher, and elaborated within Post-Keynesian economics.
+
+A protracted period of low risk premiums can simply prolong the downturn in asset price deflation, as was the case of the Great Depression in the 1930s for much of the world and the 1990s for Japan. Not only can the aftermath of a crash devastate the economy of a nation, but its effects can also reverberate beyond its borders.
+
+Effect upon spending
+[edit]
+
+Another important aspect of economic bubbles is their impact on spending habits. Market participants with overvalued assets tend to spend more because they "feel" richer (the wealth effect). Many observers quote the housing market in the United Kingdom, Australia, New Zealand, Spain and parts of the United States in recent times, as an example of this effect. When the bubble inevitably bursts, those who hold on to these overvalued assets usually experience a feeling of reduced wealth and tend to cut discretionary spending at the same time, hindering economic growth or, worse, exacerbating the economic slowdown.
+
+In an economy with a central bank, the bank may therefore attempt to keep an eye on asset price appreciation and take measures to curb high levels of speculative activity in financial assets.[citation needed] This is usually done by increasing the interest rate (that is, the cost of borrowing money). Historically, this is not the only approach taken by central banks. It has been argued[11] that they should stay out of it and let the bubble, if it is one, take its course.
+
+In economics
+[edit]
+
+Investor George Soros, influenced by ideas put forward by his tutor, Karl Popper (1957),[12] has been an active promoter of the relevance of reflexivity to economics, first propounding it publicly in his 1987 book The alchemy of finance.[13] He regards his insights into market behaviour from applying the principle as a major factor in the success of his financial career.
+
+Reflexivity is inconsistent with general equilibrium theory, which stipulates that markets move towards equilibrium and that non-equilibrium fluctuations are merely random noise that will soon be corrected. In equilibrium theory, prices in the long run at equilibrium reflect the underlying economic fundamentals, which are unaffected by prices. Reflexivity asserts that prices do in fact influence the fundamentals and that these newly influenced sets of fundamentals then proceed to change expectations, thus influencing prices; the process continues in a self-reinforcing pattern. Because the pattern is self-reinforcing, markets tend towards disequilibrium. Sooner or later they reach a point where the sentiment is reversed and negative expectations become self-reinforcing in the downward direction, thereby explaining the familiar pattern of boom and bust cycles.[14] An example Soros cites is the procyclical nature of lending, that is, the willingness of banks to ease lending standards for real estate loans when prices are rising, then raising standards when real estate prices are falling, reinforcing the boom and bust cycle. He further suggests that property price inflation is essentially a reflexive phenomenon: house prices are influenced by the sums that banks are prepared to advance for their purchase, and these sums are determined by the banks' estimation of the prices that the property would command.
+
+Soros has often claimed that his grasp of the principle of reflexivity is what has given him his "edge" and that it is the major factor contributing to his successes as a trader. For several decades there was little sign of the principle being accepted in mainstream economic circles, but there has been an increase of interest following the crash of 2008, with academic journals, economists, and investors discussing his theories.[15]
+
+Economist and former columnist of the Financial Times, Anatole Kaletsky, argued that Soros' concept of reflexivity is useful in understanding China's economy and how the Chinese government manages it.[16]
+
+Eugene Fama, the Nobel laureate in economics who has often been described as "the father of modern finance", has expressed skepticism about the notion that economic bubbles can be identified.[17][18] He argues that for something to be a bubble, its ending needs to be predicted in real time, not just after the fact. He argues that conventional rhetoric about bubbles proposes no testable propositions and no ways to measure a bubble.[19]
+
+Causes
+[edit]
+
+It has been suggested that bubbles may be rational,[20] intrinsic,[21] and contagious.[22] To date, there is no widely accepted theory to explain their occurrence.[23] Recent computer-generated agency models suggest excessive leverage could be a key factor in causing financial bubbles.[24]
+
+Puzzlingly for some, bubbles occur even in highly predictable experimental markets, where uncertainty is eliminated and market participants should be able to calculate the intrinsic value of the assets simply by examining the expected stream of dividends.[25] Nevertheless, bubbles have been observed repeatedly in experimental markets, even with participants such as business students, managers, and professional traders. Experimental bubbles have proven robust to a variety of conditions, including short-selling, margin buying, and insider trading.[23][26]
+
+While there is no clear agreement on what causes bubbles, there is evidence[citation needed] to suggest that they are not caused by bounded rationality or assumptions about the irrationality of others, as assumed by greater fool theory. It has also been shown that bubbles appear even when market participants are well capable of pricing assets correctly.[27] Further, it has been shown that bubbles appear even when speculation is not possible[28] or when over-confidence is absent.[27]
+
+More recent theories of asset bubble formation suggest that they are likely sociologically-driven events, thus explanations that merely involve fundamental factors or snippets of human behavior are incomplete at best. For instance, qualitative researchers Preston Teeter and Jorgen Sandberg argue that market speculation is driven by culturally-situated narratives[clarification needed] that are deeply embedded in and supported by the prevailing institutions of the time.[23] They cite factors such as bubbles forming during periods of innovation, easy credit, loose regulations, and internationalized investment as reasons why narratives play such an influential role in the growth of asset bubbles.
+
+Liquidity
+[edit]
+
+One possible cause of bubbles is excessive monetary liquidity in the financial system, inducing lax or inappropriate standards of lending by the banks, which makes markets vulnerable to volatile asset price inflation caused by short-term, leveraged speculation.[24] For example, Axel A. Weber, the former president of the Deutsche Bundesbank, has argued that "The past has shown that an overly generous provision of liquidity in global financial markets in connection with a very low level of interest rates promotes the formation of asset-price bubbles."[29]
+
+According to the explanation, excessive monetary liquidity (easy credit, large disposable incomes) potentially occurs while fractional reserve banks are implementing expansionary monetary policy (i.e. lowering of interest rates and flushing the financial system with money supply); this explanation may differ in certain details according to economic philosophy. Those who believe the money supply is controlled exogenously by a central bank may attribute an 'expansionary monetary policy' to that bank and (should one exist) a governing body or institution; others who believe that the money supply is created endogenously by the banking sector may attribute such a 'policy' to the behavior of the financial sector itself, and view the state as a passive or reactive factor. This may determine how central or relatively minor/inconsequential policies like fractional reserve banking and the central bank's efforts to raise or lower short-term interest rates are to one's view on the creation, inflation and ultimate implosion of an economic bubble. Explanations focusing on interest rates tend to take on a common form, however: when interest rates are set excessively low (regardless of the mechanism by which that is accomplished) investors tend to avoid putting their capital into savings accounts. Instead, investors tend to leverage their capital by borrowing from banks and invest the leveraged capital in financial assets such as company shares and real estate. Risky leveraged behavior like speculation and Ponzi schemes can lead to an increasingly fragile economy, and may also be part of what pushes asset prices artificially upward until the bubble pops.
+
+But these [ongoing economic crises] aren't just a series of unrelated accidents. Instead, what we're seeing is what happens when too much money is chasing too few investment opportunities.
+
+— Paul Krugman[30]
+
+Economic bubbles often occur when too much money is chasing too few assets, causing both good assets and bad assets to appreciate excessively beyond their fundamentals to an unsustainable level. Once the bubble bursts, the fall in prices causes the collapse of unsustainable investment schemes (especially speculative and/or Ponzi investments, but not exclusively so), which leads to a crisis of consumer (and investor) confidence that may result in a financial panic and/or financial crisis. If there is a monetary authority like a central bank, it may take measures to soak up the liquidity in the financial system in an attempt to prevent a collapse of its currency. This may involve actions like bailouts of the financial system, but also others that reverse the trend of monetary accommodation, commonly termed forms of 'contractionary monetary policy'.
+
+These measures may include raising interest rates, which tends to make investors become more risk averse and thus avoid leveraged capital because the costs of borrowing may become too expensive. There may also be countermeasures taken pre-emptively during periods of strong economic growth, such as increasing capital reserve requirements and implementing regulation that checks and/or prevents processes leading to over-expansion and excessive leveraging of debt. Ideally, such countermeasures lessen the impact of a downturn by strengthening financial institutions while the economy is strong.
+
+Advocates of perspectives stressing the role of credit money in an economy often refer to (such) bubbles as "credit bubbles", and look at such measures of financial leverage as debt-to-GDP ratios to identify bubbles. Typically the collapse of any economic bubble results in an economic contraction termed (if less severe) a recession or (if more severe) a depression; what economic policies to follow in reaction to such a contraction is a hotly debated perennial topic of political economy.
+
+Psychology
+[edit]
+
+Greater fool theory
+[edit]
+
+Main article: Greater fool theory
+
+Greater fool theory states that bubbles are driven by the behavior of perennially optimistic market participants (the fools) who buy overvalued assets in anticipation of selling it to other speculators (the greater fools) at a much higher price. According to this explanation, the bubbles continue as long as the fools can find greater fools to pay up for the overvalued asset. The bubbles will end only when the greater fool becomes the greatest fool who pays the top price for the overvalued asset and can no longer find another buyer to pay for it at a higher price. This theory is popular among laity but has not yet been fully confirmed by empirical research.[28][27]
+
+Extrapolation
+[edit]
+
+The term "bubble" should indicate a price that no reasonable future outcome can justify.
+
+— Clifford Asness[31]
+
+Extrapolation is projecting historical data into the future on the same basis; if prices have risen at a certain rate in the past, they will continue to rise at that rate forever. The argument is that investors tend to extrapolate past extraordinary returns on investment of certain assets into the future, causing them to overbid those risky assets in order to attempt to continue to capture those same rates of return.
+
+Overbidding on certain assets will at some point result in uneconomic rates of return for investors; only then the asset price deflation will begin. When investors feel that they are no longer well compensated for holding those risky assets, they will start to demand higher rates of return on their investments.
+
+Herding
+[edit]
+
+Another related explanation used in behavioral finance lies in herd behavior, the fact that investors tend to buy or sell in the direction of the market trend.[32][33] This is sometimes helped by technical analysis that tries precisely to detect those trends and follow them, which creates a self-fulfilling prophecy.
+
+Investment managers, such as stock mutual fund managers, are compensated and retained in part due to their performance relative to peers. Taking a conservative or contrarian position as a bubble builds results in performance unfavorable to peers. This may cause customers to go elsewhere and can affect the investment manager's own employment or compensation. The typical short-term focus of U.S. equity markets exacerbates the risk for investment managers that do not participate during the building phase of a bubble, particularly one that builds over a longer period of time. In attempting to maximize returns for clients and maintain their employment, they may rationally participate in a bubble they believe to be forming, as the likely shorter-term benefits of doing so outweigh the likely longer-term risks.[34]
+
+Moral hazard
+[edit]
+
+Moral hazard is the prospect that a party insulated from risk may behave differently from the way it would behave if it were fully exposed to the risk. A person's belief that they are responsible for the consequences of their own actions is an essential aspect of rational behavior. An investor must balance the possibility of making a return on their investment with the risk of making a loss – the risk-return relationship. A moral hazard can occur when this relationship is interfered with, often via government policy.
+
+A recent example is the Troubled Asset Relief Program (TARP), signed into law by U.S. President George W. Bush on 3 October 2008 to provide a government bailout for many financial and non-financial institutions who speculated in high-risk financial instruments during the housing boom condemned by a 2005 story in The Economist titled "The worldwide rise in house prices is the biggest bubble in history".[35] A historical example was intervention by the Dutch Parliament during the great Tulip Mania of 1637.
+
+Other causes of perceived insulation from risk may derive from a given entity's predominance in a market relative to other players, and not from state intervention or market regulation. A firm – or several large firms acting in concert (see cartel, oligopoly and collusion) – with very large holdings and capital reserves could instigate a market bubble by investing heavily in a given asset, creating a relative scarcity which drives up that asset's price. Because of the signaling power of the large firm or group of colluding firms, the firm's smaller competitors will follow suit, similarly investing in the asset due to its price gains.
+
+However, in relation to the party instigating the bubble, these smaller competitors are insufficiently leveraged to withstand a similarly rapid decline in the asset's price. When the large firm, cartel or de facto collusive body perceives a maximal peak has been reached in the traded asset's price, it can then proceed to rapidly sell or "dump" its holdings of this asset on the market, precipitating a price decline that forces its competitors into insolvency, bankruptcy or foreclosure.
+
+The large firm or cartel – which has intentionally leveraged itself to withstand the price decline it engineered – can then acquire the capital of its failing or devalued competitors at a low price as well as capture a greater market share (e.g., via a merger or acquisition which expands the dominant firm's distribution chain). If the bubble-instigating party is itself a lending institution, it can combine its knowledge of its borrowers' leveraging positions with publicly available information on their stock holdings, and strategically shield or expose them to default.
+
+Other
+[edit]
+
+Some regard bubbles as related to inflation and thus believe that the causes of inflation are also the causes of bubbles.[citation needed] Others take the view that there is a "fundamental value" to an asset, and that bubbles represent a rise over that fundamental value, which must eventually return to that fundamental value.[citation needed]
+There are chaotic theories of bubbles which assert that bubbles come from particular "critical" states in the market based on the communication of economic factors.[citation needed] Finally, others regard bubbles as necessary consequences of irrationally valuing assets solely based upon their returns in the recent past without resorting to a rigorous analysis based on their underlying "fundamentals".[citation needed]
+
+Stages
+[edit]
+
+According to the economist Charles P. Kindleberger, the basic structure of a speculative bubble can be divided into five phases:[36][37][38]
+
+Displacement: A sufficient external shock to the macroeconomic system, creating new profit opportunities.
+
+Boom: A rise in asset prices and speculative investments (buy now with sole intention to sell in the future at a higher price and obtain a profit).
+
+Euphoria: A democratization of speculative investments, and a detachment from real rational valuable objects.
+
+Financial distress: Prices begin to plateau, investors start considering selling to cover their liabilities.
+
+Revulsion: prices plummet as investors race to sell first, panic spreads and feeds back on itself.
+
+Identification
+[edit]
+
+CAPE based on data from economist Robert Shiller's website, as of 8/4/2015. The 26.45 measure was 93rd percentile, meaning 93% of the time investors paid less for stocks overall relative to earnings.
+
+Economic or asset price bubbles are often characterized by one or more of the following:
+
+Unusual changes in single measures, or relationships among measures (e.g., ratios) relative to their historical levels. For example, in the housing bubble of the 2000s, the housing prices were unusually high relative to income.[39] For stocks, the price to earnings ratio (CAPE) provides a measure of stock prices relative to corporate earnings; higher readings indicate investors are paying more for each dollar of earnings.[40]
+
+Elevated usage of debt (leverage) to purchase assets, such as purchasing stocks on margin or homes with a lower down payment.
+
+Higher risk lending and borrowing behavior, such as originating loans to borrowers with lower credit quality scores (e.g., subprime borrowers), combined with adjustable rate mortgages and "interest-only" loans.
+
+Rationalizing borrowing, lending, and purchase decisions based on expected future price increases rather than the ability of the borrower to repay.[41]
+
+Rationalizing asset prices by increasingly weaker arguments, such as "this time it's different" or "housing prices only go up."
+
+A high presence of marketing or media coverage related to the asset.[23]
+
+Incentives that place the consequences of bad behavior by one economic actor upon another, such as the origination of mortgages to those with limited ability to repay because the mortgage could be sold or securitized, moving the consequences from the originator to the investor.
+
+International trade (current account) imbalances, resulting in an excess of savings over investments, increasing the volatility of capital flow among countries. For example, the flow of savings from Asia to the U.S. was one of the drivers of the 2000s housing bubble.[42]
+
+A lower interest rate environment, which encourages lending and borrowing.[43]
+
+Notable asset bubbles
+[edit]
+
+Commodities
+[edit]
+
+See also: List of commodity booms
+
+Bitcoin price gain/loss 2011, 2013
+
+Tulip mania (Dutch) (1634–1637)
+
+Comic book speculation bubble (1985–1993)
+
+Silver Thursday (March 27, 1980)
+
+Uranium bubble of 2007
+
+Cryptocurrency bubble (speculative) (2016–2017, 2021–present)
+
+Artificial intelligence bubble (speculative) (2025–present)
+
+Equities
+[edit]
+
+Private securities
+[edit]
+
+The South Sea Bubble by Edward Matthew Ward, 1847
+
+South Sea Company (British) (1720)
+
+Mississippi Company (France) (1720)
+
+Canal Mania (UK) (1790s–1810s)
+
+Railway Mania (UK) (1840s)
+
+Quoted securities
+[edit]
+
+Roaring Twenties stock-market bubble (US) (1921–1929)
+
+Poseidon bubble (Australia) (1969–1970)
+
+Chinese stock bubble of 2007 (2003–2007)
+
+Dot-com bubble (US) (1996–2000)
+
+Real estate
+[edit]
+
+Florida building bubble (US) (1922–1926)
+
+2000s Property bubbles:
+
+Australian property bubble
+
+Irish property bubble
+
+New Zealand property bubble
+
+Spanish property bubble
+
+Romanian property bubble
+
+United States housing bubble (US) (2002–2006)
+
+Debt
+[edit]
+
+Corporate debt bubble (2010–)
+
+Multi-asset/Broad-based
+[edit]
+
+Japanese asset price bubble (1986–1991)
+
+1997 Asian financial crisis (1997)
+
+Everything bubble (2020–2021)
+
+Notable periods post asset bubbles
+[edit]
+
+Panic of 1837
+
+Great Depression (1929–1934)
+
+Lost Decade (Japan) (1990–2013)
+
+Early 2000s recession (2002–2003)
+
+Great Recession (2007–2009)
+
+Panic of 1873
+
+See also
+[edit]
+
+Boom and bust
+
+Business cycle
+
+Carbon bubble
+
+Economic collapse
+
+Asset price inflation
+
+Extraordinary Popular Delusions and the Madness of Crowds
+
+Fictitious capital
+
+Financial crisis
+
+Hyman Minsky, especially his Financial Instability Hypothesis
+
+Irrational Exuberance by Robert Shiller
+
+Jesse Lauriston Livermore The Boy Plunger
+
+List of commodity booms
+
+List of stock market crashes and bear markets
+
+Non-fungible token
+
+Overheating (economics)
+
+Real estate bubble
+
+Reflexivity (social theory)
+
+Stock market crash
+
+Stock market crashes in India
+
+Speculation
+
+Stock market bubble
+
+The Age of Debt Bubbles - book describing bubbles from banking debt money creation
+
+Unicorn bubble
+
+References
+[edit]
+
+↑ Mishkin, Frederic S. "How Should Central Banks Respond to Asset-Price Bubbles? The 'Lean' versus 'Clean' Debate After the GFC" (PDF). Retrieved 3 May 2026.{{cite web}}: CS1 maint: url-status (link)
+
+↑ Quote from The Deacon's Masterpiece or The One-Hoss Shay, by Oliver Wendell Holmes Sr.
+
+↑ Dogic, Nina (2015). Theories of Finance and Financial Crisis – Lessons for the Great Recession (PDF) (Report). p. 24 – via Institute for International Political Economy Berlin.
+
+↑ Markus K. Brunnermeier (2015). "Bubbles and Central Banks: Historical Perspectives". Princeton University. Retrieved 10 October 2025. When asset prices collapsed, highly leveraged financial institutions failed, leading to fire sales and a large-scale financial crisis with severe repercussions for the real economy. Lending booms in the banking sector, especially when accompanied by decreasing lending standards...make the occurrence of banking crises more likely, and banking crises are a major determinant of the severity of a crisis.
+
+1 2 3 "5 Stages of a Bubble".
+
+↑ Brown, James R.; Martinsson, Gustav; Petersen, Bruce C. (2017). "What promotes R&D? Comparative evidence from around the world". Research Policy. 46 (2): 447–462. doi:10.1016/j.respol.2016.11.010.
+
+↑ Brown, James R.; Fazzari, Steven M.; Petersen, Bruce C. (2009). "Financing Innovation and Growth: Cash Flow, External Equity, and the 1990s R&D Boom". The Journal of Finance. 64 (1): 151–185. Bibcode:2009JFin...64..151B. doi:10.1111/j.1540-6261.2008.01431.x. ISSN 0022-1082.
+
+↑ Acharya, Viral; Xu, Zhaoxia (2017). "Financial dependence and innovation: The case of public versus private firms" (PDF). Journal of Financial Economics. 124 (2): 223–243. doi:10.1016/j.jfineco.2016.02.010.
+
+↑ "The New York Stock Market Crash of 1929 Preludes the Great Depression". Goldman Sachs. Retrieved 11 August 2025.
+
+↑ Robert E. Wright, Fubarnomics: A Lighthearted, Serious Look at America's Economic Ills (Buffalo, N.Y.: Prometheus, 2010), 51–52.
+
+↑ "The Role of a Central Bank in a Bubble Economy – Section I – Gold Eagle". gold-eagle.com. 28 May 2013. Retrieved 31 August 2017.
+
+↑ Popper, K. (2013) [1957]. The Poverty of Historicism. Routledge. ISBN 978-1-135-97221-9.
+
+↑ The Alchemy of Finance: Reading the mind of the Market (1987) by George Soros, pp 27–45
+
+↑ George, Soros (2008). "Reflexivity in Financial Markets". The New Paradigm for Financial Markets: The Credit Crisis of 2008 and What it Means (1st ed.). PublicAffairs. p. 66. ISBN 978-1-58648-683-9.
+
+↑ Journal of economic methodology, Volume 20, Issue 4, 2013: Special Issue: Reflexivity and Economics: George Soros's Theory of Reflexivity and the Methodology of Economic Science http://www.tandfonline.com/toc/rjec20/20/4 For example, Larry Summers, Joe Stiglitz, and Paul Volker in: Financial times, The Credit Crunch According to Soros, January 30, 2009. https://www.ft.com/content/9553cce2-eb65-11dd-8838-0000779fd2ac
+
+↑ Kaletsky, Anatole (12 October 2015). "China is Not Collapsing". Project Syndicate. London. Retrieved 12 October 2015.
+
+↑ Engsted, Tom (2016). "Fama on Bubbles". Journal of Economic Surveys. 30 (2): 370–376. doi:10.1111/joes.12104. ISSN 1467-6419.
+
+↑ Greenwood, Robin; Shleifer, Andrei; You, Yang (1 January 2019). "Bubbles for Fama". Journal of Financial Economics. 131 (1): 20–43. doi:10.1016/j.jfineco.2018.09.002. ISSN 0304-405X.
+
+↑ Competiello, Christopher. "'People see bubbles where there are none': Why Nobel laureate Eugene Fama thinks bubbles are impossible to identify in real time — and why behavioral finance is a myth". Business Insider. Retrieved 1 February 2025.
+
+↑ Garber, Peter M. (1990). "Famous First Bubbles". The Journal of Economic Perspectives. 4 (2): 35–54. doi:10.1257/jep.4.2.35. S2CID 154443701.
+
+↑ Froot, Kenneth A.; Obstfeld, Maurice (1991). "Intrinsic Bubbles: The Case of Stock Prices". American Economic Review. 81: 1189–1214. doi:10.3386/w3091.
+
+↑ Topol, Richard (1991). "Bubbles and Volatility of Stock Prices: Effect of Mimetic Contagion". The Economic Journal. 101 (407): 786–800. doi:10.2307/2233855. JSTOR 2233855.
+
+1 2 3 4 Teeter, Preston; Sandberg, Jorgen (2017). "Cracking the enigma of asset bubbles with narratives". Strategic Organization. 15 (1): 91–99. doi:10.1177/1476127016629880. S2CID 156163200.
+
+1 2 Buchanan, Mark (19 July 2008). "Why economic theory is out of whack". New Scientist. Archived from the original on 19 December 2008. Retrieved 15 December 2008.
+
+↑ Smith, Vernon L.; Suchanek, Gerry L.; Williams, Arlington W. (1988). "Bubbles, Crashes, and Endogenous Expectations in Experimental Spot Asset Markets". Econometrica. 56 (5): 1119–1151. doi:10.2307/1911361. JSTOR 1911361.
+
+↑ King, Ronald R.; Smith, Vernon L.; Williams, Arlington W.; van Boening, Mark V. (1993). "The Robustness of Bubbles and Crashes in Experimental Stock Markets". In Day, R. H.; Chen, P. (eds.). Nonlinear Dynamics and Evolutionary Economics. New York: Oxford University Press. ISBN 978-0-19-507859-6.
+
+1 2 3 Levine, Sheen S.; Zajac, Edward J. (27 June 2007). The Institutional Nature of Price Bubbles (Report). SSRN 960178.
+
+1 2 Lei, Vivian; Noussair, Charles N.; Plott, Charles R. (2001). "Nonspeculative Bubbles in Experimental Asset Markets: Lack of Common Knowledge of Rationality Vs. Actual Irrationality" (PDF). Econometrica. 69 (4): 831. doi:10.1111/1468-0262.00222. Archived from the original (PDF) on 26 September 2021. Retrieved 16 August 2019.
+
+↑ Porras, E. (2016). Bubbles and Contagion in Financial Markets, Volume 1: An Integrative View. Springer. ISBN 978-1-137-35876-9.
+
+↑ Krugman, Paul (24 August 2015). "A Movable Glut". The New York Times. Retrieved 24 August 2015.
+
+↑ Righoltz, Barry (6 December 2013). "How do you define a bubble?". Bloomberg. Retrieved 11 November 2016.
+
+↑ Harmon, D; Lagi, M; de Aguiar, MAM; Chinellato, DD; Braha, D; Epstein, IR; et al. (2015). "Anticipating Economic Market Crises Using Measures of Collective Panic". PLOS ONE. 10 (7) e0131871. Bibcode:2015PLoSO..1031871H. doi:10.1371/journal.pone.0131871. PMC 4506134. PMID 26185988.
+
+↑ Keim, Brandon. "Possible Early Warning Sign for Market Crashes". Wired. ISSN 1059-1028. Retrieved 11 August 2023.
+
+↑ Blodget, Henry (December 2008). "Why Wall Street Always Blows It". The Atlantic. Retrieved 31 August 2017.
+
+↑ "In come the waves: The worldwide rise in house prices is the biggest bubble in history. Prepare for the economic pain when it pops". The Economist. 16 June 2005. The worldwide rise in house prices is the biggest bubble in history. Prepare for the economic pain when it pops.
+
+↑ Kindleberger, Charles (13 December 2001). Manias, Panics and Crashes: A History of Financial Crises (4th ed.). Palgrave Macmillan UK. pp. 13–22. ISBN 978-0-333-97029-4.
+
+↑ Odlyzko, Andrew. "The British Railway Mania of the 1840s" (PDF). University of Minnesota. Retrieved 29 November 2018.
+
+↑ Tuckett, David; Taffler, Richard. "A Psychoanalytic Interpretation of Dot.Com Stock Valuations". SSRN. Retrieved 29 November 2018.[permanent dead link]
+
+↑ "Bloomberg-Barry Ritholz-How do you define a bubble and are we in one now? December 2013". Bloomberg.com. 6 December 2013. Archived from the original on 15 April 2016. Retrieved 31 August 2017.
+
+↑ Leonhardt, David (25 August 2015). "Part of the Problem: Stocks Are Expensive". The New York Times. Retrieved 31 August 2017.
+
+↑ "Levy Institute-Hyman Minsky-the Financial Instability Hypothesis-May 1992" (PDF). Retrieved 31 August 2017.
+
+↑ Krugman, Paul (24 August 2015). "A Moveable Glut". The New York Times. Retrieved 31 August 2017.
+
+↑ "Get the Report: Conclusions: Financial Crisis Inquiry Commission". fcic.law.stanford.edu. Retrieved 31 August 2017.
+
+Further reading
+[edit]
+
+Reinhart, Carmen M.; Rogoff, Kenneth S. (2009). This Time is Different: Eight Centuries of Financial Folly. Princeton, NJ: Princeton University Press. ISBN 978-0-691-14216-6.
+
+External links
+[edit]
+
+When Bubbles Burst, World Economic Outlook (PDF), International Monetary Fund, April 2003.
+
+v
+
+t
+
+e
+
+Capitalism
+
+Definitions
+
+Perspectives
+
+Concepts
+
+Anarchy of production
+
+Business cycle
+
+Centralization
+
+Competition
+
+Competition law
+
+Depression
+
+Deregulation
+
+Economic bubble
+
+Economic development
+
+Economic liberalism
+
+Economic planning
+
+Entrepreneurship
+
+Ecopreneurship
+
+Externality
+
+Financial crisis
+
+Globalization
+
+Global labor arbitrage
+
+Market economy
+
+Market failure
+
+Merchantilism
+
+Meritocracy
+
+Multinational corporation
+
+Nationalization
+
+Oligopoly
+
+Privatization
+
+Primitive accumulation
+
+Profit
+
+Property rights
+
+Recession
+
+Regulation
+
+Simple commodity production
+
+Totalitarian capitalism
+
+Wage labour
+
+Wage slavery
+
+Wealth
+
+History
+
+Age of Enlightenment
+
+Commercial Revolution
+
+Feudalism
+
+Financial Revolution
+
+History of capitalist theory
+
+Industrial Revolution
+
+Late capitalism
+
+Merchant capitalism
+
+Physiocracy
+
+Ideology
+
+Anglo-Saxon
+
+Authoritarian
+
+Conservative
+
+Corporate
+
+Democratic
+
+Dirigist
+
+Free market
+
+Humanistic
+
+Islamic
+
+Laissez-faire
+
+Liberal
+
+Libertarian
+
+Market
+
+Mercantilist
+
+Mixed
+
+Monopoly
+
+National
+
+Neo
+
+Neoliberal
+
+Private
+
+Raw
+
+Regulated market
+
+Regulatory
+
+Rhine
+
+Social
+
+State
+
+State-sponsored
+
+Welfare
+
+Culture
+
+Advertising
+
+American Dream
+
+Black Friday
+
+Consumerism
+
+Decentralization
+
+Economic freedom
+
+Economic mobility
+
+Individualism
+
+Liberalism
+
+Philanthropy
+
+Private foundation
+
+Private property
+
+Rule of law
+
+Social alienation
+
+Spontaneous order
+
+Society
+
+Corporatism
+
+Criticism of welfare
+
+Economic inequality
+
+Employment
+
+Freedom of association
+
+Labour market flexibility
+
+Labour supply
+
+Productivity
+
+Prosperity
+
+Social venture capital
+
+Unemployment
+
+Criticism
+
+Anti-capitalism
+
+Anarchism
+
+Communism
+
+Socialism
+
+Marxism
+
+Capitalist propaganda
+
+Communalism
+
+Critique of political economy
+
+Critique of work
+
+Market fundamentalism
+
+Post-capitalism
+
+Post-scarcity economy
+
+Sharing economy
+
+Syndicate
+
+Syndicalism
+
+Capitalism portal
+
+Category: Capitalism
+
+v
+
+t
+
+e
+
+Financial bubbles
+
+Market trend
+
+Credit cycle
+
+Irrational exuberance
+
+Social contagion
+
+Real-estate bubble
+
+Stock market bubble
+
+Commercial revolution
+
+(1000–1760)
+
+Tulip mania (1634–1637)
+
+Mississippi bubble (1684–1720)
+
+South Sea bubble (1711–1720)
+
+Bengal Bubble of 1769 (1757–1769)
+
+1st Industrial Revolution
+
+(1760–1840)
+
+Canal Mania (c. 1790–c. 1810)
+
+Carolina gold rush (1802–1825)
+
+1810s Alabama real estate bubble
+
+Georgia Gold Rush (1828–c. 1840)
+
+1830s Chicago real estate bubble
+
+Chilean silver rush (1832–1850)
+
+1840–1870
+
+Railway Mania (c. 1840–c. 1850)
+
+California gold rush (1848–1855)
+
+Queen Charlottes Gold Rush (1851)
+
+Victorian gold rush (1851–c. 1870)
+
+New South Wales gold rush (1851–1880)
+
+Australian gold rushes (1851–1914)
+
+Fraser Canyon Gold Rush (1858)
+
+Pike's Peak gold rush (1858–1861)
+
+Rock Creek Gold Rush (1859)
+
+Pennsylvania oil rush (1859–1891)
+
+Similkameen Gold Rush (1860)
+
+Stikine Gold Rush (1861)
+
+Colorado River mining boom (1861–1864)
+
+Otago Gold Rush (1861–1864)
+
+Cariboo Gold Rush (1861–1867)
+
+First Nova Scotia Gold Rush (1861–1874)
+
+West Coast Gold Rush (1864–1867)
+
+Big Bend Gold Rush (c. 1865)
+
+Vermilion Lake gold rush (1865–1867)
+
+Kildonan Gold Rush (1869)
+
+Omineca Gold Rush (1869)
+
+2nd Industrial Revolution
+
+(1870–1914)
+
+1870s Lapland Gold Rush
+
+Coromandel Gold Rushes (c. 1870–c. 1890)
+
+Cassiar Gold Rush (c. 1870–c. 1890)
+
+Black Hills gold rush (1874–1880)
+
+Colorado Silver Boom (1879–1893)
+
+Western Australian gold rushes (c. 1880–c. 1900)
+
+Indiana gas boom (c. 1880–1903)
+
+Ohio oil rush (c. 1880–c. 1930)
+
+Tierra del Fuego Gold Rush (1883–1906)
+
+Cayoosh Gold Rush (1884)
+
+Witwatersrand Gold Rush (1886)
+
+Encilhamento (1886–1890)
+
+Cripple Creek Gold Rush (c. 1890–c. 1910)
+
+Klondike Gold Rush (1896–1899)
+
+Second Nova Scotia Gold Rush (1896–1903)
+
+Kobuk River Stampede (1897–1899)
+
+Mount Baker gold rush (1897–c. 1925)
+
+Nome Gold Rush (1899–1909)
+
+Fairbanks Gold Rush (c. 1900–1918)
+
+Texas oil boom (1901–1918)
+
+Cobalt silver rush (1903–1918)
+
+Porcupine Gold Rush (1909–1918)
+
+Interwar period
+
+(1918–1939)
+
+1920s Florida land boom (c. 1920–1925)
+
+Fairbanks Gold Rush (1918–c. 1930)
+
+Texas oil boom (1918–1945)
+
+Cobalt silver rush (1918–c. 1930)
+
+Porcupine Gold Rush (1918–1945)
+
+1930s Kakamega Gold Rush
+
+Third Nova Scotia Gold Rush (1932–1942)
+
+Post–WWII expansion
+
+(1945–1973)
+
+Texas oil boom (1945–c. 1950)
+
+Porcupine Gold Rush (1945–c. 1960)
+
+Poseidon bubble (1969–1970)
+
+The Great Inflation
+
+(1973–1982)
+
+1970s commodities boom
+
+Mexican oil boom (1977–1981)
+
+Silver Thursday (1980)
+
+New Zealand property bubble (c. 1980–1982)
+
+Great Moderation/
+
+Great Regression
+
+(1982–2007)
+
+1980s oil glut
+
+New Zealand property bubble (1982–)
+
+Spanish property bubble (1985–2008)
+
+Japanese asset price bubble (1986–1990)
+
+Dot-com bubble (1995–2000)
+
+Baltic states housing bubble (2000–2006)
+
+Irish property bubble (c. 2000–2007)
+
+2000s commodities boom (2000–2008)
+
+2000s Danish property bubble (2001–2006)
+
+United States housing bubble (2002–2006)
+
+Romanian property bubble (2002–2007)
+
+Polish property bubble (2002–2008)
+
+Canadian property bubble (2002–)
+
+Chinese property bubble (2005–2011)
+
+Lebanese housing bubble (2005–2008)
+
+Chinese stock bubble of 2007
+
+Uranium bubble of 2007
+
+Information Age
+
+(2007–present)
+
+2000s commodities boom (2008–2014)
+
+Lebanese housing bubble (2008–)
+
+Corporate debt bubble (2008–)
+
+Australian property bubble (2010–)
+
+Cryptocurrency bubble (2011–)
+
+Everything bubble (2020–21)
+
+AI bubble (2022–)
+
+Carbon bubble
+
+Green bubble
+
+Social media stock bubble
+
+Unicorn bubble
+
+U.S. higher education bubble
+
+v
+
+t
+
+e
+
+Financial crises
+
+Bank run
+
+Commodity price shocks
+
+Credit crunch
+
+Credit cycle
+
+Currency crisis
+
+Debt crisis
+
+Energy crisis
+
+Financial contagion
+
+social contagion
+
+Flash crash
+
+Hyperinflation
+
+Liquidity crisis
+
+accounting
+
+capital
+
+funding
+
+market
+
+Minsky moment
+
+Social crisis
+
+Stock market crash
+
+Pre-1000
+
+Financial crisis of 33 CE
+
+Crisis of the Third Century (235–284 CE)
+
+Commercial revolution
+
+(1000–1760)
+
+Great Bullion Famine (c. 1400–c. 1500)
+
+The Great Debasement (1544–1551)
+
+Spanish Price Revolution (c. 1550–c. 1650)
+
+Dutch Republic stock market crashes (c. 1600–1760)
+
+Kipper und Wipper (1621–1623)
+
+Tulip mania (1637)
+
+South Sea bubble (1720)
+
+Mississippi bubble (1720)
+
+1st Industrial Revolution
+
+(1760–1840)
+
+Amsterdam banking crisis of 1763
+
+Bengal Bubble of 1769 (1769–1784)
+
+British credit crisis of 1772–1773
+
+Dutch Republic financial collapse (c. 1780–1795)
+
+Copper Panic of 1789
+
+Panic of 1792
+
+Panic of 1796–1797
+
+Danish state bankruptcy of 1813
+
+Post-Napoleonic Irish grain price and land use shocks (1815–1816)
+
+Panic of 1819
+
+Panic of 1825
+
+Panic of 1837
+
+1840–1870
+
+European potato failure (1845–1856)
+
+Great Irish Famine
+
+Highland Potato Famine
+
+Panic of 1847
+
+Panic of 1857
+
+Panic of 1866
+
+Black Friday (1869)
+
+2nd Industrial Revolution
+
+(1870–1914)
+
+Panic of 1873
+
+Paris Bourse crash of 1882
+
+Panic of 1884
+
+Arendal crash (1886)
+
+Baring crisis (1890)
+
+Encilhamento (1890–1893)
+
+Panic of 1893
+
+Australian banking crisis of 1893
+
+Black Monday (1894)
+
+Panic of 1896
+
+Panic of 1901
+
+Panic of 1907
+
+Shanghai rubber stock market crisis (1910)
+
+Panic of 1910–11
+
+Financial crisis of 1914
+
+Interwar period
+
+(1918–1939)
+
+Early Soviet hyperinflation (1917–1924)
+
+Weimar Republic hyperinflation (1921–1923)
+
+Shōwa financial crisis (1927)
+
+Wall Street crash of 1929
+
+Panic of 1930
+
+Chinese hyperinflation (1937–1950)
+
+Wartime period
+
+(1939–1945)
+
+Greek hyperinflation (1941–1946)
+
+Chinese hyperinflation (1937–1950)
+
+Post–WWII expansion
+
+(1945–1973)
+
+Hungarian pengő hyperinflation (1945–1946)
+
+Kennedy Slide of 1962
+
+Chinese hyperinflation (1937–1950)
+
+Great Inflation
+
+(1973–1982)
+
+1970s energy crisis (1973–1980)
+
+1973 oil crisis
+
+1973–1974 stock market crash
+
+Secondary banking crisis of 1973–1975
+
+Steel crisis (1973–1982)
+
+Latin American debt crisis (1975–1982)
+
+1976 sterling crisis
+
+1979 oil crisis
+
+Brazilian hyperinflation (1980–1982)
+
+Great Moderation/
+
+Great Regression
+
+(1982–2007)
+
+Brazilian hyperinflation (1982–1994)
+
+Souk Al-Manakh stock market crash (1982)
+
+Chilean crisis of 1982
+
+1983 Israel bank stock crisis
+
+Black Saturday (1983)
+
+Savings and loan crisis (1986–1995)
+
+Cameroonian economic crisis (1987–2000s)
+
+Black Monday (1987)
+
+1988–1992 Norwegian banking crisis
+
+Japanese asset price bubble crash (1990–1992)
+
+Rhode Island banking crisis (1990–1992)
+
+1991 Indian economic crisis
+
+1990–1994 Swedish financial crisis
+
+1990s Finnish banking crisis
+
+1990s Armenian energy crisis
+
+Cuban Special Period (1991–2000)
+
+Black Wednesday (1992 Sterling crisis)
+
+Hyperinflation in Serbia and Montenegro (1992–1994)
+
+1994 bond market crisis
+
+Venezuelan banking crisis of 1994
+
+1994 Papua New Guinea financial crisis
+
+Mexican peso crisis (1994–1996)
+
+1997 Asian financial crisis
+
+October 27, 1997, mini-crash
+
+1998 Russian financial crisis
+
+1998–1999 Ecuador economic crisis
+
+1998–2002 Argentine great depression
+
+Samba effect (1999)
+
+Dot-com bubble (2000–2004)
+
+9/11 stock market crash (2001)
+
+2001 Turkish economic crisis
+
+South American economic crisis of 2002
+
+Stock market downturn of 2002
+
+2002 Uruguay banking crisis
+
+2003 Myanmar banking crisis
+
+2000s energy crisis (2003–2008)
+
+2004 Argentine energy crisis
+
+Chinese stock bubble of 2007
+
+Hyperinflation in Zimbabwe (2007–present)
+
+Great Recession
+
+(2007–2009)
+
+2008 financial crisis
+
+September 2008
+
+October 2008
+
+November 2008
+
+December 2008
+
+2009
+
+Subprime mortgage crisis
+
+2000s U.S. housing market correction
+
+U.S. bear market of 2007–2009
+
+2008 Latvian financial crisis
+
+2008–2009 Belgian financial crisis
+
+Great Recession in Russia
+
+2008–2009 Ukrainian financial crisis
+
+2008–2011 Icelandic financial crisis
+
+Post-2008 Irish banking crisis
+
+2008–2014 Spanish financial crisis
+
+Blue Monday Crash 2009
+
+Eurozone crisis
+
+Greek government-debt crisis
+
+Information Age
+
+(2009–present)
+
+2009 Dubai debt standstill
+
+Venezuelan banking crisis of 2009–2010
+
+2010–2014 Portuguese financial crisis
+
+Energy crisis in Venezuela (2010–present)
+
+Syrian economic crisis (2011–present)
+
+August 2011 stock markets fall
+
+2011 Bangladesh share market scam
+
+2012–2013 Cypriot financial crisis
+
+Chinese Banking Liquidity Crisis of 2013
+
+Venezuela economic crisis (2013–present)
+
+2014 Brazilian economic crisis
+
+Puerto Rican government-debt crisis (2014–2022)
+
+Russian financial crisis (2014–2016)
+
+2015–16 Nepal blockade
+
+2015–2016 Chinese stock market turbulence
+
+2015–2016 stock market selloff
+
+Brexit stock market crash (2016)
+
+Hyperinflation in Venezuela (2016–2022)
+
+2017 Sri Lankan fuel crisis
+
+Ghana banking crisis (2017–2018)
+
+Turkish economic crisis (2018–current)
+
+Lebanese liquidity crisis (2019–present)
+
+Sri Lankan economic crisis (2019–2024)
+
+COVID-19 pandemic
+
+Financial market impact
+
+2020 stock market crash
+
+Recession
+
+Chinese real estate crisis (2020–present)
+
+2021–2023 inflation surge
+
+2022 Russian financial crisis
+
+Pakistani economic crisis (2021–2024)
+
+2022 stock market decline
+
+German economic crisis (2022–present)
+
+2023 United States banking crisis
+
+2023–2024 Egyptian financial crisis
+
+2025 stock market crash
+
+List of banking crises
+
+List of economic crises
+
+List of sovereign debt crises
+
+List of stock market crashes and bear markets
+
+v
+
+t
+
+e
+
+Economic history of the United States and Commonwealth of Nations countries
+
+Commercial revolution
+
+(1000–1760)
+
+Great Bullion Famine (c. 1400–c. 1500)
+
+Great Slump (1430–1490)
+
+The Great Debasement (1544–1551)
+
+Financial Revolution (1690–1800)
+
+Slump of 1706
+
+Great Frost of 1709
+
+South Sea bubble (1713–1720)
+
+Mississippi bubble (1717–1720)
+
+Economic impact of the Seven Years' War (1754–1763)
+
+1st Industrial Revolution/
+
+Market Revolution
+
+(1760–1870)
+
+Industrial Revolution
+
+Scotland
+
+United States
+
+Wales
+
+Bengal Bubble of 1769 (1769–1784)
+
+British credit crisis of 1772–1773
+
+American Revolutionary War inflation (1775–1783)
+
+Panic of 1785 (1785–1788)
+
+Copper Panic of 1789/Panic of 1792 (1789–1793)
+
+Canal Mania (c. 1790–c. 1810)
+
+Panic of 1796–1797 (1796–1799)
+
+1802–1804 recession
+
+Carolina gold rush (1802–1825)
+
+Depression of 1807 (1807–1810)
+
+1810s Alabama real estate bubble
+
+Alabama Fever
+
+1812 recession
+
+Post-Napoleonic Depression (1815–1821)
+
+1822–23 recession
+
+Panic of 1825
+
+Panic of 1826
+
+1828–29 recession
+
+Georgia Gold Rush (1828–c. 1840)
+
+1830s Chicago real estate bubble
+
+1833–34 recession
+
+Panic of 1837 (1836–1838 and 1839–1843)
+
+U.S. state defaults in the 1840s
+
+Railway Mania (c. 1840–c. 1850)
+
+Plank Road Boom (1844–c. 1855)
+
+1845–46 recession
+
+Panic of 1847 (1847–1848)
+
+California gold rush (1848–1855)
+
+British Columbia gold rushes
+
+Queen Charlottes Gold Rush, 1851
+
+Fraser Canyon Gold Rush, 1858
+
+Rock Creek Gold Rush, 1859
+
+Similkameen Gold Rush, 1860
+
+Stikine Gold Rush, 1861
+
+Cariboo Gold Rush, 1861–1867
+
+Wild Horse Creek Gold Rush, 1863–1870
+
+Leechtown Gold Rush, 1864–1865
+
+Big Bend Gold Rush, c. 1865
+
+Omineca Gold Rush, 1869
+
+Victorian gold rush (1851–c. 1870)
+
+New South Wales gold rush (1851–1880)
+
+Australian gold rushes (1851–1914)
+
+1853–54 recession
+
+Panic of 1857 (1857–1858)
+
+Pike's Peak gold rush (1858–1861)
+
+Pennsylvania oil rush (1859–1891)
+
+1860–61 recession
+
+Colorado River mining boom (1861–1864)
+
+Otago gold rush (1861–1864)
+
+U.S. Civil War economy (1861–1865)
+
+First Nova Scotia Gold Rush (1861–1874)
+
+West Coast Gold Rush (1864–1867)
+
+Panic of 1866 (1865–1867)
+
+Vermilion Lake gold rush (1865–1867)
+
+Kildonan Gold Rush (1869)
+
+Black Friday (1869–1870)
+
+Gilded Age/
+
+2nd Industrial Revolution
+
+(1870–1914)
+
+Coromandel Gold Rushes (c. 1870–c. 1890)
+
+Cassiar Gold Rush (c. 1870–c. 1890)
+
+Long Depression
+
+1873–1879; Panic of 1873
+
+Black Hills gold rush (1874–1880)
+
+Colorado Silver Boom (1879–1893)
+
+Western Australian gold rushes (c. 1880–c. 1900)
+
+Indiana gas boom (c. 1880–1903)
+
+Ohio oil rush (c. 1880–c. 1930)
+
+Depression of 1882–1885
+
+Panic of 1884
+
+Cayoosh Gold Rush (1884)
+
+Witwatersrand Gold Rush (1886)
+
+1887–88 recession
+
+Baring crisis (1890–1891)
+
+Cripple Creek Gold Rush (c. 1890–c. 1910)
+
+Panic of 1893 (1893–1897)
+
+Australian banking crisis of 1893
+
+Black Monday (1894)
+
+Panic of 1896
+
+Klondike Gold Rush (1896–1899)
+
+Second Nova Scotia Gold Rush (1896–1903)
+
+Kobuk River Stampede (1897–1899)
+
+Mount Baker gold rush (1897–c. 1925)
+
+1899–1900 recession
+
+Nome Gold Rush (1899–1909)
+
+Fairbanks Gold Rush (c. 1900–c. 1930)
+
+Texas oil boom (1901–c. 1950)
+
+Panic of 1901 (1902–1904)
+
+Cobalt silver rush (1903–c. 1930)
+
+Panic of 1907 (1907–1908)
+
+Porcupine Gold Rush (1909–c. 1960)
+
+Panic of 1910–11 (1910–1912)
+
+Financial crisis of 1914 (1913–14)
+
+World War home fronts/
+
+Interwar period
+
+(1914–1945)
+
+World War I economy and home fronts
+
+Australia
+
+Canada
+
+United Kingdom
+
+United States
+
+Post–World War I recession (1918–1919)
+
+Recession of 1920–1921
+
+1920s Florida land boom (c. 1920–1925)
+
+Roaring Twenties
+
+1923–1924 recession
+
+1926–1927 recession
+
+Great Depression
+
+1929–1939; Wall Street crash of 1929
+
+Panic of 1930
+
+Great Contraction, 1929–1933
+
+Recession of 1937–1938
+
+Australia
+
+Canada
+
+India
+
+South Africa
+
+United Kingdom
+
+United States
+
+1930s Kakamega Gold Rush
+
+Third Nova Scotia Gold Rush (1932–1942)
+
+World War II home front
+
+Australia
+
+Canada
+
+United Kingdom
+
+United States
+
+Post–WWII expansion/
+
+1970s stagflation
+
+(1945–1982)
+
+Great Compression
+
+1945 recession
+
+Recession of 1949 (1948–1949)
+
+Hong Kong and Singapore Asian Tiger expansions (1950–1990)
+
+1951 Canada recession
+
+Recession of 1953 (1953–1954)
+
+Recession of 1958 (1957–1958)
+
+Recession of 1960–1961
+
+Kennedy Slide of 1962
+
+Poseidon bubble (1969–1970)
+
+Recession of 1969–1970
+
+1970s commodities boom
+
+1973–1975 recession
+
+1973–1974 stock market crash
+
+Secondary banking crisis of 1973–1975
+
+1970s energy crisis
+
+1973–1980; 1973 oil crisis
+
+1979 oil crisis
+
+Steel crisis (1973–1982)
+
+1976 sterling crisis
+
+Silver Thursday (1980)
+
+Early 1980s recession
+
+1980–1982; United States
+
+Computer Age/
+
+Second Gilded Age
+
+(1982–present)
+
+Great Moderation (1982–2007)
+
+1980s oil glut
+
+Black Saturday (1983)
+
+New Zealand property bubble (c. 1985–)
+
+Savings and loan crisis (1986–1995)
+
+Black Monday (1987)
+
+Friday the 13th mini-crash (1989)
+
+Early 1990s recession
+
+1990–1991; Australia
+
+United States
+
+1990 oil price shock
+
+Rhode Island banking crisis (1990–1992)
+
+1991 Indian economic crisis
+
+1990s United States boom (1991–2001)
+
+1990s India economic boom
+
+Hyperinflation in Zimbabwe (1991–present)
+
+Black Wednesday (1992)
+
+1994 bond market crisis
+
+1994 Papua New Guinea financial crisis
+
+Dot-com bubble
+
+1995–2004; Stock market downturn of 2002
+
+1997 Asian financial crisis
+
+October 27, 1997, mini-crash
+
+Early 2000s recession
+
+2001; 9/11 stock market crash
+
+2000s commodities boom (2000–2014)
+
+United States housing bubble (2002–2006)
+
+Canadian property bubble (2002–)
+
+2003 Myanmar banking crisis
+
+2000s energy crisis (2003–2008)
+
+North Dakota oil boom (2006–2015)
+
+Uranium bubble of 2007
+
+Great Recession
+
+2007–2009; Australia and New Zealand
+
+Bangladesh, India, Malaysia, Pakistan, and Sri Lanka
+
+British West Indies
+
+Canada
+
+South Africa
+
+United Kingdom
+
+United States
+
+2008 financial crisis
+
+September
+
+October
+
+November
+
+December
+
+2009
+
+Subprime mortgage crisis
+
+2000s U.S. housing market correction
+
+U.S. bear market of 2007–2009
+
+2007–2010 U.S. bank failures
+
+Corporate debt bubble (2008–)
+
+Blue Monday Crash 2009
+
+2010 flash crash
+
+Malaysia Tiger Cub expansion (2010s)
+
+Australian property bubble (2010–)
+
+August 2011 stock markets fall
+
+Black Monday
+
+2011 Bangladesh share market scam
+
+Cryptocurrency bubble (2011–)
+
+Puerto Rican government-debt crisis (2014–2022)
+
+2015–2016 stock market selloff
+
+Brexit stock market crash (2016)
+
+2017 Sri Lankan fuel crisis
+
+Ghana banking crisis (2017–2018)
+
+Sri Lankan economic crisis (2019–2024)
+
+COVID-19 recession
+
+2020–2022; 2020 stock market crash
+
+financial market impact
+
+sectoral impacts
+
+shortages
+
+Canada
+
+India
+
+Malaysia
+
+New Zealand
+
+United Kingdom
+
+United States
+
+2020s commodities boom
+
+Global energy crisis
+
+2021–2023; 2021 United Kingdom natural gas supplier crisis
+
+regional effects
+
+2021–2023 global supply chain crisis
+
+2021–2023 inflation surge
+
+Pakistani economic crisis (2021–2024)
+
+2022 stock market decline
+
+2022–2023 global food crises
+
+2023 United Kingdom recession
+
+2023 United States banking crisis
+
+2025 stock market crash
+
+Countries and sectors
+
+Australia
+
+rail transport
+
+slavery
+
+whaling/Western Australia
+
+Canada
+
+agriculture
+
+currencies
+
+early banking system
+
+list of recessions
+
+petroleum industry
+
+rail transport
+
+slavery
+
+technological and industrial
+
+whaling/Pacific Northwest
+
+Ghana
+
+India
+
+agriculture
+
+Company rule
+
+maritime
+
+British Raj
+
+Deindustrialisation
+
+salt tax
+
+slavery
+
+Malaysia
+
+New Zealand
+
+whaling
+
+Nigeria
+
+slavery
+
+Pakistan
+
+maritime
+
+rail transport
+
+South Africa
+
+slavery
+
+whaling
+
+Uganda
+
+United Kingdom
+
+Agricultural Revolution
+
+Atlantic slave trade
+
+banking
+
+British Empire
+
+English fiscal system
+
+Interwar unemployment and poverty
+
+list of recessions
+
+maritime/England/Scotland
+
+Middle Ages England/agriculture
+
+national debt
+
+Scotland/agriculture/Middle Ages
+
+rail transport/pre–1830/1830–1922/1923–1947/1948–1994/1995–present
+
+slavery
+
+trade unions
+
+Victorian era
+
+Wales
+
+whaling/Scotland
+
+United States
+
+agriculture
+
+banking/colonial-era credit/cooperatives/investment banking/wildcat banking
+
+business
+
+central banking
+
+coal mining
+
+indentured servitude
+
+iron and steel industry
+
+labor
+
+list of economic expansions
+
+list of recessions
+
+lumber industry
+
+maritime/colonial-era/1776–1799/1800–1899/1900–1999/2000–present
+
+monetary policy
+
+poverty
+
+petroleum industry/oil shale
+
+public debt
+
+rail transportation
+
+slavery/colonial-era slavery/forced labor/slave trade/slave markets
+
+tariffs
+
+taxation
+
+technological and industrial
+
+United States dollar
+
+whaling
+
+Zimbabwe
+
+Business cycle topics
+
+Aggregate demand/Supply
+
+Effective demand
+
+General glut
+
+Model
+
+Overproduction
+
+Paradox of thrift
+
+Price-and-wage stickiness
+
+Underconsumption
+
+Inflation and unemployment
+
+Chronic
+
+Classical dichotomy
+
+Debasement
+
+Debt monetization
+
+Demand-pull/cost-push/built-in inflation
+
+Deflation
+
+Disinflation
+
+Full employment
+
+Hyperinflation
+
+Money supply/demand
+
+NAIRU
+
+Natural rate of unemployment
+
+Neutrality of money
+
+Phillips curve
+
+Price level
+
+Real and nominal value
+
+Sahm rule
+
+Velocity of money
+
+Expansion
+
+Miracle
+
+Recovery
+
+Stagnation
+
+Interest rate
+
+Nominal interest rate
+
+Real interest rate
+
+Yield curve/Inverted
+
+Recession
+
+Balance sheet
+
+Depression
+
+Global
+
+Rolling
+
+Shapes
+
+Stagflation
+
+Shock
+
+Demand
+
+Supply
+
+Credit cycle topics
+
+Financial bubble
+
+Commodity booms/diamond rush/gold rush/oil boom
+
+Real-estate bubble/housing bubble/boomtown/ghost town
+
+Speculation
+
+Stock market bubble
+
+Financial crisis
+
+Bank run/bank failure
+
+Commodity price shocks
+
+Credit crunch
+
+Currency crisis
+
+Debt crisis
+
+Energy crisis
+
+Liquidity crisis/accounting/capital/funding/market
+
+Minsky moment/leverage cycle
+
+Stock market crash/Flash crash
+
+Social contagion
+
+Financial contagion
+
+Irrational exuberance
+
+Market trend
+
+Proposed bubbles
+
+AI bubble/AI boom/Fourth Industrial Revolution/Imagination Age
+
+Carbon bubble/Age of Oil/Peak oil
+
+Everything bubble
+
+Green bubble
+
+Social media stock bubble
+
+Unicorn bubble
+
+U.S. higher education bubble
+
+Authority control databases
+
+International
+
+GND
+
+National
+
+France
+
+BnF data
+
+Retrieved from "https://en.wikipedia.org/w/index.php?title=Economic_bubble&oldid=1371533290"
+
+Categories:
+Economic bubbles
+
+Business cycle
+
+Business failures
+
+Financial crises
+
+Hidden categories:
+Articles with short description
+
+Short description is different from Wikidata
+
+Use dmy dates from October 2021
+
+All articles with unsourced statements
+
+Articles with unsourced statements from April 2026
+
+CS1 maint: url-status
+
+All articles with specifically marked weasel-worded phrases
+
+Articles with specifically marked weasel-worded phrases from May 2026
+
+Articles with unsourced statements from May 2026
+
+Articles with unsourced statements from July 2007
+
+Articles with unsourced statements from June 2010
+
+Wikipedia articles needing clarification from August 2022
+
+Articles with unsourced statements from February 2025
+
+All articles with dead external links
+
+Articles with dead external links from February 2024
+
+Articles with permanently dead external links
+
+Economic bubble
+
+Add topic

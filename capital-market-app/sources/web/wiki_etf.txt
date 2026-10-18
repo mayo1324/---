@@ -1,0 +1,878 @@
+URL: https://en.wikipedia.org/wiki/Exchange-traded_fund
+FETCHED: 2026-10-18
+
+Exchange-traded fund - Wikipedia
+
+Jump to content
+
+From Wikipedia, the free encyclopedia
+
+Investment fund traded on stock exchanges
+
+The examples and perspectives in this article may not represent a worldwide view of the subject. You may improve this article, discuss the issue on the talk page, or create a new article, as appropriate. (May 2023) (Learn how and when to remove this message)
+
+Part of a series on
+
+Financial markets
+
+Public market
+
+Exchange · Securities
+
+Bond market
+
+Bond valuation
+
+Corporate bond
+
+Fixed income
+
+Government bond
+
+High-yield debt
+
+Municipal bond
+
+Securitization
+
+Stock market
+
+Common stock
+
+Growth stock
+
+Preferred stock
+
+Registered share
+
+Shareholder
+
+Stock
+
+Stockbroker
+
+Stock certificate
+
+Stock exchange
+
+Watered stock
+
+Other markets
+
+Derivatives
+
+(Credit derivative
+
+Futures exchange
+
+Hybrid security)
+
+Foreign exchange
+
+(Currency
+
+Exchange rate)
+
+Commodity
+
+ETF
+
+Money
+
+Mutual fund
+
+Option
+
+Real estate
+
+Reinsurance
+
+Structured product
+
+Swap (finance)
+
+Alternative investment
+
+Private equity
+
+Private credit
+
+Leveraged buyout
+
+Venture
+
+Growth
+
+Secondaries
+
+SPAC
+
+Carried interest
+
+Leveraged finance
+
+Over-the-counter (off-exchange)
+
+Forwards
+
+Options
+
+Spot market
+
+Swaps
+
+Trading
+
+Participants
+
+Regulation
+
+Clearing
+
+Related areas
+
+Asset management
+
+Banks and banking
+
+Bulls and Bears
+
+Diversification
+
+ESG
+
+Climate finance
+
+Eco-investing
+
+Impact investing
+
+Sustainable finance
+
+Greenwashing
+
+Financial technology
+
+Investment management
+
+Market risk
+
+Market trend
+
+Speculative attack
+
+v
+
+t
+
+e
+
+An exchange-traded fund (ETF) is a type of investment fund that is also an exchange-traded product; i.e., it is bought and sold on stock exchanges.[1][2][3] ETFs own financial assets such as stocks, bonds, currencies, cryptocurrency, debt, and futures contracts, as well as commodities such as gold bars. ETFs provide more diversification than owning an individual stock and more market liquidity than owning an individual bond.
+
+Most equity and fixed-income ETFs are index funds; they use passive management to replicate the performance of a stock market index or bond market index. These indices can be broad-based, such as the S&P 500 or Nasdaq-100 or focus on a certain industry such as the technology industry or the financial industry, a certain quality such as growth stocks or value stocks, a certain market capitalization, a certain factor such as high dividend stocks or value, momentum, quality, and low volatility, or a certain theme such as climate change, cloud computing, robotics, electric vehicles, the gig economy, e-commerce, or renewable energy.[4] Other ETFs use active management, either by picking stocks or by the use of covered call strategies to generate income.[5][6][7][8] For ETFs that invest in bonds, some will focus on government bonds, while others invest in corporate bonds or high-yield debt or focus on specific durations.[9]
+
+In the United States, actively managed ETF issuers are required by regulators to publish the composition of their portfolios on their websites daily, or monthly in the case of index fund ETFs, or quarterly in the case of active non-transparent ETFs.[10][11][12] Unlike mutual funds, ETFs are priced continuously throughout the trading day.[13]
+
+ETF issuers charge annual expense ratios.[14] Trading in ETFs may be subject to stockbroker commissions and financial transaction taxes.[15]
+
+ETFs can be sold short, can be purchased using funds borrowed from a stockbroker (margin), and can be purchased and sold using limit orders, with the buyer or seller aware of the price per share in advance.[16][17][18] Options, including put options and call options, can be written or purchased on many ETFs.
+
+ETF investors generally only realize capital gains taxes when they sell their own shares for a gain, making them more attractive tax-wise than mutual funds in some cases.[16][19][20][21]
+
+ETFs have similarities to mutual funds, closed-end funds, and exchange-traded notes. ETFs are regulated by governmental bodies and are subject to securities laws.
+
+Statistics
+[edit]
+
+The United States is by far the largest market for ETFs. In the United States, there is $10.2 trillion invested in equity ETFs, $2.4 trillion invested in fixed-income ETFs, and $0.6 trillion invested in other ETFs.[22] In Europe, there is $1.4 trillion invested in equity ETFs, $0.7 trillion invested in fixed-income ETFs, and $0.1 trillion invested in other ETFs.[23]
+
+In Asia-Pacific, there is $1.9 trillion invested in equity ETFs and $0.2 trillion invested in fixed-income ETFs, including $837 billion in China, $712 billion in Japan, $242 billion in Taiwan, $212 billion in Australia, $206 billion in South Korea, $122 billion in India, and $75 billion in Hong Kong.[24] Trading in ETFs accounts for approximately one-third of the total dollar volume of stock market trading in the US, 11% of trading volume in Europe, and 13% of trading volume in Asia. Purchases and sales of underlying assets by ETFs can significantly affect the price of such underlying assets.[25][26]
+
+In the United States, the largest ETF issuers by assets are BlackRock iShares with a 29.5% market share, Vanguard with a 28.7% market share, State Street Global Advisors with a 13.4% market share, Invesco with a 5% market share, and Charles Schwab with a 4% market share.[27]
+
+Legal structure
+[edit]
+
+An ETF divides ownership of itself into shares that are held by shareholders. Depending on the country, the legal structure of an ETF can be a corporation, trust, open-end management investment company, or unit investment trust.[5][28] Shareholders indirectly own the assets of the fund and are entitled to a share of the profits, such as interest or dividends, and would be entitled to any residual value if the fund undergoes liquidation. Shareholders also receive annual reports. An ETF generally operates with an arbitrage mechanism designed to keep it trading close to its net asset value, although deviations can occur.[29]
+
+ETFs that invest in commodities are generally structured as exchange-traded grantor trusts, which gives a direct interest in a fixed portfolio. SPDR Gold Shares, a gold ETF, is a grantor trust, and each share represents ownership of one-tenth of an ounce of gold.[30][31]
+
+Investment structure
+[edit]
+
+Most index ETFs invest 100% of their assets proportionately in the securities or assets that they intend to track, a manner of investing called replication. However, some ETFs instead use derivatives such as futures contracts, options, and swaps to track the underlying assets for all or a portion of their portfolios. This can lead to tracking error and may introduce counterparty risk. ETFs that engage in such practices include the Vanguard Total Stock Market Index Fund, the United States Oil Fund, some cryptocurrency ETFs, and synthetic ETFs.[32][33][34]
+
+Leveraged ETFs (LETFs) and inverse ETFs, use various financial engineering techniques, including equity swaps, derivatives, futures contracts, rebalancing, and re-indexing to seek a daily return that corresponds to a multiple of, or the inverse (opposite) of, the daily performance of an index with the result of significantly amplifying both risk and return.[35][36][37] These funds must undergo daily rebalancing, selling after losses and buying after gains, and therefore are subject to volatility tax.[38]
+
+Arbitrage mechanism
+[edit]
+
+ETF shares are created and redeemed when large broker-dealers called authorized participants (APs) create and redeem ETF shares directly (and in kind) from the ETF issuer in large blocks, generally 50,000 shares, called "creation units."[citation needed] The creation units mirror the underlying securities held by the ETF.[29] Creation occurs when an authorized participant delivers the ETF’s underlying securities to the fund and receives new ETF shares. Redemption occurs when the authorized participant returns ETF shares to the fund and receives the underlying securities. The AP's main incentive is profit through arbitrage: If the ETF trades above its underlying assets’ value, the AP creates new shares and sells them at the higher price. Conversely, if the ETF trades below its underlying assets' value, the AP buys ETF shares, redeems them for the more valuable underlying securities, and sells those. The spread between the price of an ETF and its underlying holdings occurs for multiple reasons including trading costs, and the time, risk, and fees involved in exchanging the securities.
+
+The ability to purchase and redeem creation units gives ETFs an arbitrage mechanism intended to minimize the potential deviation between the market price and the net asset value of ETF shares. APs provide market liquidity for the ETF shares and help ensure that their intraday market price approximates the net asset value of the underlying assets.[29] Other investors, such as individuals using a retail broker, trade ETF shares on the secondary market.
+
+When new shares of an ETF are created due to increased demand, this is referred to as ETF inflows. When ETF shares are converted into the component securities, this is referred to as ETF outflow.[39]
+
+ETFs are dependent on the efficacy of the arbitrage mechanism in order for their share price to track net asset value.
+
+History
+[edit]
+
+ETFs had their genesis in 1989 with Index Participation Shares (IPS), an S&P 500 proxy that traded on the American Stock Exchange and the Philadelphia Stock Exchange. This product was short-lived after a lawsuit by the Chicago Mercantile Exchange was successful in stopping sales in the United States.[40][41] The argument against the IPS approach was that it resembled a futures contract because the investments held an index, rather than holding the actual underlying stocks.[42]
+
+In 1990, a similar product, Toronto Index Participation Units, which tracked the TSE 35 and later the TSE 100 indices, started trading on the Toronto Stock Exchange (TSE) in 1990. The popularity of these products led the American Stock Exchange to try to develop something that would satisfy regulations by the U.S. Securities and Exchange Commission.[43]
+
+Nathan Most and Steven Bloom, under the direction of Ivers Riley, and with the assistance of Kathleen Moriarty, designed and developed Standard & Poor's Depositary Receipts (NYSE Arca: SPY), which were introduced in January 1993.[44][45][46][47] Known as SPDRs or "Spiders", the fund became the largest ETF in the world. In May 1995, State Street Global Advisors introduced the S&P 400 MidCap SPDRs (NYSE Arca: MDY).
+
+It is a frequent topic in the financial press that ETFs have a quick growth. These funds, with assets more than doubling each year since 1995 (as of 2001), have been embraced by most advocates of low–cost index funds. Vanguard is the leading advocate of index funds.[48]
+
+Barclays, in conjunction with MSCI and Funds Distributor Inc., entered the market in 1996 with World Equity Benchmark Shares (WEBS), which became iShares MSCI Index Fund Shares. WEBS originally tracked 17 MSCI country indices managed by the funds' index provider, Morgan Stanley. WEBS were particularly innovative because they gave casual investors easy access to foreign markets. While SPDRs were organized as unit investment trusts, WEBS were set up as a mutual fund, the first of their kind.[49][50]
+
+In 1998, State Street Global Advisors introduced "Sector Spiders", separate ETFs for each of the sectors of the S&P 500.[51] Also in 1998, the "Dow Diamonds" (NYSE Arca: DIA) were introduced, tracking the Dow Jones Industrial Average. In 1999, the influential "cubes" was launched, with the goal of replicating the price movement of the Nasdaq-100 – originally QQQQ but later Nasdaq: QQQ.[52]
+
+The iShares line was launched in early 2000. By 2005, it had a 44% market share of ETF assets under management.[53] Barclays Global Investors was sold to BlackRock in 2009.
+
+In 2001, The Vanguard Group entered the market by launching the Vanguard Total Stock Market ETF (NYSE Arca: VTI), which owns every publicly traded stock in the United States.[54] Some of Vanguard's ETFs are a share class of an existing mutual fund.
+
+iShares issued the first bond funds in July 2002: iShares IBoxx $ Invest Grade Corp Bond Fund (NYSE Arca: LQD), which owns corporate bonds, and a TIPS fund.[55] In 2007, iShares introduced an ETF that owns high-yield debt and an ETF that owns municipal bonds and State Street Global Advisors and The Vanguard Group also issued bond ETFs.
+
+In December 2005, Rydex (now Invesco) launched the first currency ETF, the Euro Currency Trust (NYSE Arca: FXE), which tracked the value of the Euro.[56][57] In 2007, Deutsche Bank's db x-trackers launched the EONIA Total Return Index ETF in Frankfurt tracking the Euro. In 2008, it launched the Sterling Money Market ETF (LSE: XGBP) and US Dollar Money Market ETF (LSE: XUSD) in London. In November 2009, ETF Securities launched the world's largest FX platform tracking the MSFXSM Index covering 18 long or short USD ETC vs. single G10 currencies.[58]
+
+The first leveraged ETF was issued by ProShares in 2006.[59]
+
+In 2008, the SEC authorized the creation of ETFs that use active management strategies.[29] Bear Stearns launched the first actively managed ETF, the Current Yield ETF (NYSE Arca: YYY), which began trading on the American Stock Exchange on March 25, 2008.[60][61][62]
+
+In December 2014, assets under management by U.S. ETFs reached $2 trillion.[63] By November 2019, assets under management by U.S. ETFs reached $4 trillion.[64][65][66] Assets under management by U.S. ETFs grew to $5.5 trillion by January 2021.[67]
+
+ProShares Bitcoin Strategy ETF, launched in October 2021, was the first ETF to track the price of Bitcoin; it invested in futures contracts.[68] After legal cases that mandated approval by the United States Securities and Exchange Commission, the first ETFs to own spot bitcoin began trading in January 2024.[69][70][71]
+
+In October 2023, ProShares, VanEck and Bitwise Asset Management launched the first ETFs tied to the value of Ethereum; these ETFs invested in futures contracts.[72] The first spot ETFs that own Ethereum began trading in May 2024; the United States Securities and Exchange Commission set the condition that the ETFs were not allowed to claim rewards on their coins from the proof-of-stake process, which eliminated a possible source of income.[73]
+
+Gold ETFs
+[edit]
+
+The first gold exchange-traded product was Central Fund of Canada, a closed-end fund founded in 1961. It amended its articles of incorporation in 1983 to provide investors with a product for ownership of gold and silver bullion. It has been listed on the Toronto Stock Exchange since 1966 and the American Stock Exchange since 1986.[74]
+
+The idea of a gold ETF was first conceptualized by Benchmark Asset Management Company Private Ltd in India, which filed a proposal with the Securities and Exchange Board of India in May 2002. In March 2007 after delays in obtaining regulatory approval.[75] The first gold exchange-traded fund was Gold Bullion Securities launched on the ASX in 2003, and the first silver exchange-traded fund was iShares Silver Trust launched on the NYSE in 2006.
+
+Unlike physical ownership of gold bullion, gold ETFs allow investors to gain exposure to the price of gold through shares traded on stock exchanges. Most gold ETFs either hold physical bullion in secure vaults or obtain exposure through derivatives, resulting in differences in tracking performance, costs, and investment objectives among products. SPDR Gold Shares, a commodity ETF, is the largest gold ETF and one of the largest ETFs by assets under management.[76]
+
+Notable issuers
+[edit]
+
+Main article: List of exchange-traded funds
+
+Aberdeen Group: issues commodity ETFs
+
+AdvisorShares: issues actively managed ETFs only, majority owned by Fund.com
+
+Amundi: second ETF provider in Europe [77]
+
+ARK Investment Management: issues actively managed ETFs that invest in companies involved in disruptive innovation
+
+BetaShares: issues ETFs in Australia
+
+BlackRock: issues iShares
+
+BNP Paribas: issues EasyETFs in Europe
+
+Boost ETP: issues short (inverse) and leveraged exchange-traded products including 3x equity and commodity products in Europe
+
+Charles Schwab Corporation: issues ETFs
+
+China Asset Management: issues ETFs primarily in China and Hong Kong
+
+China Southern Asset Management: issues ETFs primarily in China and Hong Kong
+
+Deutsche Bank: issues Xtrackers ETFs, and manages PowerShares DB commodity- and currency-based ETFs
+
+Dimensional Fund Advisors: factor-based ETFs
+
+ETF Securities: issues ETFs primarily in Australia
+
+Franklin Templeton Investments: Issues LibertyShares ETFs
+
+Global X Funds: issues ETFs
+
+Guggenheim Partners: issues specialty Guggenheim Funds ETFs
+
+Hang Seng Investment Management: issues ETFs in Hong Kong
+
+Indo Premier Investment Management: issues Premier ETFs in Indonesia Stock Exchange
+
+Invesco: issues ETFs, as well as BLDRS based on American depositary receipts
+
+Lyxor Asset Management: issues Lyxor ETFs in France
+
+ProShares: issues a variety of ETFs including leveraged and inverse ETFs for the NASDAQ and S&P 500, as well as a bitcoin futures ETF
+
+State Street Global Advisors: issues SPDRs
+
+The Vanguard Group: issues Vanguard ETFs, formerly known as VIPERs
+
+United States Commodity Funds: issues commodity ETFs such as the United States Oil Fund
+
+VanEck: issues ETFs; uses the Investo name in Brazil
+
+WisdomTree Investments: issues specialty ETFs
+
+See also
+[edit]
+
+Exchange-traded note (ETN)
+
+List of American exchange-traded funds
+
+List of exchange-traded funds
+
+References
+[edit]
+
+↑ "What is an ETF?". Fidelity Investments. October 31, 2024.
+
+↑ "Exchange-Traded Funds (ETFs)". U.S. Securities and Exchange Commission.
+
+↑ "Add an ETF without breaking the bank". The Vanguard Group.
+
+↑ "Thematic investing". iShares.
+
+1 2 "Actively Managed Exchange-Traded Funds - SEC Release No. IC-25258, 66 Fed. Reg. 57614". United States Securities and Exchange Commission. November 8, 2001. Archived from the original on May 3, 2017. Retrieved August 27, 2017.
+
+↑ Greifeld, Katherine (April 25, 2023). "JPMorgan Overthrows JPMorgan for Crown of Largest Actively Managed ET". Bloomberg News.
+
+↑ Fuller, Stacy L. (April 16, 2008). "The Evolution of Actively Managed Exchange-Traded Funds" (PDF). Review of Securities & Commodities Regulation.
+
+↑ "Frequently Asked Questions About ETF Basics and Structure". Investment Company Institute. April 10, 2023.
+
+↑ "What Kinds Of Bond ETFs Are There?". ETF.com.
+
+↑ "SEC Adopts New Rule to Modernize Regulation of Exchange-Traded Funds" (Press release). U.S. Securities and Exchange Commission. September 26, 2019.
+
+↑ Peirce, Hester (May 21, 2019). "A Quarter Century of Exchange-Traded Fun!". U.S. Securities and Exchange Commission.
+
+↑ Riquier, Andrea (January 31, 2020). "What is a 'non-transparent' ETF, and why would anyone want to own one?". MarketWatch.
+
+↑ "ETF Education: How Transparent Are ETFs?". ETF.com. January 22, 2018.
+
+↑ "ETF Fees: How are They Deducted & How Much Do They Cost?". SoFi. January 15, 2021.
+
+↑ Iachini, Michael (January 28, 2020). "ETF vs. Mutual Fund: It Depends on Your Strategy". Charles Schwab Corporation.
+
+1 2 "ETFs vs. mutual funds". Charles Schwab Corporation.
+
+↑ "Benefits of ETFs". Fidelity Investments. September 19, 2024.
+
+↑ "Benefits and considerations of ETFs". Charles Schwab Corporation.
+
+↑ "Stocks and Shares ISA: A low cost and tax-efficient way to invest". The Vanguard Group.
+
+↑ "Ultimate Guide to Private Pension Plans in Germany". www.horizon65.com. March 16, 2023.
+
+↑ Iachini, Michael (August 6, 2019). "ETFs and Taxes: What You Need to Know". Charles Schwab Corporation.
+
+↑ Gregson, Lois (April 6, 2026). "U.S. ETF Monthly Summary: March 2026". FactSet.
+
+↑ "Global ETFs Hit $20 Trillion AUM Milestone". Hedge Fund Alpha. February 2, 2026.
+
+↑ "APAC ETF Flows: 2025 in Review". Morningstar, Inc. 2026.
+
+↑ McCrank, John (April 28, 2011). "ETF Edge-Rise of gold ETFs raises concern of price collapse". Reuters.
+
+↑ Ivanov, Stoyu I. (July 2011). "The influence of ETFs on the price discovery of gold, silver and oil". Journal of Economics and Finance.
+
+↑ "Assets in U.S. ETFs Reach Record $14.3 Trillion". Markets Media. March 16, 2026.
+
+↑ "SPDR ETFs: Basics of Product Structure". State Street Global Advisors. July 30, 2014. Archived from the original on February 20, 2017.
+
+1 2 3 4 "17 CFR Parts 239, 270, and 274 Exchange-Traded Funds; Proposed Rule" (PDF). U.S. Securities and Exchange Commission. March 18, 2008. Archived from the original (PDF) on July 6, 2017. Retrieved August 27, 2017.
+
+↑ "SPDR® GOLD TRUST 2016 Grantor Trust Tax Reporting Statement" (PDF). SPDR Gold Shares.
+
+↑ Ferri, Rick (May 12, 2014). "Exchange-Traded Confusion". Forbes.
+
+↑ "Synthetic Exchange-Traded Fund: What it is, How it Works". Investopedia. August 23, 2022.
+
+↑ Grill, Michael; Lambert, Claudia; Marquardt, Philipp; Watfe, Gibran; Weistroffer, Christian (November 2018). "Counterparty and liquidity risks in exchange-traded funds". European Central Bank.
+
+↑ Hurlin, Christophe; Iseli, Grégoire; Perignon, Christophe; Yeung, Stanley (July 6, 2014). "The Counterparty Risk Exposure of ETF Investors". SSRN Electronic Journal. doi:10.2139/ssrn.2462747. SSRN 2462747.
+
+↑ "Inverse ETFs". Fidelity Investments.
+
+↑ Kennedy, Mark (March 11, 2020). "What to Know Before Buying Inverse and Short ETFs". Dotdash.
+
+↑ Bojinov, Stoyan (April 24, 2015). "Leveraged ETF Rebalancing: An ETFdb.com Guide". ETFdb.com.
+
+↑ Yates, Tristan (April 16, 2020). "Dissecting Leveraged ETF Returns". Investopedia.
+
+↑ "A Primer on ETF Primary Trading and the Role of Authorized Participants" (PDF). BlackRock. March 2017.
+
+↑ Berman, David (February 19, 2017). "The Canadian investment idea that busted a mutual-fund monopoly". The Globe and Mail.
+
+↑ Coumarianos, John (February 3, 2020). "ETFs Not Reflecting Net Asset Value is a Feature, Not a Bug". Barron's.
+
+↑ Eichenwald, Kurt (October 26, 1989). "Index-Participation Appeal Declined". The New York Times.
+
+↑ McFeat, Tom (December 29, 2010). "The rise of the ETF". CBC News. Retrieved January 31, 2020.
+
+↑ Greifeld, Katie (December 20, 2022). "Kathleen Moriarty, ETF Industry's 'SPDR Woman,' Dies at 69". Bloomberg News.
+
+↑ Carrel, Lawrence (September 9, 2008). ETFs for the Long Run. Wiley. ISBN 978-0-470-13894-6. ISBN 978-0-470-13894-6
+
+↑ Bayot, Jennifer (December 10, 2004). "Nathan Most Is Dead at 90; Investment Fund Innovator". The New York Times. Archived from the original on November 5, 2012.
+
+↑ "S&P Depositary Receipts Start Trading on Amex". The New York Times. January 30, 1993.
+
+↑ Gastineau, Gary L. (April 30, 2001). "Exchange-Traded Funds: An Introduction". The Journal of Portfolio Management. 27 (3): 88–96. doi:10.3905/jpm.2001.319804. ISSN 0095-4918. S2CID 260586913.
+
+↑ Wiandt, Jim; McClatchy, William (2002). Exchange Traded Funds. Wiley. p. 82. ISBN 0-471-22513-4.
+
+↑ Fabozzi, Frank (2003). The Handbook of Financial Instruments. Wiley. p. 532. ISBN 0-471-22092-2.
+
+↑ Burke, John (October 19, 2018). "How State Street Could Reclaim the ETF Throne".
+
+↑ "Invesco QQQ Trust, Series 1". Invesco.
+
+↑ Moore, Rebecca (June 7, 2006). "ETFs Show Increasing Popularity in First Half of 2005". PlanSponsor.
+
+↑ "Vanguard Total Stock Market ETF (VTI)". The Vanguard Group.
+
+↑ "iShares Bond Funds". U.S. Securities and Exchange Commission.
+
+↑ Spence, John (June 8, 2005). "First currency ETF filed". MarketWatch.
+
+↑ Martin, Neil A. (July 7, 2008). "Putting the World at Your Fingertips". The Wall Street Journal.
+
+↑ Kaminska, Izabella (November 13, 2009). "Introducing collateralised currency securities (updated)". Financial Times.
+
+↑ Spence, John (May 29, 2006). "ProFunds readies first leveraged ETFs - ETF Investing". MarketWatch.
+
+↑ Wherry, Rob (March 26, 2008). "Bear Stearns's Good News: An ETF First". The Wall Street Journal.
+
+↑ Jaffe, Chuck (April 27, 2008). "Bear Stearns Current Yield (YYY)". The Seattle Times.
+
+↑ Mankowski, Cal (April 12, 2008). Dalgleish, James (ed.). "PowerShares starts four actively-managed ETFs". Reuters.
+
+↑ Weinberg, Ari I. (January 5, 2015). "Another Milestone-Leaping Year for ETFs". The Wall Street Journal.
+
+↑ Gurdus, Lizzy (November 9, 2019). "ETF assets rise to record $4 trillion and top industry expert says it's still 'early days'". CNBC.
+
+↑ Horch, AJ (May 29, 2020). "Here's why investors started pouring trillions into exchange-traded funds". CNBC.
+
+↑ Greifeld, Katherine; Ballentine, Claire (June 17, 2020). "Crisis Lessons Drowned Out as $4 Trillion ETF Market Booms". Bloomberg News.
+
+↑ Rekenthaler, John (January 21, 2021). "Farewell, Mutual Funds". Morningstar, Inc.
+
+↑ Harp, Evan (October 20, 2021). "ProShares Launches BITO, the First Bitcoin ETF in the U.S." ETFTrends.com.
+
+↑ Morrow, Allison (August 29, 2023). "Crypto assets soar as US court clears a path for bitcoin ETFs". CNN.
+
+↑ Lang, Hannah (August 29, 2023). "US court says SEC wrong to deny Grayscale's spot bitcoin ETF proposal". Reuters.
+
+↑ Lang, Hannah; McGee, Suzanne; Saini, Manya (January 12, 2024). "US bitcoin ETFs see $4.6 billion in volume in first day of trading". Reuters.
+
+↑ McGee, Suzanne; Kamdar, Bansari Mayur (October 3, 2023). "VanEck, ProShares, Bitwise launch ETFs tied to ether futures". Reuters.
+
+↑ "Cryptofinance: into the ether". Financial Times. May 24, 2024.
+
+↑ "CENTRAL FUND CLOSES APPROXIMATELY US$57 MILLION SHARE ISSUE" (PDF) (Press release). Central Fund of Canada. March 5, 2008.
+
+↑ "Benchmark, UTI MF get Sebi nod for gold ETFs". The Economic Times. January 18, 2007.
+
+↑ "Largest ETFs: Top 100 ETFs By Assets". ETFdb.
+
+↑ Baselli, Valerio. "Les fournisseurs d'ETF veulent être un guichet unique". Morningstar FR. Retrieved June 9, 2025.
+
+Further reading
+[edit]
+
+Carrell, Lawrence. ETFs for the Long Run: What They Are, How They Work, and Simple Strategies for Successful Long-Term Investing. Wiley, September 9, 2008. ISBN 978-0-470-13894-6
+
+Ferri, Richard A. The ETF Book: All You Need to Know About Exchange-Traded Funds. Wiley, January 4, 2011. ISBN 0-470-53746-9
+
+Humphries, William. Leveraged ETFs: The Trojan Horse Has Passed the Margin-Rule Gates. 34 Seattle U.L. Rev. 299 (August 31, 2010), available at Seattle University Law Review.
+
+Koesterich, Russ. The ETF Strategist: Balancing Risk and Reward for Superior Returns. Penguin Books, May 29, 2008. ISBN 978-1-59184-207-1
+
+Lemke, Thomas P.; Lins, Gerald T. & McGuire, W. John. Regulation of Exchange-Traded Funds. LexisNexis, 2015. ISBN 978-0-7698-9131-6
+
+Madhavan, Ananth N. Exchange-Traded Funds and the New Dynamics of Investing. Oxford University Press, 2016. ISBN 978-0-1902-7939-4
+
+External links
+[edit]
+
+A brief history of ETFs – Trackinsight
+
+Exchange Traded Funds (ETF) – Australian Securities Exchange (ASX)
+
+Exchange Traded Funds (ETF) – Johannesburg Stock Exchange (JSE)
+
+Exchange Traded Funds (ETF) – London Stock Exchange (LSE)
+
+Exchange Traded Funds (ETF) – Toronto Stock Exchange (TSX)
+
+Exchange Traded Products – New York Stock Exchange
+
+ETFs – NASDAQ Stock Market
+
+What are ETFs? – Trackinsight
+
+v
+
+t
+
+e
+
+General areas of finance
+
+Alternative Investments
+
+Alternative investment
+
+Angel investor
+
+Super angel
+
+Assets, Capital and Structure
+
+Asset
+
+Asset allocation
+
+Asset growth
+
+Capital asset
+
+Capital management
+
+Capital structure
+
+Cost of capital
+
+Debt
+
+Disinvestment
+
+Diversification (finance)
+
+Divestment
+
+Position of trust
+
+Markets and Trading
+
+Bond (finance)
+
+Bull (stock market speculator)
+
+Exchange-traded fund
+
+Government bond
+
+Growth stock
+
+Growth investing
+
+Hedge (finance)
+
+Market risk
+
+Over-the-counter
+
+Risk–return spectrum
+
+Speculation
+
+Stock
+
+Stock exchange
+
+Stockbroker
+
+Swap (finance)
+
+Systematic risk
+
+Toxic asset
+
+Too big to fail
+
+Watered stock
+
+Corporate Finance and Banking
+
+Corporate finance
+
+Enterprise risk management
+
+Financial management
+
+History of banking
+
+History of money
+
+Investment banking
+
+Pension fund
+
+Personal finance
+
+Public finance
+
+Strategic financial management
+
+Sustainable and Impact Finance
+
+Climate finance
+
+Conservation finance
+
+Eco-investing
+
+Environmental finance
+
+ESG
+
+Impact investing
+
+Social finance
+
+Sustainability
+
+Sustainable Development Goals
+
+Sustainable finance
+
+Quantitative and Mathematical Finance
+
+Computational finance
+
+Experimental finance
+
+Mathematical finance
+
+Quantum finance
+
+Statistical finance
+
+Financial technology
+
+Finance Theory and Behaviour
+
+Behavioural finance
+
+Fundamental analysis
+
+Greater fool theory
+
+International finance
+
+Investment advisory
+
+Investment management
+
+Investment performance
+
+Investor profile
+
+Financial Fields (subtopics)
+
+Financial
+
+analysis
+
+analyst
+
+asset
+
+crime
+
+deepening
+
+economics
+
+engineering
+
+inclusion
+
+institutions
+
+management
+
+market
+
+plan
+
+planner
+
+regulation
+
+risk
+
+services
+
+social work
+
+system
+
+Valuation
+
+Valuation using discounted cash flows
+
+v
+
+t
+
+e
+
+Investment management
+
+Investment
+
+fund
+
+structures
+
+Collective trust fund (CIF)
+
+Common contractual fund (CCF)
+
+Discretionary investment management
+
+Exchange-traded fund (ETF)
+
+Fonds commun de placement (FCP)
+
+Fund of funds
+
+Index fund
+
+Investment trust
+
+Hedge fund
+
+Labour-sponsored venture capital corporation
+
+Listed investment company
+
+Mutual fund
+
+Offshore fund
+
+Open-ended fund company
+
+Open-ended investment company
+
+Pension fund
+
+Private equity fund
+
+Qualifying investor alternative investment fund (QIAIF)
+
+Real estate investment trust (REIT)
+
+Royalty trust
+
+Short-term investment fund
+
+SICAV
+
+Split capital investment trust
+
+Tax transparent fund
+
+Umbrella fund
+
+Unit investment trust
+
+Unit trust
+
+Unitised insurance fund
+
+Investment styles
+
+Active / passive management
+
+Hedge fund
+
+Impact investing
+
+Manager of managers
+
+Social finance
+
+Socially responsible investing
+
+Systematic investment plan
+
+Thematic investing
+
+Value / growth investing
+
+Terminology
+
+Closed-end fund
+
+Fund governance
+
+Institutional investor
+
+Net asset value
+
+Open-end fund
+
+Performance fee
+
+Theory
+
+Arbitrage pricing theory
+
+Efficient-market hypothesis
+
+Fixed income (Duration, Convexity)
+
+Martingale pricing
+
+Modern portfolio theory
+
+Noisy market hypothesis
+
+Yield curve
+
+Related topics
+
+Alternative investment
+
+Commodity pool operator
+
+Robo-advisor
+
+Returns-based style analysis
+
+Traditional investments
+
+UCITS
+
+Category
+List
+
+Retrieved from "https://en.wikipedia.org/w/index.php?title=Exchange-traded_fund&oldid=1376822218"
+
+Category:
+Exchange-traded funds
+
+Hidden categories:
+Articles with short description
+
+Short description matches Wikidata
+
+Articles with limited geographic scope from May 2023
+
+Use mdy dates from November 2021
+
+All articles with unsourced statements
+
+Articles with unsourced statements from July 2026
+
+Exchange-traded fund
+
+Add topic

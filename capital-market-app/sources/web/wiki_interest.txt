@@ -1,0 +1,2595 @@
+URL: https://en.wikipedia.org/wiki/Interest_rate
+FETCHED: 2026-10-18
+
+Interest rate - Wikipedia
+
+Jump to content
+
+From Wikipedia, the free encyclopedia
+
+Percentage of a sum of money charged for its use
+
+Part of a series on
+
+Finance
+
+Markets
+
+Assets
+
+Asset (economics)
+
+Bond
+
+Asset growth
+
+Capital asset
+
+Commodity
+
+Derivatives
+
+Domains
+
+Equity
+
+Foreign exchange
+
+Money
+
+Over-the-counter
+
+Private equity
+
+Real estate
+
+Spot
+
+Stock
+
+Participants
+
+Angel investor
+
+Bull (stock market speculator)
+
+Financial planner
+
+Investor
+
+institutional
+
+Retail
+
+Speculator
+
+Locations
+
+Financial centres
+
+Offshore financial centres
+
+Conduit and sink OFCs
+
+Instruments
+
+Bond
+
+Cash
+
+Collateralized debt obligation
+
+Credit default swap
+
+Time deposit (certificate of deposit)
+
+Credit line
+
+Deposit
+
+Derivative
+
+Futures contract
+
+Indemnity
+
+Insurance
+
+Letter of credit
+
+Loan
+
+Mortgage
+
+Option (call
+
+exotic
+
+put)
+
+Performance bonds
+
+Repurchase agreement
+
+Stock
+
+Security
+
+Syndicated loan
+
+Synthetic CDO
+
+Corporate
+
+General
+
+Accounting
+
+Audit
+
+Capital budgeting
+
+Capital structure
+
+Corporate finance
+
+Credit rating agency
+
+Enterprise risk management
+
+Enterprise value
+
+Risk management
+
+Financial statements
+
+Transactions
+
+Leveraged buyout
+
+Mergers and acquisitions
+
+Structured finance
+
+Venture capital
+
+Taxation
+
+Base erosion and profit shifting (BEPS)
+
+Corporate tax haven
+
+Tax inversion
+
+Tax haven
+
+Transfer pricing
+
+Personal
+
+Credit / Debt
+
+Employment contract
+
+Financial planning
+
+Retirement
+
+Student loan
+
+Public
+
+Government spending
+
+Final consumption expenditure
+
+Operations
+
+Redistribution
+
+Transfer payment
+
+Government revenue
+
+Taxation
+
+Deficit spending
+
+Budget (balance)
+
+Debt
+
+Non-tax revenue
+
+Warrant of payment
+
+Banking
+
+Central bank
+
+Deposit account
+
+Fractional-reserve
+
+Full-reserve
+
+Investment banking
+
+Loan
+
+Money supply
+
+Lists of banks
+
+Bank regulation
+
+Banking license
+
+Basel Committee on Banking Supervision
+
+Bank for International Settlements
+
+Financial Stability Board
+
+Deposit insurance
+
+Separation of investment and retail banking
+
+Regulation · Financial law
+
+International Financial Reporting Standards
+
+ISO 31000
+
+Professional certification
+
+Fund governance
+
+Economic history
+
+Private equity and venture capital
+
+Recession
+
+Stock market bubble
+
+Stock market crash
+
+Accounting scandals
+
+Outline
+
+Business and Economics portal
+
+Money portal
+
+v
+
+t
+
+e
+
+Part of a series on
+
+Macroeconomics
+
+Basic concepts
+
+Output and measurement
+
+Growth
+
+Business cycle
+
+Financial crisis
+
+Recession
+
+Depression
+
+National accounts
+
+SNA
+
+GDP
+
+GNI
+
+NNI
+
+Output gap
+
+Unemployment
+
+Money and prices
+
+Exchange rate
+
+Inflation
+
+Cost-push
+
+Deflation
+
+Demand-pull
+
+Disinflation
+
+Price level
+
+Shrinkflation
+
+Stagflation
+
+Interest rate
+
+Liquidity trap
+
+Money
+
+Creation
+
+Demand
+
+Liquidity preference
+
+Endogenous
+
+Supply
+
+Dynamics and theory
+
+Aggregate demand
+
+Effective demand
+
+Aggregate supply
+
+Balance of payments
+
+Expectations
+
+Adaptive
+
+Rational
+
+Government debt
+
+Investment
+
+Saving
+
+Microfoundations
+
+Nominal rigidity
+
+Shocks
+
+Demand
+
+Supply
+
+Policies
+
+Fiscal
+
+Austerity
+
+Government spending
+
+Welfare spending
+
+Stimulus
+
+Tax policy
+
+Monetary
+
+Central bank
+
+Inflation targeting
+
+Open market operation
+
+Quantitative easing
+
+Commercial
+
+Capital control
+
+Free trade
+
+Protectionism
+
+Tariff
+
+Models
+
+Accelerator
+
+AD–AS
+
+Arrow–Debreu
+
+Endogenous growth
+
+General equilibrium
+
+DSGE
+
+Harrod–Domar
+
+IS–LM
+
+Keynesian cross
+
+Matching
+
+Multiplier
+
+Mundell–Fleming
+
+NAIRU
+
+Overlapping generations
+
+Overshooting
+
+Phillips curve
+
+Quantity theory of money
+
+Ramsey–Cass–Koopmans
+
+Solow–Swan
+
+Taylor rule
+
+Schools
+
+Mainstream
+
+Keynesian
+
+New
+
+Monetarism
+
+New classical
+
+RBC
+
+New neoclassical synthesis
+
+Saltwater and freshwater
+
+Stockholm
+
+Heterodox
+
+Austrian
+
+Chartalism
+
+MMT
+
+Disequilibrium
+
+Ecological
+
+Market monetarism
+
+Marxian
+
+Post-Keynesian
+
+Circuitism
+
+Structuralist
+
+Supply-side
+
+People
+
+Barro
+
+Bernanke
+
+Blanchard
+
+Diamond
+
+Domar
+
+Fisher
+
+Frisch
+
+Friedman
+
+Hansen
+
+Harrod
+
+Hayek
+
+Hicks
+
+Kaldor
+
+Kalecki
+
+Keynes
+
+Klein
+
+Krugman
+
+Kuznets
+
+Kydland
+
+Lerner
+
+Lucas
+
+Malthus
+
+Mankiw
+
+Marx
+
+Minsky
+
+Mitchell
+
+Modigliani
+
+Mundell
+
+Myrdal
+
+Nordhaus
+
+Okun
+
+Phelps
+
+Prescott
+
+Quesnay
+
+Ramsey
+
+Ricardo
+
+Robinson
+
+Romer
+
+Samuelson
+
+Sargent
+
+Smith
+
+Solow
+
+Stiglitz
+
+Stone
+
+Taylor
+
+Tinbergen
+
+Tobin
+
+Walras
+
+Wicksell
+
+Related fields
+
+Development economics
+
+Econometrics
+
+Economic statistics
+
+Evolutionary economics
+
+International economics
+
+Monetary economics
+
+Public finance
+
+See also
+
+Economics
+
+Applied
+
+Macroeconomic model
+
+Mathematical economics
+
+Microeconomics
+
+Political economy
+
+Publications in macroeconomics
+
+Economics portal
+
+Business portal
+
+v
+
+t
+
+e
+
+An interest rate is the amount of interest due per period, as a proportion of the amount lent, deposited, or borrowed. Interest rate periods are ordinarily a year and are often annualized when not. Alongside interest rates, three other variables determine total interest: principal sum, compounding frequency, and length of time.
+
+Interest rates reflect a borrower's willingness to pay for money now over money in the future.[1] In debt financing, companies borrow capital from a bank, in the expectation that the borrowed capital may be used to generate a return on investment greater than the interest rates. Failure of a borrower to continue paying interest is an example of default, which may be followed by bankruptcy proceedings. Collateral is sometimes given in the event of default.
+
+In monetary policy and macroeconomics, the term "interest rate" is often used as shorthand for a central bank's policy rate, such as the United States Federal Reserve's federal funds rate. "Interest rate" is also sometimes used synonymously with overnight rate, bank rate, base rate, discount rate, coupon rate, repo rate, prime rate, yield to maturity, and internal rate of return.
+
+Definitions
+[edit]
+
+Real versus nominal
+[edit]
+
+Main article: Real versus nominal value (economics)
+
+Further information: Fisher equation
+
+The nominal interest rate is the interest rate without adjusting for inflation, whereas the real interest rate takes inflation into account. Real interest rates measure the interest accumulated and repayment of principal in real terms by comparing the sum against the buying power of the amount at the time it was borrowed, lent, deposited or invested. Where inflation is the same as nominal interest rate, the real interest rate is zero.
+
+The real interest rate is given by the Fisher equation:
+
+r
+=
+
+1
++
+i
+
+1
++
+p
+
+−
+1
+
+{\displaystyle r={\frac {1+i}{1+p}}-1\,\!}
+
+where p is the inflation rate.
+
+For low rates and short periods, the linear approximation applies:
+
+r
+≈
+i
+−
+p
+
+{\displaystyle r\approx i-p\,\!}
+
+The Fisher equation applies both ex ante and ex post. Ex ante, the rates are projected rates, whereas ex post, the rates are historical.
+
+Other rates
+[edit]
+
+The term "interest rate" is also often used as shorthand for a number of specific rates, most commonly the overnight rate, bank rate, or other interest rate set by a central bank.[citation needed] In this regard, the United States Federal Reserve's Federal Funds Rate is often simply known as the "interest rate" or "rate",[2] due to its global macroeconomic and financial significance.[citation needed] In United Kingdom contexts, Official Bank Rate of the Bank of England is also known as "the interest rate".[3] "Interest rate" is also sometimes used synonymously with base rate, discount rate, coupon rate, repo rate, prime rate, yield to maturity, internal rate of return, spot rate, forward rate, and benchmark rates such as Libor and SONIA.[citation needed]
+
+Base rate usually refers to the annualized effective interest rate offered on overnight deposits by the central bank or other monetary authority.[citation needed]
+
+The annual percentage rate (APR) may refer either to a nominal APR or an effective APR (EAPR). The difference between the two is that the EAPR accounts for fees and compounding, while the nominal APR does not.[citation needed]
+
+The annual equivalent rate (AER), also called the effective annual rate, factors into account compounding frequencies of products, but does not account for fees.[citation needed]
+
+Discount rate can both refer to the discount window of central banks and more generally as the annual rate used to discount future values into present value.[4]
+
+A bond's coupon rate is its interest rate,[5] while its current yield is the ratio of its annual interest payment to its current market price.[6]
+
+Yield to maturity is a bond's expected internal rate of return, assuming it will be held to maturity, that is, the discount rate which equates all remaining cash flows to the investor (all remaining coupons and repayment of the par value at maturity) with the current market price.[citation needed]
+
+Based on the relationship between supply and demand of market interest rate, there are fixed interest rate and floating interest rate.[citation needed]
+
+Monetary policy
+[edit]
+
+Interest rate targets are a vital tool of monetary policy and are taken into account when dealing with variables like investment, inflation, and unemployment. The central banks of countries generally tend to reduce interest rates when they wish to increase investment and consumption in the country's economy. However, a low interest rate as a macro-economic policy can be risky and may lead to the creation of an economic bubble, in which large amounts of investments are poured into the real-estate market and stock market. In developed economies, interest-rate adjustments are thus made to keep inflation within a target range for the health of economic activities or cap the interest rate concurrently with economic growth to safeguard economic momentum.[7][8][9][10][11]
+
+History
+[edit]
+
+Germany experienced deposit interest rates from 14% in 1973 down to almost 2% in 2003.
+
+In the past two centuries, interest rates have been variously set either by national governments or central banks. For example, the Federal Reserve federal funds rate in the United States has varied between about 0.25% and 19% from 1954 to 2008, while the Bank of England base rate varied between 0.5% and 15% from 1989 to 2009,[12][13] and Germany experienced rates close to 90% in the 1920s down to about 2% in the 2000s.[14][15] During an attempt to tackle spiraling hyperinflation in 2007, the Central Bank of Zimbabwe increased interest rates for borrowing to 800%.[16]
+
+The interest rates on prime credits in the late 1970s and early 1980s were far higher than had been recorded – higher than previous US peaks since 1800, than British peaks since 1700, or than Dutch peaks since 1600; "since modern capital markets came into existence, there have never been such high long-term rates" as in this period.[17]
+
+Before modern capital markets, there have been accounts that savings deposits could achieve an annual return of at least 25% and up to as high as 50%.[18]
+
+Influencing factors
+[edit]
+
+Political short-term gain: Lowering interest rates can give the economy a short-run boost. Under normal conditions, most economists think a cut in interest rates will only give a short term gain in economic activity that will soon be offset by inflation. The quick boost can influence elections. Most economists advocate independent central banks to limit the influence of politics on interest rates.
+
+Deferred consumption: When money is loaned the lender delays spending the money on consumption goods. Since according to time preference theory people prefer goods now to goods later, in a free market there will be a positive interest rate.
+
+Inflationary expectations: Most economies generally exhibit inflation, meaning a given amount of money buys fewer goods in the future than it will now. The borrower needs to compensate the lender for this.
+
+Alternative investments: The lender has a choice between using his money in different investments. If he chooses one, he forgoes the returns from all the others. Different investments effectively compete for funds.
+
+Risks of investment: There is always a risk that the borrower will go bankrupt, abscond, die, or otherwise default on the loan. This means that a lender generally charges a risk premium to ensure that, across his investments, he is compensated for those that fail.
+
+Liquidity preference: People prefer to have their resources available in a form that can immediately be exchanged, rather than a form that takes time to realize.
+
+Taxes: Because some of the gains from interest may be subject to taxes, the lender may insist on a higher rate to make up for this loss.
+
+Banks: Banks can tend to change the interest rate to either slow down or speed up economy growth. This involves either raising interest rates to slow the economy down, or lowering interest rates to promote economic growth.[19]
+
+Economy: Interest rates can fluctuate according to the status of the economy. It will generally be found that if the economy is strong then the interest rates will be high, if the economy is weak the interest rates will be low.
+
+Zero rate policy
+[edit]
+
+Main article: Zero interest-rate policy
+
+A so-called "zero interest-rate policy" (ZIRP) is a very low—near-zero—central bank target interest rate. At this zero lower bound the central bank faces difficulties with conventional monetary policy, because it is generally believed that market interest rates cannot realistically be pushed down into negative territory.
+
+In the United States, the policy was used in 2008-2015, following the 2008 financial crisis, and 2020-2022, during the COVID-19 pandemic.[20]
+
+Negative nominal or real rates
+[edit]
+
+Main article: Negative interest on excess reserves
+
+Nominal interest rates are normally positive, but not always. In contrast, real interest rates can be negative, when nominal interest rates are below inflation. When this is done via government policy (for example, via reserve requirements), this is known as financial repression, which was practiced by countries such as the United States and United Kingdom following World War II until the late 1970s or early 1980s, during and following the Post–World War II economic expansion.[21][22] In the late 1970s, United States Treasury securities with negative real interest rates were deemed certificates of confiscation.[23]
+
+A so-called "negative interest rate policy" (NIRP) is a negative central bank target interest rate.
+
+Theory
+[edit]
+
+Main article: Demurrage currency
+
+In theory, profit-seeking lenders will not lend below 0% if given the alternative of holding cash, as that will guarantee a loss. Likewise, a bank offering a negative deposit rate will find few takers, as savers will instead hold cash.[24]
+
+Negative interest rates have been proposed in the past, notably in the late 19th century by Silvio Gesell.[25] A negative interest rate can be described as a "tax on holding money"; Gesell proposed it as the Freigeld (free money) component of his Freiwirtschaft (free economy) system. To prevent people from holding cash, Gesell suggested issuing money for a limited duration, after which it must be exchanged for new bills; attempts to hold money thus result in it expiring and becoming worthless. Along similar lines, John Maynard Keynes approvingly cited the idea of a carrying tax on money,[25][26] but dismissed it due to administrative difficulties.[27] In 1999, a carry tax on currency was proposed by Federal Reserve employee Marvin Goodfriend, to be implemented via magnetic strips on bills, deducting the carry tax upon deposit, the tax being based on how long the bill had been held.[27]
+
+It has also been proposed that a negative interest rate can in principle be levied on existing paper currency via a serial number lottery, such as randomly choosing a number 0 through 9 and declaring that notes whose serial number end in that digit are worthless, yielding an average 10% loss of paper cash holdings to hoarders; a drawn two-digit number could match the last two digits on the note for a 1% loss. This was proposed by an anonymous student of Greg Mankiw,[25] though more as a thought experiment than a genuine proposal.[28]
+
+Practice
+[edit]
+
+Both the European Central Bank starting in 2014 and the Bank of Japan starting in early 2016 pursued the policy on top of their earlier and continuing quantitative easing policies. The latter's policy was said at its inception to be trying to "change Japan's 'deflationary mindset.'" In 2016 Sweden, Denmark and Switzerland—not directly participants in the Euro currency zone—also had NIRPs in place.[29]
+
+Countries such as Sweden and Denmark have set negative interest on reserves—that is to say, they have charged interest on reserves.[30][31][32][33]
+
+In July 2009, Sweden's central bank, the Riksbank, set its policy repo rate, the interest rate on its one-week deposit facility, at 0.25%, at the same time as setting its overnight deposit rate at −0.25%.[34] The existence of the negative overnight deposit rate was a technical consequence of the fact that overnight deposit rates are generally set at 0.5% below or 0.75% below the policy rate.[34][35] The Riksbank studied the impact of these changes and stated in a commentary report[36] that they led to no disruptions in Swedish financial markets.
+
+Government bond yields
+[edit]
+
+Ireland bond prices, Inverted yield curve in 2011,[37] And rates went negative after the European debt crisis.
+
+15 year bond
+
+10 year bond
+
+5 year bond
+
+3 year bond
+
+During the European debt crisis, government bonds of some countries (Switzerland, Denmark, Germany, Finland, the Netherlands and Austria) have been sold at negative yields. Suggested explanations include desire for safety and protection against the eurozone breaking up (in which case some eurozone countries might redenominate their debt into a stronger currency).[38]
+
+Macroeconomics
+[edit]
+
+Output, unemployment and inflation
+[edit]
+
+Interest rates affect economic activity broadly, which is the reason why they are normally the main instrument of the monetary policies conducted by central banks.[39] Changes in interest rates will affect firms' investment behaviour, either raising or lowering the opportunity cost of investing. Interest rate changes also affect asset prices like stock prices and house prices, which again influence households' consumption decisions through a wealth effect. Additionally, international interest rate differentials affect exchange rates and consequently exports and imports. These various channels are collectively known as the monetary transmission mechanism. Consumption, investment and net exports are all important components of aggregate demand. Consequently, by influencing the general interest rate level, monetary policy can affect overall demand for goods and services in the economy and hence output and employment.[40] Changes in employment will over time affect wage setting, which again affects pricing and consequently ultimately inflation. The relation between employment (or unemployment) and inflation is known as the Phillips curve.[39]
+
+For economies maintaining a fixed exchange rate system, determining the interest rate is also an important instrument of monetary policy as international capital flows are in part determined by interest rate differentials between countries.[41]
+
+Interest rate setting in the United States
+[edit]
+
+The effective federal funds rate in the US charted over more than half a century
+
+The Federal Reserve (often referred to as 'the Fed') implements monetary policy largely by targeting the federal funds rate (FFR). This is the rate that banks charge each other for overnight loans of federal funds, which are the reserves held by banks at the Fed. Until the 2008 financial crisis, the Fed relied on open market operations, i.e. selling and buying securities in the open market to adjust the supply of reserve balances so as to keep the FFR close to the Fed's target.[42] However, since 2008 the actual conduct of monetary policy implementation has changed considerably, the Fed using instead various administered interest rates (i.e., interest rates that are set directly by the Fed rather than being determined by the market forces of supply and demand) as the primary tools to steer short-term market interest rates towards the Fed's policy target.[43]
+
+Impact on savings and pensions
+[edit]
+
+Financial economists such as World Pensions Council (WPC) researchers have argued that durably low interest rates in most G20 countries will have an adverse impact on the funding positions of pension funds as "without returns that outstrip inflation, pension investors face the real value of their savings declining rather than ratcheting up over the next few years".[44] Current interest rates in savings accounts often fail to keep up with the pace of inflation.[45] Banking competition tends to increase the savings account interest rates.[46]
+
+From 1982 until 2012, most Western economies experienced a period of low inflation combined with relatively high returns on investments across all asset classes including government bonds. This brought a certain sense of complacency[citation needed] amongst some pension actuarial consultants and regulators, making it seem reasonable to use optimistic economic assumptions to calculate the present value of future pension liabilities.
+
+Interest-free economy
+[edit]
+
+This section is an excerpt from Interest-free economy.[edit]
+
+An interest-free economy or interest free economy is an economy that does not have pure interest rates.
+An interest free economy may use either barter, debt, credit, or money as its medium of exchange.
+Historically, there has been a taboo against usury and charging interest rates across many cultures and religions.
+In some contexts, "interest-free economy" may refer to a zero interest-rate policy, a macroeconomic concept for describing an economy that is characterized by a low nominal interest rate.
+
+The total interest rate typically consists of four components: pure (risk-free) interest, a risk premium, expected inflation or deflation, and administrative costs.
+In an interest-free economy, the pure interest rate component of the total interest rate would not exist, by definition.
+Depending on how the economy is structured, the other three components of interest of the total interest may or may not remain, so an interest-free economy does not necessarily have to be free of all types of interest.
+Banks could still profit from loaning money in an interest-free economy, if they are paid by the administrative costs component of the total interest rate.[47]
+
+Private markets
+[edit]
+
+There is a market for investments, including the money market, bond market, stock market, and currency market as well as retail banking.
+
+Interest rates reflect:
+
+The risk-free cost of capital
+
+Expected inflation
+
+Risk premium
+
+Transaction costs
+
+Inflationary expectations
+[edit]
+
+According to the theory of rational expectations, borrowers and lenders form an expectation of inflation in the future. The acceptable nominal interest rate at which they are willing and able to borrow or lend includes the real interest rate they require to receive, or are willing to pay, plus the rate of inflation they expect. Under behavioral expectations, the formation of expectations deviates from rational expectations due to cognitive limitations and information processing costs. Agents may exhibit myopia (limited attention) to certain economic variables, form expectations based on simplified heuristics, or update their beliefs more gradually than under full rationality. These behavioral frictions can affect monetary policy transmission and optimal policy design.[48]
+
+Risk
+[edit]
+
+The level of risk in investments is taken into consideration. Riskier investments such as shares and junk bonds are normally expected to deliver higher returns than safer ones like government bonds.
+
+The additional return above the risk-free nominal interest rate which is expected from a risky investment is the risk premium. The risk premium an investor requires on an investment depends on the risk preferences of the investor. Evidence suggests that most lenders are risk-averse.[49]
+
+A maturity risk premium applied to a longer-term investment reflects a higher perceived risk of default.
+
+There are four kinds of risk:
+
+repricing risk
+
+basis risk
+
+yield curve risk
+
+optionality
+
+Liquidity preference
+[edit]
+
+Most economic agents exhibit a liquidity preference, defined as the propensity to hold cash or highly liquid assets over less fungible investments, reflecting both precautionary and transactional motives. Liquidity preference manifests in the yield differential between assets of varying maturities and convertibility costs, where cash provides immediate transaction capability with zero conversion costs. This preference creates a term structure of required returns, exemplified by the higher yields typically demanded for longer-duration assets. For instance, while a 1-year loan offers relatively rapid convertibility to cash, a 10-year loan commands a greater liquidity premium. However, the existence of deep secondary markets can partially mitigate illiquidity costs, as evidenced by US Treasury bonds, which maintain significant liquidity despite longer maturities due to their unique status as a safe asset and the associated financial sector stability benefits.[50][51]
+
+A market model
+[edit]
+
+A basic interest rate pricing model for an asset is
+
+i
+
+n
+
+=
+
+i
+
+r
+
++
+
+p
+
+e
+
++
+
+r
+
+p
+
++
+
+l
+
+p
+
+{\displaystyle i_{n}=i_{r}+p_{e}+r_{p}+l_{p}\,\!}
+
+where
+
+in is the nominal interest rate on a given investment
+
+ir is the risk-free return to capital
+
+i*n is the nominal interest rate on a short-term risk-free liquid bond (such as U.S. treasury bills).
+
+rp is a risk premium reflecting the length of the investment and the likelihood the borrower will default
+
+lp is a liquidity premium (reflecting the perceived difficulty of converting the asset into money and thus into goods).
+
+pe is the expected inflation rate.
+
+Assuming perfect information, pe is the same for all participants in the market, and the interest rate model simplifies to
+
+i
+
+n
+
+=
+
+i
+
+n
+
+∗
+
++
+
+r
+
+p
+
++
+
+l
+
+p
+
+{\displaystyle i_{n}=i_{n}^{*}+r_{p}+l_{p}\,\!}
+
+Mathematical note
+[edit]
+
+Because interest and inflation are generally given as percentage increases, the formulae above are (linear) approximations.
+
+For instance,
+
+i
+
+n
+
+=
+
+i
+
+r
+
++
+
+p
+
+e
+
+{\displaystyle i_{n}=i_{r}+p_{e}\,\!}
+
+is only approximate. In reality, the relationship is
+
+(
+1
++
+
+i
+
+n
+
+)
+=
+(
+1
++
+
+i
+
+r
+
+)
+(
+1
++
+
+p
+
+e
+
+)
+
+{\displaystyle (1+i_{n})=(1+i_{r})(1+p_{e})\,\!}
+
+so
+
+i
+
+r
+
+=
+
+1
++
+
+i
+
+n
+
+1
++
+
+p
+
+e
+
+−
+1
+
+{\displaystyle i_{r}={\frac {1+i_{n}}{1+p_{e}}}-1\,\!}
+
+The two approximations, eliminating higher order terms, are:
+
+(
+1
++
+x
+)
+(
+1
++
+y
+)
+
+=
+1
++
+x
++
+y
++
+x
+y
+
+≈
+1
++
+x
++
+y
+
+1
+
+1
++
+x
+
+=
+1
+−
+x
++
+
+x
+
+2
+
+−
+
+x
+
+3
+
++
+⋯
+
+≈
+1
+−
+x
+
+{\displaystyle {\begin{aligned}(1+x)(1+y)&=1+x+y+xy&&\approx 1+x+y\\{\frac {1}{1+x}}&=1-x+x^{2}-x^{3}+\cdots &&\approx 1-x\end{aligned}}}
+
+The formulae in this article are exact if logarithmic units are used for relative changes, or equivalently if logarithms of indices are used in place of rates, and hold even for large relative changes.
+
+Spread
+[edit]
+
+The spread of interest rates is the lending rate minus the deposit rate.[52] This spread covers operating costs for banks providing loans and deposits. A negative spread is where a deposit rate is higher than the lending rate.[53]
+
+Influencing factors
+[edit]
+
+This list is incomplete; you can help by adding missing items. (June 2025)
+
+Interest rates vary according to:
+
+the government's directives to the central bank to accomplish the government's goals
+
+the currency of the principal sum lent or borrowed
+
+the term to maturity of the investment
+
+the perceived default probability of the borrower
+
+supply and demand in the market
+
+the amount of collateral
+
+special features like call provisions
+
+reserve requirements
+
+compensating balance
+
+as well as other factors.[54]
+
+See also
+[edit]
+
+Interest expense
+
+Macroeconomics
+
+Short-rate model
+
+List of sovereign states by central bank interest rates
+
+Notes
+[edit]
+
+↑ Fisher, Irving (1907). The Rate of Interest: Its Nature, Determination and Relation to Economic Phenomena. New York: The MacMillan Company. p. 3. ISBN 1-57898-745-8. {{cite book}}: ISBN / Date incompatibility (help)
+
+↑ Stauffer, Jason (2023-07-26). "Why now is the best time to lock in a high APY CD after the Fed's rate raise". CNBC. Retrieved 2025-08-08.
+
+↑ "Interest rates and Bank Rate". www.bankofengland.co.uk. 2025-08-07. Retrieved 2025-08-08.
+
+↑ "Discount Rate Defined: How It's Used by the Fed and in Cash-Flow Analysis". Investopedia. Retrieved 2023-05-08.
+
+↑ "Coupon Rate". Investor.gov. U.S. Securities and Exchange Commission. Retrieved 2026-09-16.
+
+↑ "Current Yield". Investor.gov. U.S. Securities and Exchange Commission. Retrieved 2026-09-16.
+
+↑ "INSIGHT-Mild inflation, low interest rates could help economy". Reuters. 2 August 2011.
+
+↑ Sepehri, Ardeshir; Moshiri, Saeed (2004). "Inflation-Growth Profiles Across Countries: Evidence from Developing and Developed Countries". International Review of Applied Economics. 18 (2): 191–207. doi:10.1080/0269217042000186679. S2CID 154979402.
+
+↑ "Inflation: Finding the right balance" (PDF). Imf.org. Retrieved 8 January 2018.
+
+↑ "Finance & Development, June 2003 - Contents". Finance and Development – F&D.
+
+↑ "Finance & Development, March 2010 – Back to Basics". Finance and Development – F&D.
+
+↑ moneyextra.com Interest Rate History Archived 2008-10-16 at the Wayback Machine. Retrieved 2008-10-27
+
+↑ "UK interest rates lowered to 0.5%". BBC News. 5 March 2009.
+
+↑ (Homer, Sylla & Sylla 1996, p. 509)
+
+↑ Bundesbank. BBK – Statistics – Time series database Archived 2009-02-12 at the Wayback Machine. Retrieved 2008-10-27
+
+↑ worldeconomies.co.uk Zimbabwe currency revised to help inflation
+
+↑ (Homer, Sylla & Sylla 1996, p. 1)
+
+↑ Ellis, William; Dawes, Richard (1857). Lessons on the Phenomena of Industrial Life: And the Conditions of Industrial Success. Groombridge. pp. iii–iv.
+
+↑ Commonwealth Bank Why do Interest Rates Change? Archived 2014-02-26 at the Wayback Machine
+
+↑ "Federal Funds Effective Rate (FEDFUNDS)". Retrieved 20 March 2025.
+
+↑ William H. Gross. "The Caine Mutiny Part 2 – PIMCO". Pacific Investment Management Company LLC. Archived from the original on 2012-10-13. Retrieved 2011-12-21.
+
+↑ "Financial Repression Redux (Reinhart, Kirkegaard, Sbrancia June 2011)" (PDF). Imf.org. Retrieved 8 January 2018.
+
+↑ Norris, Floyd (28 October 2010). "U.S. Bonds That Could Return Less Than Their Price". The New York Times.
+
+↑ Buiter, Willem (7 May 2009). "Negative interest rates: when are they coming to a central bank near you?". Financial Times blog.
+
+1 2 3 Mankiw, N. Gregory (18 April 2009). "It May Be Time for the Fed to Go Negative". The New York Times.
+
+↑ 1936, The General Theory of Employment, Interest and Money
+
+1 2 McCullagh, Declan (27 October 1999). "Cash and the 'Carry Tax'". WIRED. Archived from the original on 17 June 2008. Retrieved 2011-12-21.
+
+↑
+See follow-up blog posts for discussion: "Observations on Negative Interest Rates", 19 April 2009;
+"More on Negative Interest Rates", 22 April 2009; "More on Negative Interest Rates", 7 May 2009, all in Greg Mankiw's Blog: Random Observations for Students of Economics
+
+↑ Nakamichi, Takashi, Megumi Fujikawa and Eleanor Warnock, "Bank of Japan Introduces Negative Interest Rates" (possibly subscription-only), Wall Street Journal, January 29, 2016. Retrieved July 29, 2026
+
+↑ Goodhart, C.A.E. (January 2013). "The Potential Instruments of Monetary Policy" (PDF). Financial Markets Group Paper (Special Paper 219). London School of Economics. 9–10. ISSN 1359-9151. Archived from the original (PDF) on 2013-06-28. Retrieved 13 April 2013.
+
+↑ Blinder, Alan S. (February 2012). "Revisiting Monetary Policy in a Low-Inflation and Low-Utilization Environment". Journal of Money, Credit and Banking. 44 (Supplement s1): 141–146. doi:10.1111/j.1538-4616.2011.00481.x.
+
+↑ Thoma, Mark (August 27, 2012). "Would Lowering the Interest Rate on Excess Reserves Stimulate the Economy?". Economist's View. Retrieved 13 April 2013.
+
+↑ Parameswaran, Ashwin (2013-01-07). "On The Folly of Inflation Targeting In A World Of Interest Bearing Money". Macroeconomic Resilience. Retrieved 13 April 2013.
+
+1 2 "Repo rate table". Sveriges Riksbank. Archived from the original on 5 February 2013. Retrieved 21 August 2013.
+
+↑ Ward, Andrew; Oakley, David (27 August 2009). "Bankers watch as Sweden goes negative". Financial Times. London. Archived from the original on 2022-12-10.
+
+↑ Beechey, Meredith; Elmér, Heidi (30 September 2009). "The lower limit of the Riksbank's repo rate" (PDF). Sveriges Riksbank. Retrieved 21 August 2013.
+
+↑ Figure. Irish yield curve
+
+↑ Wigglesworth, Robin (18 July 2012). "Schatz yields turn negative for first time". Financial Times. London. Archived from the original on 2022-12-10. Retrieved 2012-08-03.
+
+1 2 Blanchard, Olivier; Amighini, Alessia; Giavazzi, Francesco (2017). "Monetary policy:a summing up". Macroeconomics: a European perspective (3rd ed.). Harlow London New York Boston San Francisco Toronto Sydney Dubai Singapore Hong Kong Tokyo Seoul Taipei New Delhi Cape Town São Paulo Mexico City Madrid Amsterdam Munich Paris Milan: Pearson. ISBN 978-1-292-08567-8.
+
+↑ "Federal Reserve Board - Monetary Policy: What Are Its Goals? How Does It Work?". Board of Governors of the Federal Reserve System. 29 July 2021. Retrieved 16 September 2023.
+
+↑ "Fixed exchange rate policy". Nationalbanken. Retrieved 16 September 2023.
+
+↑ "Open Market Operations". www.federalreserve.gov. Federal Reserve System. 26 July 2023. Retrieved 16 September 2023.
+
+↑ Ihrig, Jane; Weinbach, Gretchen C.; Wolla, Scott A. (September 2021). "Teaching the Linkage Between Banks and the Fed: R.I.P. Money Multiplier". research.stlouisfed.org. Federal Reserve Bank of St. Louis. Retrieved 16 September 2023.
+
+↑ M. Nicolas J. Firzli quoted in Sinead Cruise (4 August 2012). "Zero Return World Squeezes Retirement Plans". Reuters with CNBC. Retrieved 5 Aug 2012.
+
+↑ thesavingsguy (2021-11-16). "Why You Can't Afford to use Savings Accounts for Saving - Ask The savings guy". Archived from the original on 2021-11-16. Retrieved 2021-11-18.
+
+↑ Liebersohn, Jack (2024). "How does competition affect retail banking? Quasi-experimental evidence from bank mergers". Journal of Financial Economics. 154 103797. doi:10.1016/j.jfineco.2024.103797. ISSN 0304-405X.
+
+↑ Sidman, Josh (11 March 2024). "Silvio Gesell: Beyond Capitalism vs Socialism" Class #3 (Video). Henry George School of Economics. Event occurs at 1:28. Retrieved 26 May 2025.
+
+↑ Benchimol, Jonathan; Bounader, Lahcen (2023). "Optimal monetary policy under bounded rationality". Journal of Financial Stability. 67 101151. doi:10.1016/j.jfs.2023.101151. hdl:10419/212417.
+
+↑ Benchimol, J., 2014. Risk aversion in the Eurozone, Research in Economics, vol. 68, issue 1, pp. 39–56.
+
+↑ Krishnamurthy, Arvind; Vissing-Jorgensen, Annette (2012). "The Aggregate Demand for Treasury Debt" (PDF). Journal of Political Economy. 120 (2): 233–267. doi:10.1086/666589.
+
+↑ Krishnamurthy, Arvind; Vissing-Jorgensen, Annette (2015). "The impact of Treasury supply on financial sector lending and stability". Journal of Financial Economics. 118 (3): 571–600. doi:10.1016/j.jfineco.2015.09.001.
+
+↑ Interest rate spread (lending rate minus deposit rate, %) from World Bank. 2012
+
+↑ Negative Spread Law & Legal Definition, retrieved January 2013
+
+↑ Fama, Eugene F. (2006-07-01). "The Behavior of Interest Rates". The Review of Financial Studies. 19 (2): 359–379. doi:10.1093/rfs/hhj019. ISSN 0893-9454.
+
+References
+[edit]
+
+Homer, Sidney; Sylla, Richard Eugene; Sylla, Richard (1996). A History of Interest Rates. Rutgers University Press. ISBN 978-0-8135-2288-3. Retrieved 2008-10-27.
+
+v
+
+t
+
+e
+
+Interest rate
+
+Concepts
+
+General
+
+Nominal interest rate
+
+Real interest rate
+
+Risk-free rate
+
+Neutral rate of interest
+
+Shadow rate
+
+Time preference
+
+Loanable funds
+
+Credit channel
+
+Risk & pricing
+
+Interest rate risk
+
+Repricing risk
+
+Interest rate risk in the banking book
+
+Cumulative process
+
+Measures
+
+Yields & returns
+
+Annual percentage rate
+
+Annual percentage yield
+
+Effective interest rate
+
+Annual effective discount rate
+
+Effective interest method
+
+Mortgage constant
+
+Representative APR
+
+Rule of 78s
+
+Qualified residence interest
+
+Units
+
+Basis point
+
+Notional amount
+
+Duration gap
+
+Market & reference rates
+
+Market rates
+
+Federal funds rate
+
+Prime rate
+
+U.S. prime rate
+
+Wall Street Journal prime rate
+
+Bank rate
+
+Official bank rate
+
+Official cash rate
+
+Overnight rate
+
+Mutan rate
+
+Constant Maturity Mortgage
+
+Reference rates
+
+Libor
+
+London Interbank Bid Rate
+
+Johannesburg Interbank Average Rate
+
+Prague Interbank Offered Rate
+
+SAIBOR
+
+SOFR
+
+SONIA
+
+SARON
+
+TONAR
+
+ZARONIA
+
+€STR
+
+Eonia
+
+Euribor
+
+EURONIA
+
+ISDAfix
+
+FTSE MTIRS Index
+
+Models & frameworks
+
+Short-rate model
+
+Hull–White model
+
+Vasicek model
+
+Cox–Ingersoll–Ross model
+
+Rendleman–Bartter model
+
+Chan–Karolyi–Longstaff–Sanders process
+
+Chen model
+
+Affine term structure model
+
+Longstaff–Schwartz model
+
+LIBOR market model
+
+Heath–Jarrow–Morton framework
+
+Multi-curve framework
+
+Bootstrapping (finance)
+
+Policy & macroeconomics
+
+Monetary policy
+
+Monetary policy
+
+Central bank
+
+Zero interest-rate policy
+
+Zero lower bound
+
+Negative interest on excess reserves
+
+Negative interest rate policy
+
+Financial repression
+
+Quantitative easing
+
+Yield curve control
+
+Monetary transmission mechanism
+
+Macroeconomics
+
+Investment
+
+Inflation
+
+Unemployment
+
+Output
+
+Phillips curve
+
+Fixed exchange rate system
+
+Exchange rate
+
+Consumption
+
+Aggregate demand
+
+Wealth effect
+
+Markets & applications
+
+Financial markets
+
+Money market
+
+Bond market
+
+Stock market
+
+Currency market
+
+Bank
+
+Savings account
+
+Pension fund
+
+List of government bonds
+
+List of bond market indices
+
+Strategies & applications
+
+Interest expense
+
+Risk premium
+
+Liquidity preference
+
+Barbell strategy
+
+Bullet strategy
+
+Bond vigilante
+
+Treasury basis trade
+
+Spreads & indicators
+
+TED spread
+
+Forward rate
+
+Forward curve
+
+Spot rate
+
+Fisher equation
+
+Yield curve
+
+Current yield
+
+Yield to maturity
+
+Historical & empirical
+
+1994 bond market crisis
+
+2000s United States housing bubble
+
+Corporate debt bubble
+
+Subprime mortgage crisis
+
+Eurozone crisis
+
+Hyperinflation in Zimbabwe
+
+Interest rate history
+
+Marquette National Bank of Minneapolis v. First of Omaha Service Corp.
+
+Knut Wicksell
+
+v
+
+t
+
+e
+
+Debt
+
+Instruments
+
+Bonds
+
+Corporate
+
+Debenture
+
+Government
+
+Municipal
+
+Loans
+
+Business loan
+
+Consumer lending
+
+Loan shark
+
+Interest-only
+
+Mortgage
+
+Negative amortization
+
+Payday loan
+
+Predatory lending
+
+Usury
+
+Vendor finance
+
+Management
+
+Bankruptcy
+
+Consolidation
+
+Management plan
+
+Relief (history)
+
+Restructuring
+
+Debt snowball method
+
+Debtor-in-possession (DIP) financing
+
+Negative equity
+
+Financial literacy
+
+Loan guarantee
+
+Collection · Evasion
+
+Bad debt
+
+Charge-off
+
+Compliance
+
+Debt bondage
+
+Debt crisis
+
+List
+
+Debt overhang
+
+Debtors' prison
+
+Default
+
+Sovereign default
+
+Distraint
+
+Garnishment
+
+Insolvency
+
+Interest
+
+Interest expense
+
+Interest rate
+
+Promissory note
+
+Phantom debt
+
+Strategic default
+
+Tax refund interception
+
+Markets
+
+Consumer
+
+Corporate
+
+List
+
+Corporate debt bubble
+
+Diplomacy
+
+Government debt
+
+List
+
+Government budget balance
+
+Unfunded mandate
+
+Medical
+
+Municipal
+
+Venture
+
+Buyer
+
+Deposit account
+
+Fixed income
+
+Money market
+
+Securitization
+
+Economics
+
+Consumer leverage ratio
+
+Debt deflation
+
+Debt-to-GDP ratio
+
+Debt-to-income ratio
+
+List of countries by household debt
+
+Debt monetization
+
+Global debt
+
+External
+
+List
+
+Internal
+
+Odious debt
+
+Leverage
+
+v
+
+t
+
+e
+
+Economic history of the United States and Commonwealth of Nations countries
+
+Commercial revolution
+
+(1000–1760)
+
+Great Bullion Famine (c. 1400–c. 1500)
+
+Great Slump (1430–1490)
+
+The Great Debasement (1544–1551)
+
+Financial Revolution (1690–1800)
+
+Slump of 1706
+
+Great Frost of 1709
+
+South Sea bubble (1713–1720)
+
+Mississippi bubble (1717–1720)
+
+Economic impact of the Seven Years' War (1754–1763)
+
+1st Industrial Revolution/
+
+Market Revolution
+
+(1760–1870)
+
+Industrial Revolution
+
+Scotland
+
+United States
+
+Wales
+
+Bengal Bubble of 1769 (1769–1784)
+
+British credit crisis of 1772–1773
+
+American Revolutionary War inflation (1775–1783)
+
+Panic of 1785 (1785–1788)
+
+Copper Panic of 1789/Panic of 1792 (1789–1793)
+
+Canal Mania (c. 1790–c. 1810)
+
+Panic of 1796–1797 (1796–1799)
+
+1802–1804 recession
+
+Carolina gold rush (1802–1825)
+
+Depression of 1807 (1807–1810)
+
+1810s Alabama real estate bubble
+
+Alabama Fever
+
+1812 recession
+
+Post-Napoleonic Depression (1815–1821)
+
+1822–23 recession
+
+Panic of 1825
+
+Panic of 1826
+
+1828–29 recession
+
+Georgia Gold Rush (1828–c. 1840)
+
+1830s Chicago real estate bubble
+
+1833–34 recession
+
+Panic of 1837 (1836–1838 and 1839–1843)
+
+U.S. state defaults in the 1840s
+
+Railway Mania (c. 1840–c. 1850)
+
+Plank Road Boom (1844–c. 1855)
+
+1845–46 recession
+
+Panic of 1847 (1847–1848)
+
+California gold rush (1848–1855)
+
+British Columbia gold rushes
+
+Queen Charlottes Gold Rush, 1851
+
+Fraser Canyon Gold Rush, 1858
+
+Rock Creek Gold Rush, 1859
+
+Similkameen Gold Rush, 1860
+
+Stikine Gold Rush, 1861
+
+Cariboo Gold Rush, 1861–1867
+
+Wild Horse Creek Gold Rush, 1863–1870
+
+Leechtown Gold Rush, 1864–1865
+
+Big Bend Gold Rush, c. 1865
+
+Omineca Gold Rush, 1869
+
+Victorian gold rush (1851–c. 1870)
+
+New South Wales gold rush (1851–1880)
+
+Australian gold rushes (1851–1914)
+
+1853–54 recession
+
+Panic of 1857 (1857–1858)
+
+Pike's Peak gold rush (1858–1861)
+
+Pennsylvania oil rush (1859–1891)
+
+1860–61 recession
+
+Colorado River mining boom (1861–1864)
+
+Otago gold rush (1861–1864)
+
+U.S. Civil War economy (1861–1865)
+
+First Nova Scotia Gold Rush (1861–1874)
+
+West Coast Gold Rush (1864–1867)
+
+Panic of 1866 (1865–1867)
+
+Vermilion Lake gold rush (1865–1867)
+
+Kildonan Gold Rush (1869)
+
+Black Friday (1869–1870)
+
+Gilded Age/
+
+2nd Industrial Revolution
+
+(1870–1914)
+
+Coromandel Gold Rushes (c. 1870–c. 1890)
+
+Cassiar Gold Rush (c. 1870–c. 1890)
+
+Long Depression
+
+1873–1879; Panic of 1873
+
+Black Hills gold rush (1874–1880)
+
+Colorado Silver Boom (1879–1893)
+
+Western Australian gold rushes (c. 1880–c. 1900)
+
+Indiana gas boom (c. 1880–1903)
+
+Ohio oil rush (c. 1880–c. 1930)
+
+Depression of 1882–1885
+
+Panic of 1884
+
+Cayoosh Gold Rush (1884)
+
+Witwatersrand Gold Rush (1886)
+
+1887–88 recession
+
+Baring crisis (1890–1891)
+
+Cripple Creek Gold Rush (c. 1890–c. 1910)
+
+Panic of 1893 (1893–1897)
+
+Australian banking crisis of 1893
+
+Black Monday (1894)
+
+Panic of 1896
+
+Klondike Gold Rush (1896–1899)
+
+Second Nova Scotia Gold Rush (1896–1903)
+
+Kobuk River Stampede (1897–1899)
+
+Mount Baker gold rush (1897–c. 1925)
+
+1899–1900 recession
+
+Nome Gold Rush (1899–1909)
+
+Fairbanks Gold Rush (c. 1900–c. 1930)
+
+Texas oil boom (1901–c. 1950)
+
+Panic of 1901 (1902–1904)
+
+Cobalt silver rush (1903–c. 1930)
+
+Panic of 1907 (1907–1908)
+
+Porcupine Gold Rush (1909–c. 1960)
+
+Panic of 1910–11 (1910–1912)
+
+Financial crisis of 1914 (1913–14)
+
+World War home fronts/
+
+Interwar period
+
+(1914–1945)
+
+World War I economy and home fronts
+
+Australia
+
+Canada
+
+United Kingdom
+
+United States
+
+Post–World War I recession (1918–1919)
+
+Recession of 1920–1921
+
+1920s Florida land boom (c. 1920–1925)
+
+Roaring Twenties
+
+1923–1924 recession
+
+1926–1927 recession
+
+Great Depression
+
+1929–1939; Wall Street crash of 1929
+
+Panic of 1930
+
+Great Contraction, 1929–1933
+
+Recession of 1937–1938
+
+Australia
+
+Canada
+
+India
+
+South Africa
+
+United Kingdom
+
+United States
+
+1930s Kakamega Gold Rush
+
+Third Nova Scotia Gold Rush (1932–1942)
+
+World War II home front
+
+Australia
+
+Canada
+
+United Kingdom
+
+United States
+
+Post–WWII expansion/
+
+1970s stagflation
+
+(1945–1982)
+
+Great Compression
+
+1945 recession
+
+Recession of 1949 (1948–1949)
+
+Hong Kong and Singapore Asian Tiger expansions (1950–1990)
+
+1951 Canada recession
+
+Recession of 1953 (1953–1954)
+
+Recession of 1958 (1957–1958)
+
+Recession of 1960–1961
+
+Kennedy Slide of 1962
+
+Poseidon bubble (1969–1970)
+
+Recession of 1969–1970
+
+1970s commodities boom
+
+1973–1975 recession
+
+1973–1974 stock market crash
+
+Secondary banking crisis of 1973–1975
+
+1970s energy crisis
+
+1973–1980; 1973 oil crisis
+
+1979 oil crisis
+
+Steel crisis (1973–1982)
+
+1976 sterling crisis
+
+Silver Thursday (1980)
+
+Early 1980s recession
+
+1980–1982; United States
+
+Computer Age/
+
+Second Gilded Age
+
+(1982–present)
+
+Great Moderation (1982–2007)
+
+1980s oil glut
+
+Black Saturday (1983)
+
+New Zealand property bubble (c. 1985–)
+
+Savings and loan crisis (1986–1995)
+
+Black Monday (1987)
+
+Friday the 13th mini-crash (1989)
+
+Early 1990s recession
+
+1990–1991; Australia
+
+United States
+
+1990 oil price shock
+
+Rhode Island banking crisis (1990–1992)
+
+1991 Indian economic crisis
+
+1990s United States boom (1991–2001)
+
+1990s India economic boom
+
+Hyperinflation in Zimbabwe (1991–present)
+
+Black Wednesday (1992)
+
+1994 bond market crisis
+
+1994 Papua New Guinea financial crisis
+
+Dot-com bubble
+
+1995–2004; Stock market downturn of 2002
+
+1997 Asian financial crisis
+
+October 27, 1997, mini-crash
+
+Early 2000s recession
+
+2001; 9/11 stock market crash
+
+2000s commodities boom (2000–2014)
+
+United States housing bubble (2002–2006)
+
+Canadian property bubble (2002–)
+
+2003 Myanmar banking crisis
+
+2000s energy crisis (2003–2008)
+
+North Dakota oil boom (2006–2015)
+
+Uranium bubble of 2007
+
+Great Recession
+
+2007–2009; Australia and New Zealand
+
+Bangladesh, India, Malaysia, Pakistan, and Sri Lanka
+
+British West Indies
+
+Canada
+
+South Africa
+
+United Kingdom
+
+United States
+
+2008 financial crisis
+
+September
+
+October
+
+November
+
+December
+
+2009
+
+Subprime mortgage crisis
+
+2000s U.S. housing market correction
+
+U.S. bear market of 2007–2009
+
+2007–2010 U.S. bank failures
+
+Corporate debt bubble (2008–)
+
+Blue Monday Crash 2009
+
+2010 flash crash
+
+Malaysia Tiger Cub expansion (2010s)
+
+Australian property bubble (2010–)
+
+August 2011 stock markets fall
+
+Black Monday
+
+2011 Bangladesh share market scam
+
+Cryptocurrency bubble (2011–)
+
+Puerto Rican government-debt crisis (2014–2022)
+
+2015–2016 stock market selloff
+
+Brexit stock market crash (2016)
+
+2017 Sri Lankan fuel crisis
+
+Ghana banking crisis (2017–2018)
+
+Sri Lankan economic crisis (2019–2024)
+
+COVID-19 recession
+
+2020–2022; 2020 stock market crash
+
+financial market impact
+
+sectoral impacts
+
+shortages
+
+Canada
+
+India
+
+Malaysia
+
+New Zealand
+
+United Kingdom
+
+United States
+
+2020s commodities boom
+
+Global energy crisis
+
+2021–2023; 2021 United Kingdom natural gas supplier crisis
+
+regional effects
+
+2021–2023 global supply chain crisis
+
+2021–2023 inflation surge
+
+Pakistani economic crisis (2021–2024)
+
+2022 stock market decline
+
+2022–2023 global food crises
+
+2023 United Kingdom recession
+
+2023 United States banking crisis
+
+2025 stock market crash
+
+Countries and sectors
+
+Australia
+
+rail transport
+
+slavery
+
+whaling/Western Australia
+
+Canada
+
+agriculture
+
+currencies
+
+early banking system
+
+list of recessions
+
+petroleum industry
+
+rail transport
+
+slavery
+
+technological and industrial
+
+whaling/Pacific Northwest
+
+Ghana
+
+India
+
+agriculture
+
+Company rule
+
+maritime
+
+British Raj
+
+Deindustrialisation
+
+salt tax
+
+slavery
+
+Malaysia
+
+New Zealand
+
+whaling
+
+Nigeria
+
+slavery
+
+Pakistan
+
+maritime
+
+rail transport
+
+South Africa
+
+slavery
+
+whaling
+
+Uganda
+
+United Kingdom
+
+Agricultural Revolution
+
+Atlantic slave trade
+
+banking
+
+British Empire
+
+English fiscal system
+
+Interwar unemployment and poverty
+
+list of recessions
+
+maritime/England/Scotland
+
+Middle Ages England/agriculture
+
+national debt
+
+Scotland/agriculture/Middle Ages
+
+rail transport/pre–1830/1830–1922/1923–1947/1948–1994/1995–present
+
+slavery
+
+trade unions
+
+Victorian era
+
+Wales
+
+whaling/Scotland
+
+United States
+
+agriculture
+
+banking/colonial-era credit/cooperatives/investment banking/wildcat banking
+
+business
+
+central banking
+
+coal mining
+
+indentured servitude
+
+iron and steel industry
+
+labor
+
+list of economic expansions
+
+list of recessions
+
+lumber industry
+
+maritime/colonial-era/1776–1799/1800–1899/1900–1999/2000–present
+
+monetary policy
+
+poverty
+
+petroleum industry/oil shale
+
+public debt
+
+rail transportation
+
+slavery/colonial-era slavery/forced labor/slave trade/slave markets
+
+tariffs
+
+taxation
+
+technological and industrial
+
+United States dollar
+
+whaling
+
+Zimbabwe
+
+Business cycle topics
+
+Aggregate demand/Supply
+
+Effective demand
+
+General glut
+
+Model
+
+Overproduction
+
+Paradox of thrift
+
+Price-and-wage stickiness
+
+Underconsumption
+
+Inflation and unemployment
+
+Chronic
+
+Classical dichotomy
+
+Debasement
+
+Debt monetization
+
+Demand-pull/cost-push/built-in inflation
+
+Deflation
+
+Disinflation
+
+Full employment
+
+Hyperinflation
+
+Money supply/demand
+
+NAIRU
+
+Natural rate of unemployment
+
+Neutrality of money
+
+Phillips curve
+
+Price level
+
+Real and nominal value
+
+Sahm rule
+
+Velocity of money
+
+Expansion
+
+Miracle
+
+Recovery
+
+Stagnation
+
+Interest rate
+
+Nominal interest rate
+
+Real interest rate
+
+Yield curve/Inverted
+
+Recession
+
+Balance sheet
+
+Depression
+
+Global
+
+Rolling
+
+Shapes
+
+Stagflation
+
+Shock
+
+Demand
+
+Supply
+
+Credit cycle topics
+
+Financial bubble
+
+Commodity booms/diamond rush/gold rush/oil boom
+
+Real-estate bubble/housing bubble/boomtown/ghost town
+
+Speculation
+
+Stock market bubble
+
+Financial crisis
+
+Bank run/bank failure
+
+Commodity price shocks
+
+Credit crunch
+
+Currency crisis
+
+Debt crisis
+
+Energy crisis
+
+Liquidity crisis/accounting/capital/funding/market
+
+Minsky moment/leverage cycle
+
+Stock market crash/Flash crash
+
+Social contagion
+
+Financial contagion
+
+Irrational exuberance
+
+Market trend
+
+Proposed bubbles
+
+AI bubble/AI boom/Fourth Industrial Revolution/Imagination Age
+
+Carbon bubble/Age of Oil/Peak oil
+
+Everything bubble
+
+Green bubble
+
+Social media stock bubble
+
+Unicorn bubble
+
+U.S. higher education bubble
+
+Authority control databases
+
+International
+
+GND
+
+National
+
+United States
+
+Czech Republic
+
+Latvia
+
+Other
+
+NARA
+
+Yale LUX
+
+Retrieved from "https://en.wikipedia.org/w/index.php?title=Interest_rate&oldid=1376656886"
+
+Categories:
+Interest rates
+
+Mathematical finance
+
+Monetary policy
+
+Hidden categories:
+Articles with short description
+
+Short description matches Wikidata
+
+CS1 errors: ISBN date
+
+All articles with unsourced statements
+
+Articles with unsourced statements from August 2025
+
+Articles with unsourced statements from August 2013
+
+Webarchive template wayback links
+
+Articles containing German-language text
+
+Articles with unsourced statements from April 2019
+
+Articles with excerpts
+
+Incomplete lists from June 2025
+
+Interest rate
+
+Add topic

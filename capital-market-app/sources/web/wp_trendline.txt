@@ -1,0 +1,260 @@
+URL: https://en.wikipedia.org/wiki/Trend_line_(technical_analysis)
+FETCHED: 2026-10-18
+
+Trend line (technical analysis) - Wikipedia
+
+Jump to content
+
+From Wikipedia, the free encyclopedia
+
+Tool in technical analysis
+
+For other uses, see Trend line.
+
+This article needs more citations. Please help improve this article by adding citations to reliable sources. Unsourced material may be challenged and removed.
+
+Find sources: "Trend line" technical analysis – news · newspapers · books · scholar · JSTOR (July 2019) (Learn how and when to remove this message)
+
+Chart from 1950 to about 1990, showing how linear scale obscures details by compressing the data.
+
+In finance, a trend line is a bounding line for the price movement of a security. It is formed when a diagonal line can be drawn between a minimum of three or more price pivot points. A line can be drawn between any two points, but it does not qualify as a trend line until tested. Hence the need for the third point, the test. Trend lines are commonly used to decide entry and exit timing when trading securities.[1] They can also be referred to as a Dutch line, as the concept was first used in Holland.
+
+A support trend line is formed when a securities price decreases and then rebounds at a pivot point that aligns with at least two previous support pivot points. Similarly a resistance trend line is formed when a securities price increases and then rebounds at a pivot point that aligns with at least two previous resistance pivot points. Stock often begin or end trending because of a stock catalyst such as a product launch or change in management.
+
+Trend lines are a simple and widely used technical analysis approach to judging entry and exit investment timing. To establish a trend line historical data, typically presented in the format of a chart such as the above price chart, is required. Historically, trend lines have been drawn by hand on paper charts, but it is now more common to use charting software that enables trend lines to be drawn on computer based charts. There are some charting software that will automatically generate trend lines, however most traders prefer to draw their own trend lines.
+
+When establishing trend lines it is important to choose a chart based on a price interval period that aligns with your trading strategy. Short term traders tend to use charts based on interval periods, such as 1 minute (i.e. the price of the security is plotted on the chart every 1 minute), with longer term traders using price charts based on hourly, daily, weekly and monthly interval periods.
+
+However, time periods can also be viewed in terms of years. For example, below is a chart of the S&P 500 since the earliest data point until April 2008. While the Oracle example above uses a linear scale of price changes, long term data is more often viewed as logarithmic: e.g. the changes are really an attempt to approximate percentage changes than pure numerical value.
+
+Trend lines are typically used with price charts, however they can also be used with a range of technical analysis charts such as MACD and RSI. Trend lines can be used to identify positive and negative trending charts, whereby a positive trending chart forms an upsloping line when the support and the resistance pivots points are aligned, and a negative trending chart forms a downsloping line when the support and resistance pivot points are aligned.
+
+Trend lines are used in many ways by traders. If a stock price is moving between support and resistance trend lines, then a basic investment strategy commonly used by traders, is to buy a stock at support and sell at resistance, then short at resistance and cover the short at support. The logic behind this, is that when the price returns to an existing principal trend line it may be an opportunity to open new positions in the direction of the trend, in the belief that the trend line will hold and the trend will continue further.
+
+See also
+[edit]
+
+Support and resistance
+
+References
+[edit]
+
+↑ Edwards, Robert D.; Magee, John (1948). "14". Technical Analysis of Stock Trends. Springfield, MA, USA: Stock Trend Service. p. 505. ISBN 1-880408-00-7. {{cite book}}: ISBN / Date incompatibility (help)
+
+v
+
+t
+
+e
+
+Technical analysis
+
+Concepts
+
+Breakout
+
+Dead cat bounce
+
+Dow theory
+
+Elliott wave principle
+
+Market trend
+
+Charts
+
+Candlestick
+
+Renko
+
+Kagi
+
+Line
+
+Open-high-low-close
+
+Point and figure
+
+Line break
+
+Patterns
+
+Chart
+
+Broadening top
+
+Cup and handle
+
+Double top and double bottom
+
+Flag and pennant
+
+Gap
+
+Head and shoulders
+
+Island reversal
+
+Price channels
+
+Triangle
+
+Triple top and triple bottom
+
+Wedge pattern
+
+Candlestick
+
+Simple
+
+Doji
+
+Complex
+
+Hikkake pattern
+
+Morning star
+
+Three black crows
+
+Three white soldiers
+
+Point and figure
+
+Bull trap
+
+Bear trap
+
+Indicators
+
+Support &
+
+resistance
+
+Fibonacci retracement
+
+Pivot point (PP)
+
+Trend
+
+Average directional index (A.D.X.)
+
+Commodity channel index (CCI)
+
+Detrended price oscillator (DPO)
+
+Know sure thing oscillator (KST)
+
+Ichimoku Kinkō Hyō
+
+Moving average convergence/divergence (MACD)
+
+Mass index
+
+Moving average (MA)
+
+Parabolic SAR (SAR)
+
+Smart money index (SMI)
+
+Trend line
+
+Trix
+
+Vortex indicator (VI)
+
+Momentum
+
+Money flow index (MFI)
+
+Relative strength index (RSI)
+
+Stochastic oscillator
+
+True strength index (TSI)
+
+Ultimate oscillator
+
+Williams %R (%R)
+
+Volume
+
+Accumulation/distribution line
+
+Ease of movement (EMV)
+
+Force index (FI)
+
+Negative volume index (NVI)
+
+On-balance volume (OBV)
+
+Put/call ratio (PCR)
+
+Volume–price trend (VPT)
+
+Volatility
+
+Average true range (ATR)
+
+Bollinger Bands (BB)
+
+Donchian channel
+
+Keltner channel
+
+CBOE Market Volatility Index (VIX)
+
+VolDex
+
+Standard deviation (σ)
+
+Breadth
+
+Advance–decline line (ADL)
+
+Arms index (TRIN)
+
+McClellan oscillator
+
+Other
+
+Coppock curve
+
+Ulcer index
+
+Analysts
+
+John Bollinger
+
+Ned Davis
+
+Charles Dow
+
+Ralph Nelson Elliott
+
+Bob Farrell
+
+John Murphy
+
+Mark Hulbert
+
+Retrieved from "https://en.wikipedia.org/w/index.php?title=Trend_line_(technical_analysis)&oldid=1221356105"
+
+Category:
+Chart overlays
+
+Hidden categories:
+Articles with short description
+
+Short description matches Wikidata
+
+Articles needing additional references from July 2019
+
+All articles needing additional references
+
+CS1 errors: ISBN date
+
+Trend line (technical analysis)
+
+Add topic

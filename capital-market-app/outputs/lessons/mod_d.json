@@ -1,0 +1,72 @@
+[
+{"id":"l21","title":"דוח רווח והפסד בשפה פשוטה","min":6,"module":"D","color":"#4ade80",
+"slides":[
+{"t":"מה זה דוח רווח והפסד","b":"זה דוח של חברה שמראה כמה כסף נכנס וכמה כסף יצא בתקופה מסוימת. הוא עונה על שאלה אחת: הרווחנו או הפסדנו?","v":"pie"},
+{"t":"הכנסות","b":"הכנסות הן כל הכסף שהחברה מקבלת ממכירת מוצרים או שירותים. דרך פשוטה לחשוב על זה: מחיר של מוצר כפול מספר המוצרים שנמכרו.","v":"volume"},
+{"t":"עלויות","b":"עלויות (הוצאות) הן כל מה שהחברה משלמת כדי לעבוד, למשל משכורות, חומרי גלם ושכירות.","v":"scale"},
+{"t":"רווח או הפסד","b":"אחרי שמחסירים את כל העלויות מההכנסות מקבלים את התוצאה. אם נשאר כסף זה רווח, ואם יצאנו בחסר זה הפסד.","v":"rr","w":"דוגמה במספרים עגולים, לא נתונים אמיתיים: הכנסות 1,000, עלויות 700, רווח 300. אם העלויות 1,200, זה הפסד של 200."},
+{"t":"דוחות רבעוניים","b":"חברות ציבוריות מפרסמות דוחות כל כמה חודשים ולא רק פעם בשנה. בארה״ב יש דוח רבעוני ודוח שנתי, והשנתי כולל בדיקה של רואה חשבון.","v":"trendSide","w":"רווח בדוח אחד לא מבטיח רווח בדוח הבא."}
+],
+"qs":[
+{"q":"מה מראה דוח רווח והפסד?","o":["את ההכנסות וההוצאות של החברה בתקופה מסוימת","את מחיר המניה מחר","כמה אנשים עובדים בחברה"],"a":0,"why":"הדוח מראה הכנסות והוצאות בתקופה וכך אפשר לראות רווח או הפסד."},
+{"q":"בדוגמה: הכנסות 1,000 ועלויות 1,200. מה התוצאה?","o":["רווח של 200","הפסד של 200","אפס"],"a":1,"why":"כשהעלויות גדולות מההכנסות נוצר הפסד. (המספרים הם דוגמה בלבד.)"},
+{"q":"כמה פעמים בשנה חברה ציבורית בארה״ב מגישה דוח רבעוני?","o":["פעם אחת בשנה","בכל חודש","שלוש פעמים, ובנוסף יש דוח שנתי"],"a":2,"why":"דוח רבעוני מוגש לשלושת הרבעונים הראשונים, ואת השנתי מגישים בנפרד."}
+],
+"src":[
+{"q":"shows the company's revenues and expenses during a particular period","f":"sources/web/wiki_is.txt","u":"https://en.wikipedia.org/wiki/Income_statement"},
+{"q":"to show managers and investors whether the company made money (profit) or lost money (loss) during the period being reported","f":"sources/web/wiki_is.txt","u":"https://en.wikipedia.org/wiki/Income_statement"},
+{"q":"A simple way to think about revenue is it’s the price of a widget multiplied by the number of widgets sold","f":"sources/web/revenue.txt","u":"https://www.investor.gov/introduction-investing/investing-basics/glossary/revenue"},
+{"q":"Every time a business sells a product or performs a service, it obtains revenue","f":"sources/web/wiki_is.txt","u":"https://en.wikipedia.org/wiki/Income_statement"},
+{"q":"The report must be filed for each of the first three fiscal quarters of the company's fiscal year","f":"sources/web/10q.txt","u":"https://www.investor.gov/introduction-investing/investing-basics/glossary/form-10-q"},
+{"q":"includes audited financial statements","f":"sources/web/ir_10k.txt","u":"https://www.investor.gov/introduction-investing/investing-basics/glossary/form-10-k"}
+],
+"scene_requests":[],"status":"draft for expert review","to_verify":["כללי הדיווח בישראל (דוח רבעוני, תאריכי פרסום) לא אומתו. יש לבדוק מול הבורסה בתל אביב.","דפי הגלוסרי של Investor.gov על income statement ו-earnings הוחזרו ריקים, לכן ההגדרה נשענת על ויקיפדיה (מקור משני)."]},
+
+{"id":"l22","title":"שווי שוק, מכפיל רווח ודיבידנד","min":7,"module":"D","color":"#60a5fa",
+"slides":[
+{"t":"שווי שוק","b":"שווי שוק הוא מחיר מניה אחת כפול מספר המניות של החברה. זה הגודל של החברה לפי הבורסה.","v":"pie","w":"דוגמה בלבד, לא נתונים אמיתיים: מחיר 10 כפול 1,000,000 מניות שווה שווי שוק של 10,000,000."},
+{"t":"מה שווי שוק לא אומר","b":"שווי שוק מודד רק את חלק ההון של החברה ולא מראה כמה חובות יש לה. הוא גם לא אומר אם החברה מרוויחה.","v":"scale"},
+{"t":"מכפיל רווח","b":"מכפיל רווח הוא מחיר המניה חלקי הרווח למניה. הוא מראה כמה המשקיעים משלמים על כל שקל רווח.","v":"size","w":"דוגמה בלבד, לא נתונים אמיתיים: מחיר 100 וחלקי רווח למניה 5 נותן מכפיל 20."},
+{"t":"מה מכפיל לא אומר","b":"לחברה שמפסידה אין מכפיל רווח מוגדר. ומה נחשב מכפיל גבוה או נמוך תלוי בענף ובעסק, ולכן אי אפשר לשפוט מספר אחד לבד.","v":"riskline"},
+{"t":"דיבידנד","b":"דיבידנד הוא חלק מהרווח שהחברה משלמת לבעלי המניות. חברות רבות משלמות אותו בלוח זמנים קבוע, אבל הוא לא מובטח והחברה יכולה לבטל אותו.","v":"coaster","w":"דיבידנד שולם בעבר לא מבטיח דיבידנד בעתיד."}
+],
+"qs":[
+{"q":"איך מחשבים שווי שוק?","o":["רווח כפול מספר העובדים","מחיר מניה אחת כפול מספר המניות","הכנסות פחות הוצאות"],"a":1,"why":"שווי שוק הוא מחיר המניה כפול מספר המניות."},
+{"q":"מה נכון לגבי דיבידנד?","o":["הוא מובטח לכל שנה","הוא חלק מהרווח שמשולם לבעלי המניות, ויכול להתבטל","הוא תמיד גדל"],"a":1,"why":"דיבידנד הוא חלק מהרווח, ואין ערובה שימשיך להיות משולם."},
+{"q":"מה מכפיל רווח לא יכול להגיד לנו לבד?","o":["אם מספר אחד הוא טוב, בלי להשוות לענף ולעסק","מה מחיר המניה","איך מחשבים אותו"],"a":0,"why":"מה נחשב גבוה או נמוך תלוי בענף ובעסק, ולכן מספר אחד לבד לא קובע."}
+],
+"src":[
+{"q":"Market capitalization is the value of a corporation determined by multiplying the current public market price of one share","f":"sources/web/marketcap.txt","u":"https://www.investor.gov/introduction-investing/investing-basics/glossary/market-capitalization"},
+{"q":"It measures only the equity component of a company's capital structure","f":"sources/web/wiki_mc.txt","u":"https://en.wikipedia.org/wiki/Market_capitalization"},
+{"q":"is the ratio of a company's share price to the company's earnings per share","f":"sources/web/wiki_pe.txt","u":"https://en.wikipedia.org/wiki/Price%E2%80%93earnings_ratio"},
+{"q":"Companies with losses (negative earnings) or no profit have an undefined P/E ratio","f":"sources/web/wiki_pe.txt","u":"https://en.wikipedia.org/wiki/Price%E2%80%93earnings_ratio"},
+{"q":"but this is sector and business dependent","f":"sources/web/wiki_pe.txt","u":"https://en.wikipedia.org/wiki/Price%E2%80%93earnings_ratio"},
+{"q":"A portion of a company's profit paid to shareholders","f":"sources/web/dividend.txt","u":"https://www.investor.gov/introduction-investing/investing-basics/glossary/dividend"},
+{"q":"Public companies that pay dividends usually do so on a fixed schedule","f":"sources/web/dividend.txt","u":"https://www.investor.gov/introduction-investing/investing-basics/glossary/dividend"},
+{"q":"but are not guaranteed to continue","f":"sources/web/wiki_div.txt","u":"https://en.wikipedia.org/wiki/Dividend"}
+],
+"scene_requests":[],"status":"draft for expert review","to_verify":["הגדרת מכפיל רווח נשענת על ויקיפדיה, כי דף ה-glossary של Investor.gov על price-earnings ratio הוחזר ריק.","הערה: שאלה 3 מכילה ניסוח שלילי כדי לא לקבוע שמספר הוא טוב או רע. לבדיקת ניסוח."]},
+
+{"id":"l23","title":"מה משפיע על מחיר מניה","min":6,"module":"D","color":"#fbbf24",
+"slides":[
+{"t":"גורמים בתוך החברה","b":"מחיר מניה יכול להיות מושפע ממה שקורה בתוך החברה, למשל מוצר שנפגם. תוצאות הדוחות הן חלק מהסיפור הזה.","v":"candle1"},
+{"t":"אירועים מחוץ לחברה","b":"מחיר יכול גם להיות מושפע מאירועים שהחברה לא שולטת בהם, כמו אירועים פוליטיים או אירועים בשוק.","v":"index"},
+{"t":"ציפיות","b":"בטווח ארוך מחיר המניה קשור לציפיות לגבי רווחים ודיבידנדים עתידיים. חדשות יכולות להזיז מחיר גם לפי הציפיות: חדשות טובות פחות מהצפוי יכולות להוריד מחיר.","v":"trendSide"},
+{"t":"היצע וביקוש וריבית","b":"במודל כלכלי המחיר מתכוונן עד שהכמות שרוצים לקנות שווה לכמות שרוצים למכור. לפי ויקיפדיה, כשהתשואות באג״ח ממשלתיות גבוהות, משקיעים נוטים לשלם פחות על אותו רווח למניה.","v":"scale","w":"הקשר לריבית הוא כללי ולא תמיד מתקיים בפועל."},
+{"t":"אף אחד לא יודע מראש","b":"בטווח הקצר מחירים קשים לחיזוי, ויכולים לעלות או לרדת בגלל אירועים מהירים ורגשות. אין ערובה שחברה תצמח, ואפשר להפסיד כסף.","v":"coaster","w":"זה שיעור על הבנה ולא על תחזיות או המלצות."}
+],
+"qs":[
+{"q":"איזה מהבאים יכול להשפיע על מחיר מניה?","o":["רק מה שקורה בתוך החברה","גם מה שקורה בתוך החברה וגם אירועים מחוץ לה","רק מזג האוויר"],"a":1,"why":"מחיר יכול להיות מושפע מגורמים בתוך החברה ומאירועים שהיא לא שולטת בהם."},
+{"q":"חברה פרסמה דוח טוב, אבל המחיר ירד. למה זה יכול לקרות?","o":["זו תמיד טעות של הבורסה","החדשות היו פחות טובות ממה שציפו","בגלל שהדוח היה ארוך"],"a":1,"why":"השוק מגיב גם לציפיות, וחדשות שפחות טובות מהצפוי יכולות להוריד מחיר."},
+{"q":"האם אפשר לדעת מראש לאן יילך מחיר מניה?","o":["כן, אם קוראים דוחות","כן, אם עוקבים אחרי הריבית","לא, בטווח הקצר קשה מאוד לחזות"],"a":2,"why":"בטווח הקצר אירועים ורגשות מזיזים מחירים ולכן קשה לחזות אותם."}
+],
+"src":[
+{"q":"A stock’s price can be affected by factors inside the company, such as a faulty product, or by events the company has no control over, such as political or market events","f":"sources/web/ir_stock.txt","u":"https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks"},
+{"q":"the share price is related to expectations of future earnings and dividends of the firm","f":"sources/web/wiki_sp.txt","u":"https://en.wikipedia.org/wiki/Share_price"},
+{"q":"a counter reaction may occur if the news is better (or worse) than expected","f":"sources/web/wiki_sm.txt","u":"https://en.wikipedia.org/wiki/Stock_market"},
+{"q":"will vary until it settles at the market-clearing price, where the quantity demanded equals the quantity supplied","f":"sources/web/wiki_sd.txt","u":"https://en.wikipedia.org/wiki/Supply_and_demand"},
+{"q":"when U.S. treasury bonds yield high returns, investors pay less for a given earnings per share","f":"sources/web/wiki_pe.txt","u":"https://en.wikipedia.org/wiki/Price%E2%80%93earnings_ratio"},
+{"q":"making the stock market behavior difficult to predict","f":"sources/web/wiki_sm.txt","u":"https://en.wikipedia.org/wiki/Stock_market"}
+],
+"scene_requests":[],"status":"draft for expert review","to_verify":["הקשר בין ריבית למחירי מניות מופיע בוויקיפדיה עם תגית citation needed. יש לאמת מול מקור של בנק ישראל או רשות ניירות ערך.","לא נשמרה הסבר רשמי של בנק ישראל על השפעת הריבית. מומלץ להוסיף.","עמוד how stock prices change ב-Investor.gov לא נמצא (404)."]}
+]

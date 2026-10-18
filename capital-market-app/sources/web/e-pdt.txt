@@ -1,0 +1,50 @@
+URL: https://www.investor.gov/introduction-investing/investing-basics/glossary/pattern-day-trader
+FETCHED: 2026-10-18
+
+Pattern Day Trader | Investor.gov
+
+Skip to main content
+
+The .gov means it’s official.
+
+Federal government websites often end in .gov or .mil. Before sharing sensitive information, make sure you’re on a federal government site.
+
+The site is secure.
+
+The
+https://
+ensures that you are connecting to the official website and that any information you provide is encrypted and transmitted securely.
+
+Investor.gov
+
+U.S. Securities and Exchange Commission
+
+Pattern Day Trader
+
+FINRA has adopted new intraday margin requirements that replace current day trading margin requirements, including those for "pattern day traders.” The new intraday margin requirements, effective June 4, 2026, permit a transition period until October 20, 2027, for brokerage firms that need more time to comply. Your brokerage firm might continue operating under the old day trading margin requirements during the transition, or they might choose to migrate to the new intraday margin standards sooner. You should contact your brokerage firm to be sure you understand how the changes might affect your account. For more information, you may wish to review FINRA’s Regulatory Notice, “Margin Standards” and FINRA’s Investor Insight, “Understanding the New Intraday Margin Requirements.”
+
+FINRA rules define a “pattern day trader” as any customer who executes four or more “day trades” within five business days, provided that the number of day trades represents more than six percent of the customer’s total trades in the margin account for that same five business day period. This rule is a minimum requirement, and some broker-dealers use a slightly broader definition in determining whether a customer qualifies as a “pattern day trader.” Customers should contact their brokerage firms to determine whether their trading activities will cause their broker to designate them as pattern day traders.
+
+A broker-dealer may also designate a customer as a “pattern day trader” if it “knows or has a reasonable basis to believe” that a customer will engage in pattern day trading. For example, if a customer’s broker-dealer provided day trading training to such customer before opening the account, the broker-dealer could designate that customer as a “pattern day trader.”
+
+Under FINRA rules, customers designated “pattern day traders” by their brokerage firms must have at least $25,000 in their accounts and can only trade in margin accounts. Learn more.
+
+Featured Content
+
+Take This Month's Quiz
+
+Check your knowledge of compound growth, asset allocation, retirement plans, and more in our October investing quiz!
+
+Use Financial Tools and Calculators
+
+Access RMD, compound interest and savings goal calculators plus other financial tools.
+
+Invest for Your Child's Future
+
+Learn about Trump Accounts today!
+
+Never stop learning about investing!
+
+Stay up to date with Investor Alerts & Bulletins, Quizzes, and more.
+
+Return to Top

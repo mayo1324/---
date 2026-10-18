@@ -1,0 +1,2477 @@
+URL: https://en.wikipedia.org/wiki/Moving_average
+FETCHED: 2026-10-18
+
+Moving average - Wikipedia
+
+Jump to content
+
+From Wikipedia, the free encyclopedia
+
+Type of statistical measure over subsets of a dataset
+
+For other uses, see Moving-average model and Moving average (disambiguation).
+
+Smoothing of a noisy sine (blue curve) with a moving average (red curve).
+
+In statistics, a moving average (rolling average or running average or moving mean[1] or rolling mean) is a calculation to analyze data points by creating a series of averages of different selections of the full data set. Variations include: simple, cumulative, or weighted forms.
+
+Mathematically, a moving average is a type of convolution. Thus in signal processing it is viewed as a low-pass finite impulse response filter. Because the boxcar function outlines its filter coefficients, it is called a boxcar filter. It is sometimes followed by downsampling.
+
+Given a series of numbers and a fixed subset size, the first element of the moving average is obtained by taking the average of the initial fixed subset of the number series. Then the subset is modified by "shifting forward"; that is, excluding the first number of the series and including the next value in the series.
+
+A moving average is commonly used with time series data to smooth out short-term fluctuations and highlight longer-term trends or cycles - in this case the calculation is sometimes called a time average. The threshold between short-term and long-term depends on the application, and the parameters of the moving average will be set accordingly. It is also used in economics to examine gross domestic product, employment or other macroeconomic time series. When used with non-time series data, a moving average filters higher frequency components without any specific connection to time, although typically some kind of ordering is implied. Viewed simplistically it can be regarded as smoothing the data.
+
+History
+[edit]
+
+The technique of moving averages was invented by the Bank of England in 1833 to conceal the state of its bullion reserves.[2]
+
+Simple moving average
+[edit]
+
+In financial applications a simple moving average (SMA) is the unweighted mean of the previous
+
+k
+
+{\displaystyle k}
+
+data-points. However, in science and engineering, the mean is normally taken from an equal number of data on either side of a central value. This ensures that variations in the mean are aligned with the variations in the data rather than being shifted in time. An example of a simple equally weighted running mean is the mean over the last
+
+k
+
+{\displaystyle k}
+
+entries of a data-set containing
+
+n
+
+{\displaystyle n}
+
+entries. Let those data-points be
+
+p
+
+1
+
+,
+
+p
+
+2
+
+,
+…
+,
+
+p
+
+n
+
+{\displaystyle p_{1},p_{2},\dots ,p_{n}}
+
+. This could be closing prices of a stock. The mean over the last
+
+k
+
+{\displaystyle k}
+
+data-points (days in this example) is denoted as
+
+SMA
+
+k
+
+{\displaystyle {\textit {SMA}}_{k}}
+
+and calculated as:
+
+SMA
+
+k
+
+=
+
+p
+
+n
+−
+k
++
+1
+
++
+
+p
+
+n
+−
+k
++
+2
+
++
+⋯
++
+
+p
+
+n
+
+k
+
+=
+
+1
+k
+
+∑
+
+i
+=
+n
+−
+k
++
+1
+
+n
+
+p
+
+i
+
+{\displaystyle {\begin{aligned}{\textit {SMA}}_{k}&={\frac {p_{n-k+1}+p_{n-k+2}+\cdots +p_{n}}{k}}\\&={\frac {1}{k}}\sum _{i=n-k+1}^{n}p_{i}\end{aligned}}}
+
+When calculating the next mean
+
+SMA
+
+k
+,
+
+next
+
+{\displaystyle {\textit {SMA}}_{k,{\text{next}}}}
+
+with the same sampling width
+
+k
+
+{\displaystyle k}
+
+the range from
+
+n
+−
+k
++
+2
+
+{\displaystyle n-k+2}
+
+to
+
+n
++
+1
+
+{\displaystyle n+1}
+
+is considered. A new value
+
+p
+
+n
++
+1
+
+{\displaystyle p_{n+1}}
+
+comes into the sum and the oldest value
+
+p
+
+n
+−
+k
++
+1
+
+{\displaystyle p_{n-k+1}}
+
+drops out. This simplifies the calculations by reusing the previous mean
+
+SMA
+
+k
+,
+
+prev
+
+{\displaystyle {\textit {SMA}}_{k,{\text{prev}}}}
+
+.
+
+SMA
+
+k
+,
+
+next
+
+=
+
+1
+k
+
+∑
+
+i
+=
+n
+−
+k
++
+2
+
+n
++
+1
+
+p
+
+i
+
+=
+
+1
+k
+
+(
+
+p
+
+n
+−
+k
++
+2
+
++
+
+p
+
+n
+−
+k
++
+3
+
++
+⋯
++
+
+p
+
+n
+
++
+
+p
+
+n
++
+1
+
+⏟
+
+∑
+
+i
+=
+n
+−
+k
++
+2
+
+n
++
+1
+
+p
+
+i
+
++
+
+p
+
+n
+−
+k
++
+1
+
+−
+
+p
+
+n
+−
+k
++
+1
+
+⏟
+
+=
+0
+
+)
+
+=
+
+1
+k
+
+(
+
+p
+
+n
+−
+k
++
+1
+
++
+
+p
+
+n
+−
+k
++
+2
+
++
+⋯
++
+
+p
+
+n
+
+)
+
+⏟
+
+=
+
+SMA
+
+k
+,
+
+prev
+
+−
+
+p
+
+n
+−
+k
++
+1
+
+k
+
++
+
+p
+
+n
++
+1
+
+k
+
+=
+
+SMA
+
+k
+,
+
+prev
+
++
+
+1
+k
+
+(
+
+p
+
+n
++
+1
+
+−
+
+p
+
+n
+−
+k
++
+1
+
+)
+
+{\displaystyle {\begin{aligned}{\textit {SMA}}_{k,{\text{next}}}&={\frac {1}{k}}\sum _{i=n-k+2}^{n+1}p_{i}\\&={\frac {1}{k}}{\Big (}\underbrace {p_{n-k+2}+p_{n-k+3}+\dots +p_{n}+p_{n+1}} _{\sum _{i=n-k+2}^{n+1}p_{i}}+\underbrace {p_{n-k+1}-p_{n-k+1}} _{=0}{\Big )}\\&=\underbrace {{\frac {1}{k}}{\Big (}p_{n-k+1}+p_{n-k+2}+\dots +p_{n}{\Big )}} _{={\textit {SMA}}_{k,{\text{prev}}}}-{\frac {p_{n-k+1}}{k}}+{\frac {p_{n+1}}{k}}\\&={\textit {SMA}}_{k,{\text{prev}}}+{\frac {1}{k}}{\Big (}p_{n+1}-p_{n-k+1}{\Big )}\end{aligned}}}
+
+This means that the moving average filter can be computed quite cheaply on real time data with a FIFO / circular buffer and only 3 arithmetic steps.
+
+During the initial filling of the FIFO / circular buffer the sampling window is equal to the data-set size thus
+
+k
+=
+n
+
+{\displaystyle k=n}
+
+and the average calculation is performed as a cumulative moving average.
+
+The period selected (
+
+k
+
+{\displaystyle k}
+
+) depends on the type of movement of interest, such as short, intermediate, or long-term.
+
+If the data used are not centered around the mean, a simple moving average lags behind the latest datum by half the sample width. An SMA can also be disproportionately influenced by old data dropping out or new data coming in. One characteristic of the SMA is that if the data has a periodic fluctuation, then applying an SMA of that period will eliminate that variation (the average always containing one complete cycle). But a perfectly regular cycle is rarely encountered.[3]
+
+For a number of applications, it is advantageous to avoid the shifting induced by using only "past" data. Hence a central moving average can be computed, using data equally spaced on either side of the point in the series where the mean is calculated.[4] This requires using an odd number of points in the sample window.
+
+A major drawback of the SMA is that it lets through a significant amount of the signal shorter than the window length. This can lead to unexpected artifacts, such as peaks in the smoothed result appearing where there were troughs in the data. It also leads to the result being less smooth than expected since some of the higher frequencies are not properly removed.
+
+Its frequency response is a type of low-pass filter called sinc-in-frequency (or, in discrete time, is a Dirichlet kernel).
+
+Continuous moving average
+[edit]
+
+The continuous moving average of an integrable function
+
+f
+:
+
+R
+
+→
+
+R
+
+{\displaystyle f:\mathbb {R} \rightarrow \mathbb {R} }
+
+is defined via integration as:
+
+M
+
+f
+,
+ε
+
+:
+
+R
+
+→
+
+R
+
+x
+
+↦
+
+1
+
+2
+
+ε
+
+∫
+
+x
+−
+ε
+
+x
++
+ε
+
+f
+(
+t
+)
+
+d
+t
+
+{\displaystyle {\begin{array}{rl}M_{f,\varepsilon }:\mathbb {R} &\rightarrow \mathbb {R} \\x&\mapsto \displaystyle {\frac {1}{2\,\varepsilon }}\int _{x-\varepsilon }^{x+\varepsilon }f(t)\,dt\end{array}}}
+
+where the
+
+ε
+
+{\displaystyle \varepsilon }
+
+environment
+
+[
+x
+−
+ε
+,
+x
++
+ε
+]
+
+{\displaystyle [x-\varepsilon ,x+\varepsilon ]}
+
+around
+
+x
+
+{\displaystyle x}
+
+defines the intensity of smoothing of the graph of the integrable function. A larger
+
+ε
+>
+0
+
+{\displaystyle \varepsilon >0}
+
+smooths the source graph of the function (blue)
+
+f
+
+{\displaystyle f}
+
+more. The animations below show the moving average as animation in dependency of different values for
+
+ε
+>
+0
+
+{\displaystyle \varepsilon >0}
+
+. The fraction
+
+1
+
+2
+
+ε
+
+{\displaystyle {\frac {1}{2\,\varepsilon }}}
+
+is used, because
+
+2
+
+ε
+
+{\displaystyle 2\,\varepsilon }
+
+is the interval width for the integral. Naturally,
+
+lim
+
+ε
+→
+0
+
+M
+
+f
+,
+
+ε
+
+=
+f
+
+{\displaystyle \lim _{\varepsilon \to 0}M_{f,\ \varepsilon }=f}
+
+by fundamental theorem of calculus and L'Hôpital's rule.
+
+Continuous moving average sine and polynom - visualization of the smoothing with a small interval for integration
+
+Continuous moving average sine and polynom - visualization of the smoothing with a larger interval for integration
+
+Animation showing the impact of interval width and smoothing by moving average.
+
+Cumulative average
+[edit]
+
+In a cumulative average (CA), the data arrive in an ordered datum stream, and the user would like to get the average of all of the data up until the current datum. For example, an investor may want the average price of all of the stock transactions for a particular stock up until the current time. As each new transaction occurs, the average price at the time of the transaction can be calculated for all of the transactions up to that point using the cumulative average, typically an equally weighted average of the sequence of n values
+
+x
+
+1
+
+.
+…
+,
+
+x
+
+n
+
+{\displaystyle x_{1}.\ldots ,x_{n}}
+
+up to the current time:
+
+CA
+
+n
+
+=
+
+x
+
+1
+
++
+⋯
++
+
+x
+
+n
+
+n
+
+.
+
+{\displaystyle {\textit {CA}}_{n}={{x_{1}+\cdots +x_{n}} \over n}\,.}
+
+The brute-force method to calculate this would be to store all of the data and calculate the sum and divide by the number of points every time a new datum arrived. However, it is possible to simply update cumulative average as a new value,
+
+x
+
+n
++
+1
+
+{\displaystyle x_{n+1}}
+
+becomes available, using the formula
+
+CA
+
+n
++
+1
+
+=
+
+x
+
+n
++
+1
+
++
+n
+⋅
+
+CA
+
+n
+
+n
++
+1
+
+.
+
+{\displaystyle {\textit {CA}}_{n+1}={{x_{n+1}+n\cdot {\textit {CA}}_{n}} \over {n+1}}.}
+
+Thus the current cumulative average for a new datum is equal to the previous cumulative average, times n, plus the latest datum, all divided by the number of points received so far, n+1. When all of the data arrive (n = N), then the cumulative average will equal the final average. It is also possible to store a running total of the data as well as the number of points and dividing the total by the number of points to get the CA each time a new datum arrives.
+
+The derivation of the cumulative average formula is straightforward. Using
+
+x
+
+1
+
++
+⋯
++
+
+x
+
+n
+
+=
+n
+⋅
+
+CA
+
+n
+
+{\displaystyle x_{1}+\cdots +x_{n}=n\cdot {\textit {CA}}_{n}}
+
+and similarly for n + 1, it is seen that
+
+x
+
+n
++
+1
+
+=
+(
+
+x
+
+1
+
++
+⋯
++
+
+x
+
+n
++
+1
+
+)
+−
+(
+
+x
+
+1
+
++
+⋯
++
+
+x
+
+n
+
+)
+
+{\displaystyle x_{n+1}=(x_{1}+\cdots +x_{n+1})-(x_{1}+\cdots +x_{n})}
+
+x
+
+n
++
+1
+
+=
+(
+n
++
+1
+)
+⋅
+
+CA
+
+n
++
+1
+
+−
+n
+⋅
+
+CA
+
+n
+
+{\displaystyle x_{n+1}=(n+1)\cdot {\textit {CA}}_{n+1}-n\cdot {\textit {CA}}_{n}}
+
+Solving this equation for
+
+CA
+
+n
++
+1
+
+{\displaystyle {\textit {CA}}_{n+1}}
+
+results in
+
+CA
+
+n
++
+1
+
+=
+
+x
+
+n
++
+1
+
++
+n
+⋅
+
+CA
+
+n
+
+n
++
+1
+
+=
+
+x
+
+n
++
+1
+
++
+(
+n
++
+1
+−
+1
+)
+⋅
+
+CA
+
+n
+
+n
++
+1
+
+=
+
+(
+n
++
+1
+)
+⋅
+
+CA
+
+n
+
++
+
+x
+
+n
++
+1
+
+−
+
+CA
+
+n
+
+n
++
+1
+
+=
+
+CA
+
+n
+
++
+
+x
+
+n
++
+1
+
+−
+
+CA
+
+n
+
+n
++
+1
+
+{\displaystyle {\begin{aligned}{\textit {CA}}_{n+1}&={x_{n+1}+n\cdot {\textit {CA}}_{n} \over {n+1}}\\[6pt]&={x_{n+1}+(n+1-1)\cdot {\textit {CA}}_{n} \over {n+1}}\\[6pt]&={(n+1)\cdot {\textit {CA}}_{n}+x_{n+1}-{\textit {CA}}_{n} \over {n+1}}\\[6pt]&={{\textit {CA}}_{n}}+{{x_{n+1}-{\textit {CA}}_{n}} \over {n+1}}\end{aligned}}}
+
+Weighted moving average
+[edit]
+
+A weighted average is an average that has multiplying factors to give different weights to data at different positions in the sample window. Mathematically, the weighted moving average is the convolution of the data with a fixed weighting function. One application is removing pixelization from a digital graphical image. This is also known as Anti-aliasing [citation needed]
+
+In the financial field, and more specifically in the analyses of financial data, a weighted moving average (WMA) has the specific meaning of weights that decrease in arithmetical progression.[5] In an n-day WMA the latest day has weight n, the second latest
+
+n
+−
+1
+
+{\displaystyle n-1}
+
+, etc., down to one.
+
+WMA
+
+M
+
+=
+
+n
+
+p
+
+M
+
++
+(
+n
+−
+1
+)
+
+p
+
+M
+−
+1
+
++
+⋯
++
+2
+
+p
+
+(
+(
+M
+−
+n
+)
++
+2
+)
+
++
+
+p
+
+(
+(
+M
+−
+n
+)
++
+1
+)
+
+n
++
+(
+n
+−
+1
+)
++
+⋯
++
+2
++
+1
+
+{\displaystyle {\text{WMA}}_{M}={np_{M}+(n-1)p_{M-1}+\cdots +2p_{((M-n)+2)}+p_{((M-n)+1)} \over n+(n-1)+\cdots +2+1}}
+
+WMA weights n = 15
+
+The denominator is a triangle number equal to
+
+n
+(
+n
++
+1
+)
+
+2
+
+.
+
+{\textstyle {\frac {n(n+1)}{2}}.}
+
+In the more general case the denominator will always be the sum of the individual weights.
+
+When calculating the WMA across successive values, the difference between the numerators of
+
+WMA
+
+M
++
+1
+
+{\displaystyle {\text{WMA}}_{M+1}}
+
+and
+
+WMA
+
+M
+
+{\displaystyle {\text{WMA}}_{M}}
+
+is
+
+n
+
+p
+
+M
++
+1
+
+−
+
+p
+
+M
+
+−
+⋯
+−
+
+p
+
+M
+−
+n
++
+1
+
+{\displaystyle np_{M+1}-p_{M}-\dots -p_{M-n+1}}
+
+. If we denote the sum
+
+p
+
+M
+
++
+⋯
++
+
+p
+
+M
+−
+n
++
+1
+
+{\displaystyle p_{M}+\dots +p_{M-n+1}}
+
+by
+
+Total
+
+M
+
+{\displaystyle {\text{Total}}_{M}}
+
+, then
+
+Total
+
+M
++
+1
+
+=
+
+Total
+
+M
+
++
+
+p
+
+M
++
+1
+
+−
+
+p
+
+M
+−
+n
++
+1
+
+Numerator
+
+M
++
+1
+
+=
+
+Numerator
+
+M
+
++
+n
+
+p
+
+M
++
+1
+
+−
+
+Total
+
+M
+
+WMA
+
+M
++
+1
+
+=
+
+Numerator
+
+M
++
+1
+
+n
++
+(
+n
+−
+1
+)
++
+⋯
++
+2
++
+1
+
+{\displaystyle {\begin{aligned}{\text{Total}}_{M+1}&={\text{Total}}_{M}+p_{M+1}-p_{M-n+1}\\[3pt]{\text{Numerator}}_{M+1}&={\text{Numerator}}_{M}+np_{M+1}-{\text{Total}}_{M}\\[3pt]{\text{WMA}}_{M+1}&={{\text{Numerator}}_{M+1} \over n+(n-1)+\cdots +2+1}\end{aligned}}}
+
+The graph at the right shows how the weights decrease, from highest weight for the most recent data, down to zero. It can be compared to the weights in the exponential moving average which follows.
+
+Exponential moving average
+[edit]
+
+Main article: Exponential smoothing
+
+Further information: EWMA chart
+
+An exponential moving average (EMA), also known as an exponentially weighted moving average (EWMA),[6] is a first-order infinite impulse response filter that applies weighting factors which decrease exponentially. The weighting for each older datum decreases exponentially, never reaching zero. This formulation is according to John Stuart Hunter in a 1986 paper.[7][8]
+
+There is also a multivariate implementation of EWMA, known as MEWMA.[9]
+
+Power-law moving average
+[edit]
+
+One can calculate a moving average where the weights
+
+w
+(
+x
+)
+
+{\displaystyle w(x)}
+
+are given by a power law. For example, if we wanted to calculate a trailing average over
+
+x
+<
+0
+
+{\displaystyle x<0}
+
+we would set
+
+w
+(
+x
+)
+=
+
+x
+
+−
+k
+
+{\displaystyle w(x)=x^{-k}}
+
+for some
+
+k
+>
+1
+
+{\displaystyle k>1}
+
+. Compared to the exponential moving average, the power-law moving average has the property that very distant-in-the-past points
+
+f
+(
+
+x
+
+1
+
+)
+,
+f
+(
+
+x
+
+2
+
+)
+
+{\displaystyle f(x_{1}),f(x_{2})}
+
+have similar impacts on the average, since the ratio
+
+w
+(
+
+x
+
+1
+
+)
+
+/
+
+w
+(
+
+x
+
+2
+
+)
+
+{\displaystyle w(x_{1})/w(x_{2})}
+
+goes to zero as
+
+x
+
+1
+
+,
+
+x
+
+2
+
+→
+−
+∞
+
+{\displaystyle x_{1},x_{2}\to -\infty }
+
+. Sometimes, models that use exponential moving averages at multiple lags can be replaced by a single power-law moving average.[10]
+
+The naive implementation of a power-law moving average takes
+
+O
+(
+
+n
+
+2
+
+)
+
+{\displaystyle O(n^{2})}
+
+time, but by implementing the kernel with a fast fourier transform improves runtime to
+
+O
+(
+n
+log
+⁡
+n
+)
+
+{\displaystyle O(n\log n)}
+
+. The exponential moving average maintains the advantage of being able to be updated live in
+
+O
+(
+1
+)
+
+{\displaystyle O(1)}
+
+time however.
+
+Other weightings
+[edit]
+
+Other weighting systems are used occasionally – for example, in share trading a volume weighting will weight each time period in proportion to its trading volume.
+
+A further weighting, used by actuaries, is Spencer's 15-Point Moving Average[11] (a central moving average). Its symmetric weight coefficients are [−3, −6, −5, 3, 21, 46, 67, 74, 67, 46, 21, 3, −5, −6, −3], which factors as ⁠[1, 1, 1, 1]×[1, 1, 1, 1]×[1, 1, 1, 1, 1]×[−3, 3, 4, 3, −3]/320⁠ and leaves samples of any quadratic or cubic polynomial unchanged.[12][13]
+
+Outside the world of finance, weighted running means have many forms and applications. Each weighting function or "kernel" has its own characteristics. In engineering and science the frequency and phase response of the filter is often of primary importance in understanding the desired and undesired distortions that a particular filter will apply to the data.
+
+A mean does not just "smooth" the data. A mean is a form of low-pass filter. The effects of the particular filter used should be understood in order to make an appropriate choice.[citation needed]
+
+Moving median
+[edit]
+
+From a statistical point of view, the moving average, when used to estimate the underlying trend in a time series, is susceptible to rare events such as rapid shocks or other anomalies. A more robust estimate of the trend is the simple moving median over n time points:
+
+p
+~
+
+SM
+
+=
+
+Median
+
+(
+
+p
+
+M
+
+,
+
+p
+
+M
+−
+1
+
+,
+…
+,
+
+p
+
+M
+−
+n
++
+1
+
+)
+
+{\displaystyle {\widetilde {p}}_{\text{SM}}={\text{Median}}(p_{M},p_{M-1},\ldots ,p_{M-n+1})}
+
+where the median is found by, for example, sorting the values inside the brackets and finding the value in the middle. For larger values of n, the median can be efficiently computed by updating an indexable skiplist.[14]
+
+Statistically, the moving average is optimal for recovering the underlying trend of the time series when the fluctuations about the trend are normally distributed. However, the normal distribution does not place high probability on very large deviations from the trend which explains why such deviations will have a disproportionately large effect on the trend estimate. It can be shown that if the fluctuations are instead assumed to be Laplace distributed, then the moving median is statistically optimal.[15] For a given variance, the Laplace distribution places higher probability on rare events than does the normal, which explains why the moving median tolerates shocks better than the moving mean.
+
+When the simple moving median above is central, the smoothing is identical to the median filter which has applications in, for example, image signal processing. The Moving Median is a more robust alternative to the Moving Average when it comes to estimating the underlying trend in a time series. While the Moving Average is optimal for recovering the trend if the fluctuations around the trend are normally distributed, it is susceptible to the impact of rare events such as rapid shocks or anomalies. In contrast, the Moving Median, which is found by sorting the values inside the time window and finding the value in the middle, is more resistant to the impact of such rare events. This is because, for a given variance, the Laplace distribution, which the Moving Median assumes, places higher probability on rare events than the normal distribution that the Moving Average assumes. As a result, the Moving Median provides a more reliable and stable estimate of the underlying trend even when the time series is affected by large deviations from the trend. Additionally, the Moving Median smoothing is identical to the Median Filter, which has various applications in image signal processing.
+
+Moving average regression model
+[edit]
+
+Main article: Moving-average model
+
+In a moving average regression model, a variable of interest is assumed to be a weighted moving average of unobserved independent error terms; the weights in the moving average are parameters to be estimated.
+
+Those two concepts are often confused due to their name, but while they share many similarities, they represent distinct methods and are used in very different contexts.
+
+See also
+[edit]
+
+Wikimedia Commons has media related to Moving averages.
+
+Exponential smoothing
+
+Local regression (LOESS and LOWESS)
+
+Kernel smoothing
+
+Moving average convergence/divergence indicator
+
+Martingale (probability theory)
+
+Moving average crossover
+
+Moving least squares
+
+Rising moving average
+
+Rolling hash
+
+Running total
+
+Savitzky–Golay filter
+
+Window function
+
+Zero lag exponential moving average
+
+References
+[edit]
+
+↑ Hydrologic Variability of the Cosumnes River Floodplain (Booth et al., San Francisco Estuary and Watershed Science, Volume 4, Issue 2, 2006)
+
+↑ Klein, Judy L. (1997-10-28). Statistical Visions in Time. Cambridge University Press. p. 88. ISBN 9780521420464.
+
+↑ Statistical Analysis, Ya-lun Chou, Holt International, 1975, ISBN 0-03-089422-0, section 17.9.
+
+↑ The derivation and properties of the simple central moving average are given in full at Savitzky–Golay filter.
+
+↑ "Weighted Moving Averages: The Basics". Investopedia.
+
+↑ "DEALING WITH MEASUREMENT NOISE - Averaging Filter". Archived from the original on 2010-03-29. Retrieved 2010-10-26.
+
+↑ NIST/SEMATECH e-Handbook of Statistical Methods: Single Exponential Smoothing at the National Institute of Standards and Technology
+
+↑ Hunter, J. Stuart (1986). "The Exponentially Weighted Moving Average". Journal of Quality Technology. 18 (4): 203–210. doi:10.1080/00224065.1986.11979014. ISSN 0022-4065.
+
+↑ Yeh, A.; Lin, D.; Zhou, H.; Venkataramani, C. (2003). "A multivariate exponentially weighted moving average control chart for monitoring process variability" (PDF). Journal of Applied Statistics. 30 (5): 507–536. Bibcode:2003JApSt..30..507Y. doi:10.1080/0266476032000053655. ISSN 0266-4763. Retrieved 16 January 2025.
+
+↑ Bochud, Thierry; Challet, Damien (2007-12-01). "Optimal approximations of power laws with exponentials: application to volatility models with long memory". Quantitative Finance. 7 (6). Routledge: 585–589. doi:10.1080/14697680701278291. ISSN 1469-7688.
+
+↑ Spencer's 15-Point Moving Average — from Wolfram MathWorld
+
+↑ Rob J Hyndman. "Moving averages". 2009-11-08. Accessed 2020-08-20.
+
+↑ Aditya Guntuboyina. "Statistics 153 (Time Series) : Lecture Three". 2012-01-24. Accessed 2024-01-07.
+
+↑ "Efficient Running Median using an Indexable Skiplist « Python recipes « ActiveState Code".
+
+↑ G.R. Arce, "Nonlinear Signal Processing: A Statistical Approach", Wiley:New Jersey, US, 2005.
+
+v
+
+t
+
+e
+
+Statistics
+
+Outline
+
+Index
+
+Descriptive statistics
+
+Continuous data
+
+Center
+
+Mean
+
+Arithmetic
+
+Arithmetic-Geometric
+
+Contraharmonic
+
+Cubic
+
+Generalized/power
+
+Geometric
+
+Harmonic
+
+Heronian
+
+Heinz
+
+Lehmer
+
+Median
+
+Mode
+
+Dispersion
+
+Average absolute deviation
+
+Coefficient of variation
+
+Interquartile range
+
+Percentile
+
+Range
+
+Standard deviation
+
+Variance
+
+Shape
+
+Central limit theorem
+
+Moments
+
+Kurtosis
+
+L-moments
+
+Skewness
+
+Count data
+
+Index of dispersion
+
+Summary tables
+
+Contingency table
+
+Frequency distribution
+
+Grouped data
+
+Dependence
+
+Partial correlation
+
+Pearson product-moment correlation
+
+Rank correlation
+
+Kendall's τ
+
+Spearman's ρ
+
+Scatter plot
+
+Graphics
+
+Bar chart
+
+Biplot
+
+Box plot
+
+Control chart
+
+Correlogram
+
+Fan chart
+
+Forest plot
+
+Histogram
+
+Pie chart
+
+Q–Q plot
+
+Radar chart
+
+Run chart
+
+Scatter plot
+
+Stem-and-leaf display
+
+Violin plot
+
+Heatmap
+
+Scatter Plot Matrix
+
+ECDF plot
+
+Line chart
+
+Statistical data processing
+
+Transformations
+
+Data transformation
+
+Log transformation
+
+Power transform
+
+Box–Cox transformation
+
+Yeo–Johnson transformation
+
+Variance-stabilizing transformation
+
+Anscombe transform
+
+Fisher transformation
+
+Scaling and normalization
+
+Feature scaling
+
+Normalization
+
+Standardization (z-score)
+
+Min–max normalization
+
+Unit vector normalization
+
+Data cleaning
+
+Data cleaning
+
+Outlier
+
+Winsorizing
+
+Truncation
+
+Missing data
+
+Data reduction
+
+Dimensionality reduction
+
+Principal component analysis
+
+Factor analysis
+
+Time-series preprocessing
+
+Differencing
+
+Detrending
+
+Seasonal adjustment
+
+Stationarity transformation
+
+Data collection
+
+Study design
+
+Effect size
+
+Missing data
+
+Optimal design
+
+Population
+
+Replication
+
+Sample size determination
+
+Statistic
+
+Statistical power
+
+Survey methodology
+
+Sampling
+
+Cluster
+
+Stratified
+
+Opinion poll
+
+Questionnaire
+
+Standard error
+
+Controlled experiments
+
+Blocking
+
+Factorial experiment
+
+Interaction
+
+Random assignment
+
+Randomized controlled trial
+
+Randomized experiment
+
+Scientific control
+
+Adaptive designs
+
+Adaptive clinical trial
+
+Stochastic approximation
+
+Up-and-down designs
+
+Observational studies
+
+Cohort study
+
+Cross-sectional study
+
+Natural experiment
+
+Quasi-experiment
+
+Statistical inference
+
+Statistical theory
+
+Population
+
+Statistic
+
+Probability distribution
+
+Sampling distribution
+
+Order statistic
+
+Empirical distribution
+
+Density estimation
+
+Statistical model
+
+Model specification
+
+Lp space
+
+Parameter
+
+location
+
+scale
+
+shape
+
+Parametric family
+
+Likelihood (monotone)
+
+Location–scale family
+
+Exponential family
+
+Completeness
+
+Sufficiency
+
+Statistical functional
+
+Bootstrap
+
+U
+
+V
+
+Optimal decision
+
+loss function
+
+Efficiency
+
+Statistical distance
+
+divergence
+
+Asymptotics
+
+Robustness (Sensitivity analysis)
+
+Frequentist inference
+
+Point estimation
+
+Estimating equations
+
+Maximum likelihood
+
+Method of moments
+
+M-estimator
+
+Minimum distance
+
+Unbiased estimators
+
+Mean-unbiased minimum-variance
+
+Rao–Blackwellization
+
+Lehmann–Scheffé theorem
+
+Median unbiased
+
+Plug-in
+
+Interval estimation
+
+Confidence interval
+
+Pivot
+
+Likelihood interval
+
+Prediction interval
+
+Tolerance interval
+
+Resampling
+
+Bootstrap
+
+Jackknife
+
+Testing hypotheses
+
+1- & 2-tails
+
+Power
+
+Uniformly most powerful test
+
+Permutation test
+
+Randomization test
+
+Multiple comparisons
+
+Parametric tests
+
+Likelihood-ratio
+
+G-test
+
+Score/Lagrange multiplier
+
+Wald
+
+Z-test (normal)
+
+Specific tests
+
+Parametric
+
+Student's t-test
+
+F-test
+
+Goodness of fit
+
+Chi-squared
+
+Kolmogorov–Smirnov
+
+Anderson–Darling
+
+Lilliefors
+
+Jarque–Bera
+
+Normality (Shapiro–Wilk)
+
+Model selection
+
+Cross validation
+
+AIC
+
+BIC
+
+Rank statistics
+
+Sign
+
+Sample median
+
+Signed rank (Wilcoxon)
+
+Hodges–Lehmann estimator
+
+Rank sum (Mann–Whitney)
+
+Nonparametric anova
+
+1-way (Kruskal–Wallis)
+
+2-way (Friedman)
+
+Ordered alternative (Jonckheere–Terpstra)
+
+Van der Waerden test
+
+Bayesian inference
+
+Bayesian probability
+
+prior
+
+posterior
+
+Credible interval
+
+Bayes factor
+
+Bayesian estimator
+
+Maximum posterior estimator
+
+Correlation
+
+Regression analysis
+
+Correlation
+
+Pearson product-moment
+
+Partial correlation
+
+Confounding variable
+
+Coefficient of determination
+
+Regression analysis
+
+Errors and residuals
+
+Regression validation
+
+Mixed effects models
+
+Simultaneous equations models
+
+Multivariate adaptive regression splines (MARS)
+
+Template:Least squares and regression analysis
+
+Linear regression
+
+Simple linear regression
+
+Ordinary least squares
+
+General linear model
+
+Bayesian regression
+
+Non-standard predictors
+
+Nonlinear regression
+
+Nonparametric
+
+Semiparametric
+
+Isotonic
+
+Robust
+
+Homoscedasticity and Heteroscedasticity
+
+Generalized linear model
+
+Exponential families
+
+Logistic (Bernoulli) / Binomial / Poisson regressions
+
+Partition of variance
+
+Analysis of variance (ANOVA)
+
+Analysis of variance (ANCOVA)]
+
+MANOVA
+
+Degrees of freedom
+
+Categorical / multivariate / time-series / survival analysis
+
+Categorical
+
+Cohen's kappa
+
+Contingency table
+
+Graphical model
+
+Log-linear model
+
+McNemar's test
+
+Cochran–Mantel–Haenszel statistics
+
+Multivariate
+
+Regression
+
+Manova
+
+Principal components
+
+Canonical correlation
+
+Discriminant analysis
+
+Cluster analysis
+
+Classification
+
+Structural equation model
+
+Factor analysis
+
+Multivariate distributions
+
+Elliptical distributions
+
+Normal
+
+Time-series
+
+General
+
+Decomposition
+
+Trend
+
+Stationarity
+
+Seasonal adjustment
+
+Exponential smoothing
+
+Cointegration
+
+Structural break
+
+Granger causality
+
+Specific tests
+
+Dickey–Fuller
+
+Johansen
+
+Q-statistic (Ljung–Box)
+
+Durbin–Watson
+
+Breusch–Godfrey
+
+Time domain
+
+Autocorrelation (ACF)
+
+partial (PACF)
+
+Cross-correlation (XCF)
+
+ARMA model
+
+ARIMA model (Box–Jenkins)
+
+Autoregressive conditional heteroskedasticity (ARCH)
+
+Vector autoregression (VAR) (Autoregressive model (AR))
+
+Frequency domain
+
+Spectral density estimation
+
+Fourier analysis
+
+Least-squares spectral analysis
+
+Wavelet
+
+Whittle likelihood
+
+Survival
+
+Survival function
+
+Kaplan–Meier estimator (product limit)
+
+Proportional hazards models
+
+Accelerated failure time (AFT) model
+
+First hitting time
+
+Hazard function
+
+Nelson–Aalen estimator
+
+Test
+
+Log-rank test
+
+Applications
+
+Biostatistics
+
+Bioinformatics
+
+Clinical trials / studies
+
+Epidemiology
+
+Medical statistics
+
+Engineering statistics
+
+Chemometrics
+
+Methods engineering
+
+Probabilistic design
+
+Process / quality control
+
+Reliability
+
+System identification
+
+Social statistics
+
+Actuarial science
+
+Census
+
+Crime statistics
+
+Demography
+
+Econometrics
+
+Jurimetrics
+
+National accounts
+
+Official statistics
+
+Population statistics
+
+Psychometrics
+
+Spatial statistics
+
+Cartography
+
+Environmental statistics
+
+Geographic information system
+
+Geostatistics
+
+Kriging
+
+Category
+
+Mathematics portal
+
+Commons
+
+WikiProject
+
+v
+
+t
+
+e
+
+Technical analysis
+
+Concepts
+
+Breakout
+
+Dead cat bounce
+
+Dow theory
+
+Elliott wave principle
+
+Market trend
+
+Charts
+
+Candlestick
+
+Renko
+
+Kagi
+
+Line
+
+Open-high-low-close
+
+Point and figure
+
+Line break
+
+Patterns
+
+Chart
+
+Broadening top
+
+Cup and handle
+
+Double top and double bottom
+
+Flag and pennant
+
+Gap
+
+Head and shoulders
+
+Island reversal
+
+Price channels
+
+Triangle
+
+Triple top and triple bottom
+
+Wedge pattern
+
+Candlestick
+
+Simple
+
+Doji
+
+Complex
+
+Hikkake pattern
+
+Morning star
+
+Three black crows
+
+Three white soldiers
+
+Point and figure
+
+Bull trap
+
+Bear trap
+
+Indicators
+
+Support &
+
+resistance
+
+Fibonacci retracement
+
+Pivot point (PP)
+
+Trend
+
+Average directional index (A.D.X.)
+
+Commodity channel index (CCI)
+
+Detrended price oscillator (DPO)
+
+Know sure thing oscillator (KST)
+
+Ichimoku Kinkō Hyō
+
+Moving average convergence/divergence (MACD)
+
+Mass index
+
+Moving average (MA)
+
+Parabolic SAR (SAR)
+
+Smart money index (SMI)
+
+Trend line
+
+Trix
+
+Vortex indicator (VI)
+
+Momentum
+
+Money flow index (MFI)
+
+Relative strength index (RSI)
+
+Stochastic oscillator
+
+True strength index (TSI)
+
+Ultimate oscillator
+
+Williams %R (%R)
+
+Volume
+
+Accumulation/distribution line
+
+Ease of movement (EMV)
+
+Force index (FI)
+
+Negative volume index (NVI)
+
+On-balance volume (OBV)
+
+Put/call ratio (PCR)
+
+Volume–price trend (VPT)
+
+Volatility
+
+Average true range (ATR)
+
+Bollinger Bands (BB)
+
+Donchian channel
+
+Keltner channel
+
+CBOE Market Volatility Index (VIX)
+
+VolDex
+
+Standard deviation (σ)
+
+Breadth
+
+Advance–decline line (ADL)
+
+Arms index (TRIN)
+
+McClellan oscillator
+
+Other
+
+Coppock curve
+
+Ulcer index
+
+Analysts
+
+John Bollinger
+
+Ned Davis
+
+Charles Dow
+
+Ralph Nelson Elliott
+
+Bob Farrell
+
+John Murphy
+
+Mark Hulbert
+
+v
+
+t
+
+e
+
+Quantitative forecasting methods
+
+Historical data forecasts
+
+Moving average
+
+Exponential smoothing
+
+Trend analysis
+
+Decomposition of time series
+
+Naïve approach
+
+Associative (causal) forecasts
+
+Moving average
+
+Simple linear regression
+
+Regression analysis
+
+Econometric model
+
+Retrieved from "https://en.wikipedia.org/w/index.php?title=Moving_average&oldid=1380524467"
+
+Categories:
+Statistical charts and diagrams
+
+Time series
+
+Chart overlays
+
+Technical analysis
+
+Hidden categories:
+Articles with short description
+
+Short description matches Wikidata
+
+All articles with unsourced statements
+
+Articles with unsourced statements from February 2018
+
+Articles with unsourced statements from August 2025
+
+Commons category link is on Wikidata
+
+Moving average
+
+Add topic

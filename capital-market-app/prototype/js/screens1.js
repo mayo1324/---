@@ -219,14 +219,18 @@ function lessonCard(l) {
     <div class="tx"><b>${l.title}</b><span>${l.min} דקות</span></div>${done ? '<span class="st">הושלם</span>' : ''}</button>`;
 }
 
-/* ===== lessons ===== */
+/* ===== lessons: a learning path with modules ===== */
+const modRing = (frac, col) => { const R = 19, C = 2 * Math.PI * R; return `<svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="${R}" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="5"/><circle cx="24" cy="24" r="${R}" fill="none" stroke="${col}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - frac)}" transform="rotate(-90 24 24)"/></svg>`; };
 screens.lessons = () => {
-  const d = lessonsDone().length;
+  const done = lessonsDone(), d = done.length, nextId = (LESSONS.find(l => !done.includes(l.id)) || {}).id;
+  const mods = MODULES.map(m => ({ ...m, ls: LESSONS.filter(l => l.module === m.id) })).filter(m => m.ls.length);
   scr.innerHTML = `<div class="anim"><div class="top"><h2>שיעורים</h2><span class="pill gold">${ic.star}${A().stars}</span></div>
     <div class="card prog-card"><div style="display:flex;justify-content:space-between"><b>${d} מתוך ${LESSONS.length} שיעורים</b><span class="muted" style="font-size:13px">${portfolioOpen() ? 'התיק פתוח' : 'התיק נפתח בסיום'}</span></div>
       <div class="bar" style="margin-top:12px"><i style="width:${Math.round(d / LESSONS.length * 100)}%"></i></div></div>
     <button class="card gl-link" data-go="glossary"><div>${ic.book}</div><div><b>מילון מונחים</b><span class="muted">תמיכה, התנגדות, סטופ ועוד, בשפה פשוטה</span></div></button>
-    <div style="height:14px"></div>${LESSONS.map(lessonCard).join('')}</div>`;
+    ${mods.map(m => { const n = m.ls.filter(l => done.includes(l.id)).length; return `<div class="mod" style="--mc:${m.color}">
+      <div class="mod-h"><div class="mod-ring">${modRing(n / m.ls.length, m.color)}<b>${n}/${m.ls.length}</b></div><div><b>${m.title}</b><span>${m.sub}</span></div></div>
+      <div class="path">${m.ls.map((l, i) => { const dn = done.includes(l.id); return `<button class="pn${dn ? ' done' : ''}${l.id === nextId ? ' next' : ''}" data-go="lesson" data-arg="${l.id}" style="animation-delay:${i * .05}s"><i>${dn ? ic.check : i + 1}</i><div><b>${l.title}</b><span>${l.min} דקות${l.id === nextId ? ' · המשך מכאן' : ''}</span></div></button>`; }).join('')}</div></div>`; }).join('')}</div>`;
 };
 screens.lesson = (id) => {
   const L = LESSONS.find(x => x.id === id) || LESSONS[0];
@@ -257,26 +261,28 @@ screens.lesson = (id) => {
     };
     el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
   };
-  const ord = L.q.o.map((_, k) => k); for (let k = ord.length - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [ord[k], ord[j]] = [ord[j], ord[k]]; }
-  const n = L.slides.length + 1, say = SAY[L.id] || [];
+  const QS = L.qs || [L.q], ords = [];
+  const shuf = (n) => { const o = Array.from({ length: n }, (_, k) => k); for (let k = o.length - 1; k > 0; k--) { const j = Math.floor(Math.random() * (k + 1)); [o[k], o[j]] = [o[j], o[k]]; } return o; };
+  const n = L.slides.length + QS.length, say = SAY[L.id] || [];
   const draw = () => {
-    const quiz = i === L.slides.length, sl = L.slides[i];
+    const quiz = i >= L.slides.length, sl = L.slides[i], qi = i - L.slides.length, Q = quiz ? QS[qi] : null;
+    answered = false; if (quiz && !ords[qi]) ords[qi] = shuf(Q.o.length);
     scr.innerHTML = `<div class="lp">
       <div class="top"><button class="icon-btn" id="bk">${ic.x}</button><span class="muted" style="font-size:13px">${L.title}</span><span style="width:42px"></span></div>
       <div class="prog">${Array.from({ length: n }, (_, k) => `<i class="${k < i ? 'on' : k === i ? 'on cur' : ''}"></i>`).join('')}</div>
       <div class="slide ${dir > 0 ? 'in-r' : 'in-l'}">${quiz
-        ? `<span class="tag">בדיקה קטנה</span><h2>${L.q.q}</h2><div class="grow">${ord.map(k => `<button class="opt" data-k="${k}">${L.q.o[k]}</button>`).join('')}</div><div id="qm" class="muted" style="margin-top:14px;min-height:22px"></div>`
+        ? `<span class="tag">בדיקה קטנה${QS.length > 1 ? ` ${qi + 1} מתוך ${QS.length}` : ''}</span><h2>${Q.q}</h2><div class="grow">${ords[qi].map(k => `<button class="opt" data-k="${k}">${Q.o[k]}</button>`).join('')}</div><div id="qm" class="muted" style="margin-top:14px;min-height:22px"></div>`
         : `<div class="scene-card">${sceneSVG(sl.v)}<span class="cnt">${i + 1}/${L.slides.length}</span></div>
            <div class="tip-note">${ic.bulb}<span>${say[i] || 'שימו לב לאיור.'}</span></div>
            <h2>${sl.t}</h2><p>${sl.b}</p>${toyHTML(sl.x)}${sl.w ? `<div class="warn">${sl.w}</div>` : ''}<div class="grow"></div>`}</div>
-      <div class="nav2">${i > 0 && !quiz ? `<button class="btn ghost" id="pv" style="flex:none;width:90px">חזרה</button>` : ''}<button class="btn primary" id="nx" ${quiz ? 'disabled' : ''}>${quiz ? 'סיום שיעור' : 'הבא'}</button></div></div>`;
+      <div class="nav2">${i > 0 && !quiz ? `<button class="btn ghost" id="pv" style="flex:none;width:90px">חזרה</button>` : ''}<button class="btn primary" id="nx" ${quiz ? 'disabled' : ''}>${quiz && qi === QS.length - 1 ? 'סיום שיעור' : 'הבא'}</button></div></div>`;
     scr.scrollTop = 0;
     $('#bk').onclick = () => go('lessons');
     const pv = $('#pv'); if (pv) pv.onclick = () => step(-1);
     if (!quiz) bindToy(sl.x, scr);
     swipe($('.slide'), quiz);
     $('#nx').onclick = () => {
-      if (!quiz) { step(1); return; }
+      if (!quiz || qi < QS.length - 1) { step(1); return; }
       const s = A(), first = !s.lessonsDone.includes(L.id);
       if (first) { s.lessonsDone.push(L.id); s.stars += 1; s.xp = (s.xp || 0) + 20; save(); }
       markActive(s);
@@ -284,10 +290,10 @@ screens.lesson = (id) => {
     };
     if (quiz) $$('.opt').forEach(b => b.onclick = (e) => {
       if (answered) return;
-      const ok = +b.dataset.k === L.q.a;
+      const ok = +b.dataset.k === Q.a;
       b.classList.add(ok ? 'ok' : 'bad');
       SFX.play(ok ? 'correct' : 'wrong');
-      if (ok) { answered = true; burst(e.clientX, e.clientY, '#ffc94d', 16); $('#qm').innerHTML = '<span class="up">נכון! כל הכבוד.</span>'; $('#nx').disabled = false; }
+      if (ok) { answered = true; burst(e.clientX, e.clientY, '#ffc94d', 16); $('#qm').innerHTML = '<span class="up">נכון! כל הכבוד.</span>' + (Q.why ? ` <span class="muted" style="font-size:13.5px;line-height:1.55">${Q.why}</span>` : ''); $('#nx').disabled = false; }
       else { $('#qm').innerHTML = '<span class="down">לא בדיוק, נסו שוב.</span>'; b.classList.add('shake'); }
     });
   };
@@ -296,6 +302,11 @@ screens.lesson = (id) => {
 function confetti(n = 30) {
   if (reduceMotion) return '';
   return `<div class="confetti">${Array.from({ length: n }, (_, k) => `<i style="left:${(k * 37) % 100}%;background:${['#1ff0b0', '#ffc94d', '#60a5fa', '#ff6048', '#a78bfa'][k % 5]};animation-delay:${(k % 7) * .12}s"></i>`).join('')}</div>`;
+}
+function srcCard(L) {
+  const hosts = []; (L.src || []).forEach(x => { try { const h = new URL(x.u).hostname.replace(/^www\./, ''); if (!hosts.includes(h)) hosts.push(h); } catch (e) { } });
+  const list = (L.src || []).filter((x, k, arr) => arr.findIndex(y => y.u === x.u) === k);
+  return `<details class="card srcs"><summary>מקורות לשיעור</summary>${list.length ? list.map(x => `<a href="${x.u}" target="_blank" rel="noopener noreferrer">${new URL(x.u).hostname.replace(/^www\./, '')}</a>`).join('') : '<span class="muted">מקורות לשיעור הזה עדיין בבדיקה.</span>'}<span class="muted" style="font-size:12px;display:block;margin-top:8px">השיעור בטיוטה, עדיין לא נבדק על ידי מומחה. אין כאן המלצת השקעה.</span></details>`;
 }
 screens.lessonDone = (a) => {
   const id = a.id || a, L = LESSONS.find(x => x.id === id) || LESSONS[0], gained = a.gained || 0;
@@ -309,6 +320,7 @@ screens.lessonDone = (a) => {
     <div class="card xpc"><div class="xpt"><b data-cu="${gained}" data-pre="+" data-suf=" נק' ניסיון">+${gained}</b><span class="muted">רמה ${lvl(ac)}</span></div>
       <div class="bar"><i id="xpf" style="width:${(xp0 % 100)}%"></i></div>${up ? '<div class="lvlup">עליתם רמה!</div>' : `<span class="muted" style="font-size:12.5px">עוד ${100 - (xp1 % 100)} נקודות לרמה הבאה</span>`}</div>
     ${all ? `<div class="card unlock" style="margin-top:14px">${ic.wallet}<b>התיק הוירטואלי נפתח!</b><span class="muted">מחכים לך 5,000 ש"ח וירטואליים לתרגול</span></div>` : `<p class="muted" style="margin-top:14px">עוד ${left} שיעורים עד שהתיק הוירטואלי ייפתח</p>`}
+    ${srcCard(L)}
     <div class="btns" style="margin-top:18px"><button class="btn primary" data-go="${all ? 'portfolio' : 'practiceHome'}">${all ? 'לתיק שלי' : 'עכשיו לתרגול'}</button><button class="btn ghost" data-go="home">חזרה לבית</button></div></div>`;
   setTimeout(() => { const f = $('#xpf'); if (f) f.style.width = (xp1 % 100) + '%'; }, 350);
 };

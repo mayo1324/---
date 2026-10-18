@@ -894,3 +894,25 @@ bdi{unicode-bidi:isolate}
 .navpop .np-t span{font-size:14.5px}
 .navpop .np-b{flex-direction:column;gap:10px;margin-top:20px}
 .navpop .np-b .btn{flex:none;width:100%;height:54px;font-size:16.5px}
+
+/* ===== learning path (modules) ===== */
+.mod{margin-top:22px}
+.mod-h{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.mod-ring{position:relative;width:48px;height:48px;flex:none}
+.mod-ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:11.5px;direction:ltr}
+.mod-h>div:last-child b{display:block;font-size:18px}.mod-h>div:last-child span{font-size:13px;color:var(--muted)}
+.path{position:relative;padding-inline-start:0}
+.path::before{content:"";position:absolute;top:22px;bottom:22px;inset-inline-start:22px;width:3px;border-radius:3px;background:linear-gradient(var(--mc),rgba(255,255,255,.1));opacity:.55}
+.pn{position:relative;display:flex;align-items:center;gap:14px;width:100%;text-align:start;padding:8px 0;animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
+.pn>i{flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:16px;background:#12161c;border:3px solid rgba(255,255,255,.14);color:var(--muted);z-index:1;transition:transform .2s}
+.pn>i svg{width:22px;height:22px}
+.pn>div{flex:1;padding:12px 14px;border-radius:18px;background:linear-gradient(160deg,rgba(32,38,47,.7),rgba(17,21,27,.7));border:1px solid var(--line)}
+.pn>div b{display:block;font-size:15.5px}.pn>div span{font-size:12.5px;color:var(--muted)}
+.pn:active>i{transform:scale(.92)}
+.pn.done>i{background:var(--mc);border-color:var(--mc);color:#07100a;box-shadow:0 0 16px color-mix(in srgb,var(--mc) 55%,transparent)}
+.pn.next>i{border-color:var(--mc);color:var(--mc);animation:pnpulse 1.8s ease-in-out infinite}
+.pn.next>div{border-color:color-mix(in srgb,var(--mc) 55%,transparent)}
+@keyframes pnpulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--mc) 45%,transparent)}50%{box-shadow:0 0 0 9px transparent}}
+@media (prefers-reduced-motion:reduce){.pn.next>i{animation:none}}
+.srcs{margin-top:14px;text-align:start;font-size:13.5px}.srcs summary{cursor:pointer;font-weight:700}
+.srcs a{display:block;margin-top:8px;color:var(--lime);text-decoration:underline;word-break:break-all}

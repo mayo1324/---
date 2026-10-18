@@ -1,0 +1,278 @@
+URL: https://en.wikipedia.org/wiki/Volume_(finance)
+FETCHED: 2026-10-18
+
+Volume (finance) - Wikipedia
+
+Jump to content
+
+From Wikipedia, the free encyclopedia
+
+Amount of a security traded during a period of time in a capital market
+
+In capital markets, volume, or trading volume, is the amount (total number) of a security (or a given set of securities, or an entire market) that was traded during a given period of time. In the context of a single stock trading on a stock exchange, the volume is commonly reported as the number of shares that changed hands during a given day. The transactions are measured on stocks, bonds, options contracts, futures contracts and commodities.[1]
+
+The average volume of a security over a longer period of time is the total amount traded in that period, divided by the length of the period. Therefore, the unit of measurement for average volume is shares per unit of time, typically per trading day. The volume of trade is a measure of the market's activity and liquidity during a set period of time. Higher trading volumes are considered more positive than lower trading volumes because they mean more liquidity and better order execution.
+
+Significance
+[edit]
+
+Trading volume is usually higher when the price of a security is changing. News about a company's financial status, products, or plans, whether positive or negative, will usually result in a temporary increase in the trade volume of its stock.
+
+Shifts in trade volume can make observed price movements more significant, a point often emphasized in volume analysis as a tool for identifying market trends and reversals.[2][3] Higher volume indicates greater market liquidity.[4] For institutional investors who wish to sell a large number of shares of a certain stock, lower liquidity will force them to sell the stock slowly over a longer period of time, to avoid losses due to slippage.
+
+Legal implications
+[edit]
+
+In the United States, the Rule 144 of the Securities Act of 1933 restricts the buying or selling of an amount of a security that exceeds a certain fraction of its average trading volume, also known as relative volume.[5] Therefore, the calculation of the trading volume is regulated by the SEC.[6]
+
+See also
+[edit]
+
+Stock market
+
+Forex market
+
+References
+[edit]
+
+↑ Alex. "What Is Volume of Trade?". Investopedia. Retrieved 2021-09-05.
+
+↑ "Sample stock graph with volumes" (JPG).{{cite web}}: CS1 maint: deprecated archival service (link)
+
+↑ "Pros and cons of volume analysis". Atas. 2023-09-01. Retrieved 2025-07-23.
+
+↑ Baiynd, Anne-Marie (2011-07-08). The Trading Book: A Complete Solution to Mastering Technical Systems and Trading Psychology. McGraw-Hill. ISBN 978-0-07-176700-2.
+
+↑ "Relative Volume Scanner". RELVOL. Archived from the original on 2022-06-28. Retrieved 21 April 2021.
+
+↑ "Rule 144: Selling Restricted and Control Securities". SEC.gov. Retrieved 2025-07-23.
+
+v
+
+t
+
+e
+
+Technical analysis
+
+Concepts
+
+Breakout
+
+Dead cat bounce
+
+Dow theory
+
+Elliott wave principle
+
+Market trend
+
+Charts
+
+Candlestick
+
+Renko
+
+Kagi
+
+Line
+
+Open-high-low-close
+
+Point and figure
+
+Line break
+
+Patterns
+
+Chart
+
+Broadening top
+
+Cup and handle
+
+Double top and double bottom
+
+Flag and pennant
+
+Gap
+
+Head and shoulders
+
+Island reversal
+
+Price channels
+
+Triangle
+
+Triple top and triple bottom
+
+Wedge pattern
+
+Candlestick
+
+Simple
+
+Doji
+
+Complex
+
+Hikkake pattern
+
+Morning star
+
+Three black crows
+
+Three white soldiers
+
+Point and figure
+
+Bull trap
+
+Bear trap
+
+Indicators
+
+Support &
+
+resistance
+
+Fibonacci retracement
+
+Pivot point (PP)
+
+Trend
+
+Average directional index (A.D.X.)
+
+Commodity channel index (CCI)
+
+Detrended price oscillator (DPO)
+
+Know sure thing oscillator (KST)
+
+Ichimoku Kinkō Hyō
+
+Moving average convergence/divergence (MACD)
+
+Mass index
+
+Moving average (MA)
+
+Parabolic SAR (SAR)
+
+Smart money index (SMI)
+
+Trend line
+
+Trix
+
+Vortex indicator (VI)
+
+Momentum
+
+Money flow index (MFI)
+
+Relative strength index (RSI)
+
+Stochastic oscillator
+
+True strength index (TSI)
+
+Ultimate oscillator
+
+Williams %R (%R)
+
+Volume
+
+Accumulation/distribution line
+
+Ease of movement (EMV)
+
+Force index (FI)
+
+Negative volume index (NVI)
+
+On-balance volume (OBV)
+
+Put/call ratio (PCR)
+
+Volume–price trend (VPT)
+
+Volatility
+
+Average true range (ATR)
+
+Bollinger Bands (BB)
+
+Donchian channel
+
+Keltner channel
+
+CBOE Market Volatility Index (VIX)
+
+VolDex
+
+Standard deviation (σ)
+
+Breadth
+
+Advance–decline line (ADL)
+
+Arms index (TRIN)
+
+McClellan oscillator
+
+Other
+
+Coppock curve
+
+Ulcer index
+
+Analysts
+
+John Bollinger
+
+Ned Davis
+
+Charles Dow
+
+Ralph Nelson Elliott
+
+Bob Farrell
+
+John Murphy
+
+Mark Hulbert
+
+Authority control databases
+
+GND
+
+This finance-related article is a stub. You can help Wikipedia by adding missing information.
+
+v
+
+t
+
+e
+
+Retrieved from "https://en.wikipedia.org/w/index.php?title=Volume_(finance)&oldid=1358003473"
+
+Categories:
+Stock market
+
+Finance stubs
+
+Hidden categories:
+Articles with short description
+
+Short description is different from Wikidata
+
+CS1 maint: deprecated archival service
+
+All stub articles
+
+Volume (finance)
+
+Add topic

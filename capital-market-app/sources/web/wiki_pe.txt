@@ -1,0 +1,370 @@
+URL: https://en.wikipedia.org/wiki/Price%E2%80%93earnings_ratio
+FETCHED: 2026-10-18
+
+Price–earnings ratio - Wikipedia
+
+Jump to content
+
+From Wikipedia, the free encyclopedia
+
+Financial metric
+
+"P/E" redirects here. For other topics, see PE (disambiguation).
+
+This article needs more citations. Please help improve this article by adding citations to reliable sources. Unsourced material may be challenged and removed.
+
+Find sources: "Price–earnings ratio" – news · newspapers · books · scholar · JSTOR (September 2018) (Learn how and when to remove this message)
+
+Robert Shiller's plot of the S&P composite real price–earnings ratio and interest rates (1871–2012), from Irrational Exuberance, 2d ed.[1] In the preface to this edition, Shiller warns that "the stock market has not come down to historical levels: the price–earnings ratio as I define it in this book is still, at this writing [2005], in the mid-20s, far higher than the historical average. ... People still place too much confidence in the markets and have too strong a belief that paying attention to the gyrations in their investments will someday make them rich, and so they do not make conservative preparations for possible bad outcomes."
+
+The price–earnings ratio (P/E ratio, P/E, or PER) is the ratio of a company's share price to the company's earnings per share. The ratio is used for valuing companies and to find out whether they are overvalued or undervalued.
+
+P/E
+
+=
+
+Share Price
+Earnings per Share
+
+{\displaystyle {\text{P/E}}={\frac {\text{Share Price}}{\text{Earnings per Share}}}}
+
+As an example, if share A is trading at $24 and the earnings per share for the most recent 12-month period is $3, then share A has a P/E ratio of ⁠$24/$3/year⁠ = 8 years. Put another way, the purchaser of the share is expecting 8 years to recoup the share price. Companies with losses (negative earnings) or no profit have an undefined P/E ratio (usually shown as "not applicable" or "N/A"); sometimes, however, a negative P/E ratio may be shown. There is a general consensus among most investors that a P/E ratio of around 10 to 20 is "fairly priced" but this is sector and business dependent.
+
+Versions
+[edit]
+
+S&P 500 Shiller P/E ratio compared to trailing 12 months P/E ratio
+
+There are multiple versions of the P/E ratio, depending on whether earnings are projected or realized, and the type of earnings.
+
+"Trailing P/E" uses the weighted average share price of common shares in issue divided by the net income for the most recent 12-month period. This is the most common meaning of "P/E" if no other qualifier is specified. Monthly earnings data for individual companies are not available, and in any case usually fluctuate seasonally, so the previous four quarterly earnings reports are used and earnings per share are updated quarterly. Note, each company chooses its own financial year so the timing of updates varies from one to another.
+
+"Trailing P/E from continued operations" uses operating earnings, which exclude earnings from discontinued operations, extraordinary items (e.g. one-off windfalls and write-downs), and accounting changes.
+
+"Forward P/E": Instead of net income, this uses estimated net earnings over next 12 months. Estimates are typically derived as the mean of those published by a select group of analysts (selection criteria are rarely cited).
+
+Some people also use the formula ⁠market capitalization/ net income⁠ to calculate the P/E ratio. This formula often gives the same answer as ⁠market price/ earnings per share⁠, (if new capital has been issued it gives the wrong answer), as market capitalization = (market price) × (current number of shares), whereas earnings per share = ⁠net income/ average number of shares⁠.
+
+Variations on the standard trailing and forward P/E ratios are common. Generally, alternative P/E measures substitute different measures of earnings, such as rolling averages over longer periods of time (to attempt to "smooth" volatile or cyclical earnings, for example),[2] or "corrected" earnings figures that exclude certain extraordinary events or one-off gains or losses. The definitions may not be standardized. For companies that are loss-making, or whose earnings are expected to change dramatically, a "primary" P/E can be used instead, based on the earnings projections made for the next years to which a discount calculation is applied.
+
+Interpretation
+[edit]
+
+As the ratio of a stock (share price) to a flow (earnings per share), the P/E ratio has the units of time. It can be interpreted as the amount of time over which the company would need to sustain its current earnings in order to make enough money to pay back the current share price.[3] While the P/E ratio can in principle be given in terms of any time unit, in practice it is essentially always implicitly reported in years, with the unit of "years" rarely indicated explicitly. (This is the convention followed in this article.)[dubious – discuss]
+
+Historical P/E ratios for the U.S. stock market
+[edit]
+
+Price–earnings ratios as a predictor of twenty-year returns based upon the plot by Robert Shiller (Figure 10.1,[1] source). The horizontal axis shows the real price–earnings ratio of the S&P Composite Stock Price Index as computed in Irrational Exuberance (inflation adjusted price divided by the prior ten-year mean of inflation-adjusted earnings). The vertical axis shows the geometric average real annual return on investing in the S&P Composite Stock Price Index, reinvesting dividends, and selling twenty years later. Data from different twenty-year periods is color-coded as shown in the key. See also ten-year returns. Shiller stated in 2005 that this plot "confirms that long-term investors—investors who commit their money to an investment for ten full years—did do well when prices were low relative to earnings at the beginning of the ten years. Long-term investors would be well advised, individually, to lower their exposure to the stock market when it is high, as it has been recently, and get into the market when it is low."[1]
+
+Since 1900, the average P/E ratio for the S&P 500 index has ranged from 4.78 in Dec 1920 to 44.20 in Dec 1999.[4] However, except for some brief periods, during 1920–1990 the market P/E ratio was mostly between 10 and 20.[5]
+
+The average P/E of the market varies in relation with, among other factors, expected growth of earnings, expected stability of earnings, expected inflation, and yields of competing investments. For example, when U.S. treasury bonds yield high returns, investors pay less for a given earnings per share and P/E's fall.[citation needed]
+
+The average U.S. equity P/E ratio from 1900 to 2005 is 14 (or 16, depending on whether the geometric mean or the arithmetic mean, respectively, is used to average).[citation needed]
+
+Jeremy Siegel has suggested that the average P/E ratio of about 15 [6] (or earnings yield of about 6.6%) arises due to the long-term returns for stocks of about 6.8%. In Stocks for the Long Run, (2002 edition) he had argued that with favorable developments like the lower capital gains tax rates and transaction costs, P/E ratio in "low twenties" is sustainable, despite being higher than the historic average.
+
+Set out below are the recent year end values of the S&P 500 index and the associated P/E as reported.[7] For a list of recent contractions (recessions) and expansions see U.S. Business Cycle Expansions and Contractions.
+
+Date
+Index
+P/E
+EPS growth %
+Comment
+
+2020-09-30
+3362.99
+34.24
+
+2019-12-31
+3230.78
+23.16
+
+2018-12-312506.8518.94—
+
+2017-12-312673.6124.3312
+
+2016-12-312238.8323.68—
+
+2015-12-312043.9423.62—
+
+2014-12-312058.9020.12—
+
+2013-12-311848.3618.45—
+
+2012-12-311426.1916.49—
+
+2011-12-311257.6014.46—
+
+2010-12-311257.6416.26—
+
+2009-12-311115.1021.88—
+
+2008-12-31903.2560.70—
+
+2007-12-311468.3622.191.4
+
+2006-12-311418.3017.4014.7
+
+2005-12-311248.2917.8513.0
+
+2004-12-311211.9220.7023.8
+
+2003-12-311111.9222.8118.8
+
+2002-12-31879.8231.8918.5
+
+2001-12-311148.0846.50−30.82001 contraction resulting in P/E peak
+
+2000-12-311320.2826.418.6Dot-com bubble burst: 10 March 2000
+
+1999-12-311469.2530.5016.7
+
+1998-12-311229.2332.600.6
+
+1997-12-31970.4324.438.3
+
+1996-12-31740.7419.137.3
+
+1995-12-31615.9318.1418.7
+
+1994-12-31459.2715.0118.0Low P/E due to high recent earnings growth.
+
+1993-12-31466.4521.3128.9
+
+1992-12-31435.7122.828.1
+
+1991-12-31417.0926.12−14.8
+
+1990-12-31330.2215.47−6.9July 1990 – March 1991 contraction.
+
+1989-12-31353.4015.45—
+
+1988-12-31277.7211.69—Bottom (Black Monday was 19 Oct 1987)
+
+Note that at the height of the Dot-com bubble, P/E had risen to 32. The collapse in earnings caused P/E to rise to 46.50 in 2001. It has declined to a more sustainable region of 17. Its decline in recent years has been due to higher earnings growth.
+
+Due to the collapse in earnings and rapid stock market recovery following the 2020 Coronavirus Crash, the trailing P/E ratio reached 38.3 on October 12, 2020. This elevated level was only attained twice in history, 2001–2002 and 2008–2009.[8]
+
+In business culture
+[edit]
+
+This section needs more citations. Please help improve this section by adding citations to reliable sources. Unsourced material may be challenged and removed.
+
+Find sources: "Price–earnings ratio" – news · newspapers · books · scholar · JSTOR (March 2026) (Learn how and when to remove this message)
+
+The P/E ratio of a company is a major focus for many managers. They are usually paid in company stock or options on their company's stock (a form of payment that is supposed to align the interests of management with the interests of other stock holders). The stock price can increase in one of two ways: either through improved earnings or through an improved multiple that the market assigns to those earnings. In turn, the primary drivers for multiples such as the P/E ratio is through higher and more sustained earnings growth rates.
+
+Consequently, managers have strong incentives to boost earnings per share, even in the short term, and/or improve long-term growth rates. This can influence business decisions in several ways:
+
+If a company wants to acquire companies with a higher P/E ratio than its own, it usually prefers paying in cash or debt rather than in stock. Though in theory the method of payment makes no difference to value, doing it this way offsets or avoids earnings dilution (see accretion/dilution analysis).
+
+Conversely, companies with higher P/E ratios than their targets are more tempted to use their stock to pay for acquisitions.
+
+Companies with high P/E ratios but volatile earnings may be tempted to find ways to smooth earnings and diversify risk—this is the theory behind building conglomerates.
+
+Conversely, companies with low P/E ratios may be tempted to acquire small high-growth businesses in an effort to "rebrand" their portfolio of activities and burnish their image as growth stocks and thus obtain a higher PE rating.
+
+Companies try to smooth earnings, for example by "slush fund accounting" (hiding excess earnings in good years to cover for losses in lean years). Such measures are designed to create the image that the company always slowly but steadily increases profits, with the goal to increase the P/E ratio.
+
+Companies with low P/E ratios are usually more open to leveraging their balance sheet. As seen above, this mechanically lowers the P/E ratio, which means the company looks cheaper than it did before leverage, and also improves earnings growth rates. Both of these factors help drive up the share price.
+
+Strictly speaking, the ratio is measured in years, since the price is measured in dollars and earnings are measured in dollars per year. Therefore, the ratio demonstrates how many years it takes to cover the price, if earnings stay the same.
+
+Investor expectations
+[edit]
+
+In general, a high price–earning ratio indicates that investors are expecting higher growth of company's earnings in the future compared to companies with a lower price–earning ratio.[9] A low price–earning ratio may indicate either that a company may currently be undervalued or that the company is doing exceptionally well relative to its past trends. The price-to-earnings ratio can also be seen as a means of standardizing the value of one dollar of earnings throughout the stock market. In theory, by taking the median of P/E ratios over a period of several years, one could formulate something of a standardized P/E ratio, which could then be seen as a benchmark and used to indicate whether or not a stock is worth buying. In private equity, the extrapolation of past performance is driven by stale investments. State and local governments that are more fiscally stressed by higher unfunded pension liabilities assume higher portfolio returns through higher inflation assumptions, but this factor does not attenuate the extrapolative effects of past returns.[10]
+
+Negative earnings
+[edit]
+
+When a company has no earnings or is posting losses, in both cases P/E will be expressed as "N/A". Though it is possible to calculate a negative P/E, this is not the common convention.
+
+Related measures
+[edit]
+
+Cyclically adjusted price-to-earnings ratio
+
+Price-to-earnings-growth ratio
+
+Present value of growth opportunities
+
+Price-to-dividend ratio
+
+Return on investment
+
+Social earnings ratio
+
+EV/Ebitda
+
+Earnings yield – the inverse of price–earnings ratio
+
+See also
+[edit]
+
+Economics portal
+
+Cyclically adjusted price-to-earnings ratio
+
+Fundamental analysis
+
+Index of accounting articles
+
+Outline of economics
+
+Market value
+
+Price–sales ratio
+
+Stock market bubble
+
+Stock market crash
+
+Stock valuation using discounted cash flows
+
+Value investing
+
+Valuation using multiples
+
+Tobin's q
+
+References
+[edit]
+
+1 2 3 Shiller, Robert (2005). Irrational Exuberance (2d ed.). Princeton University Press. ISBN 0-691-12335-7.
+
+↑ Anderson, K.; Brooks, C. (2006). "The Long-Term Price-Earnings Ratio". The Long-Term Price-Earnings Ratio. SSRN 739664.
+
+↑ "Price Earnings Ratio".
+
+↑ "Seeking Alpha blog comment..." Seekingalpha.
+
+↑ Is the P/E Ratio a Good Market-Timing Indicator?
+
+↑ "Is the S&P 500 Index now over-valued? What Return Can You Reasonably Expect From Investing in the S&P 500 Index?". investorsfriend.com. Retrieved 18 December 2010.
+
+↑ "S&P 500 Earnings and Estimate Report".
+
+↑ "S&P 500 PE Ratio Data". Retrieved 9 August 2023.
+
+↑ Ko, Chiu Yu. Applied Financial Economics -- Theory with Empirics: Price and Trading. Chiu Yu Ko.
+
+↑ Rauh, Joshua D. "The Return Expectations of Institutional Investors*". Hoover Institution.
+
+Wikimedia Commons has media related to Price-to-earnings ratio.
+
+v
+
+t
+
+e
+
+Financial ratios
+
+Buffett indicator
+
+Cyclically adjusted price-to-earnings (CAPE)
+
+Capitalization rate (Cap Rate)
+
+Cash return on capital invested (CROCI)
+
+Debt ratio
+
+Debt-to-equity (D/E)
+
+Dividend cover
+
+Dividend payout
+
+Earnings yield (E/P)
+
+Enterprise value/EBITDA (EV/EBITDA)
+
+Enterprise value/gross cash invested (EV/GCI)
+
+Enterprise value/sales (EV/Sales)
+
+Loan-to-value (LTV)
+
+Omega
+
+Operating margin
+
+Price-to-book (P/B)
+
+Present value of growth opportunities (PVGO)
+
+Price/cash flow (P/CF)
+
+Price-earnings (P/E)
+
+Price-earnings to growth (PEG)
+
+Price-sales (P/S)
+
+Profit margin
+
+Quick ratio
+
+Return on assets (ROA)
+
+Return on net assets (RONA)
+
+Return on capital (ROC)
+
+Return on capital employed (ROCE)
+
+Return on equity (ROE)
+
+Return on tangible equity (ROTE)
+
+Risk-adjusted return on capital (RAROC)
+
+Risk return (RRR)
+
+Sharpe
+
+Short interest (SIR)
+
+Sortino
+
+Sustainable growth (SGR)
+
+Treynor
+
+Retrieved from "https://en.wikipedia.org/w/index.php?title=Price–earnings_ratio&oldid=1380187937"
+
+Category:
+Financial ratios
+
+Hidden categories:
+Articles with short description
+
+Short description is different from Wikidata
+
+Articles needing additional references from September 2018
+
+All articles needing additional references
+
+Use dmy dates from April 2014
+
+All accuracy disputes
+
+Articles with disputed statements from December 2023
+
+All articles with unsourced statements
+
+Articles with unsourced statements from September 2020
+
+Articles with unsourced statements from August 2012
+
+Articles needing additional references from March 2026
+
+Commons category link from Wikidata
+
+Price–earnings ratio
+
+Add topic

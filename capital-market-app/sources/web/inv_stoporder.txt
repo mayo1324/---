@@ -1,0 +1,44 @@
+URL: https://www.investor.gov/introduction-investing/investing-basics/glossary/stop-order
+FETCHED: 2026-10-18
+
+Stop Order | Investor.gov
+
+Skip to main content
+
+The .gov means it’s official.
+
+Federal government websites often end in .gov or .mil. Before sharing sensitive information, make sure you’re on a federal government site.
+
+The site is secure.
+
+The
+https://
+ensures that you are connecting to the official website and that any information you provide is encrypted and transmitted securely.
+
+Investor.gov
+
+U.S. Securities and Exchange Commission
+
+Stop Order
+
+A stop order is an order to buy or sell a stock once the price of the stock reaches a specified price, known as the stop price. When the specified price is reached, your stop order becomes a market order. The advantage of a stop order is you don't have to monitor how a stock is performing on a daily basis. The disadvantage is that a stop price purchase or sale could be activated by a short-term fluctuation in a stock's price. In addition, the price at which your trade is executed may differ from the stop price, especially in a fast-moving market where stock prices can change rapidly.
+
+Featured Content
+
+Take This Month's Quiz
+
+Check your knowledge of compound growth, asset allocation, retirement plans, and more in our October investing quiz!
+
+Use Financial Tools and Calculators
+
+Access RMD, compound interest and savings goal calculators plus other financial tools.
+
+Invest for Your Child's Future
+
+Learn about Trump Accounts today!
+
+Never stop learning about investing!
+
+Stay up to date with Investor Alerts & Bulletins, Quizzes, and more.
+
+Return to Top

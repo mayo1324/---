@@ -1,0 +1,279 @@
+[
+ {
+  "id": "l17",
+  "title": "תנודתיות ופערי מחיר",
+  "min": 6,
+  "module": "B",
+  "color": "#f472b6",
+  "slides": [
+   {
+    "t": "תנודתיות: כמה המחיר משתנה",
+    "b": "תנודתיות אומרת עד כמה המחיר משתנה לאורך זמן. מחיר שמשתנה הרבה הוא תנודתי. מחיר שמשתנה מעט הוא שקט.",
+    "v": "coaster"
+   },
+   {
+    "t": "הטווח של נר",
+    "b": "בכל נר אפשר לראות את המחיר הכי גבוה והכי נמוך. המרחק ביניהם הוא הטווח. טווח גדול אומר שהמחיר זז הרבה באותו פרק זמן.",
+    "v": "range"
+   },
+   {
+    "t": "למה יש ימים סוערים?",
+    "b": "לפעמים קורים אירועים מיוחדים, כמו פרסום דוחות של חברה או הודעה על מדיניות. אירועים כאלה יכולים להגדיל את התנודתיות.",
+    "v": "candle2"
+   },
+   {
+    "t": "פער בין סגירה לפתיחה",
+    "b": "לפעמים המחיר נפתח בבוקר במקום אחר מאשר נסגר אתמול. בגרף נשאר רווח ריק בין שני הימים, וקוראים לו פער.",
+    "v": "gap",
+    "w": "פער הוא עובדה בגרף, לא תחזית. אף אחד לא יודע מה יקרה אחריו."
+   },
+   {
+    "t": "למה זה חשוב לסטופ?",
+    "b": "סטופ הוא פקודה שנכנסת לפעולה כשהמחיר מגיע למחיר שקבעתם. כשהמחיר זז מהר או קופץ בפער, העסקה יכולה להתבצע במחיר שונה ממה שקבעתם.",
+    "v": "rr",
+    "w": "סטופ לא מבטיח מחיר יציאה מסוים."
+   }
+  ],
+  "qs": [
+   {
+    "q": "מה זו תנודתיות?",
+    "o": [
+     "כמה המחיר משתנה לאורך זמן",
+     "כמה חברות יש במדד",
+     "מתי השוק נפתח"
+    ],
+    "a": 0,
+    "why": "תנודתיות היא מידת השינוי של המחיר לאורך זמן."
+   },
+   {
+    "q": "מה הוא פער בגרף?",
+    "o": [
+     "נר ירוק ארוך",
+     "רווח ריק בין מחירים שבו לא היה מסחר",
+     "קו שמחבר שתי נקודות"
+    ],
+    "a": 1,
+    "why": "פער הוא אזור בגרף שבו כמעט לא נסחר, אחרי שינוי חד במחיר."
+   },
+   {
+    "q": "מה יכול לקרות לסטופ כשהמחיר קופץ מהר?",
+    "o": [
+     "הוא תמיד מתבצע בדיוק במחיר שנקבע",
+     "הוא יכול להתבצע במחיר שונה מהמחיר שנקבע",
+     "הוא מבטל את ההפסד"
+    ],
+    "a": 1,
+    "why": "לפי investor.gov, במסחר מהיר מחיר הביצוע יכול להיות שונה ממחיר הסטופ."
+   }
+  ],
+  "src": [
+   {
+    "q": "volatility usually denoted by σ is the degree of variation of a trading price series over time",
+    "f": "sources/web/wp_volatility.txt",
+    "u": "https://en.wikipedia.org/wiki/Volatility_(finance)"
+   },
+   {
+    "q": "The price range is the distance between the top of the upper shadow and the bottom of the lower shadow",
+    "f": "sources/web/wp_candle.txt",
+    "u": "https://en.wikipedia.org/wiki/Candlestick_chart"
+   },
+   {
+    "q": "the amount caused by specific events like earnings or policy announcements",
+    "f": "sources/web/wp_volatility.txt",
+    "u": "https://en.wikipedia.org/wiki/Volatility_(finance)"
+   },
+   {
+    "q": "On a technical analysis chart, a gap represents an area where no trading takes place",
+    "f": "sources/web/wp_gap.txt",
+    "u": "https://en.wikipedia.org/wiki/Gap_(chart_pattern)"
+   },
+   {
+    "q": "the price at which your trade is executed may differ from the stop price, especially in a fast-moving market where stock prices can change rapidly",
+    "f": "sources/web/inv_stoporder.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/stop-order"
+   },
+   {
+    "q": "A stop order is an order to buy or sell a stock once the price of the stock reaches a specified price, known as the stop price",
+    "f": "sources/web/inv_stoporder.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/stop-order"
+   }
+  ],
+  "scene_requests": [
+   {
+    "key": "range",
+    "desc": "נר אחד גדול עם חץ דו כיווני מהקצה העליון של הקו הדק לקצה התחתון, ותווית 'טווח'"
+   },
+   {
+    "key": "gap",
+    "desc": "שני נרות ברצף: הראשון נסגר בגובה אחד, השני נפתח גבוה יותר, ורווח ריק מסומן ביניהם בקו מקווקו ותווית 'פער'"
+   }
+  ],
+  "status": "draft for expert review",
+  "to_verify": [
+   "הגדרת תנודתיות ב-investor.gov: דף המילון הורד ריק, ולכן נעשה שימוש בוויקיפדיה (משני) בלבד",
+   "הטענה שפערים נוצרים בין סגירה של יום אחד לפתיחה של היום הבא: לא נמצא מקור מפורש בדפים שהורדו (הדף על פער מדבר על פער בין טווחי מחיר של ימים); לבדיקת מומחה",
+   "הסיבות לימי תנודתיות גבוהה (דוחות, הודעות מדיניות): מקור משני בלבד",
+   "הגדרות הטווח והפער ממקור משני, כלי נפוץ בניתוח טכני ולא הבטחה"
+  ]
+ },
+ {
+  "id": "l2",
+  "review": true,
+  "title": "איך קוראים נרות",
+  "src": [
+   {
+    "q": "each candle represents four important pieces of information for that day: open and close in the thick body, and high and low in the candle wick",
+    "f": "sources/web/wp_candle.txt",
+    "u": "https://en.wikipedia.org/wiki/Candlestick_chart"
+   },
+   {
+    "q": "Normally, if the asset closed higher than it opened, the body is displayed as hollow (or the green color is used)",
+    "f": "sources/web/wp_candle.txt",
+    "u": "https://en.wikipedia.org/wiki/Candlestick_chart"
+   },
+   {
+    "q": "Modern charting software permits unrestricted customization of candle looks and colors",
+    "f": "sources/web/wp_candle.txt",
+    "u": "https://en.wikipedia.org/wiki/Candlestick_chart"
+   }
+  ],
+  "text_issues": [
+   "ירוק עלה ואדום ירד: זו מוסכמה נפוצה ולא חוק. המקור אומר שהצבעים ניתנים להתאמה ושיש גרסאות עם משמעות שונה (סגירה מול הסגירה הקודמת). מומלץ לכתוב 'בדרך כלל' ולציין שבכלי מסחר שונים הצבעים עשויים להיות הפוכים.",
+   "השיעור לא מציין מקור בפועל. חסר מקור ל'איפה המחיר התחיל ונגמר': המקור המצוי הוא ויקיפדיה (משני), וחסר מקור ראשוני.",
+   "'הקווים הדקים מראים עד איפה המחיר הגיע' תקין לפי המקור (צללים מראים מחיר גבוה ונמוך), אפשר להוסיף שאלו הערכים הגבוה והנמוך בפרק הזמן.",
+   "ויקיפדיה מציינת שהצגת נרות מבוססת על ניתוח טכני, שיעילותו שנויה במחלוקת: מומלץ משפט נייטרלי שנרות הם כלי נפוץ ואינם הבטחה."
+  ]
+ },
+ {
+  "id": "l3",
+  "review": true,
+  "title": "מדד, נפח וממוצע נע",
+  "src": [
+   {
+    "q": "a stock market index or stock index is an index that measures the performance of a stock market, or of a subset of a stock market",
+    "f": "sources/web/wp_index.txt",
+    "u": "https://en.wikipedia.org/wiki/Stock_market_index"
+   },
+   {
+    "q": "volume, or trading volume, is the amount (total number) of a security",
+    "f": "sources/web/wp_volume.txt",
+    "u": "https://en.wikipedia.org/wiki/Volume_(finance)"
+   },
+   {
+    "q": "A moving average is commonly used with time series data to smooth out short-term fluctuations and highlight longer-term trends or cycles",
+    "f": "sources/web/wp_ma.txt",
+    "u": "https://en.wikipedia.org/wiki/Moving_average"
+   },
+   {
+    "q": "volatility usually denoted by σ is the degree of variation of a trading price series over time",
+    "f": "sources/web/wp_volatility.txt",
+    "u": "https://en.wikipedia.org/wiki/Volatility_(finance)"
+   }
+  ],
+  "text_issues": [
+   "'ממוצע נע ... וככה רואים בקלות לאן המחיר הולך': מוגזם. המקור אומר שהוא מחליק תנודות קצרות ומדגיש מגמות ארוכות יותר, לא שהוא מראה לאן המחיר הולך. לשכתב ל'מראה את הכיוון שהיה עד עכשיו'.",
+   "'נכס תנודתי יכול להרוויח הרבה, וגם להפסיד הרבה' ו'נכס שקט זז לאט': אין תמיכה במקורות שנשמרו. המקור מגדיר תנודתיות כמידת שינוי המחיר, לא כסיכוי לרווח. להשמיט או להוכיח.",
+   "'אם רובן עולות, המדד עולה': פישוט. מדדים משוקללים (למשל לפי שווי חברה) ולכן לא רק כמות החברות קובעת. לא נבדק במקור, לנסח 'בדרך כלל' או לאמת.",
+   "נפח: 'עמודה גבוהה אומרת שהיה הרבה מסחר' תקין. אסור להוסיף משמעות כמו 'נפח גבוה אומר שהמגמה חזקה' בלי להגדיר אותה כחוק אצבע נפוץ. ויקיפדיה כותבת רק שנפח בדרך כלל גבוה יותר כשהמחיר משתנה.",
+   "נושא התנודתיות כאן חופף ל-l17 החדש; מומלץ להפנות אליו או לקצר.",
+   "אין מקור מצורף לשיעור."
+  ]
+ },
+ {
+  "id": "l4",
+  "review": true,
+  "title": "מגמה: לאן הגרף הולך?",
+  "src": [
+   {
+    "q": "Past trends are identified by drawing lines, known as trendlines, that connect price action making higher highs and higher lows for an uptrend, or lower lows and lower highs for a downtrend",
+    "f": "sources/web/wp_trend.txt",
+    "u": "https://en.wikipedia.org/wiki/Market_trend"
+   },
+   {
+    "q": "A future market trend can only be determined in hindsight, since at any time prices in the future are not known",
+    "f": "sources/web/wp_trend.txt",
+    "u": "https://en.wikipedia.org/wiki/Market_trend"
+   },
+   {
+    "q": "It is formed when a diagonal line can be drawn between a minimum of three or more price pivot points",
+    "f": "sources/web/wp_trendline.txt",
+    "u": "https://en.wikipedia.org/wiki/Trend_line_(technical_analysis)"
+   },
+   {
+    "q": "A line can be drawn between any two points, but it does not qualify as a trend line until tested",
+    "f": "sources/web/wp_trendline.txt",
+    "u": "https://en.wikipedia.org/wiki/Trend_line_(technical_analysis)"
+   }
+  ],
+  "text_issues": [
+   "'כל עוד המחיר נשאר מעל קו עולה, המגמה ממשיכה': ניסוח כחוק. המקור אומר שמגמה עתידית ידועה רק בדיעבד. לנסח 'לפי כלל אצבע נפוץ, אנשים רואים בכך סימן להמשך המגמה, אבל זו לא הבטחה'.",
+   "'כדאי לבדוק שוב' ו'לכן לפעמים מחכים': נשמעים כעצה פעולה, ללא מקור. להוריד או לנסח בנייטרליות.",
+   "'קו בין כמה נקודות': לפי המקור צריך לפחות שלוש נקודות והקו נחשב רק אחרי שנבדק.",
+   "'כשאין כיוון קשה לתכנן עסקה': לא נתמך במקור.",
+   "אין מקור מצורף. מגמה עולה: 'כל ירידה נעצרת גבוה יותר' תואם 'higher lows', אבל חסר משפט שזו הגדרה מקובלת בניתוח טכני, לא תחזית."
+  ]
+ },
+ {
+  "id": "l5",
+  "review": true,
+  "title": "תמיכה: הרצפה",
+  "src": [
+   {
+    "q": "support and resistance are certain predetermined levels of the price of a security at which it is thought that the price will tend to stop and reverse",
+    "f": "sources/web/wp_sr.txt",
+    "u": "https://en.wikipedia.org/wiki/Support_and_resistance"
+   },
+   {
+    "q": "These levels are denoted by multiple touches of price without a breakthrough of the level",
+    "f": "sources/web/wp_sr.txt",
+    "u": "https://en.wikipedia.org/wiki/Support_and_resistance"
+   },
+   {
+    "q": "This means that the price is more likely to bounce off this level rather than break through it",
+    "f": "sources/web/wp_sr.txt",
+    "u": "https://en.wikipedia.org/wiki/Support_and_resistance"
+   },
+   {
+    "q": "The efficacy of technical analysis is disputed by the efficient-market hypothesis",
+    "f": "sources/web/wp_ta.txt",
+    "u": "https://en.wikipedia.org/wiki/Technical_analysis"
+   }
+  ],
+  "text_issues": [
+   "'תמיכה היא מקום שהמחיר ירד אליו, נעצר וחזר': מוצג כעובדה. המקור אומר 'thought that the price will tend to' (מאמינים שהמחיר נוטה). לנסח כחוק אצבע נפוץ.",
+   "'זה אזור, לא קו' ו'לא תמיד נעצר בדיוק באותו מספר': המקור מדבר על 'noise' ועל פריצה, אך אינו אומר במפורש שזה אזור. לאמת או לנסח בזהירות.",
+   "'אם קונים ליד הרצפה, אפשר לשים סטופ קצת מתחתיה': נשמע כעצת השקעה/מסחר ואין מקור. להסיר או לנסח כדוגמה שחלק מהסוחרים משתמשים בה, ללא המלצה.",
+   "'המחיר ירד אליו כמה פעמים': תואם 'multiple touches', אך המקור אומר שיותר מגעים נותנים יותר משמעות, לא הבטחה.",
+   "חסר משפט נייטרלי שיעילות הניתוח הטכני שנויה במחלוקת."
+  ]
+ },
+ {
+  "id": "l6",
+  "review": true,
+  "title": "התנגדות: התקרה",
+  "src": [
+   {
+    "q": "A resistance level is the opposite of a support level. It is where the price tends to find resistance as it rises due to an increase in selling interest",
+    "f": "sources/web/wp_sr.txt",
+    "u": "https://en.wikipedia.org/wiki/Support_and_resistance"
+   },
+   {
+    "q": "price is more likely to bounce off this level rather than break through it",
+    "f": "sources/web/wp_sr.txt",
+    "u": "https://en.wikipedia.org/wiki/Support_and_resistance"
+   },
+   {
+    "q": "if price breaks a resistance level, it will often find support at that level in the future",
+    "f": "sources/web/wp_sr.txt",
+    "u": "https://en.wikipedia.org/wiki/Support_and_resistance"
+   }
+  ],
+  "text_issues": [
+   "'התקרה עוזרת לבחור יעד לרווח: אולי שם המחיר ייעצר': ללא מקור וקרוב לעצה מסחרית. להסיר או לנסח כתיאור של מה שחלק מהסוחרים עושים.",
+   "שאלת הבחינה 'איפה כדאי לחשוב על יעד לרווח? לפני התקרה' מלמדת כלל מסחר כאילו הוא עובדה ואין עליו מקור. להחליף בשאלה על ההגדרה.",
+   "'לפעמים המחיר פורץ את התקרה' נכון לפי המקור, ומומלץ להוסיף שהתקרה לפעמים הופכת לתמיכה (חוק אצבע נפוץ, מקור: ויקיפדיה).",
+   "'מקום שהמחיר עלה אליו, נעצר וחזר למטה': צריך ניסוח 'נוטה', כי זו נטייה ולא בטוח.",
+   "אין מקור מצורף."
+  ]
+ }
+]
