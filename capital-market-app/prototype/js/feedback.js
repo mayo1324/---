@@ -29,7 +29,14 @@ function openFeedback() {
   $('#fbc').onclick = () => copy(cur_());
   $('#fbs').onclick = async () => {
     const t = cur_(); if (f.rate === 0 && !f.msg) return toast('דרגו או כתבו משהו קודם');
-    if (FEEDBACK_WHATSAPP) { window.open(`https://wa.me/${FEEDBACK_WHATSAPP}?text=${encodeURIComponent(t)}`, '_blank', 'noopener'); return; }
+    if (FEEDBACK_WHATSAPP) {
+      /* some viewers (for example a preview inside another page) block WhatsApp, so the text is also copied and shown as a fallback */
+      const url = `https://wa.me/${FEEDBACK_WHATSAPP}?text=${encodeURIComponent(t)}`, local = '0' + FEEDBACK_WHATSAPP.replace(/^972/, '');
+      try { await navigator.clipboard.writeText(t); } catch (e) { }
+      try { window.open(url, '_blank', 'noopener'); } catch (e) { }
+      $('#fbx').innerHTML = `<p class="muted" style="font-size:13px;line-height:1.6">פותחים את וואטסאפ. אם הוא לא נפתח, ההודעה כבר הועתקה: הדביקו אותה בשיחה עם ${local}.</p><a class="btn ghost" target="_blank" rel="noopener noreferrer" href="${url}">לנסות שוב לפתוח את וואטסאפ</a>`;
+      return;
+    }
     if (navigator.share) { try { await navigator.share({ title: 'משוב על האפליקציה', text: t }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
     const x = $('#fbx'), enc = encodeURIComponent(t); let h = '';
     if (FEEDBACK_WHATSAPP) h += `<a class="btn ghost" target="_blank" rel="noopener" href="https://wa.me/${FEEDBACK_WHATSAPP}?text=${enc}">שליחה בוואטסאפ</a>`;

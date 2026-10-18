@@ -1109,3 +1109,8 @@ details.more p{font-size:13.5px;line-height:1.65;color:var(--muted);margin:8px 0
 .fbfab{position:absolute;left:12px;bottom:92px;z-index:22;display:flex;align-items:center;gap:6px;height:36px;padding:0 12px 0 10px;border-radius:999px;font-size:12.5px;font-weight:700;color:var(--text);background:rgba(28,33,40,.92);border:1px solid rgba(255,255,255,.16);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 6px 18px rgba(0,0,0,.4);transition:transform .15s}
 .fbfab svg{color:var(--lime)}.fbfab:active{transform:scale(.94)}
 .with-tabs .fbfab{bottom:166px}
+
+/* feedback button now looks like the helper button below it */
+.fbfab{width:48px;height:48px;padding:0;justify-content:center;border-radius:50%;color:#0b0d10;background:linear-gradient(135deg,#d9ff6a,#b6f21a);border:0;box-shadow:0 8px 22px rgba(0,0,0,.45),0 0 0 4px rgba(200,255,61,.14);left:14px}
+.fbfab span{display:none}.fbfab svg{width:24px;height:24px;color:#0b0d10}
+.with-tabs .fbfab{bottom:164px}
