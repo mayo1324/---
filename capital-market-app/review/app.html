@@ -1177,6 +1177,13 @@ details.more p{font-size:13.5px;line-height:1.65;color:var(--muted);margin:8px 0
 .screen.entering{animation:enter3 .26s cubic-bezier(.2,.9,.25,1) both;filter:none}
 @keyframes enter3{from{opacity:0;transform:translateX(calc(var(--dx,0px) * -.5))}to{opacity:1;transform:none}}
 
+/* bottom bar sits at the very bottom edge (small gap only, so the iPhone home line is not covered) */
+.tabbar{bottom:calc(6px + env(safe-area-inset-bottom,0px) * .25)}
+.screen.has-tabs{padding-bottom:98px}
+.botfab{bottom:calc(86px + env(safe-area-inset-bottom,0px) * .25)}
+.with-tabs .fbfab{bottom:calc(144px + env(safe-area-inset-bottom,0px) * .25)}
+.fbfab{bottom:calc(16px + env(safe-area-inset-bottom,0px) * .25)}
+
 body{background:#0b0d10}
 @media (min-width:481px){body{background:#d9dde3}}
 </style>
