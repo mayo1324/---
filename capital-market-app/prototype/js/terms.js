@@ -34,13 +34,32 @@ screens.terms = (mode) => {
     ${view ? `<p class="muted tver" style="text-align:center">${t ? 'אושר בתאריך ' + new Date(t.at).toLocaleDateString('he-IL') : ''}</p>` : `<div class="tend" id="tend">
       <button class="check" id="tc1" type="button"><i></i><span>קראתי והבנתי את תנאי השימוש והפרטיות. אני מבין/ה שהתוכן באפליקציה לימודי בלבד ואינו ייעוץ השקעות או המלצה.</span></button>
       <button class="check" id="tc2" type="button"><i></i><span>אני בן/בת 15 ומעלה. אם אני מתחת ל-18, ההורה או האפוטרופוס שלי יודעים שאני משתמש/ת באפליקציה.</span></button>
-      <button class="btn primary" id="tok" disabled>אישור והמשך</button></div>`}
+      <div class="slide2 off" id="sl" role="slider" tabindex="0" aria-label="החליקו לאישור והמשך" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="sl-fill"></div><span class="sl-txt" id="slt">סמנו את שתי התיבות כדי לאשר</span>
+        <div class="sl-knob" id="slk"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></div></div></div>`}
   </div>${view ? '' : '<button class="tgo" id="tgo" type="button">קפצו לסוף ואשרו <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></button>'}`;
   if (view) { $('#tbk').onclick = () => go('profile'); return; }
-  const st = { a: false, b: false }, upd = () => { $('#tok').disabled = !(st.a && st.b); };
+  const st = { a: false, b: false, done: false }, sl = $('#sl'), knob = $('#slk'), fill = $('.sl-fill', sl), KW = 56;
+  const unlocked = () => st.a && st.b;
+  const upd = () => { sl.classList.toggle('off', !unlocked()); $('#slt').textContent = unlocked() ? 'החליקו לאישור' : 'סמנו את שתי התיבות כדי לאשר'; };
+  const setP = (p) => { const max = sl.clientWidth - KW - 8; knob.style.transform = `translateX(${-p * max}px)`; fill.style.width = (KW + 8 + p * max) + 'px'; sl.setAttribute('aria-valuenow', Math.round(p * 100)); $('#slt').style.opacity = 1 - Math.min(1, p * 1.6); };
+  const finish = () => {
+    if (st.done) return; st.done = true; setP(1); sl.classList.add('ok'); knob.innerHTML = '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'; $('#slt').textContent = 'אושר!'; $('#slt').style.opacity = 1;
+    const d = loadDB(); d.terms = { v: TERMS_VERSION, at: new Date().toISOString() }; save(); SFX.play('win');
+    if (!reduceMotion) {
+      const r = knob.getBoundingClientRect(), ph = $('#phone').getBoundingClientRect(), x = r.left + r.width / 2 - ph.left, y = r.top + r.height / 2 - ph.top;
+      const ov = document.createElement('div'); ov.className = 'appr'; ov.style.setProperty('--x', x + 'px'); ov.style.setProperty('--y', y + 'px'); ov.innerHTML = `<i></i><i></i><i></i>${confetti(46)}`; $('#phone').appendChild(ov); setTimeout(() => ov.remove(), 2200);
+    }
+    setTimeout(() => { scr.onscroll = null; bootRoute(); }, reduceMotion ? 150 : 1150);
+  };
   $('#tc1').onclick = () => { st.a = !st.a; $('#tc1').classList.toggle('on', st.a); upd(); };
   $('#tc2').onclick = () => { st.b = !st.b; $('#tc2').classList.toggle('on', st.b); upd(); };
+  let drag = null;
+  knob.addEventListener('pointerdown', (e) => { if (!unlocked() || st.done) return; drag = { x: e.clientX }; knob.style.transition = fill.style.transition = 'none'; try { knob.setPointerCapture(e.pointerId); } catch (_) { } });
+  knob.addEventListener('pointermove', (e) => { if (!drag) return; const max = sl.clientWidth - KW - 8; setP(Math.max(0, Math.min(1, (drag.x - e.clientX) / max))); });
+  const end = () => { if (!drag) return; drag = null; const max = sl.clientWidth - KW - 8, cur_ = Math.abs(+(knob.style.transform.match(/-?[\d.]+/) || [0])[0]) / max; knob.style.transition = fill.style.transition = 'transform .4s cubic-bezier(.34,1.56,.64,1), width .4s cubic-bezier(.34,1.56,.64,1)'; if (cur_ >= .9) finish(); else setP(0); };
+  knob.addEventListener('pointerup', end); knob.addEventListener('pointercancel', end);
+  sl.addEventListener('keydown', (e) => { if (!unlocked()) return; if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowLeft') { e.preventDefault(); finish(); } });
   $('#tgo').onclick = () => scr.scrollTo({ top: scr.scrollHeight, behavior: reduceMotion ? 'auto' : 'smooth' });
   scr.onscroll = () => { const near = scr.scrollHeight - scr.scrollTop - scr.clientHeight < 140; $('#tgo') && $('#tgo').classList.toggle('gone', near); };
-  $('#tok').onclick = () => { const d = loadDB(); d.terms = { v: TERMS_VERSION, at: new Date().toISOString() }; save(); scr.onscroll = null; SFX.play('pop'); bootRoute(); };
 };

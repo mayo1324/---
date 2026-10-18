@@ -1141,6 +1141,26 @@ details.more p{font-size:13.5px;line-height:1.65;color:var(--muted);margin:8px 0
 .tgo.gone{opacity:0;pointer-events:none;transform:translateY(14px)}
 .terms{padding-bottom:110px}
 
+/* ===== slide to approve ===== */
+.slide2{position:relative;height:64px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid var(--line);overflow:hidden;margin-top:6px;user-select:none;-webkit-user-select:none;transition:opacity .3s,border-color .3s}
+.slide2.off{opacity:.45}.slide2:not(.off){border-color:rgba(200,255,61,.5);box-shadow:0 0 0 4px rgba(200,255,61,.08)}
+.sl-fill{position:absolute;inset-block:0;inset-inline-start:0;width:64px;border-radius:999px;background:linear-gradient(90deg,rgba(200,255,61,.55),rgba(200,255,61,.18))}
+.sl-txt{position:absolute;inset:0;display:grid;place-items:center;font-weight:700;font-size:15px;color:var(--text);padding:0 70px;text-align:center;pointer-events:none}
+.slide2:not(.off):not(.ok) .sl-txt{background:linear-gradient(90deg,var(--text) 40%,#c8ff3d 50%,var(--text) 60%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:slshine 2.4s linear infinite}
+@keyframes slshine{from{background-position:200% 0}to{background-position:-200% 0}}
+.sl-knob{position:absolute;top:4px;inset-inline-start:4px;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;color:#0b0d10;background:linear-gradient(135deg,#d9ff6a,#b6f21a);box-shadow:0 6px 18px rgba(0,0,0,.45);touch-action:none;cursor:grab;will-change:transform}
+.slide2.off .sl-knob{cursor:not-allowed;background:#4a525d;color:#9aa3ad;box-shadow:none}
+.slide2:not(.off):not(.ok) .sl-knob svg{animation:slnudge 1.6s ease-in-out infinite}
+@keyframes slnudge{0%,100%{transform:translateX(0)}50%{transform:translateX(-5px)}}
+.slide2.ok{border-color:var(--lime);box-shadow:0 0 30px rgba(200,255,61,.5)}.slide2.ok .sl-fill{background:var(--lime)}.slide2.ok .sl-txt{color:#0b0d10}
+.slide2.ok .sl-knob{animation:slpop .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes slpop{0%{transform:scale(1)}50%{transform:scale(1.25)}100%{transform:scale(1)}}
+.appr{position:absolute;inset:0;z-index:70;pointer-events:none;overflow:hidden}
+.appr>i{position:absolute;left:var(--x);top:var(--y);width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;border:3px solid var(--lime);opacity:0;animation:aring 1.1s cubic-bezier(.2,.7,.3,1) forwards}
+.appr>i:nth-child(2){animation-delay:.15s}.appr>i:nth-child(3){animation-delay:.3s;border-color:#fff}
+@keyframes aring{0%{opacity:.9;transform:scale(.4)}100%{opacity:0;transform:scale(26)}}
+@media (prefers-reduced-motion:reduce){.sl-txt,.sl-knob svg{animation:none!important}}
+
 body{background:#0b0d10}
 @media (min-width:481px){body{background:#d9dde3}}
 </style>
@@ -4864,15 +4884,34 @@ screens.terms = (mode) => {
     ${view ? `<p class="muted tver" style="text-align:center">${t ? 'אושר בתאריך ' + new Date(t.at).toLocaleDateString('he-IL') : ''}</p>` : `<div class="tend" id="tend">
       <button class="check" id="tc1" type="button"><i></i><span>קראתי והבנתי את תנאי השימוש והפרטיות. אני מבין/ה שהתוכן באפליקציה לימודי בלבד ואינו ייעוץ השקעות או המלצה.</span></button>
       <button class="check" id="tc2" type="button"><i></i><span>אני בן/בת 15 ומעלה. אם אני מתחת ל-18, ההורה או האפוטרופוס שלי יודעים שאני משתמש/ת באפליקציה.</span></button>
-      <button class="btn primary" id="tok" disabled>אישור והמשך</button></div>`}
+      <div class="slide2 off" id="sl" role="slider" tabindex="0" aria-label="החליקו לאישור והמשך" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="sl-fill"></div><span class="sl-txt" id="slt">סמנו את שתי התיבות כדי לאשר</span>
+        <div class="sl-knob" id="slk"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></div></div></div>`}
   </div>${view ? '' : '<button class="tgo" id="tgo" type="button">קפצו לסוף ואשרו <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></button>'}`;
   if (view) { $('#tbk').onclick = () => go('profile'); return; }
-  const st = { a: false, b: false }, upd = () => { $('#tok').disabled = !(st.a && st.b); };
+  const st = { a: false, b: false, done: false }, sl = $('#sl'), knob = $('#slk'), fill = $('.sl-fill', sl), KW = 56;
+  const unlocked = () => st.a && st.b;
+  const upd = () => { sl.classList.toggle('off', !unlocked()); $('#slt').textContent = unlocked() ? 'החליקו לאישור' : 'סמנו את שתי התיבות כדי לאשר'; };
+  const setP = (p) => { const max = sl.clientWidth - KW - 8; knob.style.transform = `translateX(${-p * max}px)`; fill.style.width = (KW + 8 + p * max) + 'px'; sl.setAttribute('aria-valuenow', Math.round(p * 100)); $('#slt').style.opacity = 1 - Math.min(1, p * 1.6); };
+  const finish = () => {
+    if (st.done) return; st.done = true; setP(1); sl.classList.add('ok'); knob.innerHTML = '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'; $('#slt').textContent = 'אושר!'; $('#slt').style.opacity = 1;
+    const d = loadDB(); d.terms = { v: TERMS_VERSION, at: new Date().toISOString() }; save(); SFX.play('win');
+    if (!reduceMotion) {
+      const r = knob.getBoundingClientRect(), ph = $('#phone').getBoundingClientRect(), x = r.left + r.width / 2 - ph.left, y = r.top + r.height / 2 - ph.top;
+      const ov = document.createElement('div'); ov.className = 'appr'; ov.style.setProperty('--x', x + 'px'); ov.style.setProperty('--y', y + 'px'); ov.innerHTML = `<i></i><i></i><i></i>${confetti(46)}`; $('#phone').appendChild(ov); setTimeout(() => ov.remove(), 2200);
+    }
+    setTimeout(() => { scr.onscroll = null; bootRoute(); }, reduceMotion ? 150 : 1150);
+  };
   $('#tc1').onclick = () => { st.a = !st.a; $('#tc1').classList.toggle('on', st.a); upd(); };
   $('#tc2').onclick = () => { st.b = !st.b; $('#tc2').classList.toggle('on', st.b); upd(); };
+  let drag = null;
+  knob.addEventListener('pointerdown', (e) => { if (!unlocked() || st.done) return; drag = { x: e.clientX }; knob.style.transition = fill.style.transition = 'none'; try { knob.setPointerCapture(e.pointerId); } catch (_) { } });
+  knob.addEventListener('pointermove', (e) => { if (!drag) return; const max = sl.clientWidth - KW - 8; setP(Math.max(0, Math.min(1, (drag.x - e.clientX) / max))); });
+  const end = () => { if (!drag) return; drag = null; const max = sl.clientWidth - KW - 8, cur_ = Math.abs(+(knob.style.transform.match(/-?[\d.]+/) || [0])[0]) / max; knob.style.transition = fill.style.transition = 'transform .4s cubic-bezier(.34,1.56,.64,1), width .4s cubic-bezier(.34,1.56,.64,1)'; if (cur_ >= .9) finish(); else setP(0); };
+  knob.addEventListener('pointerup', end); knob.addEventListener('pointercancel', end);
+  sl.addEventListener('keydown', (e) => { if (!unlocked()) return; if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowLeft') { e.preventDefault(); finish(); } });
   $('#tgo').onclick = () => scr.scrollTo({ top: scr.scrollHeight, behavior: reduceMotion ? 'auto' : 'smooth' });
   scr.onscroll = () => { const near = scr.scrollHeight - scr.scrollTop - scr.clientHeight < 140; $('#tgo') && $('#tgo').classList.toggle('gone', near); };
-  $('#tok').onclick = () => { const d = loadDB(); d.terms = { v: TERMS_VERSION, at: new Date().toISOString() }; save(); scr.onscroll = null; SFX.play('pop'); bootRoute(); };
 };
 
 'use strict';
