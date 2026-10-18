@@ -4736,7 +4736,8 @@ function usageSummary() {
   return `שיעורים ${(ac.lessonsDone || []).length}/${LESSONS.length} · תרגול ${Object.values(pd).filter(v => v > 0).length}/${SCEN.length} · כוכבים ${ac.stars || 0} · מסך: ${cur.name}${cur.arg != null && typeof cur.arg !== 'object' ? ' ' + cur.arg : ''} · ${deviceShort()}${FB_ERRORS.length ? ' · שגיאות: ' + FB_ERRORS.slice(-2).join(' ; ') : ''}`;
 }
 /* the message is only the ready-made sentence, plus the friend's own words if they wrote any */
-function buildFeedbackText(f) { return ['משוב מהאפליקציה:', fbLine(f), f.msg].filter(Boolean).join('\n'); }
+/* a bold tag on its own line, then the sentence; the invisible mark at the start of each line keeps right-to-left order clean in WhatsApp */
+function buildFeedbackText(f) { return ['*משוב מהאפליקציה*', fbLine(f), f.msg].filter(Boolean).map(l => '\u200F' + l).join('\n'); }
 function openFeedback() {
   const f = { rate: 0, topic: '' };
   const TOPICS = ['עיצוב', 'תוכן השיעורים', 'תרגול', 'קושי', 'באג', 'משהו אחר'];
