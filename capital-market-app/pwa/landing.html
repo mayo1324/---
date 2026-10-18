@@ -131,14 +131,14 @@ footer{padding:36px 0 60px;border-top:1px solid var(--line);color:var(--mu);font
 <body>
 <canvas id="bg" aria-hidden="true"></canvas><div class="veil"></div>
 
-<nav id="nav"><div class="w"><a class="brand" href="./"><img src="icon-512.png" alt="">לומדים <b>שוק הון</b></a><a class="btn sm" href="app/">פתיחת האפליקציה</a></div></nav>
+<nav id="nav"><div class="w"><a class="brand" href="./"><img src="icon-512.png" alt="">לומדים <b>שוק הון</b></a><a class="btn sm" href="app/index.html">פתיחת האפליקציה</a></div></nav>
 
 <header class="hero"><div class="w hg">
   <div>
     <div class="pill fade"><i></i>גרסת ניסוי · בחינם · לבני 15 ומעלה</div>
     <h1><span class="ln"><span>תבינו את שוק ההון.</span></span><span class="ln"><span class="grad">בלי לסכן שקל.</span></span></h1>
     <p class="sub fade d2">שיעורים קצרים בעברית ותרגול על גרפים אמיתיים מהעבר. מחליטים, רואים מה קרה ולומדים למה. הכול הדמיה, בלי כסף אמיתי.</p>
-    <div class="cta fade d3"><a class="btn" href="app/" data-mag>פתיחת האפליקציה</a><button class="btn o" id="ins" data-mag>התקנה בטלפון</button><a class="btn o" href="#install" data-mag>איך מתקינים?</a></div>
+    <div class="cta fade d3"><a class="btn" href="app/index.html" data-mag>פתיחת האפליקציה</a><button class="btn o" id="ins" data-mag>התקנה בטלפון</button><a class="btn o" href="#install" data-mag>איך מתקינים?</a></div>
     <div class="chips fade d3"><span>27 שיעורים</span><span>20 מקרי תרגול</span><span>עובד גם בלי אינטרנט</span></div>
   </div>
   <div class="stage" id="stage">
@@ -207,7 +207,7 @@ footer{padding:36px 0 60px;border-top:1px solid var(--line);color:var(--mu);font
   <div class="warn rv"><b>חשוב לדעת:</b> {{DISC}} התחברות עם Google וסנכרון ההתקדמות דורשים אינטרנט. השיעורים והתרגול עובדים גם בלי.</div>
 </div></section>
 
-<section class="final"><div class="w rv"><h2>מוכנים להתחיל?</h2><p class="lead" style="margin:0 auto 30px">כמה דקות ביום, ושוק ההון כבר לא נראה כמו שפה זרה.</p><a class="btn" href="app/" data-mag>פתיחת האפליקציה</a></div></section>
+<section class="final"><div class="w rv"><h2>מוכנים להתחיל?</h2><p class="lead" style="margin:0 auto 30px">כמה דקות ביום, ושוק ההון כבר לא נראה כמו שפה זרה.</p><a class="btn" href="app/index.html" data-mag>פתיחת האפליקציה</a></div></section>
 </main>
 
 <footer><div class="w"><a href="terms.html">תקנון ופרטיות</a><p>© לומדים שוק הון · גרסת ניסוי · תוכן לימודי בלבד, לא ייעוץ השקעות</p></div></footer>
@@ -297,7 +297,7 @@ function draw(){const r=mc.getBoundingClientRect(),d=Math.min(devicePixelRatio||
  v.forEach((s,i)=>{const x=(i+.5)*sw,up=s[3]>=s[0],col=up?'#c8ff3d':'#ff5d6c';mg.strokeStyle=col;mg.fillStyle=col;mg.lineWidth=Math.max(1,sw*.12);mg.beginPath();mg.moveTo(x,Y(s[1]));mg.lineTo(x,Y(s[2]));mg.stroke();const t=Y(Math.max(s[0],s[3])),b=Y(Math.min(s[0],s[3]));mg.fillRect(x-sw*.3,t,sw*.6,Math.max(2,b-t))});
  if(cut<seq.length){mg.setLineDash([6,6]);mg.strokeStyle='rgba(255,255,255,.25)';mg.beginPath();mg.moveTo(cut*sw,0);mg.lineTo(cut*sw,h);mg.stroke();mg.setLineDash([])}}
 function guess(dir){if(done)return;done=true;$('#up').disabled=$('#dn').disabled=true;const start=seq[29][3],step=()=>{if(cut<seq.length){cut++;draw();setTimeout(step,RM?0:70)}else{const end=seq[seq.length-1][3],up=end>start,ok=(dir==='up')===up;
- $('#res').innerHTML=(ok?'<b style="color:#c8ff3d">ניחשתם נכון.</b> ':'<b style="color:#ff8a95">הפעם לא.</b> ')+'אבל בשוק האמיתי ניחוש הוא לא שיטה. בתרגול האמיתי לומדים לקרוא מגמה, רמות וסיכון.<br><a href="app/" style="color:#c8ff3d;font-weight:700">לתרגול האמיתי</a> · <a href="#" id="again" style="color:#9aa4af">סבב נוסף</a>';
+ $('#res').innerHTML=(ok?'<b style="color:#c8ff3d">ניחשתם נכון.</b> ':'<b style="color:#ff8a95">הפעם לא.</b> ')+'אבל בשוק האמיתי ניחוש הוא לא שיטה. בתרגול האמיתי לומדים לקרוא מגמה, רמות וסיכון.<br><a href="app/index.html" style="color:#c8ff3d;font-weight:700">לתרגול האמיתי</a> · <a href="#" id="again" style="color:#9aa4af">סבב נוסף</a>';
  $('#again').onclick=e=>{e.preventDefault();gen()}}};step()}
 $('#up').onclick=()=>guess('up');$('#dn').onclick=()=>guess('dn');
 gen();addEventListener('resize',draw);
