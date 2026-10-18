@@ -995,6 +995,37 @@ details.skills summary::-webkit-details-marker{display:none}details.skills[open]
 
 details.skills summary{display:flex;justify-content:space-between;align-items:center}details.skills summary::after{content:'';width:8px;height:8px;border-inline-end:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);transition:transform .25s}details.skills[open] summary::after{transform:rotate(-135deg)}
 
+/* ===== polish: press feedback, quiz, practice run, feedback, home ===== */
+.btn,.opt,.chip,.rk,.ccard,.pn,.seg button,.mod-h,.xcard,.acard{transition:transform .16s cubic-bezier(.3,.7,.4,1),background .25s,border-color .25s}
+.btn:active,.opt:active,.chip:active,.rk:active,.pn:active,.seg button:active,.mod-h:active,.xcard:active,.acard:active{transform:scale(.97)}
+.opt.ok{animation:okpulse .7s ease-out}
+@keyframes okpulse{0%{box-shadow:0 0 0 0 rgba(200,255,61,.55)}100%{box-shadow:0 0 0 16px rgba(200,255,61,0)}}
+#qm span{display:inline-block;animation:kidin .45s cubic-bezier(.22,1,.36,1) both}
+#nx:not(:disabled){animation:nudge 1.1s ease-in-out .5s 2}
+@keyframes nudge{0%,100%{transform:none}30%{transform:translateY(-4px)}60%{transform:translateY(1px)}}
+.prog i.on{transition:background .4s,box-shadow .4s,transform .35s}.prog i.cur{transform:scaleY(1.5)}
+@keyframes cin{from{opacity:0}to{opacity:1}}
+.pbox{position:relative}
+.flash{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;animation:flash 1s ease-out forwards}
+.flash.win{background:radial-gradient(circle at 50% 50%,rgba(31,214,155,.38),transparent 70%)}
+.flash.lose{background:radial-gradient(circle at 50% 50%,rgba(255,96,72,.38),transparent 70%)}
+@keyframes flash{0%{opacity:0}25%{opacity:1}100%{opacity:0}}
+.price.tkup{animation:tkup .45s ease-out}.price.tkdn{animation:tkdn .45s ease-out}
+@keyframes tkup{0%{color:#1ff0b0;transform:translateY(-2px)}100%{color:inherit;transform:none}}
+@keyframes tkdn{0%{color:#ff6048;transform:translateY(2px)}100%{color:inherit;transform:none}}
+.checks .ck{animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+.checks .ck:nth-child(2){animation-delay:.08s}.checks .ck:nth-child(3){animation-delay:.16s}.checks .ck:nth-child(4){animation-delay:.24s}.checks .ck:nth-child(5){animation-delay:.32s}.checks .ck:nth-child(6){animation-delay:.4s}.checks .ck:nth-child(n+7){animation-delay:.48s}
+.replay .chart{animation:reveal 1.2s cubic-bezier(.4,0,.2,1) .35s both}
+@keyframes reveal{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.hero2::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.09) 50%,transparent 58%);transform:translateX(-130%);animation:gloss 8s ease-in-out 2.5s infinite}
+@keyframes gloss{0%,65%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
+.hello .pill:not(.gold) svg{animation:flame 2.2s ease-in-out infinite;transform-origin:50% 90%}
+@keyframes flame{0%,100%{transform:scale(1) rotate(-3deg)}50%{transform:scale(1.14) rotate(3deg)}}
+.mod .pn{animation:rise .4s cubic-bezier(.2,.8,.2,1) both}
+.mod .pn:nth-child(2){animation-delay:.04s}.mod .pn:nth-child(3){animation-delay:.08s}.mod .pn:nth-child(4){animation-delay:.12s}.mod .pn:nth-child(5){animation-delay:.16s}.mod .pn:nth-child(6){animation-delay:.2s}.mod .pn:nth-child(n+7){animation-delay:.24s}
+.ccard{animation:rise .45s cubic-bezier(.2,.8,.2,1) both}.ccard:nth-child(2){animation-delay:.05s}.ccard:nth-child(3){animation-delay:.1s}.ccard:nth-child(4){animation-delay:.15s}
+@media (prefers-reduced-motion:reduce){.opt.ok,#nx:not(:disabled),.flash,.price.tkup,.price.tkdn,.replay .chart,.hero2::after,.hello .pill svg,.mod .pn,.ccard,.checks .ck{animation:none!important}.flash{display:none}}
+
 body{background:#0b0d10}
 @media (min-width:481px){body{background:#d9dde3}}
 </style>
@@ -1235,8 +1266,11 @@ const SFX = (() => {
     get on() { return on; },
     set(v) { on = !!v; try { localStorage.setItem(KEY, on ? '1' : '0'); } catch (e) { } if (on) this.play('pop'); },
     unlock() { const c = ensure(); if (c && c.state === 'suspended') c.resume(); },
+    /* short vibration on phones that support it (same switch as the sounds) */
+    buzz(name) { if (!on) return; const P = { tap: 8, pick: 10, tab: 8, correct: 16, wrong: [25, 45, 25], good: [16, 40, 16], oops: 30, win: [20, 70, 20, 70, 50], level: [20, 70, 20, 70, 50], pop: 8 }; try { if (navigator.vibrate && P[name]) navigator.vibrate(P[name]); } catch (e) { } },
     play(name) {
       if (!on || !S[name]) return;
+      this.buzz(name);
       try { const c = ensure(); if (!c) return; if (c.state === 'suspended') c.resume(); S[name](); } catch (e) { }
     }
   };
@@ -3734,7 +3768,7 @@ screens.profile = () => {
     <div class="sec"><h3>הישגים</h3></div><div class="badges">${bd.map(([e, t, on]) => `<div class="badge${on ? '' : ' off'}"><i>${e}</i>${t}</div>`).join('')}</div>
     <button class="premcard" data-go="paywall"><div class="pmi">${s.premium ? '✓' : '★'}</div><div><b>${s.premium ? 'המנוי פעיל' : 'שדרוג לפרימיום'}</b><span>${s.premium ? 'אפשר לראות מה כלול' : 'ללמוד בלי גבולות. עד 50% הנחה'}${s.premium ? '' : '<span class="dtag">הדגמה</span>'}</span></div>${ic.back}</button>
     <div class="sec"><h3>הגדרות</h3></div>
-    <button class="btn ghost" id="snd" style="margin-bottom:10px">${SFX.on ? 'סאונד: פעיל' : 'סאונד: כבוי'}</button>
+    <button class="btn ghost" id="snd" style="margin-bottom:10px">${SFX.on ? 'סאונד ורטט: פעיל' : 'סאונד ורטט: כבוי'}</button>
     <div class="sec"><h3>כלי הדגמה</h3></div>
     <button class="btn ghost" id="un" style="margin-bottom:10px">${portfolioOpen() ? 'התיק פתוח' : 'פתח את התיק בלי לסיים שיעורים'}</button>
     <button class="btn ghost" id="ua" style="margin-bottom:10px">${s.openAll ? 'נעל את הנושאים שוב' : 'פתח את כל הנושאים (הדגמה)'}</button>
@@ -3742,7 +3776,7 @@ screens.profile = () => {
     <button class="btn ghost" id="rs">מחיקת החשבון הזה</button>
     <p class="disc">התוכן באפליקציה לימודי בלבד. אין בו המלצות השקעה או הבטחות לרווח, ואין כסף אמיתי. ${WARN_DAY}</p>
     <p class="disc">נתונים לבדיקה פרטית בלבד, לא להפצה.</p></div>`;
-  $('#snd').onclick = () => { SFX.set(!SFX.on); $('#snd').textContent = SFX.on ? 'סאונד: פעיל' : 'סאונד: כבוי'; };
+  $('#snd').onclick = () => { SFX.set(!SFX.on); $('#snd').textContent = SFX.on ? 'סאונד ורטט: פעיל' : 'סאונד ורטט: כבוי'; };
   $('#ua').onclick = () => { A().openAll = !A().openAll; save(); toast(A().openAll ? 'כל הנושאים פתוחים להדגמה' : 'הנושאים ננעלו שוב'); go('profile'); };
   $('#un').onclick = () => { if (!portfolioOpen()) { A().demoUnlock = true; save(); toast('התיק נפתח להדגמה'); go('profile'); } };
   $('#lo').onclick = () => { loadDB().session = null; save(); go('login'); };
@@ -4238,7 +4272,7 @@ screens.practice = (idx = 0) => {
   const W = 358, H = 300, VH = 54, VBH = H + VH + 24, AX = 46, plotW = W - AX, slot = (plotW - 8) / (P.N + P.M), bw = Math.max(1.4, slot * .62);
   const all = P.candles, lo = Math.min(...all.map(c => c.l)) - 3, hi = Math.max(...all.map(c => c.h)) + 3;
   const y = (v) => 8 + (hi - v) / (hi - lo) * (H - 24), priceAt = (py) => hi - (py - 8) / (H - 24) * (hi - lo), cx = (k) => 6 + k * slot + slot / 2;
-  const st = { step: 'read', line: null, drag: null, volAns: null, trend: null, decision: null, support: null, stop: null, risk: null, target: null, hint: false, running: false, shown: P.N, mark: null };
+  const st = { step: 'read', line: null, drag: null, volAns: null, trend: null, decision: null, support: null, stop: null, risk: null, target: null, hint: false, running: false, shown: P.N, mark: null, intro: true };
   scr.innerHTML = `<div class="anim">
     <div class="pr-head"><button class="icon-btn" id="bk">${ic.back}</button><div class="tt"><b>מקרה ${idx + 1}</b><span>נכס X, בלי כסף אמיתי</span></div><button class="icon-btn" id="hb" style="color:var(--gold)" aria-label="רמז">${ic.bulb}</button></div>
     <div class="pbox"><div class="meta"><div><span class="hl">מחיר עכשיו</span><div class="price" id="px">${fmt(P.last)}</div></div><div class="hl" style="text-align:left">תיק תרגול ${money(START_CASH)}</div></div>
@@ -4258,7 +4292,8 @@ screens.practice = (idx = 0) => {
     el('line', { x1: 6 + P.N * slot, x2: 6 + P.N * slot, y1: 0, y2: H, stroke: '#3a414b', 'stroke-dasharray': '2 4' });
     if (st.shown === P.N) txt(6 + P.N * slot + (plotW - 6 - P.N * slot) / 2, H / 2, 'העתיד', '#5d6571', 12, 'middle', 400);
     if (st.hint) { el('rect', { x: 0, y: y(P.swingLow + P.atr * .35), width: plotW, height: y(P.swingLow - P.atr * .6) - y(P.swingLow + P.atr * .35), fill: '#fbbf24', opacity: .13 }); txt(8, y(P.swingLow - P.atr * .6) + 13, 'הנקודות הנמוכות האחרונות', '#fbbf24', 11, 'start', 500); }
-    for (let k = 0; k < st.shown; k++) { const c = P.candles[k], up = c.c >= c.o, col = up ? '#1ff0b0' : '#ff6048', x = cx(k); el('line', { x1: x, x2: x, y1: y(c.h), y2: y(c.l), stroke: col, 'stroke-width': slot < 4 ? 1 : 1.4, 'stroke-linecap': 'round' }); el('rect', { x: x - bw / 2, y: y(Math.max(c.o, c.c)), width: bw, height: Math.max(2, Math.abs(y(c.o) - y(c.c))), rx: 1.5, fill: col }); }
+    const intro = st.intro; st.intro = false;
+    for (let k = 0; k < st.shown; k++) { const c = P.candles[k], up = c.c >= c.o, col = up ? '#1ff0b0' : '#ff6048', x = cx(k), gk = el('g', intro && k < P.N && !reduceMotion ? { style: `animation:cin .4s ease-out ${(k * 11)}ms both` } : {}); el('line', { x1: x, x2: x, y1: y(c.h), y2: y(c.l), stroke: col, 'stroke-width': slot < 4 ? 1 : 1.4, 'stroke-linecap': 'round' }, gk); el('rect', { x: x - bw / 2, y: y(Math.max(c.o, c.c)), width: bw, height: Math.max(2, Math.abs(y(c.o) - y(c.c))), rx: 1.5, fill: col }, gk); }
     /* volume panel */
     { const top = H + 6, vmax = 150; txt(8, top + 12, 'נפח', '#8b93a1', 10.5, 'start', 600);
       if (st.step === 'volume') el('rect', { x: 2, y: top - 2, width: plotW + 2, height: VH + 4, rx: 8, fill: '#fbbf24', opacity: .1, stroke: '#fbbf24', 'stroke-opacity': .5 });
@@ -4364,10 +4399,10 @@ screens.practice = (idx = 0) => {
     const sim = enter ? simulate(fut, { stop: st.stop, target: st.target }) : { res: 'none', at: fut.length - 1 };
     const timer = setInterval(() => {
       if (st.shown - P.N > sim.at) {
-        clearInterval(timer); if (sim.res !== 'none') st.mark = { res: sim.res, at: sim.at }; draw();
+        clearInterval(timer); if (sim.res !== 'none') { st.mark = { res: sim.res, at: sim.at }; const fl = document.createElement('div'); fl.className = 'flash ' + (sim.res === 'target' ? 'win' : 'lose'); $('.pbox').appendChild(fl); SFX.play(sim.res === 'target' ? 'correct' : 'wrong'); } draw();
         setTimeout(() => go('feedback', { idx, st: { trend: st.trend, decision: st.decision, line: st.line, volAns: st.volAns, plan: enter ? plan() : null }, sim }), 1100); return;
       }
-      st.shown++; $('#px').textContent = fmt(P.candles[st.shown - 1].c); draw();
+      st.shown++; const pxe = $('#px'), nc = P.candles[st.shown - 1], pc = P.candles[st.shown - 2]; pxe.textContent = fmt(nc.c); pxe.classList.remove('tkup', 'tkdn'); void pxe.offsetWidth; pxe.classList.add(nc.c >= pc.c ? 'tkup' : 'tkdn'); draw();
     }, 110);
   }
   window.__P = P; window.__st = st; window.__SC = sc;
@@ -4415,7 +4450,7 @@ screens.feedback = ({ idx, st, sim }) => {
     const sz = sizing(P, pl), fut = P.candles.slice(P.N);
     const pnl = sim.res === 'target' ? sz.qty * (pl.target - P.last) : sim.res === 'stop' ? -sz.qty * (P.last - pl.stop) : sz.qty * (fut[sim.at].c - P.last);
     const outcome = { target: 'המחיר הגיע ליעד, יצאתם עם רווח', stop: 'המחיר ירד לסטופ, יצאתם והפסדתם סכום קטן שהחלטתם עליו מראש', none: 'המחיר לא הגיע לא ליעד ולא לסטופ' }[sim.res];
-    result = `<div class="card pnl"><span class="eyebrow">מה קרה בגרף הזה (כסף וירטואלי)</span><div class="wbig ${chgCls(pnl)}">${pnl >= 0 ? '+' : '-'}${money(Math.abs(pnl))}</div><span class="muted" style="font-size:13.5px;line-height:1.5">${outcome}.</span></div>`;
+    result = `<div class="card pnl"><span class="eyebrow">מה קרה בגרף הזה (כסף וירטואלי)</span><div class="wbig ${chgCls(pnl)}" data-cu="${pnl}" data-d="0" data-pre="₪" data-plus="1">${pnl >= 0 ? '+' : '-'}${money(Math.abs(pnl))}</div><span class="muted" style="font-size:13.5px;line-height:1.5">${outcome}.</span></div>`;
     alt = `<div class="card alt"><b>עתיד אחד בלבד</b>
       <span class="muted" style="font-size:13.5px;line-height:1.65">זה העתיד האמיתי היחיד שיש כרגע לנכס הזה. תוצאה אחת לא מוכיחה כלום, ולכן בודקים את התוכנית ולא רק את התוצאה.</span></div>`;
     if (ok) { title = sim.res === 'target' ? 'תוכנית מצוינת!' : sim.res === 'stop' ? 'תוכנית טובה, אבל הפעם לא הצליח' : 'תוכנית טובה'; sub = sim.res === 'stop' ? 'זה קורה גם לתוכניות טובות. הסטופ עשה את שלו: ההפסד נשאר קטן.' : 'כל החלקים בתוכנית נכונים.'; }

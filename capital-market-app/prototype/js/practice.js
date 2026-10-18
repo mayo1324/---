@@ -99,7 +99,7 @@ screens.practice = (idx = 0) => {
   const W = 358, H = 300, VH = 54, VBH = H + VH + 24, AX = 46, plotW = W - AX, slot = (plotW - 8) / (P.N + P.M), bw = Math.max(1.4, slot * .62);
   const all = P.candles, lo = Math.min(...all.map(c => c.l)) - 3, hi = Math.max(...all.map(c => c.h)) + 3;
   const y = (v) => 8 + (hi - v) / (hi - lo) * (H - 24), priceAt = (py) => hi - (py - 8) / (H - 24) * (hi - lo), cx = (k) => 6 + k * slot + slot / 2;
-  const st = { step: 'read', line: null, drag: null, volAns: null, trend: null, decision: null, support: null, stop: null, risk: null, target: null, hint: false, running: false, shown: P.N, mark: null };
+  const st = { step: 'read', line: null, drag: null, volAns: null, trend: null, decision: null, support: null, stop: null, risk: null, target: null, hint: false, running: false, shown: P.N, mark: null, intro: true };
   scr.innerHTML = `<div class="anim">
     <div class="pr-head"><button class="icon-btn" id="bk">${ic.back}</button><div class="tt"><b>מקרה ${idx + 1}</b><span>נכס X, בלי כסף אמיתי</span></div><button class="icon-btn" id="hb" style="color:var(--gold)" aria-label="רמז">${ic.bulb}</button></div>
     <div class="pbox"><div class="meta"><div><span class="hl">מחיר עכשיו</span><div class="price" id="px">${fmt(P.last)}</div></div><div class="hl" style="text-align:left">תיק תרגול ${money(START_CASH)}</div></div>
@@ -119,7 +119,8 @@ screens.practice = (idx = 0) => {
     el('line', { x1: 6 + P.N * slot, x2: 6 + P.N * slot, y1: 0, y2: H, stroke: '#3a414b', 'stroke-dasharray': '2 4' });
     if (st.shown === P.N) txt(6 + P.N * slot + (plotW - 6 - P.N * slot) / 2, H / 2, 'העתיד', '#5d6571', 12, 'middle', 400);
     if (st.hint) { el('rect', { x: 0, y: y(P.swingLow + P.atr * .35), width: plotW, height: y(P.swingLow - P.atr * .6) - y(P.swingLow + P.atr * .35), fill: '#fbbf24', opacity: .13 }); txt(8, y(P.swingLow - P.atr * .6) + 13, 'הנקודות הנמוכות האחרונות', '#fbbf24', 11, 'start', 500); }
-    for (let k = 0; k < st.shown; k++) { const c = P.candles[k], up = c.c >= c.o, col = up ? '#1ff0b0' : '#ff6048', x = cx(k); el('line', { x1: x, x2: x, y1: y(c.h), y2: y(c.l), stroke: col, 'stroke-width': slot < 4 ? 1 : 1.4, 'stroke-linecap': 'round' }); el('rect', { x: x - bw / 2, y: y(Math.max(c.o, c.c)), width: bw, height: Math.max(2, Math.abs(y(c.o) - y(c.c))), rx: 1.5, fill: col }); }
+    const intro = st.intro; st.intro = false;
+    for (let k = 0; k < st.shown; k++) { const c = P.candles[k], up = c.c >= c.o, col = up ? '#1ff0b0' : '#ff6048', x = cx(k), gk = el('g', intro && k < P.N && !reduceMotion ? { style: `animation:cin .4s ease-out ${(k * 11)}ms both` } : {}); el('line', { x1: x, x2: x, y1: y(c.h), y2: y(c.l), stroke: col, 'stroke-width': slot < 4 ? 1 : 1.4, 'stroke-linecap': 'round' }, gk); el('rect', { x: x - bw / 2, y: y(Math.max(c.o, c.c)), width: bw, height: Math.max(2, Math.abs(y(c.o) - y(c.c))), rx: 1.5, fill: col }, gk); }
     /* volume panel */
     { const top = H + 6, vmax = 150; txt(8, top + 12, 'נפח', '#8b93a1', 10.5, 'start', 600);
       if (st.step === 'volume') el('rect', { x: 2, y: top - 2, width: plotW + 2, height: VH + 4, rx: 8, fill: '#fbbf24', opacity: .1, stroke: '#fbbf24', 'stroke-opacity': .5 });
@@ -225,10 +226,10 @@ screens.practice = (idx = 0) => {
     const sim = enter ? simulate(fut, { stop: st.stop, target: st.target }) : { res: 'none', at: fut.length - 1 };
     const timer = setInterval(() => {
       if (st.shown - P.N > sim.at) {
-        clearInterval(timer); if (sim.res !== 'none') st.mark = { res: sim.res, at: sim.at }; draw();
+        clearInterval(timer); if (sim.res !== 'none') { st.mark = { res: sim.res, at: sim.at }; const fl = document.createElement('div'); fl.className = 'flash ' + (sim.res === 'target' ? 'win' : 'lose'); $('.pbox').appendChild(fl); SFX.play(sim.res === 'target' ? 'correct' : 'wrong'); } draw();
         setTimeout(() => go('feedback', { idx, st: { trend: st.trend, decision: st.decision, line: st.line, volAns: st.volAns, plan: enter ? plan() : null }, sim }), 1100); return;
       }
-      st.shown++; $('#px').textContent = fmt(P.candles[st.shown - 1].c); draw();
+      st.shown++; const pxe = $('#px'), nc = P.candles[st.shown - 1], pc = P.candles[st.shown - 2]; pxe.textContent = fmt(nc.c); pxe.classList.remove('tkup', 'tkdn'); void pxe.offsetWidth; pxe.classList.add(nc.c >= pc.c ? 'tkup' : 'tkdn'); draw();
     }, 110);
   }
   window.__P = P; window.__st = st; window.__SC = sc;
@@ -276,7 +277,7 @@ screens.feedback = ({ idx, st, sim }) => {
     const sz = sizing(P, pl), fut = P.candles.slice(P.N);
     const pnl = sim.res === 'target' ? sz.qty * (pl.target - P.last) : sim.res === 'stop' ? -sz.qty * (P.last - pl.stop) : sz.qty * (fut[sim.at].c - P.last);
     const outcome = { target: 'המחיר הגיע ליעד, יצאתם עם רווח', stop: 'המחיר ירד לסטופ, יצאתם והפסדתם סכום קטן שהחלטתם עליו מראש', none: 'המחיר לא הגיע לא ליעד ולא לסטופ' }[sim.res];
-    result = `<div class="card pnl"><span class="eyebrow">מה קרה בגרף הזה (כסף וירטואלי)</span><div class="wbig ${chgCls(pnl)}">${pnl >= 0 ? '+' : '-'}${money(Math.abs(pnl))}</div><span class="muted" style="font-size:13.5px;line-height:1.5">${outcome}.</span></div>`;
+    result = `<div class="card pnl"><span class="eyebrow">מה קרה בגרף הזה (כסף וירטואלי)</span><div class="wbig ${chgCls(pnl)}" data-cu="${pnl}" data-d="0" data-pre="₪" data-plus="1">${pnl >= 0 ? '+' : '-'}${money(Math.abs(pnl))}</div><span class="muted" style="font-size:13.5px;line-height:1.5">${outcome}.</span></div>`;
     alt = `<div class="card alt"><b>עתיד אחד בלבד</b>
       <span class="muted" style="font-size:13.5px;line-height:1.65">זה העתיד האמיתי היחיד שיש כרגע לנכס הזה. תוצאה אחת לא מוכיחה כלום, ולכן בודקים את התוכנית ולא רק את התוצאה.</span></div>`;
     if (ok) { title = sim.res === 'target' ? 'תוכנית מצוינת!' : sim.res === 'stop' ? 'תוכנית טובה, אבל הפעם לא הצליח' : 'תוכנית טובה'; sub = sim.res === 'stop' ? 'זה קורה גם לתוכניות טובות. הסטופ עשה את שלו: ההפסד נשאר קטן.' : 'כל החלקים בתוכנית נכונים.'; }

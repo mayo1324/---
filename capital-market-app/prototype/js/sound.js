@@ -34,8 +34,11 @@ const SFX = (() => {
     get on() { return on; },
     set(v) { on = !!v; try { localStorage.setItem(KEY, on ? '1' : '0'); } catch (e) { } if (on) this.play('pop'); },
     unlock() { const c = ensure(); if (c && c.state === 'suspended') c.resume(); },
+    /* short vibration on phones that support it (same switch as the sounds) */
+    buzz(name) { if (!on) return; const P = { tap: 8, pick: 10, tab: 8, correct: 16, wrong: [25, 45, 25], good: [16, 40, 16], oops: 30, win: [20, 70, 20, 70, 50], level: [20, 70, 20, 70, 50], pop: 8 }; try { if (navigator.vibrate && P[name]) navigator.vibrate(P[name]); } catch (e) { } },
     play(name) {
       if (!on || !S[name]) return;
+      this.buzz(name);
       try { const c = ensure(); if (!c) return; if (c.state === 'suspended') c.resume(); S[name](); } catch (e) { }
     }
   };
