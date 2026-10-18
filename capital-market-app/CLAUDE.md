@@ -25,3 +25,6 @@
 - `.claude/agents/` אייג'נטים
 - `design/` עיצוב
 - `prototype/` אב הטיפוס
+
+## כלל עבודה: שליחת האפליקציה
+בסיום כל משימה מסתיים: לבנות מחדש את `review/app.html` (`python3 scripts/build_artifact.py review/app.html --standalone`), לעדכן את הקישור הפרטי, ולשלוח למשתמש את `app.html` ואת קובץ ה-ZIP לבדיקה.
