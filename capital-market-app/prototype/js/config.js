@@ -20,3 +20,6 @@ const FIREBASE_CONFIG = {
 
 /* demo shortcuts in the profile (unlock all topics, open portfolio): hidden for everyone; open the app once with ?demo=1 to show them on this device */
 let DEMO_TOOLS = false; try { if (/[?&]demo=1/.test(location.search)) localStorage.setItem('cm_demo', '1'); DEMO_TOOLS = localStorage.getItem('cm_demo') === '1'; } catch (e) { }
+
+/* daily pace: how many NEW lessons and NEW practice cases open each day (finished ones are always open). Premium and the demo shortcut skip it. */
+const PACE = { lessons: 1, cases: 1 };

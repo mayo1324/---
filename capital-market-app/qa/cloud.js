@@ -5,7 +5,7 @@ const { launch, APP } = require('./lib');
   window.__FBMOCK={ async signIn(k){ if(__mode==='denied'){const e=new Error('x');e.code='auth/unauthorized-domain';throw e} if(__mode==='closed'){const e=new Error('x');e.code='auth/popup-closed-by-user';throw e} return {uid:'u9',name:'',email:'a@b.co'}; },
    async getDoc(u){ if(__mode==='readfail') throw new Error('offline'); return __store[u]||null; }, async setDoc(u,d){ if(__mode==='writefail') throw new Error('offline'); __store[u]=Object.assign(__store[u]||{},d); },
    async signOut(){__log.push('out')}, async deleteAccount(u){ if(__mode==='delfail') throw new Error('recent'); delete __store[u]; __log.push('del')}, async redirectUser(){return null}, async currentUser(){return null} };
-  localStorage.setItem('cm_proto_v2', JSON.stringify({accounts:{}, session:null, terms:{v:2}, seenOnboarding:true})); });
+  localStorage.setItem('cm_proto_v2', JSON.stringify({accounts:{}, session:null, terms:{v:3}, seenOnboarding:true})); });
  await p.goto(APP); await p.waitForTimeout(500);
  // merge unit tests
  const m = await p.evaluate(()=>{ const r=[]; 

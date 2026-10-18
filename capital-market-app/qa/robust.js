@@ -1,7 +1,7 @@
 const { launch, APP, seed, mkAcct } = require('./lib');
 (async()=>{ const issues=[]; const ok=(c,m)=>{if(!c)issues.push(m)};
  // corrupt storage
- for (const [name,init] of [['corrupt json',()=>localStorage.setItem('cm_proto_v2','{bad')],['empty obj',()=>localStorage.setItem('cm_proto_v2','{}')],['storage throws',()=>{ Object.defineProperty(window,'localStorage',{get(){throw new Error('blocked')}}); }],['old account shape',()=>localStorage.setItem('cm_proto_v2',JSON.stringify({accounts:{'a@b.co':{name:'א',email:'a@b.co',pass:'x'}},session:'a@b.co',terms:{v:2}}))],['session points to missing acct',()=>localStorage.setItem('cm_proto_v2',JSON.stringify({accounts:{},session:'ghost@x.co',terms:{v:2}}))]]) {
+ for (const [name,init] of [['corrupt json',()=>localStorage.setItem('cm_proto_v2','{bad')],['empty obj',()=>localStorage.setItem('cm_proto_v2','{}')],['storage throws',()=>{ Object.defineProperty(window,'localStorage',{get(){throw new Error('blocked')}}); }],['old account shape',()=>localStorage.setItem('cm_proto_v2',JSON.stringify({accounts:{'a@b.co':{name:'א',email:'a@b.co',pass:'x'}},session:'a@b.co',terms:{v:3}}))],['session points to missing acct',()=>localStorage.setItem('cm_proto_v2',JSON.stringify({accounts:{},session:'ghost@x.co',terms:{v:3}}))]]) {
    const {b,p,errs}=await launch(390,844); await p.addInitScript(init); await p.goto(APP); await p.waitForTimeout(900);
    const st = await p.evaluate(()=>({n:cur&&cur.name,len:scr.innerText.length})); 
    const u=[...new Set(errs)].filter(e=>!/ERR_FAILED/.test(e)); 

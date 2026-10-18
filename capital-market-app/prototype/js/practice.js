@@ -59,9 +59,9 @@ function trackSkills(ac, checks) {
 }
 let practiceLevel = 0;
 function caseCard(s, i, d) {
-  const stars = d[s.id] || 0, c = s.raw.c.slice(s.raw.di - 59, s.raw.di + 1).map(r => r[4]), sp = sparkPath(c, 150, 46), id = 'cs' + i;
-  const chip = stars === 3 ? 'מושלם' : stars > 0 ? 'אפשר לשפר' : 'חדש';
-  return `<button class="ccard${stars === 3 ? ' perfect' : ''}${stars === 0 ? ' fresh' : ''}" data-go="practice" data-arg="${i}">
+  const pz = casePaced(s), stars = d[s.id] || 0, c = s.raw.c.slice(s.raw.di - 59, s.raw.di + 1).map(r => r[4]), sp = sparkPath(c, 150, 46), id = 'cs' + i;
+  const chip = pz ? 'נפתח מחר' : stars === 3 ? 'מושלם' : stars > 0 ? 'אפשר לשפר' : 'חדש';
+  return `<button class="ccard${stars === 3 ? ' perfect' : ''}${stars === 0 ? ' fresh' : ''}${pz ? ' paced' : ''}" data-go="practice" data-arg="${i}">
     <svg class="cc-sp" viewBox="0 0 150 46" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8ff3d" stop-opacity=".32"/><stop offset="1" stop-color="#c8ff3d" stop-opacity="0"/></linearGradient></defs><path d="${sp.area}" fill="url(#${id})"/><path d="${sp.d}" fill="none" stroke="#c8ff3d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>
     <div class="cc-t"><b>מקרה ${i + 1}</b><em>${chip}</em></div>
     <div class="cc-m"><span class="cc-dif" aria-label="רמה ${s.level}">${'●'.repeat(s.level)}${'○'.repeat(3 - s.level)}</span><span class="cc-st">${'★'.repeat(stars)}${'☆'.repeat(3 - stars)}</span></div></button>`;
@@ -71,14 +71,14 @@ screens.practiceHome = () => {
   const total = SCEN.reduce((a, s) => a + (d[s.id] || 0), 0), max = SCEN.length * 3;
   const rated = Object.entries(sk).filter(([, v]) => v.n >= 2).map(([k, v]) => [k, v.ok / v.n]).sort((a, b) => a[1] - b[1]);
   const weak = rated.length && rated[0][1] < .75 ? rated[0] : null;
-  const nextCase = SCEN.findIndex(s => (d[s.id] || 0) < 3), played = Object.keys(sk).length > 0;
+  const nextCase = SCEN.findIndex(s => (d[s.id] || 0) < 3 && !casePaced(s)), played = Object.keys(sk).length > 0, waitCase = nextCase < 0 && SCEN.some(s => (d[s.id] || 0) < 3 && casePaced(s));
   const lv = practiceLevel || (nextCase >= 0 ? SCEN[nextCase].level : 1);
   const skillBars = Object.entries(SKILLS).filter(([k]) => sk[k]).map(([k, [t]]) => { const v = sk[k], pc = Math.round(v.ok / v.n * 100); return `<div class="sk"><span>${t}</span><div class="bar"><i style="width:${pc}%"></i></div><b>${pc}%</b></div>`; }).join('');
   const grid = (n) => SCEN.map((s, i) => [s, i]).filter(([s]) => s.level === n).map(([s, i]) => caseCard(s, i, d)).join('');
   scr.innerHTML = `<div class="anim"><div class="top"><h2>תרגול</h2><span class="pill gold">${ic.star}${ac.stars}</span></div>
     <div class="card sumcard"><div class="pc-row"><b>${total} מתוך ${max} כוכבים</b><span class="muted" style="font-size:13px">${SCEN.filter(s => (d[s.id] || 0) > 0).length} מתוך ${SCEN.length} מקרים</span></div>
       <div class="bar" style="margin:12px 0 14px"><i style="width:${Math.round(total / max * 100)}%"></i></div>
-      ${nextCase >= 0 ? `<button class="btn primary" data-go="practice" data-arg="${nextCase}">${played ? 'המשך: מקרה ' + (nextCase + 1) : 'מתחילים: מקרה 1'}</button>` : '<span class="muted">סיימתם את כל המקרים עם 3 כוכבים. כל הכבוד!</span>'}</div>
+      ${nextCase >= 0 ? `<button class="btn primary" data-go="practice" data-arg="${nextCase}">${played ? 'המשך: מקרה ' + (nextCase + 1) : 'מתחילים: מקרה 1'}</button>` : waitCase ? '<span class="muted">סיימתם את מקרה היום. מקרה חדש נפתח מחר. אפשר לחזור על מקרה כדי לשפר כוכבים.</span>' : '<span class="muted">סיימתם את כל המקרים עם 3 כוכבים. כל הכבוד!</span>'}</div>
     ${played ? '' : `<p class="muted how1">רואים גרף אמיתי מהעבר בלי לדעת איזה נכס זה, מחליטים אם לקנות או לחכות, ובונים תוכנית. אין כסף אמיתי, והכוכבים הם על החשיבה ולא על המזל.</p>`}
     ${weak ? `<div class="weak2"><span>כדאי לחזק: <b>${SKILLS[weak[0]][0]}</b> (${Math.round(weak[1] * 100)}%)</span><button class="link" data-go="lesson" data-arg="${SKILLS[weak[0]][1]}">לשיעור</button></div>` : ''}
     ${skillBars ? `<details class="card skills"><summary>החוזקות שלכם</summary>${skillBars}<span class="muted" style="font-size:12px">אחוז הפעמים שהחלק היה נכון, מכל המקרים שעשיתם.</span></details>` : ''}
@@ -97,6 +97,7 @@ screens.practiceHome = () => {
 screens.practice = (idx = 0) => {
   idx = (+idx || 0) % SCEN.length;
   const sc = SCEN[idx], P = buildScen(sc);
+  if (casePaced(sc)) { scr.innerHTML = ''; setTimeout(() => { toast('סיימתם את מקרה היום. מקרה חדש נפתח מחר'); go('practiceHome'); }, 0); return; }
   track('practice_start', sc.id);
   const W = 358, H = 300, VH = 54, AX = 46, plotW = W - AX, slot = (plotW - 8) / (P.N + P.M), bw = Math.max(1.4, slot * .62);
   const all = P.candles, lo = Math.min(...all.map(c => c.l)) - 3, hi = Math.max(...all.map(c => c.h)) + 3;
@@ -251,6 +252,7 @@ screens.feedback = ({ idx, st, sim }) => {
   const sc = SCEN[idx], P = buildScen(sc), ev = evaluate(sc, P, st), ok = ev.fails === 0;
   const ac = A(), prev = ac.practiceDone[sc.id] || 0;
   track('practice_done', sc.id + ':' + ev.stars);
+  { const fd = (ac.firstDay = ac.firstDay || { l: {}, c: {} }); fd.c = fd.c || {}; if (!fd.c[sc.id] && ac.practiceDone[sc.id] == null) fd.c[sc.id] = dayKey(); }
   if (ev.stars > prev) { ac.stars += ev.stars - prev; ac.xp = (ac.xp || 0) + (ev.stars - prev) * 10; ac.practiceDone[sc.id] = ev.stars; save(); }
   markActive(ac);
   trackSkills(ac, ev.checks); save();

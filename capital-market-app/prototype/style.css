@@ -1189,3 +1189,10 @@ details.more p{font-size:13.5px;line-height:1.65;color:var(--muted);margin:8px 0
 
 /* short screens (phone held sideways): fill the height instead of showing a tall fixed frame */
 @media (max-height:600px) and (min-width:481px){.stage{padding:0;align-items:stretch}.phone{height:100dvh;border-radius:0;box-shadow:none}}
+
+/* daily pace */
+.daynote{display:flex;flex-direction:column;gap:2px;padding:14px 16px;margin:0 0 12px;border:1px solid rgba(200,255,61,.28);background:rgba(200,255,61,.07)}
+.daynote b{color:var(--lime)}.daynote span{color:var(--muted);font-size:14px}
+.today{padding:14px 16px;margin:0 0 6px}.today b{display:block;margin-bottom:8px;font-size:15px}
+.today .td{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:14.5px}.today .td .ok{color:var(--lime);font-weight:700}
+.pn.paced,.ccard.paced{opacity:.55}.ccard.paced .cc-t em{color:var(--muted)}

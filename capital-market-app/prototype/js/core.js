@@ -30,6 +30,8 @@ function loadDB() {
     if (!a.skills || typeof a.skills !== 'object') a.skills = {};
     if (!a.days || typeof a.days !== 'object') a.days = {};
     if (!Array.isArray(a.posts)) a.posts = [];
+    if (!a.firstDay || typeof a.firstDay !== 'object') a.firstDay = { l: {}, c: {} };
+    a.firstDay.l = a.firstDay.l || {}; a.firstDay.c = a.firstDay.c || {};
     a.stars = +a.stars || 0; a.xp = +a.xp || 0; if (a.pass == null) a.pass = '';
     const P = a.portfolio; if (!P || typeof P !== 'object') a.portfolio = { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] };
     else { if (!isFinite(P.cash)) P.cash = START_CASH; if (!P.pos || typeof P.pos !== 'object') P.pos = {}; if (!Array.isArray(P.hist)) P.hist = []; if (!Array.isArray(P.eq) || !P.eq.length) P.eq = [START_CASH, START_CASH]; }

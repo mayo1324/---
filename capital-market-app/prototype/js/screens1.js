@@ -45,6 +45,12 @@ const lessonsDone = () => A().lessonsDone;
 const modLessons = (m) => LESSONS.filter(l => l.module === m.id);
 const activeMods = () => MODULES.filter(m => modLessons(m).length);
 function modOpen(m) { if (A().openAll) return true; const ms = activeMods(), i = ms.findIndex(x => x.id === m.id); return i <= 0 || modLessons(ms[i - 1]).every(l => lessonsDone().includes(l.id)); }
+/* daily pace: a new lesson and a new practice case open each day (the first finish of each is dated in firstDay; it stays on this device) */
+const paceOn = () => { const a = A(); return !(a.openAll || a.premium); };
+const todayNew = (k) => Object.values((A().firstDay || {})[k] || {}).filter(d => d === dayKey()).length;
+const lessonPaced = (l) => paceOn() && !lessonsDone().includes(l.id) && todayNew('l') >= PACE.lessons;
+const caseTried = (sc) => !!((A().firstDay || {}).c || {})[sc.id] || (A().practiceDone || {})[sc.id] != null;
+const casePaced = (sc) => paceOn() && !caseTried(sc) && todayNew('c') >= PACE.cases;
 const lessonOpen = (l) => lessonsDone().includes(l.id) || modOpen(MODULES.find(m => m.id === l.module) || MODULES[0]);
 function showUnlock(mid) {
   const m = MODULES.find(x => x.id === mid); if (!m) return;
@@ -203,7 +209,7 @@ screens.signup = () => {
 /* abstract candles for the practice tile (no labels) */
 function homeArt() { const a = genC(23, 26, 100, .5, 3.4), c = chartBox(a, 10, 310, 24, 126); return `<svg direction="ltr" viewBox="0 0 320 150" preserveAspectRatio="xMidYMid slice">${c.svg}</svg>`; }
 screens.home = () => {
-  const s = A(), nextL = LESSONS.find(l => !s.lessonsDone.includes(l.id));
+  const s = A(), nextL = LESSONS.find(l => !s.lessonsDone.includes(l.id)), wait = !!(nextL && lessonPaced(nextL));
   const done = s.lessonsDone.length, total = LESSONS.length, open = portfolioOpen();
   const eq = equity(s), pl = eq - START_CASH, xp = (s.xp || 0) % 100;
   const movers = [...ASSETS].sort((x, y) => Math.abs(y.chg) - Math.abs(x.chg)).slice(0, 5);
@@ -213,12 +219,13 @@ screens.home = () => {
     <div class="hello"><button class="avatar ringed" data-go="profile" aria-label="פרופיל"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="3"/><circle cx="28" cy="28" r="26" fill="none" stroke="#ffc94d" stroke-width="3" stroke-linecap="round" stroke-dasharray="163" stroke-dashoffset="${(163 * (1 - xp / 100)).toFixed(0)}" transform="rotate(-90 28 28)"/></svg><span>${s.name[0]}</span></button>
       <div class="t"><span class="eyebrow">שלום, רמה ${lvl(s)}</span><b>${s.name}</b></div>
       <div class="pill">${ic.fire}${streakDays(s)}</div><div class="pill gold">${ic.star}${s.stars}</div></div>
-    <button class="hero2" data-go="${nextL ? 'lesson' : 'portfolio'}" ${nextL ? `data-arg="${nextL.id}"` : ''}>
+    <button class="hero2" data-go="${nextL ? (wait ? 'practiceHome' : 'lesson') : 'portfolio'}" ${nextL && !wait ? `data-arg="${nextL.id}"` : ''}>
       <div class="h2art">${sceneSVG(heroVis)}</div>
-      <div class="h2in"><div class="h2t"><span class="tag">${nextL ? 'המשך מאיפה שעצרת' : 'סיימת את כל השיעורים'}</span>
-        <h2>${nextL ? nextL.title : 'עכשיו אפשר לחקור ולתרגל'}</h2><p>${nextL ? nextL.min + ' דקות' : 'התיק הוירטואלי מחכה לך'}</p></div>
+      <div class="h2in"><div class="h2t"><span class="tag">${nextL ? (wait ? 'מחר ממשיכים' : 'השיעור של היום') : 'סיימת את כל השיעורים'}</span>
+        <h2>${nextL ? (wait ? 'סיימתם את השיעור של היום' : nextL.title) : 'עכשיו אפשר לחקור ולתרגל'}</h2><p>${nextL ? (wait ? 'מחכה לכם מחר: ' + nextL.title : nextL.min + ' דקות') : 'התיק הוירטואלי מחכה לך'}</p></div>
         <div class="h2r">${ring(done / total, done + '/' + total)}</div></div>
-      <span class="h2go">${nextL ? 'להמשיך' : 'לתיק שלי'} ${ic.back}</span></button>
+      <span class="h2go">${nextL ? (wait ? 'לתרגול' : 'להתחיל') : 'לתיק שלי'} ${ic.back}</span></button>
+    ${paceOn() ? `<div class="card today"><b>המשימות של היום</b><div class="td"><span class="${todayNew('l') ? 'ok' : ''}">${todayNew('l') ? '✓' : '○'} שיעור חדש</span><span class="${todayNew('c') ? 'ok' : ''}">${todayNew('c') ? '✓' : '○'} מקרה תרגול חדש</span></div></div>` : ''}
     <div class="sec2"><h3>לחקור</h3></div>
     <button class="tile big" data-go="practiceHome"><div class="tart" aria-hidden="true">${homeArt()}</div><div class="tt"><i>${ic.chart}</i><b>תרגול</b><span>קוראים גרף אמיתי ומחליטים</span></div><em>${ic.back}</em></button>
     <div class="tiles3">${[['market', 'שוק', ic.trend], ['glossary', 'מילון', ic.book], ['community', 'קהילה', ic.user]].map(([go, t, icon], i) => `<button class="tile sm" data-go="${go}" style="animation-delay:${.12 + i * .06}s"><i>${icon}</i><b>${t}</b></button>`).join('')}</div>
@@ -243,11 +250,12 @@ screens.lessons = () => {
   const mods = MODULES.map(m => ({ ...m, ls: LESSONS.filter(l => l.module === m.id) })).filter(m => m.ls.length);
   const openId = lessonsOpenMod || (nextL ? nextL.module : mods[0].id);
   scr.innerHTML = `<div class="anim"><div class="top"><h2>שיעורים</h2><span class="pill gold">${ic.star}${A().stars}</span></div>
+    ${nextL && lessonPaced(nextL) ? `<div class="card daynote"><b>סיימתם את השיעור של היום.</b><span>השיעור הבא נפתח מחר. בינתיים אפשר לתרגל או לחזור על שיעור שכבר למדתם.</span></div>` : ''}
     <div class="card prog-card"><div class="pc-row"><b>${d} מתוך ${LESSONS.length} שיעורים</b><button class="chip" data-go="glossary">${ic.book}<span>מילון</span></button></div>
       <div class="bar" style="margin-top:12px"><i style="width:${Math.round(d / LESSONS.length * 100)}%"></i></div></div>
     <div class="mods">${mods.map((m, mi) => { const n = m.ls.filter(l => done.includes(l.id)).length, lk = !modOpen(m), prev = mods[mi - 1], open = !lk && m.id === openId; return `<div class="mod${lk ? ' locked' : ''}${open ? ' open' : ''}" data-mod="${m.id}" style="--mc:${m.color}">
       <button class="mod-h" data-mod-h="${m.id}"><div class="mod-ring">${modRing(n / m.ls.length, m.color)}<b>${lk ? ic.lock : n === m.ls.length ? ic.check : n + '/' + m.ls.length}</b></div><div class="mh-t"><b>${m.title}</b><span>${lk ? 'נפתח אחרי ' + prev.title : n + ' מתוך ' + m.ls.length + ' שיעורים'}</span></div><i class="chev">${ic.back}</i></button>
-      <div class="path"${open ? '' : ' hidden'}>${m.ls.map((l, i) => { const dn = done.includes(l.id); return `<button class="pn${dn ? ' done' : ''}${l.id === nextId ? ' next' : ''}" data-go="lesson" data-arg="${l.id}"><i>${dn ? ic.check : i + 1}</i><div><b>${l.title}</b><span>${l.min} דקות${l.id === nextId ? ' · המשך מכאן' : ''}</span></div></button>`; }).join('')}</div></div>`; }).join('')}</div></div>`;
+      <div class="path"${open ? '' : ' hidden'}>${m.ls.map((l, i) => { const dn = done.includes(l.id), pz = lessonPaced(l); return `<button class="pn${dn ? ' done' : ''}${l.id === nextId ? ' next' : ''}${pz ? ' paced' : ''}" data-go="lesson" data-arg="${l.id}"><i>${dn ? ic.check : pz ? ic.lock : i + 1}</i><div><b>${l.title}</b><span>${l.min} דקות${pz ? (l.id === nextId ? ' · נפתח מחר' : '') : l.id === nextId ? ' · המשך מכאן' : ''}</span></div></button>`; }).join('')}</div></div>`; }).join('')}</div></div>`;
   $$('[data-mod-h]').forEach(h => h.onclick = () => {
     const box = h.closest('.mod'); if (box.classList.contains('locked')) { toast('הנושא ייפתח אחרי שמסיימים את הנושא הקודם'); return; }
     const wasOpen = box.classList.contains('open'); lessonsOpenMod = wasOpen ? '-' : box.dataset.mod;
@@ -257,6 +265,7 @@ screens.lessons = () => {
 screens.lesson = (id) => {
   const L = LESSONS.find(x => x.id === id) || LESSONS[0];
   if (!lessonOpen(L)) { scr.innerHTML = ''; setTimeout(() => { toast('השיעור הזה ייפתח אחרי שמסיימים את הנושא הקודם'); go('lessons'); }, 0); return; }
+  if (lessonPaced(L)) { scr.innerHTML = ''; setTimeout(() => { toast('סיימתם את השיעור של היום. השיעור הבא נפתח מחר'); go('lessons'); }, 0); return; }
   track('lesson_start', L.id);
   let i = 0, answered = false, dir = 1;
   let busy = false;
@@ -308,7 +317,7 @@ screens.lesson = (id) => {
     $('#nx').onclick = () => {
       if (!quiz || qi < QS.length - 1) { step(1); return; }
       const s = A(), first = !s.lessonsDone.includes(L.id), openBefore = activeMods().filter(modOpen).map(m => m.id);
-      if (first) { s.lessonsDone.push(L.id); s.stars += 1; s.xp = (s.xp || 0) + 20; save(); track('lesson_done', L.id); }
+      if (first) { s.lessonsDone.push(L.id); s.stars += 1; s.xp = (s.xp || 0) + 20; (s.firstDay = s.firstDay || { l: {}, c: {} }).l[L.id] = dayKey(); save(); track('lesson_done', L.id); }
       markActive(s);
       const unlocked = activeMods().filter(modOpen).map(m => m.id).find(mid => !openBefore.includes(mid));
       go('lessonDone', { id: L.id, gained: first ? 20 : 0, before: (s.xp || 0) - (first ? 20 : 0), unlocked });
@@ -345,6 +354,7 @@ screens.lessonDone = (a) => {
     <div class="card xpc"><div class="xpt"><b data-cu="${gained}" data-pre="+" data-suf=" נק' ניסיון">+${gained}</b><span class="muted">רמה ${lvl(ac)}</span></div>
       <div class="bar"><i id="xpf" style="width:${(xp0 % 100)}%"></i></div>${up ? '<div class="lvlup">עליתם רמה!</div>' : `<span class="muted" style="font-size:12.5px">עוד ${100 - (xp1 % 100)} נקודות לרמה הבאה</span>`}</div>
     ${all ? `<div class="card unlock" style="margin-top:14px">${ic.wallet}<b>התיק הוירטואלי נפתח!</b><span class="muted">מחכים לך 5,000 ש"ח וירטואליים לתרגול</span></div>` : `<p class="muted" style="margin-top:14px">עוד ${left} שיעורים עד שהתיק הוירטואלי ייפתח</p>`}
+    ${(() => { const nx = LESSONS.find(l => !lessonsDone().includes(l.id)); return nx && lessonPaced(nx) ? `<div class="card daynote" style="margin-top:14px"><b>מחר נפתח שיעור חדש</b><span>מחכה לכם: ${nx.title}</span></div>` : ''; })()}
     ${srcCard(L)}
     <button class="link fbl" id="lfb">משוב על השיעור</button>
     <div class="btns" style="margin-top:18px"><button class="btn primary" data-go="${all ? 'portfolio' : 'practiceHome'}">${all ? 'לתיק שלי' : 'עכשיו לתרגול'}</button><button class="btn ghost" data-go="home">חזרה לבית</button></div></div>`;

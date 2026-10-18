@@ -28,7 +28,7 @@ const { chromium } = require('playwright');
    const m = await p.evaluate(async()=>{ const l=document.querySelector('link[rel=manifest]').href; const j=await (await fetch(l)).json(); const reg=await navigator.serviceWorker.getRegistration(); return {j, sw:reg&&reg.active&&reg.active.state, scope:reg&&reg.scope}; });
    ok(m.sw==='activated','sw not active'); ok(m.j.icons.length>=2&&m.j.start_url&&m.j.display==='standalone','manifest incomplete');
    for (const ic of m.j.icons){ const r=await p.request.get('http://localhost:8777/app/'+ic.src); ok(r.status()===200,'icon '+ic.src); }
-   await p.evaluate(()=>{ localStorage.setItem('cm_proto_v2', JSON.stringify({accounts:{}, session:null, terms:{v:2}, seenOnboarding:true})); });
+   await p.evaluate(()=>{ localStorage.setItem('cm_proto_v2', JSON.stringify({accounts:{}, session:null, terms:{v:3}, seenOnboarding:true})); });
    await ctx.setOffline(true); await p.reload(); await p.waitForTimeout(1500);
    ok(await p.evaluate(()=>typeof go==='function' && !!document.querySelector('#screen').innerText.length),'app should load offline');
    await p.evaluate(()=>{ const d=loadDB(); const a=newAcct('נועה',16,'o@x.co','abcd','x'); a.seenIntro=a.seenWelcome=true; a.openAll=true; d.accounts['o@x.co']=a; d.session='o@x.co'; save(); go('lesson','l1'); });

@@ -1197,6 +1197,13 @@ details.more p{font-size:13.5px;line-height:1.65;color:var(--muted);margin:8px 0
 /* short screens (phone held sideways): fill the height instead of showing a tall fixed frame */
 @media (max-height:600px) and (min-width:481px){.stage{padding:0;align-items:stretch}.phone{height:100dvh;border-radius:0;box-shadow:none}}
 
+/* daily pace */
+.daynote{display:flex;flex-direction:column;gap:2px;padding:14px 16px;margin:0 0 12px;border:1px solid rgba(200,255,61,.28);background:rgba(200,255,61,.07)}
+.daynote b{color:var(--lime)}.daynote span{color:var(--muted);font-size:14px}
+.today{padding:14px 16px;margin:0 0 6px}.today b{display:block;margin-bottom:8px;font-size:15px}
+.today .td{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:14.5px}.today .td .ok{color:var(--lime);font-weight:700}
+.pn.paced,.ccard.paced{opacity:.55}.ccard.paced .cc-t em{color:var(--muted)}
+
 body{background:#0b0d10}
 @media (min-width:481px){body{background:#d9dde3}}
 </style>
@@ -1241,6 +1248,9 @@ const FIREBASE_CONFIG = {
 /* demo shortcuts in the profile (unlock all topics, open portfolio): hidden for everyone; open the app once with ?demo=1 to show them on this device */
 let DEMO_TOOLS = false; try { if (/[?&]demo=1/.test(location.search)) localStorage.setItem('cm_demo', '1'); DEMO_TOOLS = localStorage.getItem('cm_demo') === '1'; } catch (e) { }
 
+/* daily pace: how many NEW lessons and NEW practice cases open each day (finished ones are always open). Premium and the demo shortcut skip it. */
+const PACE = { lessons: 1, cases: 1 };
+
 'use strict';
 /* ===== helpers ===== */
 const $ = (s, r = document) => r.querySelector(s);
@@ -1273,6 +1283,8 @@ function loadDB() {
     if (!a.skills || typeof a.skills !== 'object') a.skills = {};
     if (!a.days || typeof a.days !== 'object') a.days = {};
     if (!Array.isArray(a.posts)) a.posts = [];
+    if (!a.firstDay || typeof a.firstDay !== 'object') a.firstDay = { l: {}, c: {} };
+    a.firstDay.l = a.firstDay.l || {}; a.firstDay.c = a.firstDay.c || {};
     a.stars = +a.stars || 0; a.xp = +a.xp || 0; if (a.pass == null) a.pass = '';
     const P = a.portfolio; if (!P || typeof P !== 'object') a.portfolio = { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] };
     else { if (!isFinite(P.cash)) P.cash = START_CASH; if (!P.pos || typeof P.pos !== 'object') P.pos = {}; if (!Array.isArray(P.hist)) P.hist = []; if (!Array.isArray(P.eq) || !P.eq.length) P.eq = [START_CASH, START_CASH]; }
@@ -3688,6 +3700,12 @@ const lessonsDone = () => A().lessonsDone;
 const modLessons = (m) => LESSONS.filter(l => l.module === m.id);
 const activeMods = () => MODULES.filter(m => modLessons(m).length);
 function modOpen(m) { if (A().openAll) return true; const ms = activeMods(), i = ms.findIndex(x => x.id === m.id); return i <= 0 || modLessons(ms[i - 1]).every(l => lessonsDone().includes(l.id)); }
+/* daily pace: a new lesson and a new practice case open each day (the first finish of each is dated in firstDay; it stays on this device) */
+const paceOn = () => { const a = A(); return !(a.openAll || a.premium); };
+const todayNew = (k) => Object.values((A().firstDay || {})[k] || {}).filter(d => d === dayKey()).length;
+const lessonPaced = (l) => paceOn() && !lessonsDone().includes(l.id) && todayNew('l') >= PACE.lessons;
+const caseTried = (sc) => !!((A().firstDay || {}).c || {})[sc.id] || (A().practiceDone || {})[sc.id] != null;
+const casePaced = (sc) => paceOn() && !caseTried(sc) && todayNew('c') >= PACE.cases;
 const lessonOpen = (l) => lessonsDone().includes(l.id) || modOpen(MODULES.find(m => m.id === l.module) || MODULES[0]);
 function showUnlock(mid) {
   const m = MODULES.find(x => x.id === mid); if (!m) return;
@@ -3846,7 +3864,7 @@ screens.signup = () => {
 /* abstract candles for the practice tile (no labels) */
 function homeArt() { const a = genC(23, 26, 100, .5, 3.4), c = chartBox(a, 10, 310, 24, 126); return `<svg direction="ltr" viewBox="0 0 320 150" preserveAspectRatio="xMidYMid slice">${c.svg}</svg>`; }
 screens.home = () => {
-  const s = A(), nextL = LESSONS.find(l => !s.lessonsDone.includes(l.id));
+  const s = A(), nextL = LESSONS.find(l => !s.lessonsDone.includes(l.id)), wait = !!(nextL && lessonPaced(nextL));
   const done = s.lessonsDone.length, total = LESSONS.length, open = portfolioOpen();
   const eq = equity(s), pl = eq - START_CASH, xp = (s.xp || 0) % 100;
   const movers = [...ASSETS].sort((x, y) => Math.abs(y.chg) - Math.abs(x.chg)).slice(0, 5);
@@ -3856,12 +3874,13 @@ screens.home = () => {
     <div class="hello"><button class="avatar ringed" data-go="profile" aria-label="פרופיל"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="3"/><circle cx="28" cy="28" r="26" fill="none" stroke="#ffc94d" stroke-width="3" stroke-linecap="round" stroke-dasharray="163" stroke-dashoffset="${(163 * (1 - xp / 100)).toFixed(0)}" transform="rotate(-90 28 28)"/></svg><span>${s.name[0]}</span></button>
       <div class="t"><span class="eyebrow">שלום, רמה ${lvl(s)}</span><b>${s.name}</b></div>
       <div class="pill">${ic.fire}${streakDays(s)}</div><div class="pill gold">${ic.star}${s.stars}</div></div>
-    <button class="hero2" data-go="${nextL ? 'lesson' : 'portfolio'}" ${nextL ? `data-arg="${nextL.id}"` : ''}>
+    <button class="hero2" data-go="${nextL ? (wait ? 'practiceHome' : 'lesson') : 'portfolio'}" ${nextL && !wait ? `data-arg="${nextL.id}"` : ''}>
       <div class="h2art">${sceneSVG(heroVis)}</div>
-      <div class="h2in"><div class="h2t"><span class="tag">${nextL ? 'המשך מאיפה שעצרת' : 'סיימת את כל השיעורים'}</span>
-        <h2>${nextL ? nextL.title : 'עכשיו אפשר לחקור ולתרגל'}</h2><p>${nextL ? nextL.min + ' דקות' : 'התיק הוירטואלי מחכה לך'}</p></div>
+      <div class="h2in"><div class="h2t"><span class="tag">${nextL ? (wait ? 'מחר ממשיכים' : 'השיעור של היום') : 'סיימת את כל השיעורים'}</span>
+        <h2>${nextL ? (wait ? 'סיימתם את השיעור של היום' : nextL.title) : 'עכשיו אפשר לחקור ולתרגל'}</h2><p>${nextL ? (wait ? 'מחכה לכם מחר: ' + nextL.title : nextL.min + ' דקות') : 'התיק הוירטואלי מחכה לך'}</p></div>
         <div class="h2r">${ring(done / total, done + '/' + total)}</div></div>
-      <span class="h2go">${nextL ? 'להמשיך' : 'לתיק שלי'} ${ic.back}</span></button>
+      <span class="h2go">${nextL ? (wait ? 'לתרגול' : 'להתחיל') : 'לתיק שלי'} ${ic.back}</span></button>
+    ${paceOn() ? `<div class="card today"><b>המשימות של היום</b><div class="td"><span class="${todayNew('l') ? 'ok' : ''}">${todayNew('l') ? '✓' : '○'} שיעור חדש</span><span class="${todayNew('c') ? 'ok' : ''}">${todayNew('c') ? '✓' : '○'} מקרה תרגול חדש</span></div></div>` : ''}
     <div class="sec2"><h3>לחקור</h3></div>
     <button class="tile big" data-go="practiceHome"><div class="tart" aria-hidden="true">${homeArt()}</div><div class="tt"><i>${ic.chart}</i><b>תרגול</b><span>קוראים גרף אמיתי ומחליטים</span></div><em>${ic.back}</em></button>
     <div class="tiles3">${[['market', 'שוק', ic.trend], ['glossary', 'מילון', ic.book], ['community', 'קהילה', ic.user]].map(([go, t, icon], i) => `<button class="tile sm" data-go="${go}" style="animation-delay:${.12 + i * .06}s"><i>${icon}</i><b>${t}</b></button>`).join('')}</div>
@@ -3886,11 +3905,12 @@ screens.lessons = () => {
   const mods = MODULES.map(m => ({ ...m, ls: LESSONS.filter(l => l.module === m.id) })).filter(m => m.ls.length);
   const openId = lessonsOpenMod || (nextL ? nextL.module : mods[0].id);
   scr.innerHTML = `<div class="anim"><div class="top"><h2>שיעורים</h2><span class="pill gold">${ic.star}${A().stars}</span></div>
+    ${nextL && lessonPaced(nextL) ? `<div class="card daynote"><b>סיימתם את השיעור של היום.</b><span>השיעור הבא נפתח מחר. בינתיים אפשר לתרגל או לחזור על שיעור שכבר למדתם.</span></div>` : ''}
     <div class="card prog-card"><div class="pc-row"><b>${d} מתוך ${LESSONS.length} שיעורים</b><button class="chip" data-go="glossary">${ic.book}<span>מילון</span></button></div>
       <div class="bar" style="margin-top:12px"><i style="width:${Math.round(d / LESSONS.length * 100)}%"></i></div></div>
     <div class="mods">${mods.map((m, mi) => { const n = m.ls.filter(l => done.includes(l.id)).length, lk = !modOpen(m), prev = mods[mi - 1], open = !lk && m.id === openId; return `<div class="mod${lk ? ' locked' : ''}${open ? ' open' : ''}" data-mod="${m.id}" style="--mc:${m.color}">
       <button class="mod-h" data-mod-h="${m.id}"><div class="mod-ring">${modRing(n / m.ls.length, m.color)}<b>${lk ? ic.lock : n === m.ls.length ? ic.check : n + '/' + m.ls.length}</b></div><div class="mh-t"><b>${m.title}</b><span>${lk ? 'נפתח אחרי ' + prev.title : n + ' מתוך ' + m.ls.length + ' שיעורים'}</span></div><i class="chev">${ic.back}</i></button>
-      <div class="path"${open ? '' : ' hidden'}>${m.ls.map((l, i) => { const dn = done.includes(l.id); return `<button class="pn${dn ? ' done' : ''}${l.id === nextId ? ' next' : ''}" data-go="lesson" data-arg="${l.id}"><i>${dn ? ic.check : i + 1}</i><div><b>${l.title}</b><span>${l.min} דקות${l.id === nextId ? ' · המשך מכאן' : ''}</span></div></button>`; }).join('')}</div></div>`; }).join('')}</div></div>`;
+      <div class="path"${open ? '' : ' hidden'}>${m.ls.map((l, i) => { const dn = done.includes(l.id), pz = lessonPaced(l); return `<button class="pn${dn ? ' done' : ''}${l.id === nextId ? ' next' : ''}${pz ? ' paced' : ''}" data-go="lesson" data-arg="${l.id}"><i>${dn ? ic.check : pz ? ic.lock : i + 1}</i><div><b>${l.title}</b><span>${l.min} דקות${pz ? (l.id === nextId ? ' · נפתח מחר' : '') : l.id === nextId ? ' · המשך מכאן' : ''}</span></div></button>`; }).join('')}</div></div>`; }).join('')}</div></div>`;
   $$('[data-mod-h]').forEach(h => h.onclick = () => {
     const box = h.closest('.mod'); if (box.classList.contains('locked')) { toast('הנושא ייפתח אחרי שמסיימים את הנושא הקודם'); return; }
     const wasOpen = box.classList.contains('open'); lessonsOpenMod = wasOpen ? '-' : box.dataset.mod;
@@ -3900,6 +3920,7 @@ screens.lessons = () => {
 screens.lesson = (id) => {
   const L = LESSONS.find(x => x.id === id) || LESSONS[0];
   if (!lessonOpen(L)) { scr.innerHTML = ''; setTimeout(() => { toast('השיעור הזה ייפתח אחרי שמסיימים את הנושא הקודם'); go('lessons'); }, 0); return; }
+  if (lessonPaced(L)) { scr.innerHTML = ''; setTimeout(() => { toast('סיימתם את השיעור של היום. השיעור הבא נפתח מחר'); go('lessons'); }, 0); return; }
   track('lesson_start', L.id);
   let i = 0, answered = false, dir = 1;
   let busy = false;
@@ -3951,7 +3972,7 @@ screens.lesson = (id) => {
     $('#nx').onclick = () => {
       if (!quiz || qi < QS.length - 1) { step(1); return; }
       const s = A(), first = !s.lessonsDone.includes(L.id), openBefore = activeMods().filter(modOpen).map(m => m.id);
-      if (first) { s.lessonsDone.push(L.id); s.stars += 1; s.xp = (s.xp || 0) + 20; save(); track('lesson_done', L.id); }
+      if (first) { s.lessonsDone.push(L.id); s.stars += 1; s.xp = (s.xp || 0) + 20; (s.firstDay = s.firstDay || { l: {}, c: {} }).l[L.id] = dayKey(); save(); track('lesson_done', L.id); }
       markActive(s);
       const unlocked = activeMods().filter(modOpen).map(m => m.id).find(mid => !openBefore.includes(mid));
       go('lessonDone', { id: L.id, gained: first ? 20 : 0, before: (s.xp || 0) - (first ? 20 : 0), unlocked });
@@ -3988,6 +4009,7 @@ screens.lessonDone = (a) => {
     <div class="card xpc"><div class="xpt"><b data-cu="${gained}" data-pre="+" data-suf=" נק' ניסיון">+${gained}</b><span class="muted">רמה ${lvl(ac)}</span></div>
       <div class="bar"><i id="xpf" style="width:${(xp0 % 100)}%"></i></div>${up ? '<div class="lvlup">עליתם רמה!</div>' : `<span class="muted" style="font-size:12.5px">עוד ${100 - (xp1 % 100)} נקודות לרמה הבאה</span>`}</div>
     ${all ? `<div class="card unlock" style="margin-top:14px">${ic.wallet}<b>התיק הוירטואלי נפתח!</b><span class="muted">מחכים לך 5,000 ש"ח וירטואליים לתרגול</span></div>` : `<p class="muted" style="margin-top:14px">עוד ${left} שיעורים עד שהתיק הוירטואלי ייפתח</p>`}
+    ${(() => { const nx = LESSONS.find(l => !lessonsDone().includes(l.id)); return nx && lessonPaced(nx) ? `<div class="card daynote" style="margin-top:14px"><b>מחר נפתח שיעור חדש</b><span>מחכה לכם: ${nx.title}</span></div>` : ''; })()}
     ${srcCard(L)}
     <button class="link fbl" id="lfb">משוב על השיעור</button>
     <div class="btns" style="margin-top:18px"><button class="btn primary" data-go="${all ? 'portfolio' : 'practiceHome'}">${all ? 'לתיק שלי' : 'עכשיו לתרגול'}</button><button class="btn ghost" data-go="home">חזרה לבית</button></div></div>`;
@@ -4478,9 +4500,9 @@ function trackSkills(ac, checks) {
 }
 let practiceLevel = 0;
 function caseCard(s, i, d) {
-  const stars = d[s.id] || 0, c = s.raw.c.slice(s.raw.di - 59, s.raw.di + 1).map(r => r[4]), sp = sparkPath(c, 150, 46), id = 'cs' + i;
-  const chip = stars === 3 ? 'מושלם' : stars > 0 ? 'אפשר לשפר' : 'חדש';
-  return `<button class="ccard${stars === 3 ? ' perfect' : ''}${stars === 0 ? ' fresh' : ''}" data-go="practice" data-arg="${i}">
+  const pz = casePaced(s), stars = d[s.id] || 0, c = s.raw.c.slice(s.raw.di - 59, s.raw.di + 1).map(r => r[4]), sp = sparkPath(c, 150, 46), id = 'cs' + i;
+  const chip = pz ? 'נפתח מחר' : stars === 3 ? 'מושלם' : stars > 0 ? 'אפשר לשפר' : 'חדש';
+  return `<button class="ccard${stars === 3 ? ' perfect' : ''}${stars === 0 ? ' fresh' : ''}${pz ? ' paced' : ''}" data-go="practice" data-arg="${i}">
     <svg class="cc-sp" viewBox="0 0 150 46" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8ff3d" stop-opacity=".32"/><stop offset="1" stop-color="#c8ff3d" stop-opacity="0"/></linearGradient></defs><path d="${sp.area}" fill="url(#${id})"/><path d="${sp.d}" fill="none" stroke="#c8ff3d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>
     <div class="cc-t"><b>מקרה ${i + 1}</b><em>${chip}</em></div>
     <div class="cc-m"><span class="cc-dif" aria-label="רמה ${s.level}">${'●'.repeat(s.level)}${'○'.repeat(3 - s.level)}</span><span class="cc-st">${'★'.repeat(stars)}${'☆'.repeat(3 - stars)}</span></div></button>`;
@@ -4490,14 +4512,14 @@ screens.practiceHome = () => {
   const total = SCEN.reduce((a, s) => a + (d[s.id] || 0), 0), max = SCEN.length * 3;
   const rated = Object.entries(sk).filter(([, v]) => v.n >= 2).map(([k, v]) => [k, v.ok / v.n]).sort((a, b) => a[1] - b[1]);
   const weak = rated.length && rated[0][1] < .75 ? rated[0] : null;
-  const nextCase = SCEN.findIndex(s => (d[s.id] || 0) < 3), played = Object.keys(sk).length > 0;
+  const nextCase = SCEN.findIndex(s => (d[s.id] || 0) < 3 && !casePaced(s)), played = Object.keys(sk).length > 0, waitCase = nextCase < 0 && SCEN.some(s => (d[s.id] || 0) < 3 && casePaced(s));
   const lv = practiceLevel || (nextCase >= 0 ? SCEN[nextCase].level : 1);
   const skillBars = Object.entries(SKILLS).filter(([k]) => sk[k]).map(([k, [t]]) => { const v = sk[k], pc = Math.round(v.ok / v.n * 100); return `<div class="sk"><span>${t}</span><div class="bar"><i style="width:${pc}%"></i></div><b>${pc}%</b></div>`; }).join('');
   const grid = (n) => SCEN.map((s, i) => [s, i]).filter(([s]) => s.level === n).map(([s, i]) => caseCard(s, i, d)).join('');
   scr.innerHTML = `<div class="anim"><div class="top"><h2>תרגול</h2><span class="pill gold">${ic.star}${ac.stars}</span></div>
     <div class="card sumcard"><div class="pc-row"><b>${total} מתוך ${max} כוכבים</b><span class="muted" style="font-size:13px">${SCEN.filter(s => (d[s.id] || 0) > 0).length} מתוך ${SCEN.length} מקרים</span></div>
       <div class="bar" style="margin:12px 0 14px"><i style="width:${Math.round(total / max * 100)}%"></i></div>
-      ${nextCase >= 0 ? `<button class="btn primary" data-go="practice" data-arg="${nextCase}">${played ? 'המשך: מקרה ' + (nextCase + 1) : 'מתחילים: מקרה 1'}</button>` : '<span class="muted">סיימתם את כל המקרים עם 3 כוכבים. כל הכבוד!</span>'}</div>
+      ${nextCase >= 0 ? `<button class="btn primary" data-go="practice" data-arg="${nextCase}">${played ? 'המשך: מקרה ' + (nextCase + 1) : 'מתחילים: מקרה 1'}</button>` : waitCase ? '<span class="muted">סיימתם את מקרה היום. מקרה חדש נפתח מחר. אפשר לחזור על מקרה כדי לשפר כוכבים.</span>' : '<span class="muted">סיימתם את כל המקרים עם 3 כוכבים. כל הכבוד!</span>'}</div>
     ${played ? '' : `<p class="muted how1">רואים גרף אמיתי מהעבר בלי לדעת איזה נכס זה, מחליטים אם לקנות או לחכות, ובונים תוכנית. אין כסף אמיתי, והכוכבים הם על החשיבה ולא על המזל.</p>`}
     ${weak ? `<div class="weak2"><span>כדאי לחזק: <b>${SKILLS[weak[0]][0]}</b> (${Math.round(weak[1] * 100)}%)</span><button class="link" data-go="lesson" data-arg="${SKILLS[weak[0]][1]}">לשיעור</button></div>` : ''}
     ${skillBars ? `<details class="card skills"><summary>החוזקות שלכם</summary>${skillBars}<span class="muted" style="font-size:12px">אחוז הפעמים שהחלק היה נכון, מכל המקרים שעשיתם.</span></details>` : ''}
@@ -4516,6 +4538,7 @@ screens.practiceHome = () => {
 screens.practice = (idx = 0) => {
   idx = (+idx || 0) % SCEN.length;
   const sc = SCEN[idx], P = buildScen(sc);
+  if (casePaced(sc)) { scr.innerHTML = ''; setTimeout(() => { toast('סיימתם את מקרה היום. מקרה חדש נפתח מחר'); go('practiceHome'); }, 0); return; }
   track('practice_start', sc.id);
   const W = 358, H = 300, VH = 54, AX = 46, plotW = W - AX, slot = (plotW - 8) / (P.N + P.M), bw = Math.max(1.4, slot * .62);
   const all = P.candles, lo = Math.min(...all.map(c => c.l)) - 3, hi = Math.max(...all.map(c => c.h)) + 3;
@@ -4670,6 +4693,7 @@ screens.feedback = ({ idx, st, sim }) => {
   const sc = SCEN[idx], P = buildScen(sc), ev = evaluate(sc, P, st), ok = ev.fails === 0;
   const ac = A(), prev = ac.practiceDone[sc.id] || 0;
   track('practice_done', sc.id + ':' + ev.stars);
+  { const fd = (ac.firstDay = ac.firstDay || { l: {}, c: {} }); fd.c = fd.c || {}; if (!fd.c[sc.id] && ac.practiceDone[sc.id] == null) fd.c[sc.id] = dayKey(); }
   if (ev.stars > prev) { ac.stars += ev.stars - prev; ac.xp = (ac.xp || 0) + (ev.stars - prev) * 10; ac.practiceDone[sc.id] = ev.stars; save(); }
   markActive(ac);
   trackSkills(ac, ev.checks); save();
@@ -4958,7 +4982,7 @@ const TRACK = (() => {
   let busy = false;
   const flush = async () => {
     if (busy || !on()) return; busy = true;
-    try { let a = q(); while (a.length) { const x = a[0]; const r = await fetch(url(), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body(x), keepalive: true }); if (!r.ok && r.status !== 400 && r.status !== 403) break; a.shift(); saveQ(a); } } catch (e) { }
+    try { for (let guard = 0; guard < 60; guard++) { const x = q()[0]; if (!x) break; const r = await fetch(url(), { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body(x), keepalive: true }); if (!r.ok && r.status !== 400 && r.status !== 403) break; const a = q(); a.shift(); saveQ(a); } } catch (e) { }
     busy = false;
   };
   addEventListener('online', flush);

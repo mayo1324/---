@@ -9,6 +9,6 @@ exports.launch = async (w=390,h=844,opts={}) => {
   await p.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
   return { b, ctx, p, errs };
 };
-exports.APP = 'file:///home/user/---/capital-market-app/review/app.html';
-exports.seed = (extra='') => `localStorage.setItem('cm_proto_v2', JSON.stringify({accounts:{}, session:null, terms:{v:2}, seenOnboarding:true}));`;
+exports.APP = process.env.APP_URL || 'file:///home/user/---/capital-market-app/review/app.html';
+exports.seed = (extra='') => `localStorage.setItem('cm_proto_v2', JSON.stringify({accounts:{}, session:null, terms:{v:3}, seenOnboarding:true}));`;
 exports.mkAcct = `(()=>{ const d=loadDB(); const a=newAcct('נועה',16,'n@x.co','abcd','להבין איך זה עובד'); a.seenIntro=a.seenWelcome=true; a.openAll=true; d.accounts['n@x.co']=a; d.session='n@x.co'; save(); })()`;

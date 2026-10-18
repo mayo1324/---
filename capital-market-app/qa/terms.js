@@ -14,7 +14,7 @@ const { launch, APP } = require('./lib');
  const kb3 = await p.locator('#slk').boundingBox(); const tb3 = await sl.boundingBox();
  await p.mouse.move(kb3.x+kb3.width/2,kb3.y+kb3.height/2); await p.mouse.down(); await p.mouse.move(tb3.x+6,kb3.y+kb3.height/2,{steps:12}); await p.mouse.up(); await p.waitForTimeout(2500);
  const n = await p.evaluate(()=>[cur.name, !!loadDB().terms, loadDB().terms&&loadDB().terms.v]);
- ok(n[0]!=='terms'&&n[1]&&n[2]===2,'full slide should approve: '+JSON.stringify(n));
+ ok(n[0]!=='terms'&&n[1]&&n[2]===3,'full slide should approve: '+JSON.stringify(n));
  // reload keeps approval
  await p.reload(); await p.waitForTimeout(700); ok(await p.evaluate(()=>cur.name)!=='terms','approval should persist after reload');
  // old version re-asks

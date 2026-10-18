@@ -3,7 +3,7 @@ const { launch, APP } = require('./lib');
  const {b,p,errs}=await launch(390,844);
  await p.addInitScript(()=>{ window.__store={}; window.__user={uid:'u5',name:'דנה גוגל',email:'X@Y.co'};
   window.__FBMOCK={ async signIn(){ return window.__user; }, async getDoc(u){ return __store[u]||null; }, async setDoc(u,d){ __store[u]=Object.assign(__store[u]||{},d); }, async signOut(){}, async deleteAccount(u){delete __store[u]}, async redirectUser(){return null}, async currentUser(){return null} };
-  if(!sessionStorage.getItem('i')){ sessionStorage.setItem('i','1'); localStorage.setItem('cm_proto_v2', JSON.stringify({accounts:{}, session:null, terms:{v:2}, seenOnboarding:true})); } });
+  if(!sessionStorage.getItem('i')){ sessionStorage.setItem('i','1'); localStorage.setItem('cm_proto_v2', JSON.stringify({accounts:{}, session:null, terms:{v:3}, seenOnboarding:true})); } });
  await p.goto(APP); await p.waitForTimeout(500);
  const closeS=async()=>{ await p.waitForTimeout(1800); await p.evaluate(()=>closeSheetNow()); await p.waitForTimeout(250); };
  const accts = ()=>p.evaluate(()=>Object.keys(loadDB().accounts));

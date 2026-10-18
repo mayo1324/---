@@ -1,7 +1,7 @@
 const { launch, APP, seed } = require('./lib');
 (async () => {
   const { b, p, errs } = await launch(390,844); const issues=[]; const ok=(c,m)=>{ if(!c) issues.push(m); };
-  await p.addInitScript(()=>{ if(!sessionStorage.getItem('init')){ sessionStorage.setItem('init','1'); localStorage.setItem('cm_proto_v2', JSON.stringify({accounts:{}, session:null, terms:{v:2}, seenOnboarding:false})); } });
+  await p.addInitScript(()=>{ if(!sessionStorage.getItem('init')){ sessionStorage.setItem('init','1'); localStorage.setItem('cm_proto_v2', JSON.stringify({accounts:{}, session:null, terms:{v:3}, seenOnboarding:false})); } });
   await p.goto(APP); await p.waitForTimeout(600);
   const scrName = ()=>p.evaluate(()=>cur.name);
   ok(await scrName()==='onboarding','first screen should be onboarding, got '+await scrName());
