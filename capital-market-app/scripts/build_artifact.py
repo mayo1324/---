@@ -4,6 +4,7 @@ from pathlib import Path
 root = Path(__file__).resolve().parent.parent / "prototype"
 out = Path(sys.argv[1])
 standalone = "--standalone" in sys.argv
+pwa = "--pwa" in sys.argv
 html = (root / "index.html").read_text(encoding="utf-8")
 css = (root / "style.css").read_text(encoding="utf-8")
 order = ["config", "core", "sound", "data", "lessons-extra", "art", "art2", "cases-data", "cases", "screens1", "screens2", "practice", "bot", "feedback", "cloud", "terms", "boot"]
@@ -31,6 +32,9 @@ icon = base64.b64encode((root / "icon.png").read_bytes()).decode()
 HEAD = ('<meta name="theme-color" content="#07090c"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">'
         '<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="לומדים שוק הון">'
         f'<link rel="apple-touch-icon" href="data:image/png;base64,{icon}"><link rel="icon" href="data:image/png;base64,{icon}">')
+if pwa:
+    HEAD += '<link rel="manifest" href="manifest.json">'
+    page += "<script>if('serviceWorker' in navigator && location.protocol.startsWith('http')){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}</script>"
 if standalone:
     page = '<!doctype html>\n<html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">' + HEAD + page + '</body></html>'
 out.write_text(page, encoding="utf-8")
