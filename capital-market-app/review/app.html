@@ -4956,10 +4956,13 @@ let signTok = 0;
 async function cloudSignIn(kind, btn) {
   const my = ++signTok, lab = btn && btn.dataset.lab != null ? btn.dataset.lab : (btn && btn.innerHTML);
   if (btn) { btn.dataset.lab = lab; btn.innerHTML = '<span class="spin"></span> מתחברים... (לחצו לביטול)'; btn.onclick = () => { signTok++; reset(); }; }
-  const reset = () => { window.removeEventListener('focus', onFocus); if (btn) { btn.innerHTML = lab; btn.onclick = () => cloudSignIn(kind, btn); } };
-  /* if the popup was closed or lost and nothing came back, free the button */
-  const onFocus = () => setTimeout(() => { if (my === signTok) { signTok++; reset(); } }, 2500);
-  setTimeout(() => window.addEventListener('focus', onFocus), 1500);
+  const evs = ['focus', 'visibilitychange', 'pointerdown', 'touchstart'];
+  let hard = 0, armed = 0;
+  const reset = () => { clearTimeout(hard); clearTimeout(armed); evs.forEach(e => window.removeEventListener(e, onAny, true)); if (btn) { btn.innerHTML = lab; btn.onclick = () => cloudSignIn(kind, btn); } };
+  /* if the popup was closed or lost and nothing came back, free the button: on any return to the page, or after 20 seconds */
+  const onAny = (ev) => { if (ev.target && ev.target === btn) return; setTimeout(() => { if (my === signTok) { signTok++; reset(); } }, 1500); };
+  armed = setTimeout(() => evs.forEach(e => window.addEventListener(e, onAny, true)), 1200);
+  hard = setTimeout(() => { if (my === signTok) { signTok++; reset(); toast('ההתחברות לא הושלמה. אפשר לנסות שוב.'); } }, 20000);
   try {
     const u = await FBA.signIn(kind); if (my !== signTok) return; if (!u) return; /* redirect in progress */
     const ac = await onCloudUser(u); reset(); SFX.play('pop'); toast('שלום, ' + ac.name); go('home');
