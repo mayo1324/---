@@ -19,6 +19,18 @@ const CASE_META = {
 };
 const CASE_LEVEL = { 1: 1, 3: 1, 4: 1, 2: 2, 5: 2, 8: 2, 10: 2, 6: 3, 7: 3, 9: 3 };
 const LEVELS = [{ n: 1, t: 'צעדים ראשונים', d: 'מצבים ברורים יחסית' }, { n: 2, t: 'מתקדמים', d: 'גרפים פחות חד משמעיים' }, { n: 3, t: 'אתגר', d: 'מגמה נגדית ותנודתיות' }];
+/* cases 11 and up: decision and texts come from rules that look only at the chart before the decision (see scripts/pick_cases.py) */
+function whyAuto(action, S) {
+  const down = S.trend === 'down', up = S.trend === 'up', vol = S.atrPct >= 3.5 ? ` הנכס תנודתי: הטווח הממוצע של נר הוא כ-${S.atrPct}% מהמחיר, ולכן סטופ צמוד מדי עלול להיפגע גם כשהכיוון נכון.` : '';
+  if (action === 'enter') {
+    if (down) return `המחיר ירד כ-${S.dn}% ב-60 הנרות האחרונים, אבל הוא כ-${S.sw}% מעל הנקודה הנמוכה של 10 הנרות האחרונים, ולכן יש רצפה קרובה ומקום לסטופ. זו תוכנית עם סיכון גבוה יותר, כי המגמה כלפי מטה.${vol}`;
+    if (up) return `המחיר עלה כ-${S.up}% ב-60 הנרות האחרונים. יש מגמה עולה ורצפה קרובה (כ-${S.sw}% מתחת למחיר), ולכן יש מקום הגיוני לסטופ. גם תוכנית טובה יכולה להיכשל, ולכן יש סטופ.${vol}`;
+    return `אין מגמה ברורה (שינוי של כ-${S.up}% ב-60 הנרות), אבל יש רצפה קרובה, כ-${S.sw}% מתחת למחיר, ומקום הגיוני לסטופ. כשאין מגמה ברורה התוכנית פחות בטוחה.${vol}`;
+  }
+  if (down) return S.sw < 1 ? `המחיר ירד כ-${S.dn}% ב-60 הנרות האחרונים, והוא נמצא בנקודה הנמוכה של 10 הנרות האחרונים, כלומר אין רצפה שהחזיקה. בלי רצפה ברורה אין מקום הגיוני לסטופ, ולכן עדיף לחכות.` : `המחיר ירד כ-${S.dn}% ב-60 הנרות האחרונים, והרצפה לא קרובה וברורה (כ-${S.sw}% מתחת למחיר). הסטופ יהיה רחוק, והמגמה כלפי מטה, ולכן עדיף לחכות.`;
+  if (S.sw >= 1) return `${up ? `המחיר עלה כ-${S.up}% ב-60 הנרות האחרונים, אבל ` : ''}הרצפה רחוקה, כ-${S.sw}% מתחת למחיר, ולכן סטופ מתחתיה יהיה רחוק והסיכון גדול. כשהסיכון גדול אפשר לחכות. זה שיקול ולא כלל מוחלט.${vol}`;
+  return `המחיר נמצא בנקודה הנמוכה של 10 הנרות האחרונים, כלומר אין רצפה שהחזיקה. בלי רצפה ברורה אין מקום הגיוני לסטופ, ולכן אפשר לחכות.`;
+}
 const VOL_WORD = { low: 'נמוך', normal: 'רגיל', high: 'גבוה' };
 const fmtDate = (iso) => { const [y, m, d] = iso.split('-'); return `${+d}.${+m}.${y}`; };
 
@@ -35,11 +47,12 @@ function caseVol(raw, w) {
   return { ratio, ans: ratio >= 1.15 ? 'high' : ratio <= .85 ? 'low' : 'normal' };
 }
 const SCEN = REAL_CASES.map(raw => {
-  const m = CASE_META[raw.id], S = caseStats(raw), [w, expect] = m.vol, V = caseVol(raw, w);
+  const S = caseStats(raw), m = CASE_META[raw.id] || { asset: raw.meta.asset, action: raw.meta.action, vol: [raw.meta.volW, raw.meta.volAns], why: (x) => whyAuto(raw.meta.action, x) };
+  const [w, expect] = m.vol, V = caseVol(raw, w);
   if (V.ans !== expect) console.warn('volume answer changed for case', raw.id, V.ans, expect);
-  const wl = { 5: 'חמשת', 8: 'שמונת' }[w] + ' הנרות האחרונים';
+  const wl = { 3: 'שלושת', 5: 'חמשת', 8: 'שמונת', 10: 'עשרת' }[w] + ' הנרות האחרונים';
   return {
-    id: 'r' + raw.id, level: CASE_LEVEL[raw.id] || 1, raw, asset: m.asset, trend: S.trend, action: m.action, S, why: m.why(S),
+    id: 'r' + raw.id, level: CASE_LEVEL[raw.id] || (raw.meta && raw.meta.level) || 1, raw, asset: m.asset, trend: S.trend, action: m.action, S, why: m.why(S),
     volq: { q: `ב${wl} הנפח היה, בהשוואה לממוצע של כל הגרף:`, ans: V.ans, why: `ב${wl} הנפח היה בערך ${Math.round(V.ratio * 100)}% מהממוצע של הגרף, כלומר ${VOL_WORD[V.ans]}. (נפח גבוה: לפחות 115% מהממוצע. נמוך: עד 85%. בין לבין: רגיל.)` }
   };
 });
