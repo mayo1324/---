@@ -1117,3 +1117,19 @@ details.more p{font-size:13.5px;line-height:1.65;color:var(--muted);margin:8px 0
 
 .fb-prev{margin:4px 0 10px;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.05);border:1px dashed var(--line);font-size:14.5px;line-height:1.55;color:var(--muted);text-align:center}
 .fb-prev.on{color:var(--text);border-style:solid;border-color:rgba(200,255,61,.4);background:rgba(200,255,61,.07)}
+
+/* ===== terms of use ===== */
+.terms{padding-bottom:30px}
+.terms .tlogo{display:flex;justify-content:center;margin-top:4px;transform:scale(.8);transform-origin:center top}
+.terms .th{text-align:center;font-size:26px;margin:0}.terms .tsub{text-align:center;margin:6px 0 14px;font-size:14px}
+.tsum{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0 18px}
+.tsum>div{padding:12px 14px;border-radius:18px;background:linear-gradient(160deg,rgba(26,26,26,.78),rgba(14,14,14,.84));border:1px solid var(--line)}
+.tsum b{display:block;font-size:14.5px;color:var(--lime);margin-bottom:3px}.tsum span{display:block;font-size:12.5px;line-height:1.5;color:var(--muted)}
+.tfull{padding:16px;border-radius:22px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.tfull>h3{font-size:18px;margin:0}.tver{display:block;font-size:12px;margin:2px 0 8px}
+.tfull section{margin-top:14px}.tfull h4{font-size:15px;margin:0 0 4px}.tfull p{font-size:13.5px;line-height:1.75;color:#d2d8e0;margin:0}
+.tend{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+.tend .btn{width:100%;margin-top:4px}.tend .btn:disabled{opacity:.4}
+.tgo{position:sticky;bottom:96px;margin:0 auto;width:fit-content;z-index:23;display:flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:999px;font-weight:700;font-size:14px;color:#0b0d10;background:linear-gradient(135deg,#d9ff6a,#b6f21a);box-shadow:0 10px 26px rgba(0,0,0,.5),0 0 0 4px rgba(200,255,61,.14);transition:opacity .25s,transform .25s;white-space:nowrap}
+.tgo.gone{opacity:0;pointer-events:none;transform:translateY(14px)}
+.terms{padding-bottom:110px}

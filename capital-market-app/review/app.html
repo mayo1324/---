@@ -1125,6 +1125,22 @@ details.more p{font-size:13.5px;line-height:1.65;color:var(--muted);margin:8px 0
 .fb-prev{margin:4px 0 10px;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.05);border:1px dashed var(--line);font-size:14.5px;line-height:1.55;color:var(--muted);text-align:center}
 .fb-prev.on{color:var(--text);border-style:solid;border-color:rgba(200,255,61,.4);background:rgba(200,255,61,.07)}
 
+/* ===== terms of use ===== */
+.terms{padding-bottom:30px}
+.terms .tlogo{display:flex;justify-content:center;margin-top:4px;transform:scale(.8);transform-origin:center top}
+.terms .th{text-align:center;font-size:26px;margin:0}.terms .tsub{text-align:center;margin:6px 0 14px;font-size:14px}
+.tsum{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0 18px}
+.tsum>div{padding:12px 14px;border-radius:18px;background:linear-gradient(160deg,rgba(26,26,26,.78),rgba(14,14,14,.84));border:1px solid var(--line)}
+.tsum b{display:block;font-size:14.5px;color:var(--lime);margin-bottom:3px}.tsum span{display:block;font-size:12.5px;line-height:1.5;color:var(--muted)}
+.tfull{padding:16px;border-radius:22px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+.tfull>h3{font-size:18px;margin:0}.tver{display:block;font-size:12px;margin:2px 0 8px}
+.tfull section{margin-top:14px}.tfull h4{font-size:15px;margin:0 0 4px}.tfull p{font-size:13.5px;line-height:1.75;color:#d2d8e0;margin:0}
+.tend{margin-top:16px;display:flex;flex-direction:column;gap:10px}
+.tend .btn{width:100%;margin-top:4px}.tend .btn:disabled{opacity:.4}
+.tgo{position:sticky;bottom:96px;margin:0 auto;width:fit-content;z-index:23;display:flex;align-items:center;gap:8px;height:44px;padding:0 20px;border-radius:999px;font-weight:700;font-size:14px;color:#0b0d10;background:linear-gradient(135deg,#d9ff6a,#b6f21a);box-shadow:0 10px 26px rgba(0,0,0,.5),0 0 0 4px rgba(200,255,61,.14);transition:opacity .25s,transform .25s;white-space:nowrap}
+.tgo.gone{opacity:0;pointer-events:none;transform:translateY(14px)}
+.terms{padding-bottom:110px}
+
 body{background:#0b0d10}
 @media (min-width:481px){body{background:#d9dde3}}
 </style>
@@ -1219,7 +1235,7 @@ const scr = $('#screen');
 const ticks = [];
 const onTick = (fn) => ticks.push(fn);
 let cur = { name: '', arg: null };
-const NO_TABS = ['onboarding', 'login', 'signup', 'lesson', 'lessonDone', 'practice', 'feedback', 'asset', 'paywall', 'paysuccess'];
+const NO_TABS = ['terms', 'onboarding', 'login', 'signup', 'lesson', 'lessonDone', 'practice', 'feedback', 'asset', 'paywall', 'paysuccess'];
 const TAB_OF = { asset: 'market', practiceHome: 'practiceHome', profile: '', glossary: 'lessons', community: '' };
 let navToken = 0, booted = false;
 const TAB_ORDER = ['home', 'lessons', 'practiceHome', 'market', 'portfolio'];
@@ -3901,6 +3917,7 @@ screens.profile = () => {
     <div class="sec"><h3>הגדרות</h3></div>
     <button class="btn ghost" id="fbk" style="margin-bottom:10px">משוב על האפליקציה</button>
     <button class="btn ghost" id="abt" style="margin-bottom:10px">על גרסת הניסוי</button>
+    <button class="btn ghost" id="trm" style="margin-bottom:10px">תנאי שימוש ופרטיות</button>
     <button class="btn ghost" id="snd" style="margin-bottom:10px">${SFX.on ? 'סאונד ורטט: פעיל' : 'סאונד ורטט: כבוי'}</button>
     <div class="sec"><h3>כלי הדגמה</h3></div>
     <button class="btn ghost" id="un" style="margin-bottom:10px">${portfolioOpen() ? 'התיק פתוח' : 'פתח את התיק בלי לסיים שיעורים'}</button>
@@ -3909,7 +3926,7 @@ screens.profile = () => {
     <button class="btn ghost" id="rs">מחיקת החשבון הזה</button>
     <p class="disc">התוכן באפליקציה לימודי בלבד. אין בו המלצות השקעה או הבטחות לרווח, ואין כסף אמיתי. ${WARN_DAY}</p>
     <p class="disc">נתונים לבדיקה פרטית בלבד, לא להפצה.</p></div>`;
-  $('#fbk').onclick = openFeedback; $('#abt').onclick = openAbout;
+  $('#fbk').onclick = openFeedback; $('#abt').onclick = openAbout; $('#trm').onclick = () => go('terms', 'view');
   $('#snd').onclick = () => { SFX.set(!SFX.on); $('#snd').textContent = SFX.on ? 'סאונד ורטט: פעיל' : 'סאונד ורטט: כבוי'; };
   $('#ua').onclick = () => { A().openAll = !A().openAll; save(); toast(A().openAll ? 'כל הנושאים פתוחים להדגמה' : 'הנושאים ננעלו שוב'); go('profile'); };
   $('#un').onclick = () => { if (!portfolioOpen()) { A().demoUnlock = true; save(); toast('התיק נפתח להדגמה'); go('profile'); } };
@@ -4812,12 +4829,63 @@ const _homeScreen = screens.home; screens.home = (a) => { _homeScreen(a); showWe
 })();
 
 'use strict';
-(function boot() {
-  initBg();
+/* ===== terms of use and privacy: shown on the first visit, must be approved to continue =====
+   DRAFT for the test version. It was NOT reviewed by a lawyer. Have a lawyer review it before any public launch. */
+const TERMS_VERSION = 1;
+const TERMS_SUMMARY = [
+  ['לימוד בלבד', 'התוכן באפליקציה לימודי. אין בו ייעוץ השקעות או המלצות.'],
+  ['כסף וירטואלי', 'התרגול הוא על נתוני שוק אמיתיים מהעבר, בלי כסף אמיתי.'],
+  ['הנתונים אצלכם', 'ההתקדמות נשמרת בדפדפן שלכם בלבד, בלי שרת.'],
+  ['מגיל 15', 'מי שמתחת ל-18 משתמש בידיעת הורה או אפוטרופוס.']
+];
+const TERMS_TEXT = [
+  ['מה זו האפליקציה', 'האפליקציה היא גרסת ניסוי ללימוד שוק ההון בעברית לבני 15 ומעלה: שיעורים, חידונים ותרגול על גרפים. היא נמצאת בפיתוח, ודברים בה יכולים להשתנות או להיפסק בכל עת.'],
+  ['תוכן לימודי בלבד, ללא ייעוץ', 'כל מה שמופיע באפליקציה הוא תוכן לימודי כללי. אין בו ייעוץ השקעות, שיווק השקעות, ניהול תיקי השקעות או המלצה לקנות, למכור או להחזיק נייר ערך כלשהו, ואין לראות בו תחליף לייעוץ מקצועי המתחשב בנתונים האישיים שלכם. מפעילי האפליקציה אינם מציגים את עצמם כבעלי רישיון לייעוץ השקעות. לפני כל החלטה כספית אמיתית יש להתייעץ עם גורם מוסמך.'],
+  ['סיכון', 'השקעה בניירות ערך כרוכה בסיכון, ואפשר להפסיד חלק מהכסף או את כולו. תוצאות בעבר אינן מבטיחות תוצאות בעתיד. מסחר יומי נחשב מסוכן במיוחד: גם רשות ניירות הערך האמריקאית (SEC) מזהירה שהוא כרוך בסיכון גבוה ובהפסדים משמעותיים בזמן קצר.'],
+  ['תרגול וכסף וירטואלי', 'התיק והתרגול באפליקציה הם סימולציה בכסף וירטואלי. אין בהם כסף אמיתי, והתוצאות בהם אינן מעידות על תוצאות אמיתיות. בתרגול משתמשים בנתוני שוק אמיתיים מהעבר, בלי שם הנכס והתאריך עד סוף המקרה. החלטה "נכונה" בתרגול נקבעת לפי כללי לימוד שהוגדרו מראש ולא לפי התוצאה בדיעבד, והיא אינה המלצה לפעול כך במציאות.'],
+  ['נתונים ומקורות', 'נתוני השוק בתרגול הם נתוני עבר שהתקבלו משירות Yahoo Finance. הם נועדו לבדיקה פרטית בלבד, לא להפצה, ועלולים להכיל אי דיוקים. לשונית "שוק" מציגה נתוני הדגמה בדויים. תוכן השיעורים נכתב על סמך מקורות ציבוריים, בעיקר אתר Investor.gov של רשות ניירות הערך האמריקאית וערכים בוויקיפדיה. הוא טיוטה שלא נבדקה על ידי מומחה, ואינו כולל כללים ספציפיים לישראל כגון מסים. המנוי והתשלום באפליקציה הם הדגמה בלבד.'],
+  ['גיל ושימוש', 'השימוש מיועד לבני 15 ומעלה. מי שטרם מלאו לו 18 מצהיר שהוריו או אפוטרופסו מודעים לשימוש שלו באפליקציה. אין להשתמש באפליקציה לשום מטרה בלתי חוקית, ואין לנסות לשבש את פעולתה.'],
+  ['פרטיות ונתונים אישיים', 'בהרשמה אפשר להזין שם, גיל, אימייל וסיסמה. הפרטים האלה, וההתקדמות שלכם (שיעורים, כוכבים, תוצאות תרגול), נשמרים רק בדפדפן שלכם, במכשיר שלכם. אין שרת, ולכן אנחנו לא מקבלים אותם ולא אוספים אותם. הסיסמה נשמרת בצורה פשוטה שאינה מאובטחת באמת, ולכן אל תשתמשו בסיסמה שאתם משתמשים בה במקום אחר. אפשר למחוק את הכול בכל עת דרך "על גרסת הניסוי" בפרופיל, או בניקוי נתוני האתר בדפדפן. ההתחברות עם Google ו-Apple היא הדגמה ואינה מחוברת לחשבונות אמיתיים.'],
+  ['עוגיות ואחסון מקומי', 'האפליקציה אינה משתמשת בעוגיות פרסום או מעקב. היא משתמשת באחסון המקומי של הדפדפן (Local Storage) כדי לזכור את ההתקדמות, את ההגדרות (כמו צליל) ואת אישור התנאים האלה. האפליקציה טוענת גופנים משירות Google Fonts, ולכן כתובת ה-IP שלכם עשויה להיחשף לגוגל בעת הטעינה, בכפוף למדיניות הפרטיות שלה. אין באפליקציה אנליטיקה או פרסומות.'],
+  ['משוב', 'כפתור המשוב מכין הודעה קצרה ופותח את וואטסאפ. ההודעה לא נשלחת עד שתלחצו על "שלח", והשימוש בוואטסאפ כפוף לתנאים ולמדיניות הפרטיות שלו.'],
+  ['קניין רוחני', 'העיצוב, האיורים, הטקסטים והקוד של האפליקציה שייכים למפעיליה, ואין להעתיקם או להפיצם ללא רשות. מקורות חיצוניים ונתוני שוק שייכים לבעליהם ומשמשים כאן בהתאם לאמור בסעיף "נתונים ומקורות".'],
+  ['הגבלת אחריות', 'האפליקציה ניתנת "כפי שהיא", בלי התחייבות לדיוק, לשלמות או לזמינות. ככל שהדין מתיר, מפעילי האפליקציה לא יישאו באחריות לנזק או להפסד כלשהם, ישירים או עקיפים, הנובעים מהשימוש באפליקציה או מהסתמכות על התוכן שבה, ובכלל זה החלטות כספיות. השימוש הוא באחריות המשתמש.'],
+  ['שינויים בתנאים', 'ייתכן שנעדכן את התנאים האלה. בשינוי מהותי נבקש את אישורכם מחדש.'],
+  ['דין ויצירת קשר', 'על התנאים האלה יחול הדין הישראלי. שאלות והערות אפשר לשלוח דרך כפתור "משוב" באפליקציה.']
+];
+const termsOk = () => { const t = loadDB().terms; return !!(t && t.v === TERMS_VERSION); };
+screens.terms = (mode) => {
+  const view = mode === 'view', t = loadDB().terms;
+  scr.innerHTML = `<div class="anim terms">
+    ${view ? `<div class="top"><button class="icon-btn" id="tbk" aria-label="חזרה">${ic.back}</button><h2>תנאי שימוש ופרטיות</h2><span style="width:42px"></span></div>` : `<div class="tlogo">${authLogo ? authLogo() : ''}</div><h1 class="th">לפני שמתחילים</h1><p class="muted tsub">קראו ואשרו את תנאי השימוש והפרטיות. זה לוקח דקה.</p>`}
+    <div class="tsum">${TERMS_SUMMARY.map(([h, p]) => `<div><b>${h}</b><span>${p}</span></div>`).join('')}</div>
+    <div class="tfull"><h3>התקנון המלא</h3><span class="muted tver">גרסת ניסוי · תנאים מגרסה ${TERMS_VERSION} · ${BUILD_DATE}</span>
+      ${TERMS_TEXT.map(([h, p], i) => `<section><h4>${i + 1}. ${h}</h4><p>${p}</p></section>`).join('')}</div>
+    ${view ? `<p class="muted tver" style="text-align:center">${t ? 'אושר בתאריך ' + new Date(t.at).toLocaleDateString('he-IL') : ''}</p>` : `<div class="tend" id="tend">
+      <button class="check" id="tc1" type="button"><i></i><span>קראתי והבנתי את תנאי השימוש והפרטיות. אני מבין/ה שהתוכן באפליקציה לימודי בלבד ואינו ייעוץ השקעות או המלצה.</span></button>
+      <button class="check" id="tc2" type="button"><i></i><span>אני בן/בת 15 ומעלה. אם אני מתחת ל-18, ההורה או האפוטרופוס שלי יודעים שאני משתמש/ת באפליקציה.</span></button>
+      <button class="btn primary" id="tok" disabled>אישור והמשך</button></div>`}
+  </div>${view ? '' : '<button class="tgo" id="tgo" type="button">קפצו לסוף ואשרו <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></button>'}`;
+  if (view) { $('#tbk').onclick = () => go('profile'); return; }
+  const st = { a: false, b: false }, upd = () => { $('#tok').disabled = !(st.a && st.b); };
+  $('#tc1').onclick = () => { st.a = !st.a; $('#tc1').classList.toggle('on', st.a); upd(); };
+  $('#tc2').onclick = () => { st.b = !st.b; $('#tc2').classList.toggle('on', st.b); upd(); };
+  $('#tgo').onclick = () => scr.scrollTo({ top: scr.scrollHeight, behavior: reduceMotion ? 'auto' : 'smooth' });
+  scr.onscroll = () => { const near = scr.scrollHeight - scr.scrollTop - scr.clientHeight < 140; $('#tgo') && $('#tgo').classList.toggle('gone', near); };
+  $('#tok').onclick = () => { const d = loadDB(); d.terms = { v: TERMS_VERSION, at: new Date().toISOString() }; save(); scr.onscroll = null; SFX.play('pop'); bootRoute(); };
+};
+
+'use strict';
+/* after the terms are approved (or if they already were), go to the right first screen */
+function bootRoute() {
   const d = loadDB(), h = (location.hash || '').replace('#', '');
   const open = ['home', 'lessons', 'market', 'portfolio', 'practiceHome', 'profile'];
   if (loggedIn()) go(open.includes(h) ? h : 'home');
   else go(Object.keys(d.accounts).length ? 'login' : d.seenOnboarding ? 'signup' : 'onboarding', 0);
+}
+(function boot() {
+  initBg();
+  if (!termsOk()) go('terms'); else bootRoute();
 })();
 
 </script>

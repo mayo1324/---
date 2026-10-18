@@ -362,6 +362,7 @@ screens.profile = () => {
     <div class="sec"><h3>הגדרות</h3></div>
     <button class="btn ghost" id="fbk" style="margin-bottom:10px">משוב על האפליקציה</button>
     <button class="btn ghost" id="abt" style="margin-bottom:10px">על גרסת הניסוי</button>
+    <button class="btn ghost" id="trm" style="margin-bottom:10px">תנאי שימוש ופרטיות</button>
     <button class="btn ghost" id="snd" style="margin-bottom:10px">${SFX.on ? 'סאונד ורטט: פעיל' : 'סאונד ורטט: כבוי'}</button>
     <div class="sec"><h3>כלי הדגמה</h3></div>
     <button class="btn ghost" id="un" style="margin-bottom:10px">${portfolioOpen() ? 'התיק פתוח' : 'פתח את התיק בלי לסיים שיעורים'}</button>
@@ -370,7 +371,7 @@ screens.profile = () => {
     <button class="btn ghost" id="rs">מחיקת החשבון הזה</button>
     <p class="disc">התוכן באפליקציה לימודי בלבד. אין בו המלצות השקעה או הבטחות לרווח, ואין כסף אמיתי. ${WARN_DAY}</p>
     <p class="disc">נתונים לבדיקה פרטית בלבד, לא להפצה.</p></div>`;
-  $('#fbk').onclick = openFeedback; $('#abt').onclick = openAbout;
+  $('#fbk').onclick = openFeedback; $('#abt').onclick = openAbout; $('#trm').onclick = () => go('terms', 'view');
   $('#snd').onclick = () => { SFX.set(!SFX.on); $('#snd').textContent = SFX.on ? 'סאונד ורטט: פעיל' : 'סאונד ורטט: כבוי'; };
   $('#ua').onclick = () => { A().openAll = !A().openAll; save(); toast(A().openAll ? 'כל הנושאים פתוחים להדגמה' : 'הנושאים ננעלו שוב'); go('profile'); };
   $('#un').onclick = () => { if (!portfolioOpen()) { A().demoUnlock = true; save(); toast('התיק נפתח להדגמה'); go('profile'); } };
