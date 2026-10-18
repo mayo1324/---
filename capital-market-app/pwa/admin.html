@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>לוח מדדים</title>
+<style>
+:root{--bg:#07090c;--card:#12161b;--tx:#eef1f4;--mu:#98a3ae;--li:#c8ff3d;--rd:#ff6048}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 system-ui,Arial,sans-serif;padding:20px}
+.w{max-width:980px;margin:0 auto}h1{margin:0 0 4px}h2{margin:30px 0 10px;font-size:20px}.mu{color:var(--mu);font-size:14px}
+button{min-height:44px;padding:0 22px;border-radius:12px;border:0;background:var(--li);color:#10180a;font:inherit;font-weight:800;cursor:pointer}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:12px;overflow:hidden}th,td{padding:9px 12px;text-align:right;border-bottom:1px solid #222a33;font-size:15px}th{color:var(--mu);font-weight:600}
+.bar{height:10px;border-radius:6px;background:var(--li);min-width:2px}.num{font-variant-numeric:tabular-nums;direction:ltr;text-align:left}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.err{color:var(--rd)}select{min-height:44px;border-radius:10px;background:var(--card);color:var(--tx);border:1px solid #2a323c;padding:0 12px;font:inherit}
+</style></head><body><div class="w">
+<h1>לוח מדדים</h1><p class="mu">משפך, שימור ושימוש. הנתונים אנונימיים. רק הבעלים יכול לקרוא אותם, אחרי התחברות עם Google.</p>
+<div class="row"><button id="in">התחברות עם Google</button><select id="days"><option value="7">7 ימים אחרונים</option><option value="14" selected>14 ימים אחרונים</option><option value="30">30 ימים אחרונים</option></select><button id="go" style="display:none">רענון</button><span id="msg" class="mu"></span></div>
+<div id="out"></div></div>
+<script type="module">
+const CFG={apiKey:'AIzaSyDJablsF0GQ1xNTHiedOM6cFKCjTWVXsT8',authDomain:'learn-markets.firebaseapp.com',projectId:'learn-markets',appId:'1:228220691798:web:5c3d6002085c61ab0222f7'};
+const v='10.12.2',base=`https://www.gstatic.com/firebasejs/${v}/`;
+const [{initializeApp},A,F]=await Promise.all([import(base+'firebase-app.js'),import(base+'firebase-auth.js'),import(base+'firebase-firestore.js')]);
+const app=initializeApp(CFG),auth=A.getAuth(app),db=F.getFirestore(app),$=s=>document.querySelector(s);
+const msg=t=>$('#msg').textContent=t||'';
+$('#in').onclick=async()=>{try{await A.signInWithPopup(auth,new A.GoogleAuthProvider())}catch(e){msg('ההתחברות נכשלה: '+(e.code||e.message))}};
+A.onAuthStateChanged(auth,u=>{ $('#go').style.display=u?'':'none'; if(u){ $('#in').style.display='none'; msg('מחובר: '+u.email); run(); } });
+$('#go').onclick=run; $('#days').onchange=run;
+const dk=t=>{const d=new Date(t);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const addDays=(k,n)=>{const [y,m,d]=k.split('-').map(Number);return dk(new Date(y,m-1,d+n).getTime())};
+const pct=(a,b)=>b?Math.round(a/b*100)+'%':'-';
+async function run(){
+  msg('טוען...'); const since=Date.now()-(+$('#days').value)*864e5;
+  let ev=[]; try{ const q=F.query(F.collection(db,'events'),F.where('t','>=',since),F.orderBy('t','asc'),F.limit(20000)); const snap=await F.getDocs(q); ev=snap.docs.map(d=>d.data()); }
+  catch(e){ msg(''); $('#out').innerHTML='<p class="err">אין הרשאה או שגיאה: '+(e.code||e.message)+'. ודאו שהחלפתם את OWNER_EMAIL בכללים ושהתחברתם עם אותו אימייל. ייתכן שצריך אינדקס (הקישור יופיע בקונסול).</p>'; return; }
+  msg(ev.length+' אירועים'+(ev.length>=20000?' (הגעתם למגבלה, חלק נחתך)':''));
+  const byV=new Map(); ev.forEach(x=>{ if(!byV.has(x.vid)) byV.set(x.vid,[]); byV.get(x.vid).push(x); });
+  const has=(arr,e,s)=>arr.some(x=>x.e===e&&(!s||x.s===s));
+  const V=[...byV.values()];
+  const step=(label,f)=>({label,n:V.filter(f).length});
+  const F1=[step('ביקרו בדף הנחיתה',a=>has(a,'landing_view')),step('לחצו לפתיחת האפליקציה',a=>has(a,'cta_click')),step('אישרו את התקנון (כניסה ראשונה)',a=>has(a,'terms_ok')),step('פתחו את האפליקציה',a=>has(a,'app_open')),step('הגיעו למסך הרשמה',a=>has(a,'signup_view')),step('השלימו הרשמה',a=>has(a,'signup_done')),step('סיימו שיעור',a=>has(a,'lesson_done')),step('סיימו תרגול',a=>has(a,'practice_done')),step('ראו את מסך המנוי',a=>has(a,'paywall_view'))];
+  const top=F1[0].n||1;
+  let h='<h2>משפך</h2><table><tr><th>שלב</th><th>אנשים</th><th>מהדף</th><th></th></tr>'+F1.map(s=>`<tr><td>${s.label}</td><td class="num">${s.n}</td><td class="num">${pct(s.n,top)}</td><td style="width:35%"><div class="bar" style="width:${Math.round(s.n/top*100)}%"></div></td></tr>`).join('')+'</table><p class="mu">אנשים = מכשירים (מזהה אקראי). מי שנכנס מדפדפן אחר נספר פעם נוספת.</p>';
+  // retention: cohort = first day seen in the app (app_open, or any app event)
+  const act=(a)=>a.filter(x=>x.s==='app').map(x=>dk(x.t));
+  const cohorts=new Map(); V.forEach(a=>{ const days=[...new Set(act(a))].sort(); if(!days.length) return; const d0=days[0]; if(!cohorts.has(d0)) cohorts.set(d0,[]); cohorts.get(d0).push(new Set(days)); });
+  const today=dk(Date.now()), offs=[1,2,3,7,14];
+  const rows=[...cohorts.keys()].sort().reverse().map(d0=>{ const L=cohorts.get(d0); return `<tr><td>${d0}</td><td class="num">${L.length}</td>`+offs.map(o=>{ const dd=addDays(d0,o); if(dd>today) return '<td class="num mu">-</td>'; const n=L.filter(s=>s.has(dd)).length; return `<td class="num">${pct(n,L.length)} <span class="mu">(${n})</span></td>`; }).join('')+'</tr>'; }).join('');
+  const tot=offs.map(o=>{ let n=0,m=0; cohorts.forEach((L,d0)=>{ const dd=addDays(d0,o); if(dd>today) return; m+=L.length; n+=L.filter(s=>s.has(dd)).length; }); return `<td class="num"><b>${pct(n,m)}</b></td>`; }).join('');
+  h+='<h2>שימור לפי יום כניסה ראשון</h2><table><tr><th>יום</th><th>חדשים</th>'+offs.map(o=>`<th>יום ${o}</th>`).join('')+'</tr>'+rows+`<tr><td><b>סך הכול</b></td><td></td>${tot}</tr></table><p class="mu">אחוז מהחדשים שחזרו בדיוק ביום הזה אחרי הכניסה הראשונה. ימים שלא עברו עדיין מסומנים ב-"-".</p>`;
+  // daily activity
+  const daily=new Map(); ev.filter(x=>x.s==='app').forEach(x=>{ const k=dk(x.t); if(!daily.has(k)) daily.set(k,{v:new Set(),l:0,p:0}); const o=daily.get(k); o.v.add(x.vid); if(x.e==='lesson_done')o.l++; if(x.e==='practice_done')o.p++; });
+  h+='<h2>פעילות יומית</h2><table><tr><th>יום</th><th>משתמשים פעילים</th><th>שיעורים שהושלמו</th><th>תרגולים שהושלמו</th></tr>'+[...daily.keys()].sort().reverse().map(k=>{const o=daily.get(k);return `<tr><td>${k}</td><td class="num">${o.v.size}</td><td class="num">${o.l}</td><td class="num">${o.p}</td></tr>`}).join('')+'</table>';
+  // per lesson / case drop-off
+  const cnt=(e)=>{const m=new Map(); ev.filter(x=>x.e===e).forEach(x=>{ const id=x.p.split(':')[0]; if(!m.has(id)) m.set(id,new Set()); m.get(id).add(x.vid); }); return m;};
+  const ls=cnt('lesson_start'),ld=cnt('lesson_done'); const ids=[...new Set([...ls.keys(),...ld.keys()])].sort((a,b)=>(+a.replace(/\D/g,''))-(+b.replace(/\D/g,'')));
+  h+='<h2>שיעורים: התחילו מול סיימו</h2><table><tr><th>שיעור</th><th>התחילו</th><th>סיימו</th><th>סיימו מתוך התחילו</th></tr>'+ids.map(i=>{const a=(ls.get(i)||new Set()).size,b=(ld.get(i)||new Set()).size;return `<tr><td>${i}</td><td class="num">${a}</td><td class="num">${b}</td><td class="num">${pct(b,a)}</td></tr>`}).join('')+'</table>';
+  const ps=cnt('practice_start'),pd=cnt('practice_done'); const pids=[...new Set([...ps.keys(),...pd.keys()])].sort((a,b)=>(+a.replace(/\D/g,''))-(+b.replace(/\D/g,'')));
+  h+='<h2>תרגול: התחילו מול סיימו</h2><table><tr><th>מקרה</th><th>התחילו</th><th>סיימו</th><th>סיימו מתוך התחילו</th></tr>'+pids.map(i=>{const a=(ps.get(i)||new Set()).size,b=(pd.get(i)||new Set()).size;return `<tr><td>${i}</td><td class="num">${a}</td><td class="num">${b}</td><td class="num">${pct(b,a)}</td></tr>`}).join('')+'</table>';
+  const refs=new Map(); ev.filter(x=>x.e==='landing_view').forEach(x=>{ const r=x.p||'ישיר'; refs.set(r,(refs.get(r)||0)+1); });
+  h+='<h2>מאיפה הגיעו לדף</h2><table><tr><th>מקור</th><th>ביקורים</th></tr>'+[...refs.entries()].sort((a,b)=>b[1]-a[1]).map(([r,n])=>`<tr><td>${r}</td><td class="num">${n}</td></tr>`).join('')+'</table>';
+  $('#out').innerHTML=h;
+}
+</script></body></html>

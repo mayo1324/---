@@ -141,6 +141,7 @@ function demoProviderFlow(kind) {
 }
 
 screens.login = () => {
+  track('login_view');
   scr.innerHTML = `<div class="auth anim">
     <button class="icon-btn" id="bk" style="margin:4px 0 0">${ic.back}</button>${authLogo()}
     <div class="glass"><h2>כניסה לחשבון</h2>
@@ -161,13 +162,14 @@ screens.login = () => {
     let bad = setErr('em', /^\S+@\S+\.\S+$/.test(em) ? (acc ? '' : 'לא מצאנו חשבון עם האימייל הזה') : 'כתבו אימייל תקין');
     if (!bad) bad = setErr('pw', !pw ? 'כתבו סיסמה' : acc.noPass ? 'החשבון הזה נוצר עם Google. התחברו עם הכפתור של Google' : acc.pass !== hash(pw) ? 'הסיסמה לא נכונה' : ''); else setErr('pw', '');
     if (bad) return;
-    loadDB().session = em; save(); toast('ברוך שובך, ' + acc.name); go('home');
+    loadDB().session = em; save(); track('login', 'email'); toast('ברוך שובך, ' + acc.name); go('home');
   };
   $('#go').onclick = submit;
   $('#pw').onkeydown = (e) => { if (e.key === 'Enter') submit(); };
 };
 
 screens.signup = () => {
+  track('signup_view');
   const st = { goal: 'להבין איך זה עובד', terms: true };
   scr.innerHTML = `<div class="auth anim">
     <button class="icon-btn" id="bk" style="margin:4px 0 0">${ic.back}</button>${authLogo()}
@@ -192,7 +194,7 @@ screens.signup = () => {
     bad = setErr('em', !/^\S+@\S+\.\S+$/.test(em) ? 'כתבו אימייל תקין' : loadDB().accounts[em] ? (loadDB().accounts[em].noPass ? 'כבר יש חשבון עם האימייל הזה, שנוצר עם Google. התחברו עם Google' : 'כבר יש חשבון עם האימייל הזה. אפשר להתחבר') : '') || bad;
     bad = setErr('pw', pw.length < 4 ? 'הסיסמה צריכה להיות לפחות 4 תווים' : '') || bad;
     if (bad) return;
-    loadDB().accounts[em] = newAcct(nm, age, em, pw, st.goal); loadDB().session = em; save();
+    loadDB().accounts[em] = newAcct(nm, age, em, pw, st.goal); loadDB().session = em; save(); track('signup_done', 'email');
     go('home');
   };
 };
@@ -255,6 +257,7 @@ screens.lessons = () => {
 screens.lesson = (id) => {
   const L = LESSONS.find(x => x.id === id) || LESSONS[0];
   if (!lessonOpen(L)) { scr.innerHTML = ''; setTimeout(() => { toast('השיעור הזה ייפתח אחרי שמסיימים את הנושא הקודם'); go('lessons'); }, 0); return; }
+  track('lesson_start', L.id);
   let i = 0, answered = false, dir = 1;
   let busy = false;
   /* leave the current slide first, then bring the next one in (RTL: forward comes from the left) */
@@ -305,7 +308,7 @@ screens.lesson = (id) => {
     $('#nx').onclick = () => {
       if (!quiz || qi < QS.length - 1) { step(1); return; }
       const s = A(), first = !s.lessonsDone.includes(L.id), openBefore = activeMods().filter(modOpen).map(m => m.id);
-      if (first) { s.lessonsDone.push(L.id); s.stars += 1; s.xp = (s.xp || 0) + 20; save(); }
+      if (first) { s.lessonsDone.push(L.id); s.stars += 1; s.xp = (s.xp || 0) + 20; save(); track('lesson_done', L.id); }
       markActive(s);
       const unlocked = activeMods().filter(modOpen).map(m => m.id).find(mid => !openBefore.includes(mid));
       go('lessonDone', { id: L.id, gained: first ? 20 : 0, before: (s.xp || 0) - (first ? 20 : 0), unlocked });
@@ -365,6 +368,7 @@ screens.profile = () => {
     <button class="btn ghost" id="abt" style="margin-bottom:10px">על גרסת הניסוי</button>
     <button class="btn ghost" id="trm" style="margin-bottom:10px">תנאי שימוש ופרטיות</button>
     <button class="btn ghost" id="snd" style="margin-bottom:10px">${SFX.on ? 'סאונד ורטט: פעיל' : 'סאונד ורטט: כבוי'}</button>
+    <button class="btn ghost" id="ana" style="margin-bottom:10px">${TRACK.optedOut() ? 'ספירת שימוש אנונימית: כבויה' : 'ספירת שימוש אנונימית: פעילה'}</button>
     ${DEMO_TOOLS ? `<div class="sec"><h3>כלי הדגמה</h3></div>
     <button class="btn ghost" id="un" style="margin-bottom:10px">${portfolioOpen() ? 'התיק פתוח' : 'פתח את התיק בלי לסיים שיעורים'}</button>
     <button class="btn ghost" id="ua" style="margin-bottom:10px">${s.openAll ? 'נעל את הנושאים שוב' : 'פתח את כל הנושאים (הדגמה)'}</button>` : ''}
@@ -373,6 +377,7 @@ screens.profile = () => {
     <p class="disc">התוכן באפליקציה לימודי בלבד. אין בו המלצות השקעה או הבטחות לרווח, ואין כסף אמיתי. ${WARN_DAY}</p>
     <p class="disc">נתונים לבדיקה פרטית בלבד, לא להפצה.</p></div>`;
   $('#fbk').onclick = openFeedback; $('#abt').onclick = openAbout; if ($('#inst')) $('#inst').onclick = openInstall; $('#trm').onclick = () => go('terms', 'view');
+  $('#ana').onclick = () => { TRACK.setOptOut(!TRACK.optedOut()); $('#ana').textContent = TRACK.optedOut() ? 'ספירת שימוש אנונימית: כבויה' : 'ספירת שימוש אנונימית: פעילה'; };
   $('#snd').onclick = () => { SFX.set(!SFX.on); $('#snd').textContent = SFX.on ? 'סאונד ורטט: פעיל' : 'סאונד ורטט: כבוי'; };
   if ($('#ua')) $('#ua').onclick = () => { A().openAll = !A().openAll; save(); toast(A().openAll ? 'כל הנושאים פתוחים להדגמה' : 'הנושאים ננעלו שוב'); go('profile'); };
   if ($('#un')) $('#un').onclick = () => { if (!portfolioOpen()) { A().demoUnlock = true; save(); toast('התיק נפתח להדגמה'); go('profile'); } };

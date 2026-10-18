@@ -210,7 +210,7 @@ footer{padding:36px 0 60px;border-top:1px solid var(--line);color:var(--mu);font
 <section class="final"><div class="w rv"><h2>מוכנים להתחיל?</h2><p class="lead" style="margin:0 auto 30px">כמה דקות ביום, ושוק ההון כבר לא נראה כמו שפה זרה.</p><a class="btn" href="app/index.html" data-mag>פתיחת האפליקציה</a></div></section>
 </main>
 
-<footer><div class="w"><a href="terms.html">תקנון ופרטיות</a><p>© לומדים שוק הון · גרסת ניסוי · תוכן לימודי בלבד, לא ייעוץ השקעות</p></div></footer>
+<footer><div class="w"><a href="terms.html">תקנון ופרטיות</a><p>© לומדים שוק הון · גרסת ניסוי · תוכן לימודי בלבד, לא ייעוץ השקעות</p><p style="font-size:13px">אנחנו סופרים ביקורים באופן אנונימי (בלי שם ואימייל). פרטים ב<a href="terms.html">תקנון ופרטיות</a>. אפשר לכבות באפליקציה, בפרופיל.</p></div></footer>
 
 <script>
 (()=>{
@@ -301,6 +301,20 @@ function guess(dir){if(done)return;done=true;$('#up').disabled=$('#dn').disabled
  $('#again').onclick=e=>{e.preventDefault();gen()}}};step()}
 $('#up').onclick=()=>guess('up');$('#dn').onclick=()=>guess('dn');
 gen();addEventListener('resize',draw);
+})();
+</script>
+<script>
+/* anonymous visit counting: a random id kept on this device, the event name and the time. No name, no email. Same id is used inside the app (same site). */
+(function(){
+  var K='cm_vid',OFF='cm_noanalytics',cfg={p:'learn-markets',k:'AIzaSyDJablsF0GQ1xNTHiedOM6cFKCjTWVXsT8'};
+  function g(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  if(navigator.doNotTrack==='1'||g(OFF)==='1'||!/^https?:$/.test(location.protocol))return;
+  var v=g(K);if(!v){v=(crypto.randomUUID?crypto.randomUUID():Math.random().toString(36).slice(2)+Date.now().toString(36)).replace(/-/g,'').slice(0,24);try{localStorage.setItem(K,v)}catch(e){}}
+  function ev(e,p){try{fetch('https://firestore.googleapis.com/v1/projects/'+cfg.p+'/databases/(default)/documents/events?key='+cfg.k,{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({fields:{vid:{stringValue:v},e:{stringValue:e},p:{stringValue:String(p||'').slice(0,40)},s:{stringValue:'landing'},t:{integerValue:String(Date.now())}}})}).catch(function(){})}catch(x){}}
+  var src=(new URLSearchParams(location.search).get('src')||'').replace(/[^a-zA-Z0-9_-]/g,'').slice(0,20),ref='';try{ref=new URL(document.referrer).hostname.replace(/^www\./,'')}catch(e){}
+  ev('landing_view',src||ref);
+  document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href],button');if(!a)return;var h=a.getAttribute('href')||'';if(h.indexOf('app/')===0)ev('cta_click',a.id||a.textContent.trim().slice(0,20));else if(a.id==='ins')ev('install_click','landing')});
+  var sent=false;addEventListener('scroll',function(){if(!sent&&scrollY+innerHeight>document.body.scrollHeight*.75){sent=true;ev('landing_scroll','75')}},{passive:true});
 })();
 </script>
 </body>

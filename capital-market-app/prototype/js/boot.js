@@ -9,5 +9,5 @@ function bootRoute() {
 (function boot() {
   initBg();
   if (!termsOk()) go('terms'); else bootRoute();
-  if (termsOk()) cloudResume();
+  if (termsOk()) { track('app_open'); cloudResume(); }
 })();

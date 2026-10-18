@@ -326,6 +326,7 @@ const FEATS = [
   ['◎', 'תיק וירטואלי מורחב', 'כמה תיקים לתרגול']
 ];
 screens.paywall = () => {
+  track('paywall_view');
   const ac = A(); let sel = '12';
   if (ac.premium) {
     const pl = PLANS.find(x => x.id === ac.premium.plan) || PLANS[2];

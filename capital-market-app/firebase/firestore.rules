@@ -13,6 +13,19 @@ service cloud.firestore {
         ]);
     }
 
+    // Anonymous usage counting: anyone may add an event of this exact shape, nobody may change or delete one,
+    // and only the owner may read them (replace OWNER_EMAIL with the owner's Google email before publishing).
+    match /events/{id} {
+      allow create: if request.resource.data.keys().hasOnly(['vid', 'e', 'p', 's', 't'])
+        && request.resource.data.vid is string && request.resource.data.vid.size() <= 40
+        && request.resource.data.e is string && request.resource.data.e.size() <= 30
+        && request.resource.data.p is string && request.resource.data.p.size() <= 40
+        && request.resource.data.s in ['app', 'landing']
+        && request.resource.data.t is int;
+      allow read: if request.auth != null && request.auth.token.email == 'OWNER_EMAIL';
+      allow update, delete: if false;
+    }
+
     // Everything else is closed.
     match /{document=**} {
       allow read, write: if false;

@@ -70,20 +70,21 @@ function cloudPush() {
 }
 /* One account per email: a Google sign-in with an email that already has an account (password or Google) joins that account */
 async function onCloudUser(u) {
-  const d = loadDB(), ek = plain(u.email).toLowerCase(), legacy = 'g:' + u.uid, key = ek || legacy; let cloud = null, warn = false, linked = false;
+  const d = loadDB(), ek = plain(u.email).toLowerCase(), legacy = 'g:' + u.uid, key = ek || legacy; let cloud = null, warn = false, linked = false, created = false;
   try { cloud = await FBA.getDoc(u.uid); } catch (e) { warn = true; }
   let ac = d.accounts[key];
   /* an older Google account saved under another key moves to the email key (or merges into the account that already has it) */
   const oldKey = d.accounts[legacy] ? legacy : Object.keys(d.accounts).find(k => k !== key && d.accounts[k] && d.accounts[k].uid === u.uid);
   if (oldKey) { if (!ac) { ac = d.accounts[oldKey]; } else { mergeProgress(ac, d.accounts[oldKey]); ac.uid = ac.uid || u.uid; } delete d.accounts[oldKey]; }
   if (ac && !ac.uid && !ac.noPass) linked = true; /* a password account that now gets Google as well */
-  if (!ac) { ac = newAcct(u.name || 'משתמש', 15, u.email || '', 'cloud:' + u.uid, 'להבין איך זה עובד'); ac.noPass = true; ac.provider = 'google'; ac.seenIntro = false; }
+  if (!ac) { created = true; ac = newAcct(u.name || 'משתמש', 15, u.email || '', 'cloud:' + u.uid, 'להבין איך זה עובד'); ac.noPass = true; ac.provider = 'google'; ac.seenIntro = false; }
   ac.uid = u.uid; ac.google = true;
   mergeProgress(ac, cloud);
   ac.name = plain(ac.name && ac.name !== 'משתמש' ? ac.name : (u.name || 'משתמש')) || 'משתמש'; ac.email = plain(u.email || ac.email);
   d.accounts[key] = ac; d.session = key; d.seenOnboarding = true; save(); cloudPush();
   if (warn) toast('לא הצלחנו לטעון התקדמות מהענן. ממשיכים מקומית.');
-  return { ac, linked };
+  track(created ? 'signup_done' : 'login', 'google');
+  return { ac, linked, created };
 }
 const CLOUD_ERR = {
   'auth/unauthorized-domain': 'הכתובת הזאת עדיין לא מורשית להתחברות. אפשר להמשיך בלי Google.',

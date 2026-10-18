@@ -47,7 +47,7 @@ function openFeedback() {
       /* some viewers (for example a preview inside another page) block WhatsApp, so the text is also copied and shown as a fallback */
       const url = `https://wa.me/${FEEDBACK_WHATSAPP}?text=${encodeURIComponent(t)}`;
       try { await navigator.clipboard.writeText(t); } catch (e) { }
-      try { window.open(url, '_blank', 'noopener'); } catch (e) { }
+      track('feedback_sent'); try { window.open(url, '_blank', 'noopener'); } catch (e) { }
       $('#fbx').innerHTML = `<p class="muted" style="font-size:13px;line-height:1.6">פותחים את וואטסאפ עם הודעה מוכנה, ואתם רק לוחצים על שלח. אם הוא לא נפתח, ההודעה כבר הועתקה ואפשר להדביק אותה.</p><a class="btn ghost" target="_blank" rel="noopener noreferrer" href="${url}">לנסות שוב לפתוח את וואטסאפ</a>`;
       return;
     }
@@ -76,7 +76,7 @@ function openAbout() {
     <div class="about"><p><b>מה זה?</b> אב טיפוס של אפליקציה שמלמדת שוק הון לבני 15 ומעלה, עם שיעורים ותרגול על גרפים. אין כאן ייעוץ השקעות, המלצות או כסף אמיתי.</p>
     <p><b>מה אמיתי ומה הדגמה?</b> מקרי התרגול הם נתוני שוק אמיתיים מהעבר (מ-Yahoo Finance), לבדיקה פרטית בלבד ולא להפצה. לשונית "שוק", המנוי, התשלום, הקהילה וההתחברות עם Google ו-Apple הם הדגמה.</p>
     <p><b>תוכן השיעורים:</b> טיוטה שנכתבה לפי מקורות (בעיקר Investor.gov של ה-SEC והגדרות מויקיפדיה). עדיין לא נבדקה על ידי מומחה, ואין בה תוכן ישראלי ספציפי כמו מסים וחוקים.</p>
-    <p><b>הפרטיות שלכם:</b> ההתקדמות נשמרת בדפדפן שלכם. רק אם תתחברו עם Google, היא תישמר גם בענן של Google, באזור תל אביב. אין פרסומות ואין אנליטיקה. משוב נשלח רק אם תבחרו לשלוח אותו.</p></div>
+    <p><b>הפרטיות שלכם:</b> ההתקדמות נשמרת בדפדפן שלכם. רק אם תתחברו עם Google, היא תישמר גם בענן של Google, באזור תל אביב. אין פרסומות. אנחנו סופרים שימוש באופן אנונימי (בלי שם ואימייל), ואפשר לכבות את זה בפרופיל. משוב נשלח רק אם תבחרו לשלוח אותו.</p></div>
     <button class="btn ghost" id="abfb" style="margin-top:12px">משוב על האפליקציה</button>
     <button class="btn ghost danger" id="abrs" style="margin-top:10px">מחיקת כל הנתונים במכשיר הזה</button>`);
   $('#abfb').onclick = () => { closeSheet(); setTimeout(openFeedback, 280); };
