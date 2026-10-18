@@ -111,7 +111,8 @@ const fi = {
 const authLogo = () => `<div class="authlogo"><div class="lgi">${fi.candle}</div><h1><span>לומדים</span> <b>שוק הון</b></h1><p>ללמוד, לתרגל, להבין</p></div>`;
 const gfield = (id, icon, ph, extra = '', type = 'text', dirLtr = false) => `<div class="gf"><span class="lead">${icon}</span><input class="gi" id="${id}" type="${type}" placeholder="${ph}" ${dirLtr ? 'dir="ltr" style="text-align:right"' : ''} ${extra}>${type === 'password' ? `<button type="button" class="eye" data-eye="${id}" aria-label="הצגת סיסמה">${fi.eye}</button>` : ''}</div><div class="err-t" id="e-${id}"></div>`;
 const realProv = (k) => typeof CLOUD_ON !== 'undefined' && CLOUD_ON && CLOUD_PROVIDERS[k];
-const socials = (verb) => `<div class="orline"><span>או</span></div><button class="soc" data-prov="google"><i class="pm g">G</i>${verb} עם Google${realProv('google') ? '' : '<span class="dtag">הדגמה</span>'}</button><button class="soc" data-prov="apple"><i class="pm a">A</i>${verb} עם Apple${realProv('apple') ? '' : '<span class="dtag">הדגמה</span>'}</button>`;
+const GLOGO = '<svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.2 5.5-4.7 7.2l7.6 5.9c4.4-4.1 6.9-10.1 6.9-17.6z"/><path fill="#FBBC05" d="M10.5 28.7a14.5 14.5 0 010-9.4l-7.9-6.1a24 24 0 000 21.6l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>';
+const socials = (verb) => `<div class="orline"><span>או</span></div><button class="soc" data-prov="google">${GLOGO}<span>${verb} עם Google</span>${realProv('google') ? '' : '<span class="dtag">הדגמה</span>'}</button>`;
 function bindAuth(root) {
   $$('[data-eye]', root).forEach(b => b.onclick = () => { const i = $('#' + b.dataset.eye); i.type = i.type === 'password' ? 'text' : 'password'; b.classList.toggle('on', i.type === 'text'); });
   $$('[data-prov]', root).forEach(b => b.onclick = () => providerFlow(b.dataset.prov, b));
@@ -148,8 +149,7 @@ screens.login = () => {
       <div class="rowx"><button class="check on" id="rem" type="button"><i></i><span>זכור אותי</span></button><button class="link" id="fg" type="button">שכחתי סיסמה</button></div>
       <button class="btn primary" id="go">${fi.lock.replace('<svg', '<svg width="18" height="18"')} כניסה</button>
       ${socials('כניסה')}
-      <p class="alt">אין לך חשבון? <button class="link" id="su">יצירת חשבון</button></p></div>
-    <p class="demo-note" style="text-align:center">אב טיפוס: החשבונות נשמרים רק בדפדפן הזה.</p></div>`;
+      <p class="alt">אין לך חשבון? <button class="link" id="su">יצירת חשבון</button></p></div></div>`;
   bindAuth(scr);
   $('#rem').onclick = () => $('#rem').classList.toggle('on');
   $('#bk').onclick = () => go('onboarding', 0);
@@ -168,7 +168,7 @@ screens.login = () => {
 };
 
 screens.signup = () => {
-  const st = { goal: 'להבין איך זה עובד', terms: false };
+  const st = { goal: 'להבין איך זה עובד', terms: true };
   scr.innerHTML = `<div class="auth anim">
     <button class="icon-btn" id="bk" style="margin:4px 0 0">${ic.back}</button>${authLogo()}
     <div class="glass"><h2>יצירת חשבון</h2>
@@ -176,18 +176,13 @@ screens.signup = () => {
       ${gfield('age', fi.cal, 'גיל (15 ומעלה)', 'min="1" max="99" inputmode="numeric"', 'number')}
       ${gfield('em', fi.mail, 'אימייל', 'autocomplete="username"', 'email', true)}
       ${gfield('pw', fi.lock, 'סיסמה (לפחות 4 תווים)', 'autocomplete="new-password"', 'password', true)}
-      <p class="muted" style="font-size:12.5px;line-height:1.5;margin:-2px 4px 12px">זו גרסת ניסוי. אל תשתמשו בסיסמה שאתם משתמשים בה במקום אחר.</p>
-      <div class="goals"><span>מה המטרה שלך?</span><div class="chips" id="goals">${['להבין איך זה עובד', 'ללמוד לקרוא גרפים', 'סתם סקרנות'].map(g => `<button class="chip${g === st.goal ? ' on' : ''}" type="button">${g}</button>`).join('')}</div></div>
-      <button class="check" id="terms" type="button"><i></i><span>אני מבין שהתוכן לימודי בלבד, אין בו המלצות השקעה והבטחות לרווח, ואין כסף אמיתי באפליקציה.</span></button>
-      <div class="err-t" id="e-t"></div>
+      <p class="muted" style="font-size:12.5px;line-height:1.5;margin:-2px 4px 14px">גרסת ניסוי: אל תשתמשו בסיסמה שיש לכם במקום אחר.</p>
       <button class="btn primary" id="go">${fi.lock.replace('<svg', '<svg width="18" height="18"')} יצירת חשבון</button>
       ${socials('הרשמה')}
       <p class="alt">כבר יש לך חשבון? <button class="link" id="li">התחברות</button></p></div></div>`;
   bindAuth(scr);
   $('#bk').onclick = () => go('onboarding', 0);
   $('#li').onclick = () => go('login');
-  $('#goals').onclick = (e) => { const c = e.target.closest('.chip'); if (!c) return; $$('.chip', $('#goals')).forEach(x => x.classList.remove('on')); c.classList.add('on'); st.goal = c.textContent; };
-  $('#terms').onclick = () => { st.terms = !st.terms; $('#terms').classList.toggle('on', st.terms); };
   const setErr = (id, msg) => { $('#e-' + id).textContent = msg || ''; const f = $('#' + id); if (f && f.closest('.gf')) f.closest('.gf').classList.toggle('err', !!msg); return !!msg; };
   $('#go').onclick = () => {
     const nm = $('#nm').value.trim(), age = +$('#age').value, em = $('#em').value.trim().toLowerCase(), pw = $('#pw').value;
@@ -196,7 +191,6 @@ screens.signup = () => {
     bad = setErr('age', !age ? 'כתבו גיל' : age < 15 ? 'האפליקציה מיועדת לגיל 15 ומעלה' : '') || bad;
     bad = setErr('em', !/^\S+@\S+\.\S+$/.test(em) ? 'כתבו אימייל תקין' : loadDB().accounts[em] ? 'כבר יש חשבון עם האימייל הזה. אפשר להתחבר' : '') || bad;
     bad = setErr('pw', pw.length < 4 ? 'הסיסמה צריכה להיות לפחות 4 תווים' : '') || bad;
-    bad = setErr('t', st.terms ? '' : 'צריך לאשר כדי להמשיך') || bad;
     if (bad) return;
     loadDB().accounts[em] = newAcct(nm, age, em, pw, st.goal); loadDB().session = em; save();
     go('home');
