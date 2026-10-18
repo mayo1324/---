@@ -87,6 +87,7 @@ function go(name, arg) {
     const tb = $('#tabbar');
     tb.hidden = !tabs;
     const bf = $('#botfab'); if (bf) bf.hidden = !tabs;
+    $('#phone').classList.toggle('with-tabs', tabs);
     if (tabs) renderTabs(name in TAB_OF ? TAB_OF[name] : name);
     runCountUps();
     try { history.replaceState(null, '', '#' + name); } catch (e) { }

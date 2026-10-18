@@ -1112,6 +1112,11 @@ details.more p{font-size:13.5px;line-height:1.65;color:var(--muted);margin:8px 0
 .errbar{position:absolute;top:10px;left:12px;right:12px;z-index:60;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:16px;background:rgba(60,28,24,.96);border:1px solid rgba(255,96,72,.45);font-size:13px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
 .errbar span{flex:1;line-height:1.45}.errbar .link{flex:none;color:#ffb4a6}
 
+/* ===== always-visible feedback button ===== */
+.fbfab{position:absolute;left:12px;bottom:92px;z-index:22;display:flex;align-items:center;gap:6px;height:36px;padding:0 12px 0 10px;border-radius:999px;font-size:12.5px;font-weight:700;color:var(--text);background:rgba(28,33,40,.92);border:1px solid rgba(255,255,255,.16);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 6px 18px rgba(0,0,0,.4);transition:transform .15s}
+.fbfab svg{color:var(--lime)}.fbfab:active{transform:scale(.94)}
+.with-tabs .fbfab{bottom:166px}
+
 body{background:#0b0d10}
 @media (min-width:481px){body{background:#d9dde3}}
 </style>
@@ -1231,6 +1236,7 @@ function go(name, arg) {
     const tb = $('#tabbar');
     tb.hidden = !tabs;
     const bf = $('#botfab'); if (bf) bf.hidden = !tabs;
+    $('#phone').classList.toggle('with-tabs', tabs);
     if (tabs) renderTabs(name in TAB_OF ? TAB_OF[name] : name);
     runCountUps();
     try { history.replaceState(null, '', '#' + name); } catch (e) { }
@@ -4768,6 +4774,13 @@ function onAppError(msg) {
 window.addEventListener('error', (e) => onAppError((e.message || 'error') + (e.lineno ? ' @' + e.lineno : '')));
 window.addEventListener('unhandledrejection', (e) => onAppError('promise: ' + ((e.reason && e.reason.message) || e.reason)));
 const _homeScreen = screens.home; screens.home = (a) => { _homeScreen(a); showWelcomeOnce(); };
+
+/* a small feedback button that stays on every screen, bottom left */
+(function () {
+  const b = document.createElement('button'); b.id = 'fbfab'; b.className = 'fbfab'; b.setAttribute('aria-label', 'משוב');
+  b.innerHTML = '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M12 8.5v3M12 13.6v.01"/></svg><span>משוב</span>';
+  b.onclick = openFeedback; $('#phone').appendChild(b);
+})();
 
 'use strict';
 (function boot() {

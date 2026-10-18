@@ -67,3 +67,10 @@ function onAppError(msg) {
 window.addEventListener('error', (e) => onAppError((e.message || 'error') + (e.lineno ? ' @' + e.lineno : '')));
 window.addEventListener('unhandledrejection', (e) => onAppError('promise: ' + ((e.reason && e.reason.message) || e.reason)));
 const _homeScreen = screens.home; screens.home = (a) => { _homeScreen(a); showWelcomeOnce(); };
+
+/* a small feedback button that stays on every screen, bottom left */
+(function () {
+  const b = document.createElement('button'); b.id = 'fbfab'; b.className = 'fbfab'; b.setAttribute('aria-label', 'משוב');
+  b.innerHTML = '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M12 8.5v3M12 13.6v.01"/></svg><span>משוב</span>';
+  b.onclick = openFeedback; $('#phone').appendChild(b);
+})();
