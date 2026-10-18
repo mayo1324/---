@@ -23,3 +23,6 @@ let DEMO_TOOLS = false; try { if (/[?&]demo=1/.test(location.search)) localStora
 
 /* daily pace: how many NEW lessons and NEW practice cases open each day (finished ones are always open). Premium and the demo shortcut skip it. */
 const PACE = { lessons: 1, cases: 1 };
+
+/* email and password accounts managed by Firebase (works on every device, supports password reset). Off until tested on a real device: open the app once with ?ea=1 to turn it on for that device (?ea=0 turns it off). */
+const EMAIL_CLOUD_DEFAULT = false;

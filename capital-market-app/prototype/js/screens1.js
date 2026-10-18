@@ -161,7 +161,11 @@ screens.login = () => {
   $('#rem').onclick = () => $('#rem').classList.toggle('on');
   $('#bk').onclick = () => go('onboarding', 0);
   $('#su').onclick = () => go('signup');
-  $('#fg').onclick = () => toast('באב הטיפוס אין איפוס סיסמה');
+  $('#fg').onclick = async () => {
+    if (!emailCloud()) { toast('באב הטיפוס אין איפוס סיסמה'); return; }
+    const em = $('#em').value.trim().toLowerCase(); if (!/^\S+@\S+\.\S+$/.test(em)) { toast('כתבו קודם את האימייל בשדה למעלה'); return; }
+    try { await cloudReset(em); toast('אם יש חשבון עם האימייל הזה, שלחנו אליו קישור לאיפוס סיסמה. בדקו גם בספאם.'); } catch (e) { toast(CLOUD_ERR[e && e.code] || 'לא הצלחנו לשלוח. נסו שוב.'); }
+  };
   const setErr = (id, msg) => { $('#e-' + id).textContent = msg || ''; $('#' + id).closest('.gf').classList.toggle('err', !!msg); return !!msg; };
   const submit = () => {
     const em = $('#em').value.trim().toLowerCase(), pw = $('#pw').value, acc = loadDB().accounts[em];
@@ -170,8 +174,19 @@ screens.login = () => {
     if (bad) return;
     loadDB().session = em; save(); track('login', 'email'); toast('ברוך שובך, ' + acc.name); go('home');
   };
-  $('#go').onclick = submit;
-  $('#pw').onkeydown = (e) => { if (e.key === 'Enter') submit(); };
+  /* with cloud accounts on, the password is checked by Firebase (or by the saved local account for older accounts) */
+  const submitCloud = async () => {
+    const em = $('#em').value.trim().toLowerCase(), pw = $('#pw').value, acc = loadDB().accounts[em];
+    let bad = setErr('em', /^\S+@\S+\.\S+$/.test(em) ? '' : 'כתבו אימייל תקין');
+    if (!bad) bad = setErr('pw', !pw ? 'כתבו סיסמה' : acc && acc.noPass && !acc.cloudPass ? 'החשבון הזה נוצר עם Google. התחברו עם הכפתור של Google' : ''); else setErr('pw', '');
+    if (bad) return;
+    const btn = $('#go'), lab = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<span class="spin"></span> נכנסים...';
+    try { const r = await cloudLogin(em, pw); toast('ברוך שובך, ' + r.ac.name); go('home'); }
+    catch (e) { setErr('pw', CLOUD_ERR[e && e.code] || 'ההתחברות נכשלה. נסו שוב.'); btn.disabled = false; btn.innerHTML = lab; }
+  };
+  const doLogin = () => emailCloud() ? submitCloud() : submit();
+  $('#go').onclick = doLogin;
+  $('#pw').onkeydown = (e) => { if (e.key === 'Enter') doLogin(); };
 };
 
 screens.signup = () => {
@@ -192,14 +207,21 @@ screens.signup = () => {
   $('#bk').onclick = () => go('onboarding', 0);
   $('#li').onclick = () => go('login');
   const setErr = (id, msg) => { $('#e-' + id).textContent = msg || ''; const f = $('#' + id); if (f && f.closest('.gf')) f.closest('.gf').classList.toggle('err', !!msg); return !!msg; };
-  $('#go').onclick = () => {
+  $('#go').onclick = async () => {
     const nm = $('#nm').value.trim(), age = +$('#age').value, em = $('#em').value.trim().toLowerCase(), pw = $('#pw').value;
     let bad = false;
     bad = setErr('nm', nm.length < 2 ? 'כתבו שם של לפחות שתי אותיות' : '') || bad;
     bad = setErr('age', !age ? 'כתבו גיל' : age < 15 ? 'האפליקציה מיועדת לגיל 15 ומעלה' : '') || bad;
     bad = setErr('em', !/^\S+@\S+\.\S+$/.test(em) ? 'כתבו אימייל תקין' : loadDB().accounts[em] ? (loadDB().accounts[em].noPass ? 'כבר יש חשבון עם האימייל הזה, שנוצר עם Google. התחברו עם Google' : 'כבר יש חשבון עם האימייל הזה. אפשר להתחבר') : '') || bad;
-    bad = setErr('pw', pw.length < 4 ? 'הסיסמה צריכה להיות לפחות 4 תווים' : '') || bad;
+    const minPw = emailCloud() ? 6 : 4;
+    bad = setErr('pw', pw.length < minPw ? `הסיסמה צריכה להיות לפחות ${minPw} תווים` : '') || bad;
     if (bad) return;
+    if (emailCloud()) {
+      const btn = $('#go'), lab = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<span class="spin"></span> יוצרים חשבון...';
+      try { await cloudSignUp(nm, age, em, pw, st.goal); go('home'); }
+      catch (e) { setErr('em', e && e.code === 'auth/email-already-in-use' ? CLOUD_ERR[e.code] : ''); if (!(e && e.code === 'auth/email-already-in-use')) setErr('pw', CLOUD_ERR[e && e.code] || 'לא הצלחנו ליצור חשבון. נסו שוב.'); btn.disabled = false; btn.innerHTML = lab; }
+      return;
+    }
     loadDB().accounts[em] = newAcct(nm, age, em, pw, st.goal); loadDB().session = em; save(); track('signup_done', 'email');
     go('home');
   };
