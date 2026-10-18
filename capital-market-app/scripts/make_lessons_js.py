@@ -5,8 +5,8 @@ import json, re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-art = (ROOT / "prototype" / "js" / "art.js").read_text(encoding="utf-8")
-have = set(re.findall(r"^  ([A-Za-z0-9]+):", art, re.M)) | set(re.findall(r"SCENES\.([A-Za-z0-9]+) =", art))
+art = "".join((ROOT / "prototype" / "js" / n).read_text(encoding="utf-8") for n in ("art.js", "art2.js"))
+have = set(re.findall(r"^  ([A-Za-z0-9_]+):", art, re.M)) | set(re.findall(r"SCENES\.([A-Za-z0-9_]+) =", art))
 new, src, missing = [], {}, {}
 for f in sorted((ROOT / "outputs" / "lessons").glob("*.json")):
     for L in json.loads(f.read_text(encoding="utf-8")):

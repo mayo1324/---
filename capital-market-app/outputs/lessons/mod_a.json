@@ -1,0 +1,915 @@
+[
+ {
+  "id": "l10",
+  "title": "מניה: מה קונים באמת",
+  "min": 6,
+  "module": "A",
+  "color": "#1ff0b0",
+  "slides": [
+   {
+    "t": "מניה היא בעלות",
+    "b": "מניה מראה שאתם בעלים של חלק בחברה. בדרך כלל היא גם נותנת זכות להצביע בהחלטות מסוימות של החברה.",
+    "v": "pie"
+   },
+   {
+    "t": "למה חברות מוכרות מניות",
+    "b": "חברה מוכרת מניות כדי לקבל כסף. היא יכולה להשתמש בו, למשל, כדי להרחיב מתקנים או להשיק מוצרים חדשים.",
+    "v": "market"
+   },
+   {
+    "t": "איך מרוויחים ממניה",
+    "b": "אפשר להרוויח אם המחיר של המניה עולה. אפשר לקבל גם דיבידנד, חלק מהרווחים שהחברה מחלקת לבעלי המניות.",
+    "v": "pie"
+   },
+   {
+    "t": "המחיר זז ואין הבטחה",
+    "b": "מחיר מניה יכול לרדת וגם לעלות. אין ערובה שהחברה תצמח, ולכן אפשר להפסיד כסף.",
+    "v": "coaster",
+    "w": "אפשר להפסיד כסף שהשקעתם במניות."
+   },
+   {
+    "t": "אם החברה קורסת",
+    "b": "אם חברה פושטת רגל, בעלי המניות הרגילות הם אחרונים בתור לקבל כסף. מה שנשאר להם יכול להיות כלום.",
+    "v": "riskline"
+   }
+  ],
+  "qs": [
+   {
+    "q": "מה אומרת מניה על מי שמחזיק בה?",
+    "o": [
+     "הוא בעלים של חלק מהחברה",
+     "הוא הלווה כסף לחברה וקיבל הבטחה להחזר",
+     "הוא עובד בחברה"
+    ],
+    "a": 0,
+    "why": "מניה מייצגת בעלות בחברה, ואילו מי שמלווה כסף לחברה מחזיק באג\"ח."
+   },
+   {
+    "q": "מהו דיבידנד?",
+    "o": [
+     "עמלה שמשלמים לברוקר",
+     "חלק מהרווחים שהחברה מחלקת לבעלי המניות",
+     "מחיר המניה ביום הראשון"
+    ],
+    "a": 1,
+    "why": "דיבידנד הוא כסף שהחברה מחלקת לבעלי המניות מתוך הרווחים שלה."
+   },
+   {
+    "q": "מה נכון לגבי מניות?",
+    "o": [
+     "המחיר שלהן רק עולה",
+     "אי אפשר להפסיד בהן אם החברה גדולה",
+     "המחיר יכול לעלות ולרדת, ואפשר להפסיד כסף"
+    ],
+    "a": 2,
+    "why": "מחירי מניות זזים בשני הכיוונים ואין ערובה שהחברה תצליח."
+   }
+  ],
+  "src": [
+   {
+    "q": "A share of stock is an instrument that signifies an ownership position (called equity) in a corporation",
+    "f": "sources/web/a_stock.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/stock"
+   },
+   {
+    "q": "Most stocks also provide voting rights, which give shareholders a proportional vote in certain corporate decisions",
+    "f": "sources/web/a_stock.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/stock"
+   },
+   {
+    "q": "Companies issue stock to get money for various things, which may include",
+    "f": "sources/web/ig_stocks.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks"
+   },
+   {
+    "q": "Enlarging facilities or building new ones",
+    "f": "sources/web/ig_stocks.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks"
+   },
+   {
+    "q": "Launching new products",
+    "f": "sources/web/ig_stocks.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks"
+   },
+   {
+    "q": "Dividend payments, which come when the company distributes some of its earnings to stockholders",
+    "f": "sources/web/ig_stocks.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks"
+   },
+   {
+    "q": "But stock prices move down as well as up. There’s no guarantee that the company whose stock you hold will grow and do well, so you can lose money you invest in stocks.",
+    "f": "sources/web/ig_stocks.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks"
+   },
+   {
+    "q": "If you are a common stockholder, you get whatever is left, which may be nothing.",
+    "f": "sources/web/ig_stocks.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks"
+   }
+  ],
+  "scene_requests": [],
+  "status": "draft for expert review",
+  "to_verify": [
+   "האם בישראל לכל מניה רגילה יש זכות הצבעה (המקור הוא אמריקאי ואומר 'רוב המניות')."
+  ]
+ },
+ {
+  "id": "l11",
+  "title": "אג\"ח: הלוואה למדינה או לחברה",
+  "min": 6,
+  "module": "A",
+  "color": "#60a5fa",
+  "slides": [
+   {
+    "t": "אג\"ח היא שטר חוב",
+    "b": "אג\"ח היא כמו הלוואה. מי שקונה אותה מלווה כסף למי שהנפיק אותה, וזו יכולה להיות מדינה או חברה.",
+    "v": "bondLoan"
+   },
+   {
+    "t": "מה מקבלים",
+    "b": "המנפיק מבטיח לשלם ריבית בזמן ההלוואה. בסוף התקופה הוא אמור להחזיר את הסכום המקורי.",
+    "v": "bondLoan"
+   },
+   {
+    "t": "אג\"ח לא נותנת בעלות",
+    "b": "בעל אג\"ח של חברה לא הופך לבעלים שלה. הוא מקבל רק ריבית והחזר של הסכום, גם אם החברה מרוויחה מאוד.",
+    "v": "pie"
+   },
+   {
+    "t": "איפה הסיכון",
+    "b": "המנפיק יכול לא לשלם בזמן, וזה נקרא כשל בתשלום. אג\"ח של חברות עם סיכון גבוה בדרך כלל נותנות ריבית גבוהה יותר.",
+    "v": "riskline",
+    "w": "ריבית גבוהה יותר באה עם סיכון גבוה יותר להפסד."
+   },
+   {
+    "t": "גם מחיר האג\"ח זז",
+    "b": "אם מוכרים אג\"ח לפני הסוף, המחיר יכול להיות גבוה או נמוך מהסכום המקורי. כשהריבית בשוק עולה, אג\"ח ישנה עם ריבית נמוכה עלולה להימכר בהנחה.",
+    "v": "coaster"
+   }
+  ],
+  "qs": [
+   {
+    "q": "מה עושה מי שקונה אג\"ח?",
+    "o": [
+     "הופך לבעלים של חלק מהחברה",
+     "מלווה כסף למנפיק",
+     "קונה זכות להצביע באסיפה"
+    ],
+    "a": 1,
+    "why": "קונה אג\"ח מלווה כסף למנפיק, ואילו בעלות היא של בעלי מניות."
+   },
+   {
+    "q": "מה הסיכון המרכזי של בעל אג\"ח של חברה?",
+    "o": [
+     "שהחברה תרוויח יותר מדי",
+     "שהחברה לא תשלם ריבית או קרן בזמן",
+     "שיגידו לו כמה לשלם מס"
+    ],
+    "a": 1,
+    "why": "הסיכון המרכזי הוא שהמנפיק לא ישלם בזמן את הריבית או את הסכום שהלווינו."
+   },
+   {
+    "q": "מה קורה לעיתים למי שמוכר אג\"ח ישנה כשהריבית בשוק עלתה?",
+    "o": [
+     "הוא עלול למכור אותה בהנחה",
+     "הוא תמיד מקבל בונוס",
+     "הוא חייב להחזיק עד הסוף"
+    ],
+    "a": 0,
+    "why": "אג\"ח חדשות נותנות ריבית גבוהה יותר, לכן אג\"ח ישנה עלולה להימכר בהנחה."
+   }
+  ],
+  "src": [
+   {
+    "q": "When you buy a bond, you are lending to the issuer, which may be a government, municipality, or corporation.",
+    "f": "sources/web/a_bonds_page.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/bonds-or-fixed-income-products/bonds"
+   },
+   {
+    "q": "In return, the issuer promises to pay you a specified rate of interest during the life of the bond and to repay the principal",
+    "f": "sources/web/a_bonds_page.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/bonds-or-fixed-income-products/bonds"
+   },
+   {
+    "q": "When you buy a corporate bond, you do not own equity in the company.",
+    "f": "sources/web/a_fixed_income.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/bonds-or-fixed-income-products"
+   },
+   {
+    "q": "You will receive only the interest and principal on the bond, no matter how profitable the company becomes",
+    "f": "sources/web/a_fixed_income.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/bonds-or-fixed-income-products"
+   },
+   {
+    "q": "One key risk to a bondholder is that the company may fail to make timely payments of interest or principal.",
+    "f": "sources/web/a_fixed_income.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/bonds-or-fixed-income-products"
+   },
+   {
+    "q": "Non-investment grade bonds, which are also called high-yield or speculative bonds, generally offer higher interest rates to compensate investors for greater risk.",
+    "f": "sources/web/a_fixed_income.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/bonds-or-fixed-income-products"
+   },
+   {
+    "q": "If sold before maturity, the bond may be worth more or less than the face value.",
+    "f": "sources/web/a_risk.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/what-risk"
+   },
+   {
+    "q": "To sell an older bond with a lower interest rate, you might have to sell it at a discount.",
+    "f": "sources/web/a_risk.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/what-risk"
+   }
+  ],
+  "scene_requests": [
+   {
+    "key": "bondLoan",
+    "desc": "שני צדדים: מלווה (אדם עם כסף) ומנפיק (בניין של מדינה או חברה). חץ של כסף הולך אל המנפיק, וחצים של ריבית והחזר חוזרים אל המלווה, עם סמל שטר חוב באמצע."
+   }
+  ],
+  "status": "draft for expert review",
+  "to_verify": [
+   "כינויי האג\"ח בישראל (אג\"ח ממשלתי, אג\"ח קונצרני) והאם הממשלה נחשבת בטוחה יותר: לא הוצג במקור שנאסף, הושמט.",
+   "המקורות הם אמריקאיים; הדוגמאות הישראליות הושמטו."
+  ]
+ },
+ {
+  "id": "l12",
+  "title": "מי משתתף בשוק: בורסה, ברוקר, רגולטור",
+  "min": 6,
+  "module": "A",
+  "color": "#a78bfa",
+  "slides": [
+   {
+    "t": "הבורסה: המקום שבו סוחרים",
+    "b": "בורסה היא מקום שבו אפשר לקנות ולמכור ניירות ערך, כמו מניות ואג\"ח. היום הרבה מהמסחר נעשה במחשבים ולא במקום פיזי אחד.",
+    "v": "market"
+   },
+   {
+    "t": "הברוקר: השליח שלכם",
+    "b": "ברוקר הוא גורם שקונה ומוכר ניירות ערך בשביל הלקוחות שלו. בדרך כלל משלמים לו עמלה על כל קנייה או מכירה.",
+    "v": "players"
+   },
+   {
+    "t": "הרגולטור: השוטר של השוק",
+    "b": "רגולטור הוא גוף ממשלתי שמפקח על השוק. המטרה שלו היא להגן על משקיעים ולשמור על שוק הוגן.",
+    "v": "players"
+   },
+   {
+    "t": "מה הרגולטור דורש",
+    "b": "חברות שמציעות ניירות ערך לציבור צריכות לומר אמת על העסק ועל הסיכונים. ברוקרים ובורסות צריכים להתייחס למשקיעים בהגינות.",
+    "v": "players"
+   },
+   {
+    "t": "בודקים עם מי עובדים",
+    "b": "לפני שבוחרים ברוקר כדאי לבדוק כמה עולים השירותים ואיך הוא מרוויח. כדאי לבדוק גם אם יש לו היסטוריה של בעיות עם הרגולטור.",
+    "v": "players",
+    "w": "הרבה הונאות מתחזות לברוקרים. בודקים שהגורם מורשה."
+   }
+  ],
+  "qs": [
+   {
+    "q": "מה התפקיד של ברוקר?",
+    "o": [
+     "לפקח על הבורסה",
+     "לקנות ולמכור ניירות ערך בשביל הלקוחות",
+     "להנפיק מניות"
+    ],
+    "a": 1,
+    "why": "ברוקר מבצע קנייה ומכירה בשביל לקוחותיו ולרוב מקבל עמלה."
+   },
+   {
+    "q": "מה המטרה של הרגולטור?",
+    "o": [
+     "להגן על משקיעים ולשמור על שוק הוגן",
+     "להבטיח רווח לכל משקיע",
+     "להחליט מה יהיה מחיר המניות"
+    ],
+    "a": 0,
+    "why": "רגולטור כמו ה-SEC בארה\"ב נועד להגן על משקיעים ולשמור על שווקים הוגנים."
+   },
+   {
+    "q": "מה כדאי לבדוק לפני שבוחרים ברוקר?",
+    "o": [
+     "רק את צבע האפליקציה",
+     "כמה זה עולה ואיך הוא מרוויח",
+     "כמה חברים שלי משתמשים בו"
+    ],
+    "a": 1,
+    "why": "כדאי לבדוק עלויות, איך הברוקר מרוויח וגם אם יש לו היסטוריה של בעיות."
+   }
+  ],
+  "src": [
+   {
+    "q": "A stock exchange, securities exchange, or bourse is an exchange where stockbrokers and traders can buy and sell securities, such as shares of stock, bonds and other financial instruments.",
+    "f": "sources/web/wiki_exchange.txt",
+    "u": "https://en.wikipedia.org/wiki/Stock_exchange"
+   },
+   {
+    "q": "trade is increasingly less linked to a physical place as modern markets use electronic communication networks",
+    "f": "sources/web/wiki_exchange.txt",
+    "u": "https://en.wikipedia.org/wiki/Stock_exchange"
+   },
+   {
+    "q": "A general term for the organized trading of stocks through exchanges, over-the-counter, and computerized trading venues.",
+    "f": "sources/web/a_stock_market.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/stock-market"
+   },
+   {
+    "q": "that engages in the business of buying and selling securities",
+    "f": "sources/web/a_broker.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/broker"
+   },
+   {
+    "q": "you pay a broker a fee called a commission or markup every time you buy or sell an investment",
+    "f": "sources/web/a_broker.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/broker"
+   },
+   {
+    "q": "Maintain fair, orderly, and efficient markets",
+    "f": "sources/web/a_rolesec.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/role-sec"
+   },
+   {
+    "q": "Companies offering securities for sale to the public must tell the truth about their business, the securities they are selling, and the risks involved in investing in those securities.",
+    "f": "sources/web/a_rolesec.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/role-sec"
+   },
+   {
+    "q": "must treat investors fairly and honestly",
+    "f": "sources/web/a_rolesec.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/role-sec"
+   },
+   {
+    "q": "how much you will pay for services and transactions",
+    "f": "sources/web/a_broker.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/broker"
+   },
+   {
+    "q": "whether the broker has legal or disciplinary history",
+    "f": "sources/web/a_broker.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/broker"
+   }
+  ],
+  "scene_requests": [
+   {
+    "key": "players",
+    "desc": "שרשרת: משקיע, ברוקר, בורסה בכיוון אחד, ומעליהם דמות של מפקח (רגולטור) עם זכוכית מגדלת שמסתכלת על כולם."
+   }
+  ],
+  "status": "draft for expert review",
+  "to_verify": [
+   "השם והתפקיד של בורסת תל אביב ושל רשות ניירות ערך: נמצאו רק בוויקיפדיה (משני) ובדף של הבורסה חסום (403), לכן הושמטו מהשקפים. נדרש מקור רשמי (tase.co.il, isa.gov.il).",
+   "הדרישות מברוקרים בישראל (רישוי, פיקוח): לא אומת; המקור אמריקאי."
+  ]
+ },
+ {
+  "id": "l13",
+  "title": "איך נקבע מחיר: היצע וביקוש",
+  "min": 5,
+  "module": "A",
+  "color": "#fbbf24",
+  "slides": [
+   {
+    "t": "קונים ומוכרים נפגשים",
+    "b": "בכל רגע יש מי שרוצה לקנות מניה ויש מי שרוצה למכור אותה. כשיש קונים ומוכרים מוכנים, הפקודה בדרך כלל מתבצעת.",
+    "v": "market"
+   },
+   {
+    "t": "הרבה רוצים לקנות",
+    "b": "כשיותר אנשים רוצים לקנות מניה, המחיר שלה נוטה לעלות. הביקוש גדול מההיצע.",
+    "v": "scale",
+    "x": "scale"
+   },
+   {
+    "t": "הרבה רוצים למכור",
+    "b": "כשיותר אנשים רוצים למכור, המחיר נוטה לרדת. ערך ההשקעות עולה ויורד לפי הביקוש להן בשוק.",
+    "v": "scale"
+   },
+   {
+    "t": "מה משפיע על הביקוש",
+    "b": "גורמים בתוך החברה, כמו מוצר פגום, יכולים להשפיע על המחיר. גם אירועים שהחברה לא שולטת בהם, כמו אירועים פוליטיים, משפיעים.",
+    "v": "coaster"
+   },
+   {
+    "t": "המחיר שראיתם הוא לא תמיד המחיר שתקבלו",
+    "b": "בפקודה בשוק קונים או מוכרים במחיר הנוכחי. המחיר בפועל יכול להיות שונה ממה שציפיתם.",
+    "v": "market",
+    "w": "המחיר בפועל יכול להיות שונה ממה שרואים על המסך."
+   }
+  ],
+  "qs": [
+   {
+    "q": "מה נוטה לקרות למחיר כשהרבה אנשים רוצים למכור מניה?",
+    "o": [
+     "הוא עולה",
+     "הוא נשאר קבוע",
+     "הוא יורד"
+    ],
+    "a": 2,
+    "why": "כשיותר אנשים רוצים למכור, המחיר נוטה לרדת."
+   },
+   {
+    "q": "מה נכון על הערך של מניה בשוק?",
+    "o": [
+     "הוא תלוי בביקוש להשקעה",
+     "הוא נקבע פעם בשנה",
+     "הוא זהה בכל חברה"
+    ],
+    "a": 0,
+    "why": "ערך ההשקעות יכול לעלות או לרדת לפי הביקוש להן בשוק."
+   },
+   {
+    "q": "מה יכול להשפיע על מחיר המניה?",
+    "o": [
+     "רק מה שקורה בתוך החברה",
+     "רק אירועים פוליטיים",
+     "גם גורמים בחברה וגם אירועים שהיא לא שולטת בהם"
+    ],
+    "a": 2,
+    "why": "מחיר מניה מושפע מגורמים פנימיים כמו מוצר פגום וגם מאירועים חיצוניים כמו אירועים פוליטיים."
+   }
+  ],
+  "src": [
+   {
+    "q": "as long as there are willing buyers and sellers, you are almost always guaranteed your order will be executed",
+    "f": "sources/web/inv_marketorder.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/market-order"
+   },
+   {
+    "q": "the more people that want to buy the stock, the higher its price will be; and conversely, the more people that want to sell the stock, the lower the price will be",
+    "f": "sources/web/wiki_price.txt",
+    "u": "https://en.wikipedia.org/wiki/Stock_valuation"
+   },
+   {
+    "q": "The value of your investments can go up or down depending on the demand for them in the market.",
+    "f": "sources/web/a_risk.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/what-risk"
+   },
+   {
+    "q": "A stock’s price can be affected by factors inside the company, such as a faulty product, or by events the company has no control over, such as political or market events.",
+    "f": "sources/web/ig_stocks.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks"
+   },
+   {
+    "q": "A market order is an order to buy or sell a stock at the current market price.",
+    "f": "sources/web/inv_marketorder.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/market-order"
+   },
+   {
+    "q": "the price you pay when your order is executed may not be the price you expected",
+    "f": "sources/web/inv_marketorder.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/market-order"
+   }
+  ],
+  "scene_requests": [],
+  "status": "draft for expert review",
+  "to_verify": [
+   "הקשר בין היצע וביקוש למחיר נתמך במקור ראשי רק באופן כללי (ביקוש); הניסוח 'יותר קונים, מחיר עולה' מגיע מוויקיפדיה (משני).",
+   "איך הבורסה בישראל מתאימה בין קונים ומוכרים (מכרז, מסחר רציף): לא נבדק."
+  ]
+ },
+ {
+  "id": "l14",
+  "title": "מדדים וקרנות סל",
+  "min": 6,
+  "module": "A",
+  "color": "#38bdf8",
+  "slides": [
+   {
+    "t": "מדד הוא סל של מניות",
+    "b": "מדד מודד את הביצועים של סל מניות שמייצג שוק או תחום בכלכלה. הוא לא מניה אחת, אלא תמונה כללית.",
+    "v": "index"
+   },
+   {
+    "t": "קרן סל: הרבה מניות במקום אחד",
+    "b": "קרן היא כסף של הרבה משקיעים שמושקע יחד במניות, באג\"ח או בנכסים אחרים. כל יחידה בקרן היא חלק בבעלות על כל מה שהקרן מחזיקה.",
+    "v": "fundPool"
+   },
+   {
+    "t": "קרן שעוקבת אחרי מדד",
+    "b": "יש קרנות שמטרתן להשיג בערך אותה תשואה כמו מדד מסוים, לפני עמלות. הן עושות את זה בעיקר על ידי השקעה בחברות שבמדד.",
+    "v": "fundPool"
+   },
+   {
+    "t": "קרן סל נסחרת כמו מניה",
+    "b": "את יחידות קרן הסל קונים ומוכרים בבורסה במחיר השוק. קרן נאמנות רגילה קונים ומוכרים מול הקרן עצמה.",
+    "v": "fundPool"
+   },
+   {
+    "t": "פיזור לא אומר שאין סיכון",
+    "b": "קרן יכולה להשקיע בהרבה חברות ולכן לצמצם סיכון אם חברה אחת נכשלת. אבל קרנות לא מובטחות, ואפשר להפסיד חלק מהכסף או את כולו.",
+    "v": "riskline",
+    "w": "קרן יכולה לרדת בערכה, ואפשר להפסיד כסף."
+   }
+  ],
+  "qs": [
+   {
+    "q": "מהו מדד?",
+    "o": [
+     "מדידה של ביצועי סל מניות",
+     "מניה של חברה אחת",
+     "סוג של קרן נאמנות"
+    ],
+    "a": 0,
+    "why": "מדד מודד את הביצועים של סל מניות שמייצג שוק או תחום."
+   },
+   {
+    "q": "מה ההבדל בין קרן סל לקרן נאמנות רגילה בקנייה ובמכירה?",
+    "o": [
+     "אין הבדל",
+     "קרן סל נסחרת בבורסה במחיר שוק",
+     "קרן סל אסור למכור"
+    ],
+    "a": 1,
+    "why": "יחידות קרן סל נסחרות בבורסה במחיר שוק, וקרן נאמנות נקנית ונמכרת מול הקרן."
+   },
+   {
+    "q": "מה נכון לגבי קרנות?",
+    "o": [
+     "הן מבטיחות רווח",
+     "הן מבוטחות ולכן בטוחות מכל הפסד",
+     "הן מפזרות בין חברות אבל אפשר להפסיד"
+    ],
+    "a": 2,
+    "why": "קרנות מפזרות השקעה בין חברות אבל אינן מובטחות ואפשר להפסיד."
+   }
+  ],
+  "src": [
+   {
+    "q": "A measurement of the performance of a specific \"basket\" of stocks considered to represent a particular market or sector",
+    "f": "sources/web/a_index.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/market-index"
+   },
+   {
+    "q": "they pool money from many investors and invest the money in stocks, bonds, short-term money-market instruments, other securities or assets",
+    "f": "sources/web/a_etf.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/exchange-traded-fund-etf"
+   },
+   {
+    "q": "Each ETF share represents an investor’s part ownership of the ETF’s portfolio",
+    "f": "sources/web/a_etf.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/exchange-traded-fund-etf"
+   },
+   {
+    "q": "These funds follow a passive investment strategy designed to achieve approximately the same return as a particular index before fees.",
+    "f": "sources/web/a_indexfund.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/index-fund"
+   },
+   {
+    "q": "unlike mutual funds, investors buy and sell ETF shares on national securities exchanges at market prices",
+    "f": "sources/web/a_etf.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/exchange-traded-fund-etf"
+   },
+   {
+    "q": "Investors buy and sell mutual fund shares from/to the fund itself or through a broker or investment adviser",
+    "f": "sources/web/a_mfetf.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/mutual-funds-and-exchange-traded-1"
+   },
+   {
+    "q": "This helps to lower your risk if one company fails.",
+    "f": "sources/web/a_mfetf.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/mutual-funds-and-exchange-traded-1"
+   },
+   {
+    "q": "primarily by investing in the securities (stocks or bonds) of companies that are included in the selected index",
+    "f": "sources/web/a_indexfund.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/index-fund"
+   },
+   {
+    "q": "You may lose some or all of the money you invest because the investments held by a fund can go down in value.",
+    "f": "sources/web/a_mfetf.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/mutual-funds-and-exchange-traded-1"
+   }
+  ],
+  "scene_requests": [
+   {
+    "key": "fundPool",
+    "desc": "הרבה דמויות קטנות שמכניסות מטבעות לקופה משותפת אחת, ומהקופה יוצאים חצים אל כמה לוגואים אנונימיים של מניות ואג\"ח (בלי שמות חברות)."
+   }
+  ],
+  "status": "draft for expert review",
+  "to_verify": [
+   "שמות המדדים המרכזיים בישראל וקרנות הסל הישראליות (תעודות סל): לא נבדקו, הושמטו.",
+   "המונח העברי 'קרן סל' מול 'תעודת סל' בישראל: לא אומת מול מקור רשמי.",
+   "המקורות על קרנות הם אמריקאיים (SEC)."
+  ]
+ },
+ {
+  "id": "l15",
+  "title": "ריבית, אינפלציה ומה הקשר לשוק",
+  "min": 6,
+  "module": "A",
+  "color": "#fb923c",
+  "slides": [
+   {
+    "t": "ריבית היא מחיר ההלוואה",
+    "b": "ריבית היא הסכום הנוסף שהלווה משלם למלווה, מעבר להחזר הסכום שלווה. היא נמדדת כאחוז מהסכום.",
+    "v": "bondLoan"
+   },
+   {
+    "t": "אינפלציה: המחירים עולים",
+    "b": "אינפלציה היא עלייה ממוצעת במחירים של מוצרים ושירותים. כשהמחירים עולים, כל שקל קונה פחות.",
+    "v": "inflBasket"
+   },
+   {
+    "t": "למה זה חשוב לחסכונות",
+    "b": "אינפלציה פוגעת בכוח הקנייה. זה סיכון למי שמקבל ריבית קבועה, כי הריבית יכולה לא להדביק את עליית המחירים.",
+    "v": "inflBasket",
+    "w": "ריבית נמוכה מהאינפלציה יכולה להקטין את הערך האמיתי של הכסף."
+   },
+   {
+    "t": "ריבית ואג\"ח",
+    "b": "כשריבית השוק עולה, אג\"ח חדשות נותנות ריבית גבוהה יותר. אג\"ח ישנה עם ריבית נמוכה עלולה להימכר בהנחה.",
+    "v": "bondLoan"
+   },
+   {
+    "t": "ריבית אמיתית",
+    "b": "כדי להבין כמה הכסף באמת גדל, משווים את הריבית לאינפלציה. אם שתיהן שוות, הריבית האמיתית היא אפס.",
+    "v": "inflBasket"
+   }
+  ],
+  "qs": [
+   {
+    "q": "מה זו אינפלציה?",
+    "o": [
+     "עלייה ממוצעת במחירים של מוצרים ושירותים",
+     "ירידה במחיר המניות",
+     "סוג של הלוואה"
+    ],
+    "a": 0,
+    "why": "אינפלציה היא עלייה ממוצעת במחירים, ולכן כל שקל קונה פחות."
+   },
+   {
+    "q": "מה קורה לאג\"ח ישנה כשריבית השוק עולה?",
+    "o": [
+     "היא תמיד שווה יותר",
+     "היא עלולה להימכר בהנחה",
+     "היא נעלמת"
+    ],
+    "a": 1,
+    "why": "אג\"ח חדשות נותנות ריבית גבוהה יותר, ולכן אג\"ח ישנה עם ריבית נמוכה עלולה להימכר בהנחה."
+   },
+   {
+    "q": "אם הריבית שווה לאינפלציה, מה הריבית האמיתית?",
+    "o": [
+     "גבוהה מאוד",
+     "שלילית תמיד",
+     "אפס"
+    ],
+    "a": 2,
+    "why": "ריבית אמיתית היא הריבית אחרי התחשבות באינפלציה, ואם הן שוות היא אפס."
+   }
+  ],
+  "src": [
+   {
+    "q": "הלווה משלם למלווה את הריבית, בנוסף להחזר הקרן",
+    "f": "sources/web/whe_rate.txt",
+    "u": "https://he.wikipedia.org/wiki/ריבית"
+   },
+   {
+    "q": "An interest rate is the amount of interest due per period, as a proportion of the amount lent, deposited, or borrowed.",
+    "f": "sources/web/wiki_interest.txt",
+    "u": "https://en.wikipedia.org/wiki/Interest_rate"
+   },
+   {
+    "q": "inflation is an increase in the average price of goods and services in terms of money",
+    "f": "sources/web/wiki_inflation.txt",
+    "u": "https://en.wikipedia.org/wiki/Inflation"
+   },
+   {
+    "q": "each unit of currency buys fewer goods and services",
+    "f": "sources/web/wiki_inflation.txt",
+    "u": "https://en.wikipedia.org/wiki/Inflation"
+   },
+   {
+    "q": "Inflation reduces purchasing power, which is a risk for investors receiving a fixed rate of interest.",
+    "f": "sources/web/a_risk.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/what-risk"
+   },
+   {
+    "q": "Rising interest rates will make newly issued bonds more appealing to investors because the newer bonds will have a higher rate of interest than older ones.",
+    "f": "sources/web/a_risk.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/what-risk"
+   },
+   {
+    "q": "To sell an older bond with a lower interest rate, you might have to sell it at a discount.",
+    "f": "sources/web/a_risk.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/what-risk"
+   },
+   {
+    "q": "Where inflation is the same as nominal interest rate, the real interest rate is zero.",
+    "f": "sources/web/wiki_interest.txt",
+    "u": "https://en.wikipedia.org/wiki/Interest_rate"
+   }
+  ],
+  "scene_requests": [
+   {
+    "key": "bondLoan",
+    "desc": "כמו בשיעור אג\"ח: מלווה, מנפיק, חץ כסף וחצי ריבית והחזר."
+   },
+   {
+    "key": "inflBasket",
+    "desc": "אותו סל קניות בשני רגעים: אתמול עם שטר אחד מכסה אותו, היום צריך שני שטרות. חץ זמן ביניהם."
+   }
+  ],
+  "status": "draft for expert review",
+  "to_verify": [
+   "הגדרת האינפלציה והריבית נתמכות במקור ראשי רק חלקית (SEC מגדיר אינפלציה כעלייה כללית במחירים); הניסוח המלא מויקיפדיה (משני).",
+   "תפקיד בנק ישראל בקביעת הריבית ויעד האינפלציה בישראל: האתר של בנק ישראל חסום, והמידע נמצא רק בוויקיפדיה, לכן הושמט.",
+   "הקשר בין ריבית ושוק המניות: לא נכלל, אין מקור שנאסף."
+  ]
+ },
+ {
+  "id": "l16",
+  "title": "מניה מול קרן מול פיקדון: מה ההבדל בסיכון",
+  "min": 6,
+  "module": "A",
+  "color": "#fb7185",
+  "slides": [
+   {
+    "t": "לכל מוצר יש סיכון משלו",
+    "b": "לכל מוצר חיסכון והשקעה יש סיכונים ותשואות שונים. ההבדלים הם באיזו מהירות מקבלים את הכסף, כמה הוא גדל וכמה הוא בטוח.",
+    "v": "compareBars"
+   },
+   {
+    "t": "מניה: סיכון גבוה",
+    "b": "מחיר מניה יכול לרדת, ואם החברה קורסת בעלי המניות הרגילות אחרונים בתור. בארצות הברית, מניות של חברות גדולות הפסידו כסף בערך בשנה אחת מכל שלוש.",
+    "v": "compareBars",
+    "w": "אפשר להפסיד כסף שהשקעתם במניות."
+   },
+   {
+    "t": "קרן: פיזור, אבל לא ביטחון",
+    "b": "קרן מפזרת בין הרבה חברות, ולכן מצמצמת את הסיכון אם חברה אחת נכשלת. אבל היא לא מובטחת ואפשר להפסיד חלק מהכסף או את כולו.",
+    "v": "fundPool"
+   },
+   {
+    "t": "פיקדון: בטוח יותר, תשואה נמוכה",
+    "b": "פיקדון בבנק נחשב בדרך כלל בטוח יותר, אבל הכסף מרוויח ריבית נמוכה. הסיכון בו הוא שהאינפלציה תגדל מהר יותר מהכסף שלכם.",
+    "v": "compareBars"
+   },
+   {
+    "t": "סיכוי וסיכון הולכים יחד",
+    "b": "בדרך כלל, ככל שהרווח האפשרי גבוה יותר, כך גם הסיכון להפסד גבוה יותר. אין מוצר שנותן הכול.",
+    "v": "riskline"
+   }
+  ],
+  "qs": [
+   {
+    "q": "איזה משפט נכון בדרך כלל?",
+    "o": [
+     "הרווח האפשרי גבוה יותר מלווה בסיכון גבוה יותר",
+     "אפשר לקבל רווח גבוה בלי סיכון",
+     "פיקדון תמיד מרוויח יותר ממניה"
+    ],
+    "a": 0,
+    "why": "בדרך כלל ככל שהתשואה האפשרית גבוהה יותר, כך גם הסיכון להפסד."
+   },
+   {
+    "q": "מה הסיכון בפיקדון שהמקור מזכיר?",
+    "o": [
+     "שמחיר הפיקדון יקפוץ בבורסה",
+     "שהאינפלציה תגדל מהר יותר מהכסף",
+     "שהוא יהפוך למניה"
+    ],
+    "a": 1,
+    "why": "בפיקדון הסיכון הוא שהאינפלציה תגדל מהר יותר מהכסף ותקטין את הערך שלו."
+   },
+   {
+    "q": "מה נכון לגבי קרנות?",
+    "o": [
+     "הן מבטיחות רווח",
+     "הן מבוטחות על ידי המדינה מהפסד",
+     "הן מפזרות אך אפשר להפסיד חלק מהכסף או את כולו"
+    ],
+    "a": 2,
+    "why": "קרנות לא מובטחות ואין להן ביטוח ממשלתי, ואפשר להפסיד חלק מהכסף או את כולו."
+   }
+  ],
+  "src": [
+   {
+    "q": "Every saving and investment product has different risks and returns.",
+    "f": "sources/web/a_risk.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/what-risk"
+   },
+   {
+    "q": "how readily investors can get their money when they need it, how fast their money will grow, and how safe their money will be",
+    "f": "sources/web/a_risk.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/what-risk"
+   },
+   {
+    "q": "Large company stocks as a group, for example, have lost money on average about one out of every three years.",
+    "f": "sources/web/a_risk.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/what-risk"
+   },
+   {
+    "q": "If you are a common stockholder, you get whatever is left, which may be nothing.",
+    "f": "sources/web/a_risk.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/what-risk"
+   },
+   {
+    "q": "This helps to lower your risk if one company fails.",
+    "f": "sources/web/a_mfetf.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/mutual-funds-and-exchange-traded-1"
+   },
+   {
+    "q": "Mutual funds are not guaranteed or insured by the FDIC or any other government agency.",
+    "f": "sources/web/a_mfetf.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/mutual-funds-and-exchange-traded-1"
+   },
+   {
+    "q": "You may lose some or all of the money you invest because the investments held by a fund can go down in value.",
+    "f": "sources/web/a_mfetf.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/mutual-funds-and-exchange-traded-1"
+   },
+   {
+    "q": "Certificates of deposit are considered to be one of the safest savings options.",
+    "f": "sources/web/a_cd_page.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/certificates-deposit-cds"
+   },
+   {
+    "q": "But there’s a tradeoff between security and availability; your money earns a low interest rate.",
+    "f": "sources/web/a_risk.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/what-risk"
+   },
+   {
+    "q": "The risk with CDs is the risk that inflation will grow faster than your money",
+    "f": "sources/web/a_cd_page.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/certificates-deposit-cds"
+   },
+   {
+    "q": "Generally, the higher the potential return, the higher the risk of loss.",
+    "f": "sources/web/a_mfetf.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/mutual-funds-and-exchange-traded-1"
+   }
+  ],
+  "scene_requests": [
+   {
+    "key": "fundPool",
+    "desc": "כמו בשיעור מדדים: קופה משותפת שמפוזרת בין הרבה נכסים."
+   },
+   {
+    "key": "compareBars",
+    "desc": "שלושה עמודים זה ליד זה: מניה (גבוה ותנודתי), קרן (בינוני), פיקדון (נמוך ויציב), עם קו סיכון שעולה משמאל לימין."
+   }
+  ],
+  "status": "draft for expert review",
+  "to_verify": [
+   "הביטוח על פיקדונות הוא אמריקאי (FDIC עד 250,000 דולר) ולכן לא נכלל בשקפים. יש לבדוק מהו ההסדר בישראל לפני שמוסיפים.",
+   "'פיקדון בבנק' בישראל מול 'תעודת פיקדון' (CD) האמריקאית: המקור מדבר על CD; יש לאמת שההגדרות דומות.",
+   "הנתון על הפסד ממוצע אחת לשלוש שנים הוא של מניות חברות גדולות בארה\"ב לפי SEC, לא ידוע אם זה נכון לישראל."
+  ]
+ },
+ {
+  "id": "l1",
+  "review": true,
+  "title": "מה זה שוק ההון?",
+  "src": [
+   {
+    "q": "A share of stock is an instrument that signifies an ownership position (called equity) in a corporation",
+    "f": "sources/web/a_stock.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/stock"
+   },
+   {
+    "q": "A stock exchange, securities exchange, or bourse is an exchange where stockbrokers and traders can buy and sell securities, such as shares of stock, bonds and other financial instruments.",
+    "f": "sources/web/wiki_exchange.txt",
+    "u": "https://en.wikipedia.org/wiki/Stock_exchange"
+   },
+   {
+    "q": "the more people that want to buy the stock, the higher its price will be; and conversely, the more people that want to sell the stock, the lower the price will be",
+    "f": "sources/web/wiki_price.txt",
+    "u": "https://en.wikipedia.org/wiki/Stock_valuation"
+   },
+   {
+    "q": "The value of your investments can go up or down depending on the demand for them in the market.",
+    "f": "sources/web/a_risk.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/what-risk"
+   },
+   {
+    "q": "There’s no guarantee that the company whose stock you hold will grow and do well, so you can lose money you invest in stocks.",
+    "f": "sources/web/ig_stocks.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks"
+   },
+   {
+    "q": "The risks involved, however, are substantially higher than longer-term investing strategies.",
+    "f": "sources/web/day-risks.txt",
+    "u": "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins/thinking-day-trading-know-risks"
+   },
+   {
+    "q": "Day trading is extremely risky and can result in substantial financial losses in a very short period of time.",
+    "f": "sources/web/day-trading.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/day-trading"
+   }
+  ],
+  "text_issues": [
+   "שקף 1: 'אם החברה מצליחה, החתיכה שלכם שווה יותר' מנוסח כוודאי. המקורות אומרים שאין ערובה שהחברה תצמח. מומלץ לכתוב 'בדרך כלל' או 'יכולה להיות שווה יותר'.",
+   "שקף 2: 'כמו בשוק רגיל' הוא דימוי טוב, אבל כדאי להוסיף שמשקיעים רגילים קונים דרך ברוקר ולא ישירות בבורסה. המקור לבורסה הוא רק ויקיפדיה (משני), ויש להשלים מקור ראשי.",
+   "שקף 3: 'כשהרבה אנשים רוצים לקנות, המחיר עולה' מנוסח כוודאי, ובשאלה כתוב 'נוטה לעלות'. מומלץ ליישר ל'נוטה לעלות'. גם המחיר מושפע מגורמים נוספים (אירועים בחברה ואירועים חיצוניים) והניסוח נתמך במקור ראשי רק חלקית.",
+   "שקף 4: 'לכן לומדים לשלוט בהפסד' אינו טענת עובדה אלא מסר פדגוגי ללא מקור. אפשר להשאיר כמסר, אבל לא כעובדה.",
+   "שקף 5: 'אין סגנון אחד נכון לכולם' היא עמדה ולא עובדה מקורית. 'מסחר יומי קשה יותר ומפסידים בו יותר' (WARN_DAY): המקורות שנאספו אומרים שהסיכון גבוה משמעותית ושאפשר להפסיד הרבה בזמן קצר, אבל לא מצאתי בהם ניסוח ש'מפסידים יותר'. מומלץ לנסח 'מסחר יומי מסוכן יותר ועלול לגרום להפסדים גדולים בזמן קצר', או להוסיף מקור סטטיסטי.",
+   "השיעור נקרא 'מה זה שוק ההון?' אבל אינו מזכיר אג\"ח, שהן החצי השני של שוק ההון. כדאי להוסיף משפט מקשר או לשנות כותרת.",
+   "לשיעור שאלה אחת בלבד ואין לה הסבר ('why'). שאר השיעורים בתוכנית כוללים 3 שאלות עם הסבר.",
+   "אין מקפים ארוכים בטקסט של l1. לא נמצאו בעיות לשון משמעותיות."
+  ]
+ }
+]

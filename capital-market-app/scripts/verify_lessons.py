@@ -6,8 +6,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SCENES = set()
-art = (ROOT / "prototype" / "js" / "art.js").read_text(encoding="utf-8")
-SCENES |= set(re.findall(r"^  ([A-Za-z0-9]+):", art, re.M)) | set(re.findall(r"SCENES\.([A-Za-z0-9]+) =", art))
+art = "".join((ROOT / "prototype" / "js" / n).read_text(encoding="utf-8") for n in ("art.js", "art2.js"))
+SCENES |= set(re.findall(r"^  ([A-Za-z0-9_]+):", art, re.M)) | set(re.findall(r"SCENES\.([A-Za-z0-9_]+) =", art))
 DASH = re.compile("[—–‒―]")
 
 

@@ -273,7 +273,7 @@ screens.lesson = (id) => {
       <div class="slide ${dir > 0 ? 'in-r' : 'in-l'}">${quiz
         ? `<span class="tag">בדיקה קטנה${QS.length > 1 ? ` ${qi + 1} מתוך ${QS.length}` : ''}</span><h2>${Q.q}</h2><div class="grow">${ords[qi].map(k => `<button class="opt" data-k="${k}">${Q.o[k]}</button>`).join('')}</div><div id="qm" class="muted" style="margin-top:14px;min-height:22px"></div>`
         : `<div class="scene-card">${sceneSVG(sl.v)}<span class="cnt">${i + 1}/${L.slides.length}</span></div>
-           <div class="tip-note">${ic.bulb}<span>${say[i] || 'שימו לב לאיור.'}</span></div>
+           ${say[i] ? `<div class="tip-note">${ic.bulb}<span>${say[i]}</span></div>` : ''}
            <h2>${sl.t}</h2><p>${sl.b}</p>${toyHTML(sl.x)}${sl.w ? `<div class="warn">${sl.w}</div>` : ''}<div class="grow"></div>`}</div>
       <div class="nav2">${i > 0 && !quiz ? `<button class="btn ghost" id="pv" style="flex:none;width:90px">חזרה</button>` : ''}<button class="btn primary" id="nx" ${quiz ? 'disabled' : ''}>${quiz && qi === QS.length - 1 ? 'סיום שיעור' : 'הבא'}</button></div></div>`;
     scr.scrollTop = 0;
