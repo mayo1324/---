@@ -1,14 +1,28 @@
 'use strict';
 /* ===== feedback, welcome, about, error notice: for letting friends test the prototype ===== */
 const FB_ERRORS = [];
+/* ready-made short sentences: one for every topic and every number of stars */
+const FB_LINES = {
+  'תוכן השיעורים': { 1: 'השיעורים לא ברורים לי, קשה לי להבין מהם.', 2: 'השיעורים לא הכי ברורים, יש בהם דברים שלא הבנתי.', 3: 'השיעורים בסדר, אבל אפשר לשפר אותם.', 4: 'השיעורים טובים וברורים, תודה!', 5: 'תודה על השיעורים, הם מעולים ומסבירים הכול!' },
+  'תרגול': { 1: 'התרגול לא עובד לי, הוא מבלבל ולא ברור מה לעשות.', 2: 'התרגול מבלבל קצת, לא תמיד ברור מה מצפים ממני.', 3: 'התרגול בסדר, אבל יש מה לשפר.', 4: 'התרגול כיף ומלמד, אהבתי!', 5: 'התרגול מעולה! אהבתי במיוחד את הגרפים האמיתיים.' },
+  'עיצוב': { 1: 'העיצוב לא מצא חן בעיניי, הוא עמוס ולא נעים לעין.', 2: 'העיצוב לא הכי נעים לי, יש בו דברים מבלבלים.', 3: 'העיצוב בסדר, אבל אפשר לשפר.', 4: 'העיצוב יפה ונעים לעין, אהבתי!', 5: 'העיצוב מעולה! נראה מקצועי ונעים להשתמש.' },
+  'קושי': { 1: 'זה קשה מדי בשבילי, קשה לי לעקוב.', 2: 'זה קצת קשה לי, הייתי רוצה הסברים פשוטים יותר.', 3: 'רמת הקושי בסדר, לפעמים קשה ולפעמים קל.', 4: 'הקושי מתאים לי, לא קל מדי ולא קשה מדי.', 5: 'הקושי מושלם, מאתגר אבל ברור!' },
+  'באג': { 1: 'משהו נשבר לי באפליקציה והיא לא עבדה כמו שצריך.', 2: 'נתקלתי בבעיה באפליקציה, משהו לא עבד.', 3: 'יש בעיה קטנה אחת, אבל אפשר להמשיך.', 4: 'הכול עבד כמעט חלק, יש רק פגם קטן.', 5: 'הכול עבד חלק, לא מצאתי שום באג!' },
+  'משהו אחר': { 1: 'האפליקציה לא עבדה לי בכלל.', 2: 'האפליקציה לא הכי מתאימה לי כרגע.', 3: 'האפליקציה בסדר, אבל יש עוד מה לשפר.', 4: 'אהבתי את האפליקציה, תמשיכו!', 5: 'האפליקציה מעולה! תודה שנתתם לי לנסות.' }
+};
+const fbLine = (f) => f.rate ? (FB_LINES[f.topic] || FB_LINES['משהו אחר'])[f.rate] : (f.topic ? `אני רוצה להגיד משהו על ${f.topic}.` : '');
+function deviceShort() {
+  const u = navigator.userAgent, br = /Edg\//.test(u) ? 'Edge' : /Firefox\//.test(u) ? 'Firefox' : /Chrome\//.test(u) ? 'Chrome' : /Safari\//.test(u) ? 'Safari' : 'דפדפן';
+  const os = /Android/.test(u) ? 'Android' : /iPhone|iPad/.test(u) ? 'iPhone' : /Windows/.test(u) ? 'Windows' : /Mac OS/.test(u) ? 'Mac' : /Linux/.test(u) ? 'Linux' : '';
+  return br + (os ? ' על ' + os : '');
+}
 function usageSummary() {
   const ac = A(), pd = ac.practiceDone || {};
-  return `שיעורים: ${(ac.lessonsDone || []).length}/${LESSONS.length} | מקרי תרגול: ${Object.values(pd).filter(v => v > 0).length}/${SCEN.length} | כוכבים: ${ac.stars || 0} | רצף: ${streakDays(ac)} | מסך: ${cur.name}${cur.arg != null && typeof cur.arg !== 'object' ? ' ' + cur.arg : ''} | רוחב: ${innerWidth}`;
+  return `שיעורים ${(ac.lessonsDone || []).length}/${LESSONS.length} · תרגול ${Object.values(pd).filter(v => v > 0).length}/${SCEN.length} · כוכבים ${ac.stars || 0} · מסך: ${cur.name}${cur.arg != null && typeof cur.arg !== 'object' ? ' ' + cur.arg : ''} · ${deviceShort()}${FB_ERRORS.length ? ' · שגיאות: ' + FB_ERRORS.slice(-2).join(' ; ') : ''}`;
 }
 function buildFeedbackText(f) {
-  const stars = f.rate ? '★'.repeat(f.rate) + '☆'.repeat(5 - f.rate) + ` (${f.rate}/5)` : 'לא דורג';
-  return `משוב על האפליקציה (${APP_VERSION}, ${BUILD_DATE})\nדירוג: ${stars}\nנושא: ${f.topic || 'כללי'}\nהודעה: ${f.msg || '(בלי הודעה)'}` +
-    (f.attach ? `\n--- נתוני שימוש אנונימיים ---\n${usageSummary()}\nדפדפן: ${navigator.userAgent.slice(0, 110)}${FB_ERRORS.length ? '\nשגיאות: ' + FB_ERRORS.slice(-3).join(' ; ') : ''}` : '');
+  const head = f.rate ? `${f.rate}/5 ${'★'.repeat(f.rate)}${f.topic ? ' | ' + f.topic : ''}` : (f.topic || 'כללי');
+  return `היי, משוב על האפליקציה:\n${head}\n"${fbLine(f) || (f.msg ? '' : '...')}"` + (f.msg ? `\n${f.msg}` : '') + (f.attach ? `\n— ${usageSummary()} (${APP_VERSION}, ${BUILD_DATE})` : '');
 }
 function openFeedback() {
   const f = { rate: 0, topic: '', attach: true };
@@ -16,19 +30,22 @@ function openFeedback() {
   openSheet(`<h3>משוב על האפליקציה</h3><p class="muted" style="font-size:13.5px;line-height:1.55">שתי דקות של משוב עוזרות לנו מאוד. אין צורך בשם או באימייל.</p>
     <div class="fb-rate" id="fbr">${[1, 2, 3, 4, 5].map(n => `<button data-r="${n}" aria-label="${n} מתוך 5">★</button>`).join('')}</div>
     <div class="chips fb-topics" id="fbt">${TOPICS.map(t => `<button class="chip" data-t="${t}">${t}</button>`).join('')}</div>
-    <textarea class="gi cq" id="fbm" rows="4" maxlength="600" placeholder="מה היה ברור, מה לא, מה היה משעמם, מה נשבר?"></textarea>
+    <div class="fb-prev" id="fbp"></div>
+    <textarea class="gi cq" id="fbm" rows="3" maxlength="600" placeholder="רוצים להוסיף משהו משלכם? (לא חובה)"></textarea>
     <button class="check on" id="fba" type="button"><i></i><span>צרפו נתוני שימוש אנונימיים (כמה שיעורים ותרגולים עשיתי, סוג מכשיר). בלי שם ובלי אימייל.</span></button>
     <div class="fb-send"><button class="btn primary" id="fbs">שליחה</button><button class="btn ghost" id="fbc">העתקה</button></div>
     <div class="fb-extra" id="fbx"></div>
     <p class="demo-note" style="margin-top:10px">הטקסט לא נשלח אוטומטית לשום מקום. "שליחה" פותחת שיחה בוואטסאפ עם המשוב כתוב, ואתם רק לוחצים על שלח. אפשר גם ללחוץ "העתקה" ולהדביק איפה שנוח.</p>`);
   const cur_ = () => { f.msg = $('#fbm').value.trim(); return buildFeedbackText(f); };
-  $('#fbr').onclick = (e) => { const b = e.target.closest('button'); if (!b) return; f.rate = +b.dataset.r; $$('#fbr button').forEach(x => x.classList.toggle('on', +x.dataset.r <= f.rate)); };
-  $('#fbt').onclick = (e) => { const b = e.target.closest('.chip'); if (!b) return; f.topic = b.dataset.t; $$('#fbt .chip').forEach(x => x.classList.toggle('on', x === b)); };
+  const prev = () => { const l = fbLine(f); $('#fbp').textContent = l ? '"' + l + '"' : 'בחרו כוכבים ונושא, ונכתוב בשבילכם משפט קצר.'; $('#fbp').classList.toggle('on', !!l); };
+  $('#fbr').onclick = (e) => { const b = e.target.closest('button'); if (!b) return; f.rate = +b.dataset.r; $$('#fbr button').forEach(x => x.classList.toggle('on', +x.dataset.r <= f.rate)); prev(); };
+  $('#fbt').onclick = (e) => { const b = e.target.closest('.chip'); if (!b) return; f.topic = b.dataset.t; $$('#fbt .chip').forEach(x => x.classList.toggle('on', x === b)); prev(); };
+  prev();
   $('#fba').onclick = () => { f.attach = !f.attach; $('#fba').classList.toggle('on', f.attach); };
   const copy = async (t) => { try { await navigator.clipboard.writeText(t); toast('הועתק, אפשר להדביק'); } catch (e) { const ta = $('#fbm'); ta.value = t; ta.select(); toast('סמנו והעתיקו את הטקסט'); } };
   $('#fbc').onclick = () => copy(cur_());
   $('#fbs').onclick = async () => {
-    const t = cur_(); if (f.rate === 0 && !f.msg) return toast('דרגו או כתבו משהו קודם');
+    const t = cur_(); if (!fbLine(f) && !f.msg) return toast('בחרו כוכבים ונושא, או כתבו משהו');
     if (FEEDBACK_WHATSAPP) {
       /* some viewers (for example a preview inside another page) block WhatsApp, so the text is also copied and shown as a fallback */
       const url = `https://wa.me/${FEEDBACK_WHATSAPP}?text=${encodeURIComponent(t)}`, local = '0' + FEEDBACK_WHATSAPP.replace(/^972/, '');

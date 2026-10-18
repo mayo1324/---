@@ -1114,3 +1114,6 @@ details.more p{font-size:13.5px;line-height:1.65;color:var(--muted);margin:8px 0
 .fbfab{width:48px;height:48px;padding:0;justify-content:center;border-radius:50%;color:#0b0d10;background:linear-gradient(135deg,#d9ff6a,#b6f21a);border:0;box-shadow:0 8px 22px rgba(0,0,0,.45),0 0 0 4px rgba(200,255,61,.14);left:14px}
 .fbfab span{display:none}.fbfab svg{width:24px;height:24px;color:#0b0d10}
 .with-tabs .fbfab{bottom:164px}
+
+.fb-prev{margin:4px 0 10px;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.05);border:1px dashed var(--line);font-size:14.5px;line-height:1.55;color:var(--muted);text-align:center}
+.fb-prev.on{color:var(--text);border-style:solid;border-color:rgba(200,255,61,.4);background:rgba(200,255,61,.07)}
