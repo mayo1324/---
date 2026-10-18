@@ -1,0 +1,35 @@
+<!doctype html><html dir="rtl" lang="he"><meta charset="utf-8"><style>
+body{margin:0;background:#0b0e12;font-family:Heebo,Arial,sans-serif;color:#eee;padding:28px;width:1240px}
+h1{margin:0 0 22px;font-size:26px}.g{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.t{background:#12171d;border-radius:22px;padding:22px;text-align:center}.t .n{color:#c8ff3d;font-weight:800;font-size:18px}.t p{margin:6px 0 16px;color:#98a3ae;font-size:14px;min-height:40px}
+.ic{width:200px;height:200px;margin:0 auto 18px;border-radius:46px;display:block}
+.row{display:flex;gap:12px;justify-content:center;align-items:center;background:#0b0e12;border-radius:16px;padding:12px}.row .ic{width:44px;height:44px;border-radius:11px;margin:0}.row .ic.s{width:28px;height:28px;border-radius:7px}.row b{font-size:20px;font-weight:800}.row i{font-style:normal;color:#c8ff3d}
+</style>
+<svg width="0" height="0" style="position:absolute"><defs>
+<linearGradient id="L" gradientUnits="userSpaceOnUse" x1="0" y1="6" x2="0" y2="42"><stop offset="0" stop-color="#f4ffb8"/><stop offset=".5" stop-color="#c8ff3d"/><stop offset="1" stop-color="#8fd10a"/></linearGradient>
+<linearGradient id="Lh" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="48" y2="48"><stop offset="0" stop-color="#eaff8a"/><stop offset=".6" stop-color="#a8d812"/><stop offset="1" stop-color="#6f9a05"/></linearGradient>
+<radialGradient id="D" cx=".5" cy=".28" r=".95"><stop offset="0" stop-color="#1c2711"/><stop offset="1" stop-color="#06080b"/></radialGradient>
+<filter id="gl" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2"/></filter>
+<linearGradient id="top" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f9ffd0"/><stop offset="1" stop-color="#d4ff55"/></linearGradient>
+<linearGradient id="lft" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b6ee22"/><stop offset="1" stop-color="#6f9a05"/></linearGradient>
+<linearGradient id="rgt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fc40e"/><stop offset="1" stop-color="#3f5f03"/></linearGradient>
+</defs></svg>
+<h1>שכלולים של "מדרגות"</h1><div class="g" id="g"></div>
+<script>
+const bgD='<rect width="48" height="48" fill="url(#D)"/>';
+const V=[
+['A','נרות מתמלאים','שלושה נרות שהולכים ומתמלאים: ריק, חצי, מלא. "ההבנה שלי גדלה". עם פתילים ונקודה.',
+ bgD+'<g stroke="url(#L)" stroke-linecap="round" fill="none"><path d="M12 22v-4M24 15v-5M36 10V6" stroke-width="2"/><rect x="8" y="22" width="8.4" height="15" rx="2.6" stroke-width="2.4"/><rect x="19.8" y="15" width="8.4" height="22" rx="2.6" stroke-width="2.4"/></g><rect x="19.8" y="26" width="8.4" height="11" rx="2.6" fill="url(#L)"/><rect x="31.8" y="10" width="8.4" height="27" rx="2.6" fill="url(#L)"/><rect x="8" y="31" width="8.4" height="6" rx="2.6" fill="url(#L)"/><path d="M8 41.5h32" stroke="url(#L)" stroke-width="1.6" stroke-linecap="round" opacity=".5"/>'],
+['B','הלומד עולה','שלוש מדרגות-נרות והנקודה (אתם) מזנקת בקשת מהמדרגה הראשונה לפסגה, עם נצנוץ.',
+ bgD+'<g fill="url(#L)"><rect x="6" y="30" width="9" height="10" rx="2.6"/><rect x="19" y="23" width="9" height="17" rx="2.6"/><rect x="32" y="14" width="9" height="26" rx="2.6"/></g><path d="M10.5 25C13 13 24 8 31 9" fill="none" stroke="#c8ff3d" stroke-width="1.6" stroke-dasharray="1.2 3.2" stroke-linecap="round"/><circle cx="10.5" cy="24" r="3.4" fill="#f4ffb8"/><path d="M38 4.5l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1z" fill="#f4ffb8"/>'],
+['C','בלוקים תלת-ממדיים','אותן מדרגות כקוביות איזומטריות עם תאורה. נראה פחות כמו סמל גנרי ויותר כמו מותג.',
+ bgD+(()=>{const b=(x,y,h)=>`<path d="M${x} ${y}l5-2.8 5 2.8v${h}l-5 2.8-5-2.8z" fill="url(#lft)"/><path d="M${x+5} ${y+2.8}l5-2.8v${h}l-5 2.8z" fill="url(#rgt)"/><path d="M${x} ${y}l5-2.8 5 2.8-5 2.8z" fill="url(#top)"/>`;return b(7,30,8)+b(19,22,16)+b(31,12,24)})()+'<circle cx="12" cy="24" r="2.8" fill="#f4ffb8"/>'],
+['D','שין + מדרגות','אות ש שהנרות שלה עולות כמו מדרגות. משלבת את הסמל הייחודי עם הרעיון שבחרתם.',
+ bgD+'<g fill="none" stroke="url(#L)" stroke-linecap="round" stroke-linejoin="round"><path d="M10 25v6c0 5 4 7.5 9 7.5" stroke-width="5.2"/><path d="M38 14v17c0 5-4 7.5-9 7.5h-10" stroke-width="5.2"/><path d="M24 38.5V19" stroke-width="5.2"/><path d="M10 20.5v1.5M24 13v1.8M38 9v1.8" stroke-width="2"/></g>'],
+['E','פתיל וקו מגמה','שלוש עמודות עם קו מגמה דק שעולה דרכן ונגמר בחץ-נקודה זוהרת. תחושת "תנועה קדימה".',
+ bgD+'<g fill="url(#L)"><rect x="7" y="28" width="9" height="12" rx="2.8"/><rect x="19.5" y="22" width="9" height="18" rx="2.8"/><rect x="32" y="15" width="9" height="25" rx="2.8"/></g><path d="M8 24L21 17 30 10 40 6" fill="none" stroke="#f4ffb8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".95"/><circle cx="40" cy="6" r="3.4" fill="#f4ffb8"/><circle cx="40" cy="6" r="6" fill="#c8ff3d" filter="url(#gl)" opacity=".8"/>'],
+['F','דגל על הפסגה','שלוש מדרגות ודגל קטן על הגבוהה: הישג והתקדמות. ידידותי לבני נוער.',
+ '<rect width="48" height="48" fill="url(#Lh)"/><g fill="#10180a"><rect x="7" y="29" width="9" height="11" rx="2.8"/><rect x="19.5" y="22" width="9" height="18" rx="2.8"/><rect x="32" y="15" width="9" height="25" rx="2.8"/><circle cx="11.5" cy="22" r="3.2"/></g><path d="M36.5 15V5.5" stroke="#10180a" stroke-width="2" stroke-linecap="round"/><path d="M36.5 5.5l7 2.6-7 2.6z" fill="#10180a"/>']
+];
+document.getElementById('g').innerHTML=V.map(([k,t,d,s])=>{const sv=c=>`<svg class="ic ${c}" viewBox="0 0 48 48">${s}</svg>`;return `<div class="t"><div class="n">${k}. ${t}</div><p>${d}</p>${sv('')}<div class="row">${sv('')}${sv('s')}<b>לומדים <i>שוק הון</i></b></div></div>`}).join('');
+</script></html>
