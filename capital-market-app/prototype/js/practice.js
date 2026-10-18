@@ -56,24 +56,40 @@ function trackSkills(ac, checks) {
   ac.skills = ac.skills || {};
   checks.forEach(c => { if (!c.term || !SKILLS[c.term]) return; const k = ac.skills[c.term] = ac.skills[c.term] || { ok: 0, n: 0 }; k.n++; if (c.ok) k.ok++; });
 }
+let practiceLevel = 0;
+function caseCard(s, i, d) {
+  const stars = d[s.id] || 0, c = s.raw.c.slice(s.raw.di - 59, s.raw.di + 1).map(r => r[4]), sp = sparkPath(c, 150, 46), id = 'cs' + i;
+  const chip = stars === 3 ? 'מושלם' : stars > 0 ? 'אפשר לשפר' : 'חדש';
+  return `<button class="ccard${stars === 3 ? ' perfect' : ''}${stars === 0 ? ' fresh' : ''}" data-go="practice" data-arg="${i}">
+    <svg class="cc-sp" viewBox="0 0 150 46" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8ff3d" stop-opacity=".32"/><stop offset="1" stop-color="#c8ff3d" stop-opacity="0"/></linearGradient></defs><path d="${sp.area}" fill="url(#${id})"/><path d="${sp.d}" fill="none" stroke="#c8ff3d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>
+    <div class="cc-t"><b>מקרה ${i + 1}</b><em>${chip}</em></div>
+    <div class="cc-m"><span class="cc-dif" aria-label="רמה ${s.level}">${'●'.repeat(s.level)}${'○'.repeat(3 - s.level)}</span><span class="cc-st">${'★'.repeat(stars)}${'☆'.repeat(3 - stars)}</span></div></button>`;
+}
 screens.practiceHome = () => {
-  const ac = A(), d = ac.practiceDone, sk = ac.skills || {}, played = Object.keys(sk).length > 0;
+  const ac = A(), d = ac.practiceDone, sk = ac.skills || {};
   const total = SCEN.reduce((a, s) => a + (d[s.id] || 0), 0), max = SCEN.length * 3;
-  const rated = Object.entries(sk).filter(([, v]) => v.n >= 2).map(([k, v]) => [k, v.ok / v.n, v]).sort((a, b) => a[1] - b[1]);
+  const rated = Object.entries(sk).filter(([, v]) => v.n >= 2).map(([k, v]) => [k, v.ok / v.n]).sort((a, b) => a[1] - b[1]);
   const weak = rated.length && rated[0][1] < .75 ? rated[0] : null;
-  const nextCase = SCEN.findIndex(s => (d[s.id] || 0) < 3);
+  const nextCase = SCEN.findIndex(s => (d[s.id] || 0) < 3), played = Object.keys(sk).length > 0;
+  const lv = practiceLevel || (nextCase >= 0 ? SCEN[nextCase].level : 1);
   const skillBars = Object.entries(SKILLS).filter(([k]) => sk[k]).map(([k, [t]]) => { const v = sk[k], pc = Math.round(v.ok / v.n * 100); return `<div class="sk"><span>${t}</span><div class="bar"><i style="width:${pc}%"></i></div><b>${pc}%</b></div>`; }).join('');
-  scr.innerHTML = `<div class="anim"><div class="top"><h2>תרגול</h2><span class="pill gold">${ic.star}${A().stars}</span></div>
-    <div class="card prog-card"><div style="display:flex;justify-content:space-between"><b>${total} מתוך ${max} כוכבים</b><span class="muted" style="font-size:13px">${SCEN.filter(s => (d[s.id] || 0) > 0).length} מתוך ${SCEN.length} מקרים</span></div><div class="bar" style="margin-top:12px"><i style="width:${Math.round(total / max * 100)}%"></i></div></div>
-    ${played ? '' : `<div class="card howto"><b>איך זה עובד?</b><div class="how">${['רואים גרף אמיתי מהעבר, בלי לדעת איזה נכס זה', 'מחליטים אם לקנות או לחכות', 'אם קונים: בונים תוכנית צעד אחרי צעד', 'מריצים את הגרף ורואים מה קרה'].map((t, i) => `<div><i>${i + 1}</i><span>${t}</span></div>`).join('')}</div>
-      <span class="muted" style="font-size:13px;line-height:1.6">אין כאן כסף אמיתי. הנקודות והכוכבים הם על החשיבה שלכם ולא על המזל. לפעמים התשובה הנכונה היא לחכות.</span></div>`}
-    ${nextCase >= 0 ? `<button class="card rec" data-go="practice" data-arg="${nextCase}"><span class="eyebrow">${played ? 'המשך מכאן' : 'מתחילים כאן'}</span><b>מקרה ${nextCase + 1}</b><span class="muted">${LEVELS[SCEN[nextCase].level - 1].t} · ${d[SCEN[nextCase].id] ? 'כדאי לשפר את הציון' : 'עוד לא ניסיתם'}</span>${ic.back}</button>` : ''}
-    ${weak ? `<div class="card weak"><span class="eyebrow">כדאי לחזק</span><b>${SKILLS[weak[0]][0]}</b><span class="muted">הצלחתם ב-${Math.round(weak[1] * 100)}% מהפעמים. שיעור קצר יכול לעזור.</span><button class="btn ghost small" data-go="lesson" data-arg="${SKILLS[weak[0]][1]}">לשיעור</button></div>` : ''}
-    ${skillBars ? `<div class="card skills"><b>החוזקות שלכם</b>${skillBars}<span class="muted" style="font-size:12px">אחוז הפעמים שהחלק היה נכון, מכל המקרים שעשיתם.</span></div>` : ''}
-    ${LEVELS.map(lv => `<div class="sec2" style="margin-top:18px"><h3>${lv.t}</h3><span class="muted" style="font-size:13px">${lv.d}</span></div>
-      ${SCEN.map((s, i) => [s, i]).filter(([s]) => s.level === lv.n).map(([s, i]) => `<button class="les" data-go="practice" data-arg="${i}"><div class="ic" style="color:var(--lime)">${ic.chart}</div><div class="tx"><b>מקרה ${i + 1}</b><span>נכס X</span></div><span class="st" style="direction:ltr">${'★'.repeat(d[s.id] || 0)}${'☆'.repeat(3 - (d[s.id] || 0))}</span></button>`).join('')}`).join('')}
+  const grid = (n) => SCEN.map((s, i) => [s, i]).filter(([s]) => s.level === n).map(([s, i]) => caseCard(s, i, d)).join('');
+  scr.innerHTML = `<div class="anim"><div class="top"><h2>תרגול</h2><span class="pill gold">${ic.star}${ac.stars}</span></div>
+    <div class="card sumcard"><div class="pc-row"><b>${total} מתוך ${max} כוכבים</b><span class="muted" style="font-size:13px">${SCEN.filter(s => (d[s.id] || 0) > 0).length} מתוך ${SCEN.length} מקרים</span></div>
+      <div class="bar" style="margin:12px 0 14px"><i style="width:${Math.round(total / max * 100)}%"></i></div>
+      ${nextCase >= 0 ? `<button class="btn primary" data-go="practice" data-arg="${nextCase}">${played ? 'המשך: מקרה ' + (nextCase + 1) : 'מתחילים: מקרה 1'}</button>` : '<span class="muted">סיימתם את כל המקרים עם 3 כוכבים. כל הכבוד!</span>'}</div>
+    ${played ? '' : `<p class="muted how1">רואים גרף אמיתי מהעבר בלי לדעת איזה נכס זה, מחליטים אם לקנות או לחכות, ובונים תוכנית. אין כסף אמיתי, והכוכבים הם על החשיבה ולא על המזל.</p>`}
+    ${weak ? `<div class="weak2"><span>כדאי לחזק: <b>${SKILLS[weak[0]][0]}</b> (${Math.round(weak[1] * 100)}%)</span><button class="link" data-go="lesson" data-arg="${SKILLS[weak[0]][1]}">לשיעור</button></div>` : ''}
+    ${skillBars ? `<details class="card skills"><summary>החוזקות שלכם</summary>${skillBars}<span class="muted" style="font-size:12px">אחוז הפעמים שהחלק היה נכון, מכל המקרים שעשיתם.</span></details>` : ''}
+    <div class="seg" role="tablist">${LEVELS.map(l => `<button role="tab" class="${l.n === lv ? 'on' : ''}" data-lv="${l.n}"><b>${l.t}</b><span>${SCEN.filter(s => s.level === l.n && (d[s.id] || 0) === 3).length}/${SCEN.filter(s => s.level === l.n).length}</span></button>`).join('')}</div>
+    <p class="muted lvd" id="lvd">${LEVELS[lv - 1].d}</p>
+    <div class="cgrid" id="cgrid">${grid(lv)}</div>
     <p class="demo-note">נתוני שוק אמיתיים מהעבר. העבר לא מבטיח את העתיד. אין כאן המלצת השקעה.</p>
     <p class="demo-note">נתונים לבדיקה פרטית בלבד, לא להפצה.</p></div>`;
+  $$('.seg button').forEach(b => b.onclick = () => {
+    practiceLevel = +b.dataset.lv; $$('.seg button').forEach(x => x.classList.toggle('on', x === b));
+    $('#lvd').textContent = LEVELS[practiceLevel - 1].d; const g = $('#cgrid'); g.innerHTML = grid(practiceLevel); g.classList.remove('swap'); void g.offsetWidth; g.classList.add('swap');
+  });
 };
 
 /* ----- the exercise ----- */

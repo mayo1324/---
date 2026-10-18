@@ -238,16 +238,22 @@ function lessonCard(l) {
 
 /* ===== lessons: a learning path with modules ===== */
 const modRing = (frac, col) => { const R = 19, C = 2 * Math.PI * R; return `<svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="${R}" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="5"/><circle cx="24" cy="24" r="${R}" fill="none" stroke="${col}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - frac)}" transform="rotate(-90 24 24)"/></svg>`; };
+let lessonsOpenMod = null;
 screens.lessons = () => {
-  const done = lessonsDone(), d = done.length, nextId = (LESSONS.find(l => !done.includes(l.id)) || {}).id;
+  const done = lessonsDone(), d = done.length, nextL = LESSONS.find(l => !done.includes(l.id)), nextId = (nextL || {}).id;
   const mods = MODULES.map(m => ({ ...m, ls: LESSONS.filter(l => l.module === m.id) })).filter(m => m.ls.length);
+  const openId = lessonsOpenMod || (nextL ? nextL.module : mods[0].id);
   scr.innerHTML = `<div class="anim"><div class="top"><h2>שיעורים</h2><span class="pill gold">${ic.star}${A().stars}</span></div>
-    <div class="card prog-card"><div style="display:flex;justify-content:space-between"><b>${d} מתוך ${LESSONS.length} שיעורים</b><span class="muted" style="font-size:13px">${portfolioOpen() ? 'התיק פתוח' : 'התיק נפתח בסיום'}</span></div>
+    <div class="card prog-card"><div class="pc-row"><b>${d} מתוך ${LESSONS.length} שיעורים</b><button class="chip" data-go="glossary">${ic.book}<span>מילון</span></button></div>
       <div class="bar" style="margin-top:12px"><i style="width:${Math.round(d / LESSONS.length * 100)}%"></i></div></div>
-    <button class="card gl-link" data-go="glossary"><div>${ic.book}</div><div><b>מילון מונחים</b><span class="muted">תמיכה, התנגדות, סטופ ועוד, בשפה פשוטה</span></div></button>
-    ${mods.map((m, mi) => { const n = m.ls.filter(l => done.includes(l.id)).length, lk = !modOpen(m), prev = mods[mi - 1]; return `<div class="mod${lk ? ' locked' : ''}" style="--mc:${m.color}">
-      <div class="mod-h"><div class="mod-ring">${modRing(n / m.ls.length, m.color)}<b>${lk ? ic.lock : n + '/' + m.ls.length}</b></div><div><b>${m.title}</b><span>${lk ? 'נפתח אחרי שמסיימים את ' + prev.title : m.sub}</span></div></div>
-      <div class="path">${m.ls.map((l, i) => { const dn = done.includes(l.id); return lk && !dn ? `<div class="pn locked" style="animation-delay:${i * .05}s"><i>${ic.lock}</i><div><b>${l.title}</b><span>${l.min} דקות</span></div></div>` : `<button class="pn${dn ? ' done' : ''}${l.id === nextId ? ' next' : ''}" data-go="lesson" data-arg="${l.id}" style="animation-delay:${i * .05}s"><i>${dn ? ic.check : i + 1}</i><div><b>${l.title}</b><span>${l.min} דקות${l.id === nextId ? ' · המשך מכאן' : ''}</span></div></button>`; }).join('')}</div></div>`; }).join('')}</div>`;
+    <div class="mods">${mods.map((m, mi) => { const n = m.ls.filter(l => done.includes(l.id)).length, lk = !modOpen(m), prev = mods[mi - 1], open = !lk && m.id === openId; return `<div class="mod${lk ? ' locked' : ''}${open ? ' open' : ''}" data-mod="${m.id}" style="--mc:${m.color}">
+      <button class="mod-h" data-mod-h="${m.id}"><div class="mod-ring">${modRing(n / m.ls.length, m.color)}<b>${lk ? ic.lock : n === m.ls.length ? ic.check : n + '/' + m.ls.length}</b></div><div class="mh-t"><b>${m.title}</b><span>${lk ? 'נפתח אחרי ' + prev.title : n + ' מתוך ' + m.ls.length + ' שיעורים'}</span></div><i class="chev">${ic.back}</i></button>
+      <div class="path"${open ? '' : ' hidden'}>${m.ls.map((l, i) => { const dn = done.includes(l.id); return `<button class="pn${dn ? ' done' : ''}${l.id === nextId ? ' next' : ''}" data-go="lesson" data-arg="${l.id}"><i>${dn ? ic.check : i + 1}</i><div><b>${l.title}</b><span>${l.min} דקות${l.id === nextId ? ' · המשך מכאן' : ''}</span></div></button>`; }).join('')}</div></div>`; }).join('')}</div></div>`;
+  $$('[data-mod-h]').forEach(h => h.onclick = () => {
+    const box = h.closest('.mod'); if (box.classList.contains('locked')) { toast('הנושא ייפתח אחרי שמסיימים את הנושא הקודם'); return; }
+    const wasOpen = box.classList.contains('open'); lessonsOpenMod = wasOpen ? '-' : box.dataset.mod;
+    $$('.mod').forEach(x => { const o = !wasOpen && x === box; x.classList.toggle('open', o); const pt = $('.path', x); if (pt) pt.hidden = !o; });
+  });
 };
 screens.lesson = (id) => {
   const L = LESSONS.find(x => x.id === id) || LESSONS[0];

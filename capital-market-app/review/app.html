@@ -953,6 +953,48 @@ bdi{unicode-bidi:isolate}
 .replay{margin-top:14px;text-align:start}.replay>b{display:block;margin-bottom:8px}.replay .chart{width:100%;height:auto;display:block}
 .rlegend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:6px}
 
+/* ===== calmer lessons and practice screens ===== */
+.pc-row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.prog-card .chip,.pc-row .chip{display:inline-flex;gap:6px;align-items:center;height:34px;padding:0 14px;font-size:13px}.pc-row .chip svg{width:16px;height:16px}
+.mods{margin-top:6px}
+.mod{margin-top:10px;border-radius:22px;background:linear-gradient(160deg,rgba(26,26,26,.7),rgba(14,14,14,.74));border:1px solid var(--line);overflow:hidden;transition:border-color .3s}
+.mod.open{border-color:color-mix(in srgb,var(--mc) 45%,transparent)}
+.mod-h{display:flex;align-items:center;gap:14px;width:100%;text-align:start;padding:14px 16px;margin:0}
+.mod-h .mh-t{flex:1;min-width:0}.mod-h .mh-t b{display:block;font-size:17px}.mod-h .mh-t span{font-size:12.5px;color:var(--muted)}
+.mod-h .chev{flex:none;width:20px;height:20px;color:var(--muted);transition:transform .3s;transform:rotate(90deg);font-style:normal}.mod-h .chev svg{width:20px;height:20px}
+.mod.open .chev{transform:rotate(-90deg);color:var(--mc)}.mod.locked .chev{opacity:.0}
+.mod .mod-h>div:last-child{opacity:1}
+.mod .path{padding:0 16px 14px;animation:rise .35s cubic-bezier(.2,.8,.2,1) both}.mod .path[hidden]{display:none}
+.mod .path::before{inset-inline-start:33px;top:14px;bottom:30px}
+.mod .pn{padding:5px 0;gap:12px;animation:none}
+.mod .pn>i{width:34px;height:34px;font-size:13px;border-width:2px}.mod .pn>i svg{width:17px;height:17px}
+.mod .pn>div{background:none;border:0;padding:6px 4px}
+.mod .pn>div b{font-size:15px;font-weight:600}
+.mod .pn.next>div{background:color-mix(in srgb,var(--mc) 10%,transparent);border-radius:14px;padding:6px 10px}
+.sumcard .btn{width:100%}
+.how1{font-size:13.5px;line-height:1.65;margin:12px 4px 0}
+.weak2{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;padding:10px 14px;border-radius:16px;background:rgba(255,201,77,.08);border:1px solid rgba(255,201,77,.22);font-size:13.5px}
+.weak2 b{color:var(--gold)}.weak2 .link{flex:none}
+details.skills{margin-top:12px;padding:12px 16px}details.skills summary{cursor:pointer;font-weight:700;font-size:15px;list-style:none}
+details.skills summary::-webkit-details-marker{display:none}details.skills[open] summary{margin-bottom:8px}
+.seg{display:flex;gap:6px;margin-top:18px;padding:4px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
+.seg button{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;padding:9px 4px;border-radius:14px;color:var(--muted);transition:background .25s,color .25s}
+.seg button b{font-size:13.5px;font-weight:700}.seg button span{font-size:11px;direction:ltr}
+.seg button.on{background:var(--lime);color:#0b0d10;box-shadow:0 4px 14px rgba(200,255,61,.25)}
+.lvd{font-size:13px;margin:10px 4px 12px}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.cgrid.swap{animation:rise .4s cubic-bezier(.2,.8,.2,1)}
+.ccard{position:relative;display:flex;flex-direction:column;gap:6px;padding:12px 14px 12px;text-align:start;border-radius:22px;overflow:hidden;background:linear-gradient(160deg,rgba(30,34,28,.8),rgba(14,14,14,.88));border:1px solid var(--line);transition:transform .18s,border-color .25s}
+.ccard:active{transform:scale(.97)}
+.ccard.fresh{border-color:rgba(200,255,61,.35)}.ccard.perfect{border-color:rgba(200,255,61,.6);box-shadow:0 0 22px rgba(200,255,61,.14)}
+.cc-sp{width:100%;height:46px;display:block;margin-bottom:2px}
+.cc-t{display:flex;align-items:center;justify-content:space-between;gap:6px}.cc-t b{font-size:16px}
+.cc-t em{font-style:normal;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;background:rgba(255,255,255,.08);color:var(--muted)}
+.ccard.fresh .cc-t em{background:rgba(200,255,61,.16);color:var(--lime)}.ccard.perfect .cc-t em{background:var(--lime);color:#0b0d10}
+.cc-m{display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--muted)}
+.cc-dif{letter-spacing:2px;color:var(--lime);font-size:9px;direction:ltr}.cc-st{color:var(--lime);letter-spacing:1px;direction:ltr}
+
+details.skills summary{display:flex;justify-content:space-between;align-items:center}details.skills summary::after{content:'';width:8px;height:8px;border-inline-end:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);transition:transform .25s}details.skills[open] summary::after{transform:rotate(-135deg)}
+
 body{background:#0b0d10}
 @media (min-width:481px){body{background:#d9dde3}}
 </style>
@@ -3569,16 +3611,22 @@ function lessonCard(l) {
 
 /* ===== lessons: a learning path with modules ===== */
 const modRing = (frac, col) => { const R = 19, C = 2 * Math.PI * R; return `<svg viewBox="0 0 48 48" width="48" height="48"><circle cx="24" cy="24" r="${R}" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="5"/><circle cx="24" cy="24" r="${R}" fill="none" stroke="${col}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - frac)}" transform="rotate(-90 24 24)"/></svg>`; };
+let lessonsOpenMod = null;
 screens.lessons = () => {
-  const done = lessonsDone(), d = done.length, nextId = (LESSONS.find(l => !done.includes(l.id)) || {}).id;
+  const done = lessonsDone(), d = done.length, nextL = LESSONS.find(l => !done.includes(l.id)), nextId = (nextL || {}).id;
   const mods = MODULES.map(m => ({ ...m, ls: LESSONS.filter(l => l.module === m.id) })).filter(m => m.ls.length);
+  const openId = lessonsOpenMod || (nextL ? nextL.module : mods[0].id);
   scr.innerHTML = `<div class="anim"><div class="top"><h2>שיעורים</h2><span class="pill gold">${ic.star}${A().stars}</span></div>
-    <div class="card prog-card"><div style="display:flex;justify-content:space-between"><b>${d} מתוך ${LESSONS.length} שיעורים</b><span class="muted" style="font-size:13px">${portfolioOpen() ? 'התיק פתוח' : 'התיק נפתח בסיום'}</span></div>
+    <div class="card prog-card"><div class="pc-row"><b>${d} מתוך ${LESSONS.length} שיעורים</b><button class="chip" data-go="glossary">${ic.book}<span>מילון</span></button></div>
       <div class="bar" style="margin-top:12px"><i style="width:${Math.round(d / LESSONS.length * 100)}%"></i></div></div>
-    <button class="card gl-link" data-go="glossary"><div>${ic.book}</div><div><b>מילון מונחים</b><span class="muted">תמיכה, התנגדות, סטופ ועוד, בשפה פשוטה</span></div></button>
-    ${mods.map((m, mi) => { const n = m.ls.filter(l => done.includes(l.id)).length, lk = !modOpen(m), prev = mods[mi - 1]; return `<div class="mod${lk ? ' locked' : ''}" style="--mc:${m.color}">
-      <div class="mod-h"><div class="mod-ring">${modRing(n / m.ls.length, m.color)}<b>${lk ? ic.lock : n + '/' + m.ls.length}</b></div><div><b>${m.title}</b><span>${lk ? 'נפתח אחרי שמסיימים את ' + prev.title : m.sub}</span></div></div>
-      <div class="path">${m.ls.map((l, i) => { const dn = done.includes(l.id); return lk && !dn ? `<div class="pn locked" style="animation-delay:${i * .05}s"><i>${ic.lock}</i><div><b>${l.title}</b><span>${l.min} דקות</span></div></div>` : `<button class="pn${dn ? ' done' : ''}${l.id === nextId ? ' next' : ''}" data-go="lesson" data-arg="${l.id}" style="animation-delay:${i * .05}s"><i>${dn ? ic.check : i + 1}</i><div><b>${l.title}</b><span>${l.min} דקות${l.id === nextId ? ' · המשך מכאן' : ''}</span></div></button>`; }).join('')}</div></div>`; }).join('')}</div>`;
+    <div class="mods">${mods.map((m, mi) => { const n = m.ls.filter(l => done.includes(l.id)).length, lk = !modOpen(m), prev = mods[mi - 1], open = !lk && m.id === openId; return `<div class="mod${lk ? ' locked' : ''}${open ? ' open' : ''}" data-mod="${m.id}" style="--mc:${m.color}">
+      <button class="mod-h" data-mod-h="${m.id}"><div class="mod-ring">${modRing(n / m.ls.length, m.color)}<b>${lk ? ic.lock : n === m.ls.length ? ic.check : n + '/' + m.ls.length}</b></div><div class="mh-t"><b>${m.title}</b><span>${lk ? 'נפתח אחרי ' + prev.title : n + ' מתוך ' + m.ls.length + ' שיעורים'}</span></div><i class="chev">${ic.back}</i></button>
+      <div class="path"${open ? '' : ' hidden'}>${m.ls.map((l, i) => { const dn = done.includes(l.id); return `<button class="pn${dn ? ' done' : ''}${l.id === nextId ? ' next' : ''}" data-go="lesson" data-arg="${l.id}"><i>${dn ? ic.check : i + 1}</i><div><b>${l.title}</b><span>${l.min} דקות${l.id === nextId ? ' · המשך מכאן' : ''}</span></div></button>`; }).join('')}</div></div>`; }).join('')}</div></div>`;
+  $$('[data-mod-h]').forEach(h => h.onclick = () => {
+    const box = h.closest('.mod'); if (box.classList.contains('locked')) { toast('הנושא ייפתח אחרי שמסיימים את הנושא הקודם'); return; }
+    const wasOpen = box.classList.contains('open'); lessonsOpenMod = wasOpen ? '-' : box.dataset.mod;
+    $$('.mod').forEach(x => { const o = !wasOpen && x === box; x.classList.toggle('open', o); const pt = $('.path', x); if (pt) pt.hidden = !o; });
+  });
 };
 screens.lesson = (id) => {
   const L = LESSONS.find(x => x.id === id) || LESSONS[0];
@@ -4147,24 +4195,40 @@ function trackSkills(ac, checks) {
   ac.skills = ac.skills || {};
   checks.forEach(c => { if (!c.term || !SKILLS[c.term]) return; const k = ac.skills[c.term] = ac.skills[c.term] || { ok: 0, n: 0 }; k.n++; if (c.ok) k.ok++; });
 }
+let practiceLevel = 0;
+function caseCard(s, i, d) {
+  const stars = d[s.id] || 0, c = s.raw.c.slice(s.raw.di - 59, s.raw.di + 1).map(r => r[4]), sp = sparkPath(c, 150, 46), id = 'cs' + i;
+  const chip = stars === 3 ? 'מושלם' : stars > 0 ? 'אפשר לשפר' : 'חדש';
+  return `<button class="ccard${stars === 3 ? ' perfect' : ''}${stars === 0 ? ' fresh' : ''}" data-go="practice" data-arg="${i}">
+    <svg class="cc-sp" viewBox="0 0 150 46" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8ff3d" stop-opacity=".32"/><stop offset="1" stop-color="#c8ff3d" stop-opacity="0"/></linearGradient></defs><path d="${sp.area}" fill="url(#${id})"/><path d="${sp.d}" fill="none" stroke="#c8ff3d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/></svg>
+    <div class="cc-t"><b>מקרה ${i + 1}</b><em>${chip}</em></div>
+    <div class="cc-m"><span class="cc-dif" aria-label="רמה ${s.level}">${'●'.repeat(s.level)}${'○'.repeat(3 - s.level)}</span><span class="cc-st">${'★'.repeat(stars)}${'☆'.repeat(3 - stars)}</span></div></button>`;
+}
 screens.practiceHome = () => {
-  const ac = A(), d = ac.practiceDone, sk = ac.skills || {}, played = Object.keys(sk).length > 0;
+  const ac = A(), d = ac.practiceDone, sk = ac.skills || {};
   const total = SCEN.reduce((a, s) => a + (d[s.id] || 0), 0), max = SCEN.length * 3;
-  const rated = Object.entries(sk).filter(([, v]) => v.n >= 2).map(([k, v]) => [k, v.ok / v.n, v]).sort((a, b) => a[1] - b[1]);
+  const rated = Object.entries(sk).filter(([, v]) => v.n >= 2).map(([k, v]) => [k, v.ok / v.n]).sort((a, b) => a[1] - b[1]);
   const weak = rated.length && rated[0][1] < .75 ? rated[0] : null;
-  const nextCase = SCEN.findIndex(s => (d[s.id] || 0) < 3);
+  const nextCase = SCEN.findIndex(s => (d[s.id] || 0) < 3), played = Object.keys(sk).length > 0;
+  const lv = practiceLevel || (nextCase >= 0 ? SCEN[nextCase].level : 1);
   const skillBars = Object.entries(SKILLS).filter(([k]) => sk[k]).map(([k, [t]]) => { const v = sk[k], pc = Math.round(v.ok / v.n * 100); return `<div class="sk"><span>${t}</span><div class="bar"><i style="width:${pc}%"></i></div><b>${pc}%</b></div>`; }).join('');
-  scr.innerHTML = `<div class="anim"><div class="top"><h2>תרגול</h2><span class="pill gold">${ic.star}${A().stars}</span></div>
-    <div class="card prog-card"><div style="display:flex;justify-content:space-between"><b>${total} מתוך ${max} כוכבים</b><span class="muted" style="font-size:13px">${SCEN.filter(s => (d[s.id] || 0) > 0).length} מתוך ${SCEN.length} מקרים</span></div><div class="bar" style="margin-top:12px"><i style="width:${Math.round(total / max * 100)}%"></i></div></div>
-    ${played ? '' : `<div class="card howto"><b>איך זה עובד?</b><div class="how">${['רואים גרף אמיתי מהעבר, בלי לדעת איזה נכס זה', 'מחליטים אם לקנות או לחכות', 'אם קונים: בונים תוכנית צעד אחרי צעד', 'מריצים את הגרף ורואים מה קרה'].map((t, i) => `<div><i>${i + 1}</i><span>${t}</span></div>`).join('')}</div>
-      <span class="muted" style="font-size:13px;line-height:1.6">אין כאן כסף אמיתי. הנקודות והכוכבים הם על החשיבה שלכם ולא על המזל. לפעמים התשובה הנכונה היא לחכות.</span></div>`}
-    ${nextCase >= 0 ? `<button class="card rec" data-go="practice" data-arg="${nextCase}"><span class="eyebrow">${played ? 'המשך מכאן' : 'מתחילים כאן'}</span><b>מקרה ${nextCase + 1}</b><span class="muted">${LEVELS[SCEN[nextCase].level - 1].t} · ${d[SCEN[nextCase].id] ? 'כדאי לשפר את הציון' : 'עוד לא ניסיתם'}</span>${ic.back}</button>` : ''}
-    ${weak ? `<div class="card weak"><span class="eyebrow">כדאי לחזק</span><b>${SKILLS[weak[0]][0]}</b><span class="muted">הצלחתם ב-${Math.round(weak[1] * 100)}% מהפעמים. שיעור קצר יכול לעזור.</span><button class="btn ghost small" data-go="lesson" data-arg="${SKILLS[weak[0]][1]}">לשיעור</button></div>` : ''}
-    ${skillBars ? `<div class="card skills"><b>החוזקות שלכם</b>${skillBars}<span class="muted" style="font-size:12px">אחוז הפעמים שהחלק היה נכון, מכל המקרים שעשיתם.</span></div>` : ''}
-    ${LEVELS.map(lv => `<div class="sec2" style="margin-top:18px"><h3>${lv.t}</h3><span class="muted" style="font-size:13px">${lv.d}</span></div>
-      ${SCEN.map((s, i) => [s, i]).filter(([s]) => s.level === lv.n).map(([s, i]) => `<button class="les" data-go="practice" data-arg="${i}"><div class="ic" style="color:var(--lime)">${ic.chart}</div><div class="tx"><b>מקרה ${i + 1}</b><span>נכס X</span></div><span class="st" style="direction:ltr">${'★'.repeat(d[s.id] || 0)}${'☆'.repeat(3 - (d[s.id] || 0))}</span></button>`).join('')}`).join('')}
+  const grid = (n) => SCEN.map((s, i) => [s, i]).filter(([s]) => s.level === n).map(([s, i]) => caseCard(s, i, d)).join('');
+  scr.innerHTML = `<div class="anim"><div class="top"><h2>תרגול</h2><span class="pill gold">${ic.star}${ac.stars}</span></div>
+    <div class="card sumcard"><div class="pc-row"><b>${total} מתוך ${max} כוכבים</b><span class="muted" style="font-size:13px">${SCEN.filter(s => (d[s.id] || 0) > 0).length} מתוך ${SCEN.length} מקרים</span></div>
+      <div class="bar" style="margin:12px 0 14px"><i style="width:${Math.round(total / max * 100)}%"></i></div>
+      ${nextCase >= 0 ? `<button class="btn primary" data-go="practice" data-arg="${nextCase}">${played ? 'המשך: מקרה ' + (nextCase + 1) : 'מתחילים: מקרה 1'}</button>` : '<span class="muted">סיימתם את כל המקרים עם 3 כוכבים. כל הכבוד!</span>'}</div>
+    ${played ? '' : `<p class="muted how1">רואים גרף אמיתי מהעבר בלי לדעת איזה נכס זה, מחליטים אם לקנות או לחכות, ובונים תוכנית. אין כסף אמיתי, והכוכבים הם על החשיבה ולא על המזל.</p>`}
+    ${weak ? `<div class="weak2"><span>כדאי לחזק: <b>${SKILLS[weak[0]][0]}</b> (${Math.round(weak[1] * 100)}%)</span><button class="link" data-go="lesson" data-arg="${SKILLS[weak[0]][1]}">לשיעור</button></div>` : ''}
+    ${skillBars ? `<details class="card skills"><summary>החוזקות שלכם</summary>${skillBars}<span class="muted" style="font-size:12px">אחוז הפעמים שהחלק היה נכון, מכל המקרים שעשיתם.</span></details>` : ''}
+    <div class="seg" role="tablist">${LEVELS.map(l => `<button role="tab" class="${l.n === lv ? 'on' : ''}" data-lv="${l.n}"><b>${l.t}</b><span>${SCEN.filter(s => s.level === l.n && (d[s.id] || 0) === 3).length}/${SCEN.filter(s => s.level === l.n).length}</span></button>`).join('')}</div>
+    <p class="muted lvd" id="lvd">${LEVELS[lv - 1].d}</p>
+    <div class="cgrid" id="cgrid">${grid(lv)}</div>
     <p class="demo-note">נתוני שוק אמיתיים מהעבר. העבר לא מבטיח את העתיד. אין כאן המלצת השקעה.</p>
     <p class="demo-note">נתונים לבדיקה פרטית בלבד, לא להפצה.</p></div>`;
+  $$('.seg button').forEach(b => b.onclick = () => {
+    practiceLevel = +b.dataset.lv; $$('.seg button').forEach(x => x.classList.toggle('on', x === b));
+    $('#lvd').textContent = LEVELS[practiceLevel - 1].d; const g = $('#cgrid'); g.innerHTML = grid(practiceLevel); g.classList.remove('swap'); void g.offsetWidth; g.classList.add('swap');
+  });
 };
 
 /* ----- the exercise ----- */
