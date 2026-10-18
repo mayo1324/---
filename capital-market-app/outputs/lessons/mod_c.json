@@ -1,0 +1,446 @@
+[
+ {
+  "id": "l18",
+  "title": "פיזור",
+  "min": 6,
+  "module": "C",
+  "color": "#34d399",
+  "slides": [
+   {
+    "t": "לא כל הביצים בסל אחד",
+    "b": "פיזור הוא לחלק את הכסף בין כמה השקעות. הרעיון: אם אחת מפסידה, אולי האחרות יפצו על זה.",
+    "v": "styles",
+    "w": "זה רעיון, לא הבטחה."
+   },
+   {
+    "t": "חלוקה לסוגים",
+    "b": "אפשר לחלק בין סוגים שונים של נכסים, כמו מניות, אג\"ח ומזומן. זה נקרא הקצאת נכסים.",
+    "v": "pie"
+   },
+   {
+    "t": "גם בתוך אותו סוג",
+    "b": "גם בתוך מניות כדאי לא לשים הכול על מניה אחת או שתיים.",
+    "v": "styles"
+   },
+   {
+    "t": "קרנות ופיזור",
+    "b": "קרן היא קופה משותפת של הרבה אנשים. היא יכולה להחזיק הרבה חברות, וכך הנפילה של חברה אחת פוגעת פחות.",
+    "v": "index"
+   },
+   {
+    "t": "פיזור לא מבטל סיכון",
+    "b": "קרן שמתמקדת בענף אחד לא בהכרח מפוזרת. וגם בקרן אפשר להפסיד חלק מהכסף או את כולו.",
+    "v": "coaster",
+    "w": "פיזור מקטין סיכון מסוים, לא מבטל אותו."
+   }
+  ],
+  "qs": [
+   {
+    "q": "מה הרעיון של פיזור?",
+    "o": [
+     "לא לשים את כל הכסף בהשקעה אחת",
+     "לקנות רק מניה אחת בטוחה",
+     "למכור הכול ביום רע"
+    ],
+    "a": 0,
+    "why": "פיזור הוא פיזור הכסף בין כמה השקעות."
+   },
+   {
+    "q": "מה נכון לגבי קרן שמתמקדת בענף אחד?",
+    "o": [
+     "היא תמיד מפוזרת היטב",
+     "היא לא בהכרח מפוזרת",
+     "אי אפשר להפסיד בה"
+    ],
+    "a": 1,
+    "why": "קרן ממוקדת בענף אחד לא בהכרח נותנת פיזור."
+   },
+   {
+    "q": "מה נכון לגבי פיזור?",
+    "o": [
+     "הוא מבטל כל הפסד",
+     "הוא מקטין סיכון אבל לא מבטל אותו",
+     "הוא מבטיח רווח"
+    ],
+    "a": 1,
+    "why": "גם בקרן אפשר להפסיד חלק מהכסף או את כולו."
+   }
+  ],
+  "src": [
+   {
+    "q": "Diversification is a strategy that can be neatly summed up as \"Don't put all your eggs in one basket.\" The strategy involves spreading your money among various investments in the hope that if one loses money, the others will make up for those losses.",
+    "f": "sources/web/ig_diversification.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/diversification"
+   },
+   {
+    "q": "Asset allocation involves dividing your investments among different categories, such as stocks, bonds, and cash.",
+    "f": "sources/web/ig_asset_allocation.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/asset-allocation"
+   },
+   {
+    "q": "It’s also important to diversify within an asset class, such as not putting all of your money in one or two stocks.",
+    "f": "sources/web/risk-tol.txt",
+    "u": "https://www.investor.gov/introduction-investing/getting-started/assessing-your-risk-tolerance"
+   },
+   {
+    "q": "Mutual funds may invest in a range of companies and industries rather than investing in one specific stock or bond. This helps to lower your risk if one company fails.",
+    "f": "sources/web/ig_mf.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/mutual-funds-and-exchange-traded-1"
+   },
+   {
+    "q": "But a mutual fund or ETF won’t necessarily provide diversification, especially if it is narrowly focused (such as on one industry sector).",
+    "f": "sources/web/risk-tol.txt",
+    "u": "https://www.investor.gov/introduction-investing/getting-started/assessing-your-risk-tolerance"
+   },
+   {
+    "q": "You may lose some or all of the money you invest because the investments held by a fund can go down in value.",
+    "f": "sources/web/ig_mf.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/mutual-funds-and-exchange-traded-1"
+   }
+  ],
+  "scene_requests": [],
+  "status": "draft for expert review",
+  "to_verify": [
+   "פיזור בבורסה הישראלית: אילו קרנות ומדדים קיימים (מקור: הבורסה לניירות ערך, אתר חסום 403)",
+   "האם פיזור מקטין סיכון במספרים (אין מספר במקורות שנקראו, לכן לא נכתב)"
+  ]
+ },
+ {
+  "id": "l19",
+  "title": "מינוף: למה הוא מסוכן",
+  "min": 6,
+  "module": "C",
+  "color": "#f87171",
+  "slides": [
+   {
+    "t": "מה זה מינוף",
+    "b": "מינוף הוא לקנות מניות בכסף שמשאילים לכם. זה סיכון שחשוב להכיר, לא כלי שממליצים עליו.",
+    "v": "leverage",
+    "w": "השיעור מסביר סיכון בלבד, לא המלצה."
+   },
+   {
+    "t": "חשבון מרגין",
+    "b": "בחשבון כזה הברוקר מלווה כסף. הנכסים בחשבון משמשים כערובה להלוואה.",
+    "v": "leverage"
+   },
+   {
+    "t": "מגדיל גם הפסד",
+    "b": "מינוף מגדיל את כוח הקנייה, אבל גם את ההפסד האפשרי. אם המחיר זז לכיוון הלא נכון, ההפסד יכול להגיע מהר.",
+    "v": "coaster"
+   },
+   {
+    "t": "אפשר להפסיד יותר ממה שהשקעתם",
+    "b": "במינוף אפשר להפסיד יותר כסף ממה שהשקעתם בהתחלה. לפעמים הרבה יותר.",
+    "v": "leverage",
+    "w": "זו הסיבה שהוא נחשב מסוכן."
+   },
+   {
+    "t": "דרישה להפקיד עוד",
+    "b": "אם השווי יורד, הברוקר יכול לדרוש הפקדה נוספת או למכור נכסים מהחשבון בלי להודיע מראש. הוא גם בוחר מה למכור.",
+    "v": "scale"
+   }
+  ],
+  "qs": [
+   {
+    "q": "מה זה מינוף?",
+    "o": [
+     "קנייה בכסף מושאל",
+     "קנייה רק במזומן",
+     "מכירה של כל המניות"
+    ],
+    "a": 0,
+    "why": "מינוף הוא שימוש בכסף שהושאל כדי לקנות ניירות ערך."
+   },
+   {
+    "q": "מה אפשר לומר על הפסד במינוף?",
+    "o": [
+     "הוא אף פעם לא עובר את הסכום שהושקע",
+     "הוא יכול לעבור את הסכום שהושקע",
+     "הברוקר תמיד מכסה אותו"
+    ],
+    "a": 1,
+    "why": "במינוף אפשר להפסיד יותר ממה שהושקע בהתחלה."
+   },
+   {
+    "q": "מה הברוקר יכול לעשות כשהשווי בחשבון מרגין יורד?",
+    "o": [
+     "לשלם לכם על ההפסד",
+     "לדרוש הפקדה או למכור נכסים בלי להודיע",
+     "להקפיא את המחירים"
+    ],
+    "a": 1,
+    "why": "הברוקר יכול לדרוש הפקדה או למכור, בלי להודיע מראש."
+   }
+  ],
+  "src": [
+   {
+    "q": "Leveraged investing involves using borrowed money to purchase stocks or other securities.",
+    "f": "sources/web/day-risks.txt",
+    "u": "https://www.investor.gov/additional-resources/spotlight/formerdirectorlorischock-directors-take/thinking-day-trading-know-risks"
+   },
+   {
+    "q": "A “margin account” is a type of brokerage account in which the broker-dealer lends the investor cash, using the account as collateral, to purchase securities.",
+    "f": "sources/web/ig_margin_account.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/margin-account"
+   },
+   {
+    "q": "Margin increases investors’ purchasing power, but also exposes investors to the potential for larger losses.",
+    "f": "sources/web/ig_margin_account.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/margin-account"
+   },
+   {
+    "q": "Leveraged investing can even result in losing more money, and in some cases substantially more, than initially invested.",
+    "f": "sources/web/day-risks.txt",
+    "u": "https://www.investor.gov/additional-resources/spotlight/formerdirectorlorischock-directors-take/thinking-day-trading-know-risks"
+   },
+   {
+    "q": "If you buy on margin and the value of your securities declines, your brokerage firm can require you to deposit cash or securities to your account immediately, or sell any of the securities in your account to cover any shortfall, without informing you in advance.",
+    "f": "sources/web/ig_margin_call.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/margin-call"
+   },
+   {
+    "q": "The brokerage firm decides which of your securities to sell.",
+    "f": "sources/web/ig_margin_call.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/margin-call"
+   }
+  ],
+  "scene_requests": [
+   {
+    "key": "leverage",
+    "desc": "איור פשוט: אדם מחזיק שקית כסף קטנה משלו וחבילה גדולה יותר שהושאלה, ומאזניים שנוטים כשהמחיר יורד"
+   }
+  ],
+  "status": "draft for expert review",
+  "to_verify": [
+   "כללי מינוף ומרגין בישראל: מי רשאי, מה הגבלות הברוקרים (הבורסה ורשות ניירות ערך חסומות או לא נקראו)",
+   "האם בישראל אפשר להפסיד יותר מהסכום שהושקע בכל סוגי המינוף (המקורות שנקראו הם אמריקאיים)"
+  ]
+ },
+ {
+  "id": "l20",
+  "title": "עמלות ומסים",
+  "min": 6,
+  "module": "C",
+  "color": "#fbbf24",
+  "slides": [
+   {
+    "t": "עלויות אוכלות תשואה",
+    "b": "עמלות והוצאות מקטינות את מה שמרוויחים בסוף. לכן חשוב לדעת מה משלמים.",
+    "v": "fees"
+   },
+   {
+    "t": "עמלת ברוקר",
+    "b": "ברוקר קונה ומוכר בשבילכם תמורת תשלום שנקרא עמלה.",
+    "v": "fees"
+   },
+   {
+    "t": "המרווח",
+    "b": "יש הפרש בין המחיר שבו קונים מיד למחיר שבו מוכרים מיד. זה עוד חלק מהעלות.",
+    "v": "fees"
+   },
+   {
+    "t": "הוצאות של קרן",
+    "b": "קרן גובה הוצאות כל שנה, כאחוז מהנכסים שלה. הפרש קטן בעלויות יכול להפוך להפרש גדול עם השנים.",
+    "v": "scale"
+   },
+   {
+    "t": "ומה לגבי מסים?",
+    "b": "רווח הון הוא רווח ממכירת השקעה ביותר ממה ששילמו עליה. כללי המס בישראל לא מוצגים כאן, עד שיאומתו במקור רשמי.",
+    "v": "fees",
+    "w": "בשלב זה אין כאן פרטי מס ישראליים."
+   }
+  ],
+  "qs": [
+   {
+    "q": "מה קורה לתשואה כשיש עמלות והוצאות?",
+    "o": [
+     "היא גדלה",
+     "היא קטנה",
+     "היא לא משתנה"
+    ],
+    "a": 1,
+    "why": "עמלות והוצאות מקטינות את תשואת ההשקעה."
+   },
+   {
+    "q": "מהו המרווח?",
+    "o": [
+     "הפרש בין מחיר קנייה מיידית למחיר מכירה מיידית",
+     "עמלה שנתית של קרן",
+     "המס על רווח"
+    ],
+    "a": 0,
+    "why": "המרווח הוא ההפרש בין מחיר הקנייה למחיר המכירה המיידיים."
+   },
+   {
+    "q": "מה נכון לגבי הוצאות של קרן?",
+    "o": [
+     "הן לעולם לא משפיעות",
+     "הן יכולות להשפיע הרבה לאורך שנים",
+     "רק ברוקר משלם אותן"
+    ],
+    "a": 1,
+    "why": "גם הפרש קטן בעלויות יכול להפוך להפרש גדול עם הזמן."
+   }
+  ],
+  "src": [
+   {
+    "q": "Fees and expenses reduce the value of your fund’s investment returns.",
+    "f": "sources/web/ig_fb.txt",
+    "u": "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins/mutual-fund-and-etf-fees-and-expenses-investor-bulletin"
+   },
+   {
+    "q": "Brokers buy and sell shares for customers for a fee, known as a commission.",
+    "f": "sources/web/ig_stocks.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks"
+   },
+   {
+    "q": "is the difference between the prices quoted (either by a single market maker or in a limit order book) for an immediate sale (ask) and an immediate purchase (bid)",
+    "f": "sources/web/en_spread.txt",
+    "u": "https://en.wikipedia.org/wiki/Bid%E2%80%93ask_spread"
+   },
+   {
+    "q": "The percentage of a fund's average net assets used each year to pay the fund’s operating expenses",
+    "f": "sources/web/ig_expense_ratio.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/expense-ratio"
+   },
+   {
+    "q": "Even small differences in fees can mean large differences in returns over time.",
+    "f": "sources/web/ig_mf.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/mutual-funds-and-exchange-traded-1"
+   },
+   {
+    "q": "The profit that comes when an investment is sold for more than the price the investor paid for it.",
+    "f": "sources/web/ig_capgain.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/capital-gain"
+   }
+  ],
+  "scene_requests": [
+   {
+    "key": "fees",
+    "desc": "איור פשוט: ערימת מטבעות שמתוכה נלקחים כמה מטבעות קטנים לתיבות עם התוויות עמלה, מרווח, הוצאות"
+   }
+  ],
+  "status": "draft for expert review",
+  "to_verify": [
+   "שיעורי מס רווח הון בישראל",
+   "מס על דיבידנד בישראל",
+   "האם הבנק או הברוקר מנכה מס במקור",
+   "טווחי עמלות והוצאות ניהול בישראל",
+   "האם יש הבדל בין עמלה קבועה לאחוזית אצל ברוקרים בישראל",
+   "הגדרות 'דמי ניהול' של קרנות בישראל (הבורסה חסומה 403, בנק ישראל חסום, רשות המסים ורשות ניירות ערך חסומות)",
+   "נקראו אך לא נכללו בשיעור: הוראת שוק יכולה להתבצע במחיר שונה (ig_mo.txt), הוצאות קרן משולמות בעקיפין (ig_mf.txt), עמלה קבועה יקרה יחסית בסכום קטן (ig_fb.txt); ניתן להוסיף לפי החלטת מומחה"
+  ]
+ },
+ {
+  "id": "l7",
+  "review": true,
+  "title": "כניסה, סטופ ויעד",
+  "src": [
+   {
+    "q": "When the specified price is reached, your stop order becomes a market order.",
+    "f": "sources/web/ig_stop_order.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/stop-order"
+   },
+   {
+    "q": "The disadvantage is that a stop price purchase or sale could be activated by a short-term fluctuation in a stock's price. In addition, the price at which your trade is executed may differ from the stop price, especially in a fast-moving market where stock prices can change rapidly.",
+    "f": "sources/web/ig_stop_order.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/stop-order"
+   },
+   {
+    "q": "A sell stop order is entered at a stop price below the current market price. Investors generally use a sell stop order to limit a loss or protect a profit on a stock they own.",
+    "f": "sources/web/ig_orders.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/how-stock-markets-work/types-orders"
+   },
+   {
+    "q": "Gaps are spaces on a chart that emerge when the price of the financial instrument significantly changes with little or no trading in between.",
+    "f": "sources/web/wp_gap.txt",
+    "u": "https://en.wikipedia.org/wiki/Gap_(chart_pattern)"
+   }
+  ],
+  "text_issues": [
+   "שקף 'סטופ: יוצאים אם טעינו': הניסוח 'כך ההפסד נשאר קטן' מוגזם. לפי investor.gov, הוראת סטופ הופכת להוראת שוק כשהמחיר מגיע, ומחיר הביצוע יכול להיות שונה ממחיר הסטופ, במיוחד בשוק מהיר. גם תנודה קצרה יכולה להפעיל אותה.",
+   "הוראת סטופ לא מבטיחה הפסד מרבי. צריך להוסיף אזהרה על פערי מחיר (גאפ) ועל החלקה: המחיר יכול לקפוץ מעל או מתחת לסטופ בלי מסחר באמצע.",
+   "שאלת הבדיקה 'כדי להגביל הפסד' (תשובה נכונה) והמילון: 'מפסידים עד 5 ליחידה' בדוגמה מציגים את ההגבלה כוודאית. עדיף 'כדי לנסות להגביל הפסד' ו'בדרך כלל מפסידים בערך 5'.",
+   "'שמים אותו קצת מתחת לרצפה': כלל מניתוח טכני. אין לו מקור שנקרא, וצריך לציין שזו שיטה נפוצה ולא חוק.",
+   "'כדאי להיכנס כשיש סיבה שרואים בגרף, לא כשיש תחושה' ו'כדאי שהרווח האפשרי יהיה גדול מההפסד האפשרי': עצות ללא מקור, ויש בהן נימה של המלצה. לנסח כגישה נפוצה בהוראה, לא כהנחיה.",
+   "הגדרת 'יעד': לא מופיעה במקורות שנקראו כהוראה מובנית, והיא מושג של תוכנית, לא סוג הוראה. לא נמצא מקור ל'יעד' כמושג.",
+   "ההגדרה 'סטופ הוא מחיר שאם המחיר יורד אליו יוצאים' לא מבהירה שזו הוראה שנשלחת לברוקר ושהיא הופכת להוראת שוק. כדאי להוסיף משפט."
+  ]
+ },
+ {
+  "id": "l8",
+  "review": true,
+  "title": "סיכוי מול סיכון",
+  "src": [
+   {
+    "q": "When the specified price is reached, your stop order becomes a market order.",
+    "f": "sources/web/ig_stop_order.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/stop-order"
+   },
+   {
+    "q": "The disadvantage is that a stop price purchase or sale could be activated by a short-term fluctuation in a stock's price. In addition, the price at which your trade is executed may differ from the stop price, especially in a fast-moving market where stock prices can change rapidly.",
+    "f": "sources/web/ig_stop_order.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/stop-order"
+   },
+   {
+    "q": "Leveraged investing may increase a day trader’s profit if a stock’s price or the market moves in the right direction.",
+    "f": "sources/web/day-risks.txt",
+    "u": "https://www.investor.gov/additional-resources/spotlight/formerdirectorlorischock-directors-take/thinking-day-trading-know-risks"
+   },
+   {
+    "q": "Gaps are spaces on a chart that emerge when the price of the financial instrument significantly changes with little or no trading in between.",
+    "f": "sources/web/wp_gap.txt",
+    "u": "https://en.wikipedia.org/wiki/Gap_(chart_pattern)"
+   }
+  ],
+  "text_issues": [
+   "'סיכון הוא כמה אפשר להפסיד (מהכניסה עד הסטופ)': מניח שהסטופ יתבצע במחיר הסטופ. לפי investor.gov מחיר הביצוע יכול להיות שונה, לכן ההפסד בפועל יכול להיות גדול מהמחושב.",
+   "'סיכוי הוא כמה אפשר להרוויח (עד היעד)': היעד אינו בטוח, והמחיר יכול לא להגיע אליו. כדאי לנסח 'הרווח שמקווים לו'.",
+   "החישוב 1 ל-2 נכון חשבונית (5 מול 10), אבל לא ברור שהמקור לשיטת הנוסח 'יחס 1 ל-2' נקרא. אין מקור שנקרא למוסכמה של סדר המספרים.",
+   "'אפשר לטעות הרבה פעמים ועדיין להרוויח': נכון חשבונית רק אם התדירות והעלויות מאפשרות. החישוב מתעלם מעמלות, מרווח והחלקה שמקטינים רווח ומגדילים הפסד. כדאי לקשר לשיעור עמלות.",
+   "אין אזכור שיחס טוב לא אומר שהעסקה סבירה להצלחה: חסר מידע על ההסתברות. זה פער חינוכי, לא טענה שגויה.",
+   "אין בשיעור מקור לאף טענה. כל הטענות בו הן חשבון או עיקרון הוראה ללא ציטוט."
+  ]
+ },
+ {
+  "id": "l9",
+  "review": true,
+  "title": "לא מהמרים: שולטים בסיכון",
+  "src": [
+   {
+    "q": "When determining your asset allocation, consider diversification— the practice of spreading money among different investments to reduce risk.",
+    "f": "sources/web/risk-tol.txt",
+    "u": "https://www.investor.gov/introduction-investing/getting-started/assessing-your-risk-tolerance"
+   },
+   {
+    "q": "Diversification is a strategy that can be neatly summed up as \"Don't put all your eggs in one basket.\" The strategy involves spreading your money among various investments in the hope that if one loses money, the others will make up for those losses.",
+    "f": "sources/web/ig_diversification.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/diversification"
+   },
+   {
+    "q": "But a mutual fund or ETF won’t necessarily provide diversification, especially if it is narrowly focused (such as on one industry sector).",
+    "f": "sources/web/risk-tol.txt",
+    "u": "https://www.investor.gov/introduction-investing/getting-started/assessing-your-risk-tolerance"
+   },
+   {
+    "q": "Even when companies aren’t in danger of failing, their stock price may fluctuate up or down.",
+    "f": "sources/web/a_risk.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/what-risk"
+   },
+   {
+    "q": "Day trading is extremely risky and can result in substantial financial losses in a very short period of time.",
+    "f": "sources/web/day-trading.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/day-trading"
+   }
+  ],
+  "text_issues": [
+   "'כלל אצבע: מסכנים אחוז קטן מהתיק בעסקה': זה כלל הוראה נפוץ, לא חוק, ולא נמצא בו מקור ב-investor.gov. כשכותבים 1% או 2% (למשל בתוכנית), לנסח 'מורים רבים מלמדים' ולא 'צריך'.",
+   "'אחרי זה מחשבים כמה מניות לקנות כדי שההפסד לא יעבור 50 ש\"ח': מניח שהסטופ יתבצע במחיר שלו. בפועל פערי מחיר והחלקה יכולים להגדיל את ההפסד מעבר ל-50. צריך להוסיף אזהרה.",
+   "'פיזור בין כמה נכסים מקטין את הסיכון, אבל לא מבטל אותו': מתאים לגישת investor.gov, אבל 'מקטין' נתמך כתקווה ('in the hope') ולא כוודאות. כדאי לנסח 'אמור להקטין'.",
+   "'ההגדרה 'לא מהמרים' מנוגדת להימור: ההבחנה בין הימור לתוכנית היא ניסוח חינוכי ללא מקור. אין מקור ל'הימור זה להחליט לפי תחושה'.",
+   "'להחליט לא לקנות היא לפעמים הכי חכמה': דעה בלי מקור, ויש בה נימת עצה. לנסח כאפשרות, לא כהמלצה.",
+   "שאלת בדיקה על 1% מ-5,000 היא חשבון נכון (50), אבל משדרת ש-1% הוא הנורמה. להוסיף ניסוח 'לדוגמה'.",
+   "הניטרליות לסגנון מסחר: אין אזהרה עובדתית על מסחר יומי, וקיים מקור: investor.gov מתאר מסחר יומי כמסוכן מאוד, ואפשר להוסיפה בשיעור מתאים."
+  ]
+ }
+]
