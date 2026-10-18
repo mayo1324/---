@@ -3,7 +3,7 @@
 const FB_ERRORS = [];
 /* ready-made short sentences: one for every topic and every number of stars */
 const FB_LINES = {
-  'תוכן השיעורים': { 1: 'השיעורים לא ברורים לי, קשה לי להבין מהם.', 2: 'השיעורים לא הכי ברורים, יש בהם דברים שלא הבנתי.', 3: 'השיעורים בסדר, אבל אפשר לשפר אותם.', 4: 'השיעורים טובים וברורים, תודה!', 5: 'תודה על השיעורים, הם מעולים ומסבירים הכול!' },
+  'תוכן השיעורים': { 1: 'השיעורים לא ברורים לי, קשה לי להבין מהם.', 2: 'השיעורים לא הכי ברורים, יש בהם דברים שלא הבנתי.', 3: 'השיעורים בסדר, אבל אפשר לשפר אותם.', 4: 'השיעורים טובים וברורים, תודה!', 5: 'תודה על השיעורים, הם נהדרים!' },
   'תרגול': { 1: 'התרגול לא עובד לי, הוא מבלבל ולא ברור מה לעשות.', 2: 'התרגול מבלבל קצת, לא תמיד ברור מה מצפים ממני.', 3: 'התרגול בסדר, אבל יש מה לשפר.', 4: 'התרגול כיף ומלמד, אהבתי!', 5: 'התרגול מעולה! אהבתי במיוחד את הגרפים האמיתיים.' },
   'עיצוב': { 1: 'העיצוב לא מצא חן בעיניי, הוא עמוס ולא נעים לעין.', 2: 'העיצוב לא הכי נעים לי, יש בו דברים מבלבלים.', 3: 'העיצוב בסדר, אבל אפשר לשפר.', 4: 'העיצוב יפה ונעים לעין, אהבתי!', 5: 'העיצוב מעולה! נראה מקצועי ונעים להשתמש.' },
   'קושי': { 1: 'זה קשה מדי בשבילי, קשה לי לעקוב.', 2: 'זה קצת קשה לי, הייתי רוצה הסברים פשוטים יותר.', 3: 'רמת הקושי בסדר, לפעמים קשה ולפעמים קל.', 4: 'הקושי מתאים לי, לא קל מדי ולא קשה מדי.', 5: 'הקושי מושלם, מאתגר אבל ברור!' },
@@ -20,28 +20,24 @@ function usageSummary() {
   const ac = A(), pd = ac.practiceDone || {};
   return `שיעורים ${(ac.lessonsDone || []).length}/${LESSONS.length} · תרגול ${Object.values(pd).filter(v => v > 0).length}/${SCEN.length} · כוכבים ${ac.stars || 0} · מסך: ${cur.name}${cur.arg != null && typeof cur.arg !== 'object' ? ' ' + cur.arg : ''} · ${deviceShort()}${FB_ERRORS.length ? ' · שגיאות: ' + FB_ERRORS.slice(-2).join(' ; ') : ''}`;
 }
-function buildFeedbackText(f) {
-  const head = f.rate ? `${f.rate}/5 ${'★'.repeat(f.rate)}${f.topic ? ' | ' + f.topic : ''}` : (f.topic || 'כללי');
-  return `היי, משוב על האפליקציה:\n${head}\n"${fbLine(f) || (f.msg ? '' : '...')}"` + (f.msg ? `\n${f.msg}` : '') + (f.attach ? `\n— ${usageSummary()} (${APP_VERSION}, ${BUILD_DATE})` : '');
-}
+/* the message is only the ready-made sentence, plus the friend's own words if they wrote any */
+function buildFeedbackText(f) { return [fbLine(f), f.msg].filter(Boolean).join('\n'); }
 function openFeedback() {
-  const f = { rate: 0, topic: '', attach: true };
+  const f = { rate: 0, topic: '' };
   const TOPICS = ['עיצוב', 'תוכן השיעורים', 'תרגול', 'קושי', 'באג', 'משהו אחר'];
-  openSheet(`<h3>משוב על האפליקציה</h3><p class="muted" style="font-size:13.5px;line-height:1.55">שתי דקות של משוב עוזרות לנו מאוד. אין צורך בשם או באימייל.</p>
+  openSheet(`<h3>משוב על האפליקציה</h3><p class="muted" style="font-size:13.5px;line-height:1.55">בחרו כוכבים ונושא, ונכתוב בשבילכם משפט קצר. אפשר להוסיף גם משהו משלכם.</p>
     <div class="fb-rate" id="fbr">${[1, 2, 3, 4, 5].map(n => `<button data-r="${n}" aria-label="${n} מתוך 5">★</button>`).join('')}</div>
     <div class="chips fb-topics" id="fbt">${TOPICS.map(t => `<button class="chip" data-t="${t}">${t}</button>`).join('')}</div>
     <div class="fb-prev" id="fbp"></div>
     <textarea class="gi cq" id="fbm" rows="3" maxlength="600" placeholder="רוצים להוסיף משהו משלכם? (לא חובה)"></textarea>
-    <button class="check on" id="fba" type="button"><i></i><span>צרפו נתוני שימוש אנונימיים (כמה שיעורים ותרגולים עשיתי, סוג מכשיר). בלי שם ובלי אימייל.</span></button>
     <div class="fb-send"><button class="btn primary" id="fbs">שליחה</button><button class="btn ghost" id="fbc">העתקה</button></div>
     <div class="fb-extra" id="fbx"></div>
-    <p class="demo-note" style="margin-top:10px">הטקסט לא נשלח אוטומטית לשום מקום. "שליחה" פותחת שיחה בוואטסאפ עם המשוב כתוב, ואתם רק לוחצים על שלח. אפשר גם ללחוץ "העתקה" ולהדביק איפה שנוח.</p>`);
+    <p class="demo-note" style="margin-top:10px">הטקסט לא נשלח אוטומטית לשום מקום. "שליחה" פותחת שיחה בוואטסאפ עם המשפט כתוב, ואתם רק לוחצים על שלח. לא נשלח שום מידע אחר.</p>`);
   const cur_ = () => { f.msg = $('#fbm').value.trim(); return buildFeedbackText(f); };
   const prev = () => { const l = fbLine(f); $('#fbp').textContent = l ? '"' + l + '"' : 'בחרו כוכבים ונושא, ונכתוב בשבילכם משפט קצר.'; $('#fbp').classList.toggle('on', !!l); };
   $('#fbr').onclick = (e) => { const b = e.target.closest('button'); if (!b) return; f.rate = +b.dataset.r; $$('#fbr button').forEach(x => x.classList.toggle('on', +x.dataset.r <= f.rate)); prev(); };
   $('#fbt').onclick = (e) => { const b = e.target.closest('.chip'); if (!b) return; f.topic = b.dataset.t; $$('#fbt .chip').forEach(x => x.classList.toggle('on', x === b)); prev(); };
   prev();
-  $('#fba').onclick = () => { f.attach = !f.attach; $('#fba').classList.toggle('on', f.attach); };
   const copy = async (t) => { try { await navigator.clipboard.writeText(t); toast('הועתק, אפשר להדביק'); } catch (e) { const ta = $('#fbm'); ta.value = t; ta.select(); toast('סמנו והעתיקו את הטקסט'); } };
   $('#fbc').onclick = () => copy(cur_());
   $('#fbs').onclick = async () => {
