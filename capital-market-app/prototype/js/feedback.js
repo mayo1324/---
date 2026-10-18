@@ -20,7 +20,7 @@ function openFeedback() {
     <button class="check on" id="fba" type="button"><i></i><span>צרפו נתוני שימוש אנונימיים (כמה שיעורים ותרגולים עשיתי, סוג מכשיר). בלי שם ובלי אימייל.</span></button>
     <div class="fb-send"><button class="btn primary" id="fbs">שליחה</button><button class="btn ghost" id="fbc">העתקה</button></div>
     <div class="fb-extra" id="fbx"></div>
-    <p class="demo-note" style="margin-top:10px">הטקסט לא נשלח אוטומטית לשום מקום. "שליחה" פותחת את אפשרויות השיתוף של המכשיר, ו"העתקה" מעתיקה אותו להדבקה בוואטסאפ או בהודעה.</p>`);
+    <p class="demo-note" style="margin-top:10px">הטקסט לא נשלח אוטומטית לשום מקום. "שליחה" פותחת שיחה בוואטסאפ עם המשוב כתוב, ואתם רק לוחצים על שלח. אפשר גם ללחוץ "העתקה" ולהדביק איפה שנוח.</p>`);
   const cur_ = () => { f.msg = $('#fbm').value.trim(); return buildFeedbackText(f); };
   $('#fbr').onclick = (e) => { const b = e.target.closest('button'); if (!b) return; f.rate = +b.dataset.r; $$('#fbr button').forEach(x => x.classList.toggle('on', +x.dataset.r <= f.rate)); };
   $('#fbt').onclick = (e) => { const b = e.target.closest('.chip'); if (!b) return; f.topic = b.dataset.t; $$('#fbt .chip').forEach(x => x.classList.toggle('on', x === b)); };
@@ -29,6 +29,7 @@ function openFeedback() {
   $('#fbc').onclick = () => copy(cur_());
   $('#fbs').onclick = async () => {
     const t = cur_(); if (f.rate === 0 && !f.msg) return toast('דרגו או כתבו משהו קודם');
+    if (FEEDBACK_WHATSAPP) { window.open(`https://wa.me/${FEEDBACK_WHATSAPP}?text=${encodeURIComponent(t)}`, '_blank', 'noopener'); return; }
     if (navigator.share) { try { await navigator.share({ title: 'משוב על האפליקציה', text: t }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
     const x = $('#fbx'), enc = encodeURIComponent(t); let h = '';
     if (FEEDBACK_WHATSAPP) h += `<a class="btn ghost" target="_blank" rel="noopener" href="https://wa.me/${FEEDBACK_WHATSAPP}?text=${enc}">שליחה בוואטסאפ</a>`;
