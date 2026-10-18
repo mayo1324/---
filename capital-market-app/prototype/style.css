@@ -1,6 +1,6 @@
 :root{
   --bg:#07090c; --card:rgba(24,29,36,.72); --card2:#1d232b; --line:rgba(255,255,255,.08);
-  --text:#f5f7fa; --muted:#98a2b3; --dim:#5f6977;
+  --text:#f5f7fa; --muted:#98a2b3; --dim:#808a97;
   --green:#1ff0b0; --green-d:#0f8f68; --green-bg:rgba(31,240,176,.13);
   --red:#ff6048; --red-bg:rgba(255,96,72,.13);
   --gold:#ffc94d; --blue:#6aa8ff; --violet:#a78bfa;
@@ -1176,3 +1176,16 @@ details.more p{font-size:13.5px;line-height:1.65;color:var(--muted);margin:8px 0
 .botfab{bottom:calc(86px + env(safe-area-inset-bottom,0px) * .25)}
 .with-tabs .fbfab{bottom:calc(144px + env(safe-area-inset-bottom,0px) * .25)}
 .fbfab{bottom:calc(16px + env(safe-area-inset-bottom,0px) * .25)}
+
+/* the two round buttons stay out of the way: smaller, and they slide off while the page is scrolling */
+.botfab,.fbfab{width:42px;height:42px;left:10px;transition:opacity .25s ease,transform .25s ease}
+.fbfab svg,.botfab svg{width:21px;height:21px}
+.scrolling .botfab,.scrolling .fbfab{opacity:0;transform:translateX(-64px);pointer-events:none}
+
+/* bigger touch areas for small text links and chips, without changing how they look */
+.link,.lrn,.term,.cp-rep,.check,.lchip,.vbadge{position:relative}
+.link::after,.lrn::after,.term::after,.cp-rep::after,.lchip::after{content:"";position:absolute;inset:-12px -8px}
+.eye{min-width:44px;min-height:44px}
+
+/* short screens (phone held sideways): fill the height instead of showing a tall fixed frame */
+@media (max-height:600px) and (min-width:481px){.stage{padding:0;align-items:stretch}.phone{height:100dvh;border-radius:0;box-shadow:none}}

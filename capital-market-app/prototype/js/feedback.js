@@ -107,3 +107,6 @@ const _homeScreen = screens.home; screens.home = (a) => { _homeScreen(a); showWe
   b.innerHTML = '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M12 8.5v3M12 13.6v.01"/></svg><span>משוב</span>';
   b.onclick = openFeedback; $('#phone').appendChild(b);
 })();
+
+/* hide the round helper buttons while scrolling so they never cover content */
+(function () { let t = 0; const el = document.getElementById('screen'); if (!el) return; el.addEventListener('scroll', () => { document.body.classList.add('scrolling'); clearTimeout(t); t = setTimeout(() => document.body.classList.remove('scrolling'), 700); }, { passive: true }); })();

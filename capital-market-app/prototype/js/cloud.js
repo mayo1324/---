@@ -53,7 +53,7 @@ function mergeProgress(local, cloud) {
   Object.keys(cloud.skills || {}).forEach(k => { const a = local.skills[k], b = cloud.skills[k]; if (a && b && b.n > a.n) local.skills[k] = b; });
   local.watch = uni(local.watch, cloud.watch);
   if (cloud.portfolio && (cloud.updatedAt || 0) > (local.cloudAt || 0)) local.portfolio = cloud.portfolio;
-  ['name', 'goal'].forEach(k => { if (!local[k] && cloud[k]) local[k] = cloud[k]; });
+  ['name', 'goal'].forEach(k => { if (!local[k] && cloud[k]) local[k] = plain(cloud[k]); });
   local.seenIntro = local.seenIntro || cloud.seenIntro; local.seenWelcome = local.seenWelcome || cloud.seenWelcome;
   if (cloud.posts) local.posts = (local.posts && local.posts.length >= cloud.posts.length) ? local.posts : cloud.posts;
   return local;
@@ -74,7 +74,7 @@ async function onCloudUser(u) {
   let ac = d.accounts[key];
   if (!ac) { ac = newAcct(u.name || 'משתמש', 15, u.email || '', 'cloud:' + u.uid, 'להבין איך זה עובד'); ac.uid = u.uid; ac.provider = 'google'; ac.seenIntro = false; }
   mergeProgress(ac, cloud);
-  ac.name = ac.name && ac.name !== 'משתמש' ? ac.name : (u.name || 'משתמש'); ac.email = u.email || ac.email;
+  ac.name = plain(ac.name && ac.name !== 'משתמש' ? ac.name : (u.name || 'משתמש')) || 'משתמש'; ac.email = plain(u.email || ac.email);
   d.accounts[key] = ac; d.session = key; d.seenOnboarding = true; save(); cloudPush();
   if (warn) toast('לא הצלחנו לטעון התקדמות מהענן. ממשיכים מקומית.');
   return ac;

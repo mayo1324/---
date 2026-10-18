@@ -115,10 +115,10 @@ screens.practice = (idx = 0) => {
   function draw() {
     svg.innerHTML = ''; svg.setAttribute('viewBox', `0 0 ${W} ${vbh()}`);
     const step = (hi - lo) > 40 ? 10 : 5;
-    for (let v = Math.ceil(lo / step) * step; v < hi; v += step) { el('line', { x1: 0, x2: plotW, y1: y(v), y2: y(v), stroke: '#fff', 'stroke-opacity': .06, 'stroke-dasharray': '3 5' }); txt(W - 4, y(v) + 4, Math.round(v), '#5d6571', 11, 'end', 400); }
+    for (let v = Math.ceil(lo / step) * step; v < hi; v += step) { el('line', { x1: 0, x2: plotW, y1: y(v), y2: y(v), stroke: '#fff', 'stroke-opacity': .06, 'stroke-dasharray': '3 5' }); txt(W - 4, y(v) + 4, Math.round(v), '#808a97', 11, 'end', 400); }
     el('rect', { x: 6 + P.N * slot, y: 0, width: plotW - 6 - P.N * slot, height: H, fill: '#fff', opacity: .03 });
     el('line', { x1: 6 + P.N * slot, x2: 6 + P.N * slot, y1: 0, y2: H, stroke: '#3a414b', 'stroke-dasharray': '2 4' });
-    if (st.shown === P.N) txt(6 + P.N * slot + (plotW - 6 - P.N * slot) / 2, H / 2, 'העתיד', '#5d6571', 12, 'middle', 400);
+    if (st.shown === P.N) txt(6 + P.N * slot + (plotW - 6 - P.N * slot) / 2, H / 2, 'העתיד', '#808a97', 12, 'middle', 400);
     if (st.hint) { el('rect', { x: 0, y: y(P.swingLow + P.atr * .35), width: plotW, height: y(P.swingLow - P.atr * .6) - y(P.swingLow + P.atr * .35), fill: '#fbbf24', opacity: .13 }); txt(8, y(P.swingLow - P.atr * .6) + 13, 'הנקודות הנמוכות האחרונות', '#fbbf24', 11, 'start', 500); }
     const intro = st.intro; st.intro = false;
     for (let k = 0; k < st.shown; k++) { const c = P.candles[k], up = c.c >= c.o, col = up ? '#1ff0b0' : '#ff6048', x = cx(k), gk = el('g', intro && k < P.N && !reduceMotion ? { style: `animation:cin .4s ease-out ${(k * 11)}ms both` } : {}); el('line', { x1: x, x2: x, y1: y(c.h), y2: y(c.l), stroke: col, 'stroke-width': slot < 4 ? 1 : 1.4, 'stroke-linecap': 'round' }, gk); el('rect', { x: x - bw / 2, y: y(Math.max(c.o, c.c)), width: bw, height: Math.max(2, Math.abs(y(c.o) - y(c.c))), rx: 1.5, fill: col }, gk); }
@@ -127,7 +127,7 @@ screens.practice = (idx = 0) => {
       if (st.step === 'volume') el('rect', { x: 2, y: top - 2, width: plotW + 2, height: VH + 4, rx: 8, fill: '#fbbf24', opacity: .1, stroke: '#fbbf24', 'stroke-opacity': .5 });
       for (let k = 0; k < st.shown; k++) { const c = P.candles[k], hh = c.v / vmax * (VH - 6), up = c.c >= c.o; el('rect', { x: cx(k) - bw / 2, y: top + VH - hh, width: bw, height: hh, rx: 1.5, fill: up ? '#1ff0b0' : '#ff6048', opacity: .55 }); } }
     /* time axis, relative only (no dates) */
-    { const ty = vbh() - 3; txt(6, ty, 'לפני 60 ימים', '#5d6571', 10, 'start', 400); txt(cx(30), ty, 'לפני 30', '#5d6571', 10, 'middle', 400); txt(cx(P.N - 1), ty, 'עכשיו', '#5d6571', 10, 'middle', 400); }
+    { const ty = vbh() - 3; txt(6, ty, 'לפני 60 ימים', '#808a97', 10, 'start', 400); txt(cx(30), ty, 'לפני 30', '#808a97', 10, 'middle', 400); txt(cx(P.N - 1), ty, 'עכשיו', '#808a97', 10, 'middle', 400); }
     /* trend line drawn by the learner (extends into the future as a dashed projection) */
     { const ln = st.drag || st.line; if (ln && ln.i2 !== ln.i1) { const m = (ln.p2 - ln.p1) / (ln.i2 - ln.i1), last = P.N + P.M - 1, yAt = (i) => y(ln.p1 + m * (i - ln.i1));
       el('line', { x1: cx(ln.i1), y1: yAt(ln.i1), x2: cx(ln.i2), y2: yAt(ln.i2), stroke: '#fbbf24', 'stroke-width': 2.4, 'stroke-linecap': 'round' });
@@ -154,7 +154,7 @@ screens.practice = (idx = 0) => {
     const rect = svg.getBoundingClientRect(), py = (e.clientY - rect.top) * (vbh() / rect.height);
     let v = clamp(priceAt(py), lo + 1, hi - 1);
     const snap = (arr) => { let best = null, bd = 12; arr.forEach(p => { const d = Math.abs(y(p) - py); if (d < bd) { bd = d; best = p; } }); return best; };
-    if (st.step === 'support') { const s = snap(P.candles.slice(0, P.N).map(c => c.l)); if (s != null) v = s; }
+    if (st.step === 'support') { const s = snap(P.candles.slice(0, P.N).map(c => c.l).filter(l => l < P.last)); if (s != null) v = s; v = Math.min(v, P.last - Math.max(.1, P.atr * .25)); }
     if (st.step === 'target') { const s = snap(P.candles.slice(0, P.N).map(c => c.h)); if (s != null) v = s; }
     v = Math.round(v * 10) / 10; st[st.step] = v; draw(); readout();
   }
@@ -199,7 +199,7 @@ screens.practice = (idx = 0) => {
       h = hd('כמה כסף מוכנים להפסיד אם טעיתם?', 'מחליטים קודם כמה מפסידים, ורק אז כמה לקנות. בתיק של ' + money(START_CASH) + ' כדאי להפסיד סכום קטן.') + `<div class="riskgrid" id="rk">${RISK_OPTS.map(([v, t]) => `<button class="rk${st.risk === v ? ' on' : ''}${v >= 5 ? ' warn' : ''}" data-v="${v}"><b>${money(START_CASH * v / 100)}</b><span>${v}% · ${t}</span></button>`).join('')}</div><div class="ro" id="ro">${roSize()}</div>${lrn(['risk'])}`; next = 'target'; dis = !st.risk;
     } else if (st.step === 'target') {
       const risk = P.last - st.stop;
-      h = hd('עד איזה מחיר מחכים לרווח?', 'בחרו מחיר שבו יוצאים עם רווח. הרווח האפשרי צריך להיות <b>גדול מההפסד האפשרי</b>, לפחות פי 1.5. זה נקרא ' + term('target') + '.') + `<div class="chips" id="tg"><button class="chip" data-t="${P.last + risk * 2}">רווח כפול מההפסד</button><button class="chip" data-t="${P.last + risk * 3}">רווח פי 3</button><button class="chip" data-t="${P.recentHigh}">הגבוה האחרון בגרף</button></div><div class="ro" id="ro">${roTarget()}</div>${lrn(['target', 'rr', 'resistance'])}`; next = 'run'; label = 'הרץ את הגרף'; dis = st.target == null || st.target <= P.last;
+      h = hd('עד איזה מחיר מחכים לרווח?', 'בחרו מחיר שבו יוצאים עם רווח. הרווח האפשרי צריך להיות <b>גדול מההפסד האפשרי</b>, לפחות פי 1.5. זה נקרא ' + term('target') + '.') + `<div class="chips" id="tg"><button class="chip" data-t="${P.last + risk * 2}">רווח כפול מההפסד</button><button class="chip" data-t="${P.last + risk * 3}">רווח פי 3</button>${P.recentHigh > P.last ? `<button class="chip" data-t="${P.recentHigh}">הגבוה האחרון בגרף</button>` : ''}</div><div class="ro" id="ro">${roTarget()}</div>${lrn(['target', 'rr', 'resistance'])}`; next = 'run'; label = 'הרץ את הגרף'; dis = st.target == null || st.target <= P.last;
     }
     p.innerHTML = h + nav(label, dis);
     $$('.opt', p).forEach(b => b.onclick = () => { if (st.step === 'read') st.trend = b.dataset.k; else if (st.step === 'volume') st.volAns = b.dataset.k; else st.decision = b.dataset.k; draw(); panel(); });

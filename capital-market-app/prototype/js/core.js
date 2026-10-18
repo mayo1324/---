@@ -14,15 +14,32 @@ const hash = (s) => { let h = 5381; for (const ch of String(s)) h = ((h << 5) + 
 /* ===== storage: accounts kept in this browser only (demo, not real security) ===== */
 const KEY = 'cm_proto_v2';
 let DB = null;
+/* names and emails are shown inside HTML: drop characters that could become markup */
+const plain = (v) => String(v == null ? '' : v).replace(/[<>&"'`]/g, '').trim();
 function loadDB() {
   if (DB) return DB;
   try { DB = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { DB = null; }
   if (!DB || !DB.accounts) DB = { accounts: {}, session: null, seenOnboarding: false };
+  Object.keys(DB.accounts).forEach(k => {
+    let a = DB.accounts[k]; if (!a || typeof a !== 'object') { delete DB.accounts[k]; return; }
+    a.name = plain(a.name) || 'משתמש'; a.email = plain(a.email);
+    /* accounts saved by older versions or partial cloud data: fill whatever is missing so no screen breaks */
+    if (!Array.isArray(a.lessonsDone)) a.lessonsDone = [];
+    if (!a.practiceDone || typeof a.practiceDone !== 'object') a.practiceDone = {};
+    if (!Array.isArray(a.watch)) a.watch = ['ALFA', 'IDX100'];
+    if (!a.skills || typeof a.skills !== 'object') a.skills = {};
+    if (!a.days || typeof a.days !== 'object') a.days = {};
+    if (!Array.isArray(a.posts)) a.posts = [];
+    a.stars = +a.stars || 0; a.xp = +a.xp || 0; if (a.pass == null) a.pass = '';
+    const P = a.portfolio; if (!P || typeof P !== 'object') a.portfolio = { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] };
+    else { if (!isFinite(P.cash)) P.cash = START_CASH; if (!P.pos || typeof P.pos !== 'object') P.pos = {}; if (!Array.isArray(P.hist)) P.hist = []; if (!Array.isArray(P.eq) || !P.eq.length) P.eq = [START_CASH, START_CASH]; }
+  });
+  if (DB.session && !DB.accounts[DB.session]) DB.session = null;
   return DB;
 }
 function save() { try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) { } if (typeof cloudPush === 'function') cloudPush(); }
 const START_CASH = 5000;
-const newAcct = (name, age, email, pass, goal) => ({ name, age, email, pass: hash(pass), goal, stars: 0, xp: 0, lessonsDone: [], practiceDone: {}, watch: ['ALFA', 'IDX100'], portfolio: { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] }, demoUnlock: false });
+const newAcct = (name, age, email, pass, goal) => ({ name: plain(name), age, email: plain(email), pass: hash(pass), goal: plain(goal), stars: 0, xp: 0, lessonsDone: [], practiceDone: {}, watch: ['ALFA', 'IDX100'], portfolio: { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] }, demoUnlock: false });
 const GUEST = newAcct('אורח', 16, '', 'x', '');
 const A = () => { const d = loadDB(); return (d.session && d.accounts[d.session]) || GUEST; };
 const loggedIn = () => { const d = loadDB(); return !!(d.session && d.accounts[d.session]); };
@@ -83,6 +100,7 @@ function go(name, arg) {
     scr.className = 'screen' + (tabs ? ' has-tabs' : '');
     scr.innerHTML = '';
     screens[name](arg);
+    $$('button.icon-btn:not([aria-label])', scr).forEach(b => b.setAttribute('aria-label', name === 'lesson' && b.id === 'bk' ? 'סגירה' : 'חזרה'));
     scr.scrollTop = 0;
     const tb = $('#tabbar');
     tb.hidden = !tabs;

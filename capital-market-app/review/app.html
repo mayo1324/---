@@ -7,7 +7,7 @@
 :root{color-scheme:dark}
 :root{
   --bg:#07090c; --card:rgba(24,29,36,.72); --card2:#1d232b; --line:rgba(255,255,255,.08);
-  --text:#f5f7fa; --muted:#98a2b3; --dim:#5f6977;
+  --text:#f5f7fa; --muted:#98a2b3; --dim:#808a97;
   --green:#1ff0b0; --green-d:#0f8f68; --green-bg:rgba(31,240,176,.13);
   --red:#ff6048; --red-bg:rgba(255,96,72,.13);
   --gold:#ffc94d; --blue:#6aa8ff; --violet:#a78bfa;
@@ -1184,6 +1184,19 @@ details.more p{font-size:13.5px;line-height:1.65;color:var(--muted);margin:8px 0
 .with-tabs .fbfab{bottom:calc(144px + env(safe-area-inset-bottom,0px) * .25)}
 .fbfab{bottom:calc(16px + env(safe-area-inset-bottom,0px) * .25)}
 
+/* the two round buttons stay out of the way: smaller, and they slide off while the page is scrolling */
+.botfab,.fbfab{width:42px;height:42px;left:10px;transition:opacity .25s ease,transform .25s ease}
+.fbfab svg,.botfab svg{width:21px;height:21px}
+.scrolling .botfab,.scrolling .fbfab{opacity:0;transform:translateX(-64px);pointer-events:none}
+
+/* bigger touch areas for small text links and chips, without changing how they look */
+.link,.lrn,.term,.cp-rep,.check,.lchip,.vbadge{position:relative}
+.link::after,.lrn::after,.term::after,.cp-rep::after,.lchip::after{content:"";position:absolute;inset:-12px -8px}
+.eye{min-width:44px;min-height:44px}
+
+/* short screens (phone held sideways): fill the height instead of showing a tall fixed frame */
+@media (max-height:600px) and (min-width:481px){.stage{padding:0;align-items:stretch}.phone{height:100dvh;border-radius:0;box-shadow:none}}
+
 body{background:#0b0d10}
 @media (min-width:481px){body{background:#d9dde3}}
 </style>
@@ -1241,15 +1254,32 @@ const hash = (s) => { let h = 5381; for (const ch of String(s)) h = ((h << 5) + 
 /* ===== storage: accounts kept in this browser only (demo, not real security) ===== */
 const KEY = 'cm_proto_v2';
 let DB = null;
+/* names and emails are shown inside HTML: drop characters that could become markup */
+const plain = (v) => String(v == null ? '' : v).replace(/[<>&"'`]/g, '').trim();
 function loadDB() {
   if (DB) return DB;
   try { DB = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { DB = null; }
   if (!DB || !DB.accounts) DB = { accounts: {}, session: null, seenOnboarding: false };
+  Object.keys(DB.accounts).forEach(k => {
+    let a = DB.accounts[k]; if (!a || typeof a !== 'object') { delete DB.accounts[k]; return; }
+    a.name = plain(a.name) || 'משתמש'; a.email = plain(a.email);
+    /* accounts saved by older versions or partial cloud data: fill whatever is missing so no screen breaks */
+    if (!Array.isArray(a.lessonsDone)) a.lessonsDone = [];
+    if (!a.practiceDone || typeof a.practiceDone !== 'object') a.practiceDone = {};
+    if (!Array.isArray(a.watch)) a.watch = ['ALFA', 'IDX100'];
+    if (!a.skills || typeof a.skills !== 'object') a.skills = {};
+    if (!a.days || typeof a.days !== 'object') a.days = {};
+    if (!Array.isArray(a.posts)) a.posts = [];
+    a.stars = +a.stars || 0; a.xp = +a.xp || 0; if (a.pass == null) a.pass = '';
+    const P = a.portfolio; if (!P || typeof P !== 'object') a.portfolio = { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] };
+    else { if (!isFinite(P.cash)) P.cash = START_CASH; if (!P.pos || typeof P.pos !== 'object') P.pos = {}; if (!Array.isArray(P.hist)) P.hist = []; if (!Array.isArray(P.eq) || !P.eq.length) P.eq = [START_CASH, START_CASH]; }
+  });
+  if (DB.session && !DB.accounts[DB.session]) DB.session = null;
   return DB;
 }
 function save() { try { localStorage.setItem(KEY, JSON.stringify(DB)); } catch (e) { } if (typeof cloudPush === 'function') cloudPush(); }
 const START_CASH = 5000;
-const newAcct = (name, age, email, pass, goal) => ({ name, age, email, pass: hash(pass), goal, stars: 0, xp: 0, lessonsDone: [], practiceDone: {}, watch: ['ALFA', 'IDX100'], portfolio: { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] }, demoUnlock: false });
+const newAcct = (name, age, email, pass, goal) => ({ name: plain(name), age, email: plain(email), pass: hash(pass), goal: plain(goal), stars: 0, xp: 0, lessonsDone: [], practiceDone: {}, watch: ['ALFA', 'IDX100'], portfolio: { cash: START_CASH, pos: {}, hist: [], eq: [START_CASH, START_CASH] }, demoUnlock: false });
 const GUEST = newAcct('אורח', 16, '', 'x', '');
 const A = () => { const d = loadDB(); return (d.session && d.accounts[d.session]) || GUEST; };
 const loggedIn = () => { const d = loadDB(); return !!(d.session && d.accounts[d.session]); };
@@ -1310,6 +1340,7 @@ function go(name, arg) {
     scr.className = 'screen' + (tabs ? ' has-tabs' : '');
     scr.innerHTML = '';
     screens[name](arg);
+    $$('button.icon-btn:not([aria-label])', scr).forEach(b => b.setAttribute('aria-label', name === 'lesson' && b.id === 'bk' ? 'סגירה' : 'חזרה'));
     scr.scrollTop = 0;
     const tb = $('#tabbar');
     tb.hidden = !tabs;
@@ -4494,10 +4525,10 @@ screens.practice = (idx = 0) => {
   function draw() {
     svg.innerHTML = ''; svg.setAttribute('viewBox', `0 0 ${W} ${vbh()}`);
     const step = (hi - lo) > 40 ? 10 : 5;
-    for (let v = Math.ceil(lo / step) * step; v < hi; v += step) { el('line', { x1: 0, x2: plotW, y1: y(v), y2: y(v), stroke: '#fff', 'stroke-opacity': .06, 'stroke-dasharray': '3 5' }); txt(W - 4, y(v) + 4, Math.round(v), '#5d6571', 11, 'end', 400); }
+    for (let v = Math.ceil(lo / step) * step; v < hi; v += step) { el('line', { x1: 0, x2: plotW, y1: y(v), y2: y(v), stroke: '#fff', 'stroke-opacity': .06, 'stroke-dasharray': '3 5' }); txt(W - 4, y(v) + 4, Math.round(v), '#808a97', 11, 'end', 400); }
     el('rect', { x: 6 + P.N * slot, y: 0, width: plotW - 6 - P.N * slot, height: H, fill: '#fff', opacity: .03 });
     el('line', { x1: 6 + P.N * slot, x2: 6 + P.N * slot, y1: 0, y2: H, stroke: '#3a414b', 'stroke-dasharray': '2 4' });
-    if (st.shown === P.N) txt(6 + P.N * slot + (plotW - 6 - P.N * slot) / 2, H / 2, 'העתיד', '#5d6571', 12, 'middle', 400);
+    if (st.shown === P.N) txt(6 + P.N * slot + (plotW - 6 - P.N * slot) / 2, H / 2, 'העתיד', '#808a97', 12, 'middle', 400);
     if (st.hint) { el('rect', { x: 0, y: y(P.swingLow + P.atr * .35), width: plotW, height: y(P.swingLow - P.atr * .6) - y(P.swingLow + P.atr * .35), fill: '#fbbf24', opacity: .13 }); txt(8, y(P.swingLow - P.atr * .6) + 13, 'הנקודות הנמוכות האחרונות', '#fbbf24', 11, 'start', 500); }
     const intro = st.intro; st.intro = false;
     for (let k = 0; k < st.shown; k++) { const c = P.candles[k], up = c.c >= c.o, col = up ? '#1ff0b0' : '#ff6048', x = cx(k), gk = el('g', intro && k < P.N && !reduceMotion ? { style: `animation:cin .4s ease-out ${(k * 11)}ms both` } : {}); el('line', { x1: x, x2: x, y1: y(c.h), y2: y(c.l), stroke: col, 'stroke-width': slot < 4 ? 1 : 1.4, 'stroke-linecap': 'round' }, gk); el('rect', { x: x - bw / 2, y: y(Math.max(c.o, c.c)), width: bw, height: Math.max(2, Math.abs(y(c.o) - y(c.c))), rx: 1.5, fill: col }, gk); }
@@ -4506,7 +4537,7 @@ screens.practice = (idx = 0) => {
       if (st.step === 'volume') el('rect', { x: 2, y: top - 2, width: plotW + 2, height: VH + 4, rx: 8, fill: '#fbbf24', opacity: .1, stroke: '#fbbf24', 'stroke-opacity': .5 });
       for (let k = 0; k < st.shown; k++) { const c = P.candles[k], hh = c.v / vmax * (VH - 6), up = c.c >= c.o; el('rect', { x: cx(k) - bw / 2, y: top + VH - hh, width: bw, height: hh, rx: 1.5, fill: up ? '#1ff0b0' : '#ff6048', opacity: .55 }); } }
     /* time axis, relative only (no dates) */
-    { const ty = vbh() - 3; txt(6, ty, 'לפני 60 ימים', '#5d6571', 10, 'start', 400); txt(cx(30), ty, 'לפני 30', '#5d6571', 10, 'middle', 400); txt(cx(P.N - 1), ty, 'עכשיו', '#5d6571', 10, 'middle', 400); }
+    { const ty = vbh() - 3; txt(6, ty, 'לפני 60 ימים', '#808a97', 10, 'start', 400); txt(cx(30), ty, 'לפני 30', '#808a97', 10, 'middle', 400); txt(cx(P.N - 1), ty, 'עכשיו', '#808a97', 10, 'middle', 400); }
     /* trend line drawn by the learner (extends into the future as a dashed projection) */
     { const ln = st.drag || st.line; if (ln && ln.i2 !== ln.i1) { const m = (ln.p2 - ln.p1) / (ln.i2 - ln.i1), last = P.N + P.M - 1, yAt = (i) => y(ln.p1 + m * (i - ln.i1));
       el('line', { x1: cx(ln.i1), y1: yAt(ln.i1), x2: cx(ln.i2), y2: yAt(ln.i2), stroke: '#fbbf24', 'stroke-width': 2.4, 'stroke-linecap': 'round' });
@@ -4533,7 +4564,7 @@ screens.practice = (idx = 0) => {
     const rect = svg.getBoundingClientRect(), py = (e.clientY - rect.top) * (vbh() / rect.height);
     let v = clamp(priceAt(py), lo + 1, hi - 1);
     const snap = (arr) => { let best = null, bd = 12; arr.forEach(p => { const d = Math.abs(y(p) - py); if (d < bd) { bd = d; best = p; } }); return best; };
-    if (st.step === 'support') { const s = snap(P.candles.slice(0, P.N).map(c => c.l)); if (s != null) v = s; }
+    if (st.step === 'support') { const s = snap(P.candles.slice(0, P.N).map(c => c.l).filter(l => l < P.last)); if (s != null) v = s; v = Math.min(v, P.last - Math.max(.1, P.atr * .25)); }
     if (st.step === 'target') { const s = snap(P.candles.slice(0, P.N).map(c => c.h)); if (s != null) v = s; }
     v = Math.round(v * 10) / 10; st[st.step] = v; draw(); readout();
   }
@@ -4578,7 +4609,7 @@ screens.practice = (idx = 0) => {
       h = hd('כמה כסף מוכנים להפסיד אם טעיתם?', 'מחליטים קודם כמה מפסידים, ורק אז כמה לקנות. בתיק של ' + money(START_CASH) + ' כדאי להפסיד סכום קטן.') + `<div class="riskgrid" id="rk">${RISK_OPTS.map(([v, t]) => `<button class="rk${st.risk === v ? ' on' : ''}${v >= 5 ? ' warn' : ''}" data-v="${v}"><b>${money(START_CASH * v / 100)}</b><span>${v}% · ${t}</span></button>`).join('')}</div><div class="ro" id="ro">${roSize()}</div>${lrn(['risk'])}`; next = 'target'; dis = !st.risk;
     } else if (st.step === 'target') {
       const risk = P.last - st.stop;
-      h = hd('עד איזה מחיר מחכים לרווח?', 'בחרו מחיר שבו יוצאים עם רווח. הרווח האפשרי צריך להיות <b>גדול מההפסד האפשרי</b>, לפחות פי 1.5. זה נקרא ' + term('target') + '.') + `<div class="chips" id="tg"><button class="chip" data-t="${P.last + risk * 2}">רווח כפול מההפסד</button><button class="chip" data-t="${P.last + risk * 3}">רווח פי 3</button><button class="chip" data-t="${P.recentHigh}">הגבוה האחרון בגרף</button></div><div class="ro" id="ro">${roTarget()}</div>${lrn(['target', 'rr', 'resistance'])}`; next = 'run'; label = 'הרץ את הגרף'; dis = st.target == null || st.target <= P.last;
+      h = hd('עד איזה מחיר מחכים לרווח?', 'בחרו מחיר שבו יוצאים עם רווח. הרווח האפשרי צריך להיות <b>גדול מההפסד האפשרי</b>, לפחות פי 1.5. זה נקרא ' + term('target') + '.') + `<div class="chips" id="tg"><button class="chip" data-t="${P.last + risk * 2}">רווח כפול מההפסד</button><button class="chip" data-t="${P.last + risk * 3}">רווח פי 3</button>${P.recentHigh > P.last ? `<button class="chip" data-t="${P.recentHigh}">הגבוה האחרון בגרף</button>` : ''}</div><div class="ro" id="ro">${roTarget()}</div>${lrn(['target', 'rr', 'resistance'])}`; next = 'run'; label = 'הרץ את הגרף'; dis = st.target == null || st.target <= P.last;
     }
     p.innerHTML = h + nav(label, dis);
     $$('.opt', p).forEach(b => b.onclick = () => { if (st.step === 'read') st.trend = b.dataset.k; else if (st.step === 'volume') st.volAns = b.dataset.k; else st.decision = b.dataset.k; draw(); panel(); });
@@ -4895,6 +4926,9 @@ const _homeScreen = screens.home; screens.home = (a) => { _homeScreen(a); showWe
   b.onclick = openFeedback; $('#phone').appendChild(b);
 })();
 
+/* hide the round helper buttons while scrolling so they never cover content */
+(function () { let t = 0; const el = document.getElementById('screen'); if (!el) return; el.addEventListener('scroll', () => { document.body.classList.add('scrolling'); clearTimeout(t); t = setTimeout(() => document.body.classList.remove('scrolling'), 700); }, { passive: true }); })();
+
 'use strict';
 /* ===== cloud sign-in and sync (Firebase) =====
    Google works when FIREBASE_CONFIG is set. Apple stays a demo until it is enabled in CLOUD_PROVIDERS.
@@ -4950,7 +4984,7 @@ function mergeProgress(local, cloud) {
   Object.keys(cloud.skills || {}).forEach(k => { const a = local.skills[k], b = cloud.skills[k]; if (a && b && b.n > a.n) local.skills[k] = b; });
   local.watch = uni(local.watch, cloud.watch);
   if (cloud.portfolio && (cloud.updatedAt || 0) > (local.cloudAt || 0)) local.portfolio = cloud.portfolio;
-  ['name', 'goal'].forEach(k => { if (!local[k] && cloud[k]) local[k] = cloud[k]; });
+  ['name', 'goal'].forEach(k => { if (!local[k] && cloud[k]) local[k] = plain(cloud[k]); });
   local.seenIntro = local.seenIntro || cloud.seenIntro; local.seenWelcome = local.seenWelcome || cloud.seenWelcome;
   if (cloud.posts) local.posts = (local.posts && local.posts.length >= cloud.posts.length) ? local.posts : cloud.posts;
   return local;
@@ -4971,7 +5005,7 @@ async function onCloudUser(u) {
   let ac = d.accounts[key];
   if (!ac) { ac = newAcct(u.name || 'משתמש', 15, u.email || '', 'cloud:' + u.uid, 'להבין איך זה עובד'); ac.uid = u.uid; ac.provider = 'google'; ac.seenIntro = false; }
   mergeProgress(ac, cloud);
-  ac.name = ac.name && ac.name !== 'משתמש' ? ac.name : (u.name || 'משתמש'); ac.email = u.email || ac.email;
+  ac.name = plain(ac.name && ac.name !== 'משתמש' ? ac.name : (u.name || 'משתמש')) || 'משתמש'; ac.email = plain(u.email || ac.email);
   d.accounts[key] = ac; d.session = key; d.seenOnboarding = true; save(); cloudPush();
   if (warn) toast('לא הצלחנו לטעון התקדמות מהענן. ממשיכים מקומית.');
   return ac;
