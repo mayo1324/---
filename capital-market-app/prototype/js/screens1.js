@@ -384,6 +384,7 @@ screens.profile = () => {
     <button class="btn ghost" id="ua" style="margin-bottom:10px">${s.openAll ? 'נעל את הנושאים שוב' : 'פתח את כל הנושאים (הדגמה)'}</button>` : ''}
     <button class="btn ghost" id="lo" style="margin-bottom:10px">התנתקות</button>
     <button class="btn ghost" id="rs">מחיקת החשבון הזה</button>
+    <p class="muted" style="text-align:center;font-size:12px;margin-top:14px">${APP_VERSION} · ${BUILD_DATE}</p>
     <p class="disc">התוכן באפליקציה לימודי בלבד. אין בו המלצות השקעה או הבטחות לרווח, ואין כסף אמיתי. ${WARN_DAY}</p>
     <p class="disc">נתונים לבדיקה פרטית בלבד, לא להפצה.</p></div>`;
   $('#fbk').onclick = openFeedback; $('#abt').onclick = openAbout; if ($('#inst')) $('#inst').onclick = openInstall; $('#trm').onclick = () => go('terms', 'view');

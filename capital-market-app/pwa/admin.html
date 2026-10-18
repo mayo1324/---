@@ -10,7 +10,7 @@ table{width:100%;border-collapse:collapse;background:var(--card);border-radius:1
 .bar{height:10px;border-radius:6px;background:var(--li);min-width:2px}.num{font-variant-numeric:tabular-nums;direction:ltr;text-align:left}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.err{color:var(--rd)}select{min-height:44px;border-radius:10px;background:var(--card);color:var(--tx);border:1px solid #2a323c;padding:0 12px;font:inherit}
 </style></head><body><div class="w">
-<h1>לוח מדדים</h1><p class="mu">משפך, שימור ושימוש. הנתונים אנונימיים. רק הבעלים יכול לקרוא אותם, אחרי התחברות עם Google.</p>
+<h1>לוח מדדים</h1><p class="mu" id="ver"></p><p class="mu">משפך, שימור ושימוש. הנתונים אנונימיים. רק הבעלים יכול לקרוא אותם, אחרי התחברות עם Google.</p>
 <div class="row"><button id="in">התחברות עם Google</button><select id="days"><option value="7">7 ימים אחרונים</option><option value="14" selected>14 ימים אחרונים</option><option value="30">30 ימים אחרונים</option></select><button id="go" style="display:none">רענון</button><span id="msg" class="mu"></span></div>
 <div id="out"></div></div>
 <script type="module">
@@ -27,9 +27,11 @@ const addDays=(k,n)=>{const [y,m,d]=k.split('-').map(Number);return dk(new Date(
 const pct=(a,b)=>b?Math.round(a/b*100)+'%':'-';
 async function run(){
   msg('טוען...'); const since=Date.now()-(+$('#days').value)*864e5;
-  let ev=[]; try{ const q=F.query(F.collection(db,'events'),F.where('t','>=',since),F.orderBy('t','asc'),F.limit(20000)); const snap=await F.getDocs(q); ev=snap.docs.map(d=>d.data()); }
-  catch(e){ msg(''); $('#out').innerHTML='<p class="err">אין הרשאה או שגיאה: '+(e.code||e.message)+'. ודאו שהחלפתם את OWNER_EMAIL בכללים ושהתחברתם עם אותו אימייל. ייתכן שצריך אינדקס (הקישור יופיע בקונסול).</p>'; return; }
-  msg(ev.length+' אירועים'+(ev.length>=20000?' (הגעתם למגבלה, חלק נחתך)':''));
+  let ev=[], lastErr=null;
+  const attempts=[()=>F.query(F.collection(db,'events'),F.where('t','>=',since),F.orderBy('t','asc'),F.limit(5000)),()=>F.query(F.collection(db,'events'),F.where('t','>=',since)),()=>F.query(F.collection(db,'events'),F.limit(5000))];
+  for(const mk of attempts){ try{ const snap=await F.getDocs(mk()); ev=snap.docs.map(d=>d.data()).filter(x=>typeof x.t==='number'?x.t>=since:+x.t>=since); lastErr=null; break; }catch(e){ lastErr=e; if(e.code==='permission-denied') break; } }
+  if(lastErr){ msg(''); $('#out').innerHTML='<p class="err">אין הרשאה או שגיאה: '+(lastErr.code||'')+' '+(lastErr.message||'')+'<br>אם כתוב permission-denied: ודאו שהחלפתם את OWNER_EMAIL בכללים ושהתחברתם עם אותו אימייל.</p>'; return; }
+  msg(ev.length+' אירועים'+(ev.length>=5000?' (הגעתם למגבלה של 5000, חלק נחתך)':''));
   const byV=new Map(); ev.forEach(x=>{ if(!byV.has(x.vid)) byV.set(x.vid,[]); byV.get(x.vid).push(x); });
   const has=(arr,e,s)=>arr.some(x=>x.e===e&&(!s||x.s===s));
   const V=[...byV.values()];

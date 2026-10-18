@@ -8,7 +8,7 @@ pwa = "--pwa" in sys.argv
 html = (root / "index.html").read_text(encoding="utf-8")
 css = (root / "style.css").read_text(encoding="utf-8")
 order = ["config", "core", "sound", "data", "lessons-extra", "art", "art2", "cases-data", "cases", "screens1", "screens2", "practice", "bot", "feedback", "track", "cloud", "terms", "boot"]
-js = "\n".join((root / "js" / f"{n}.js").read_text(encoding="utf-8") for n in order).replace("__BUILD_DATE__", __import__("datetime").date.today().strftime("%d.%m.%Y"))
+js = "\n".join((root / "js" / f"{n}.js").read_text(encoding="utf-8") for n in order).replace("__BUILD_DATE__", __import__("datetime").datetime.now().strftime("%d.%m.%Y %H:%M"))
 body = re.search(r'<div class="stage">.*?</div>\s*</div>\s*(?=<script)', html, re.S).group(0)
 page = f'''<title>לומדים שוק הון</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
