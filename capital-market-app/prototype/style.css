@@ -1156,3 +1156,5 @@ details.more p{font-size:13.5px;line-height:1.65;color:var(--muted);margin:8px 0
 
 .soc svg{flex:none}.soc{background:#fff;color:#1f1f1f;border:0;font-weight:700}.soc:active{background:#eee}.soc .dtag{color:#555;background:#eee}
 .auth .glass{padding-top:22px}.auth .gf{margin-bottom:12px}
+
+.lgi{background:radial-gradient(circle at 50% 28%,#1c2711,#06080b)!important;box-shadow:0 0 0 1px rgba(200,255,61,.35) inset,0 0 34px rgba(200,255,61,.35),0 18px 30px rgba(0,0,0,.5)!important}.lgi svg{width:52px;height:52px}
