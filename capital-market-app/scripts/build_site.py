@@ -11,7 +11,7 @@ for n in ("icon-192.png", "icon-512.png"): shutil.copy(R / "pwa" / n, out / "app
 shutil.copy(R / "pwa" / "icon-512.png", out / "icon-512.png")
 (out / "app/manifest.json").write_text(json.dumps({
   "name": "לומדים שוק הון", "short_name": "שוק הון", "description": "ללמוד, לתרגל ולהבין את שוק ההון. תוכן לימודי, בלי כסף אמיתי.",
-  "lang": "he", "dir": "rtl", "start_url": "./", "scope": "./", "display": "standalone", "orientation": "portrait",
+  "id": "./", "lang": "he", "dir": "rtl", "start_url": "./", "scope": "./", "display": "standalone", "orientation": "portrait",
   "background_color": "#07090c", "theme_color": "#07090c",
   "icons": [{"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"}, {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}]
 }, ensure_ascii=False, indent=1), encoding="utf-8")

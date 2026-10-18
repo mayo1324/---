@@ -361,6 +361,7 @@ screens.profile = () => {
     <button class="premcard" data-go="paywall"><div class="pmi">${s.premium ? '✓' : '★'}</div><div><b>${s.premium ? 'המנוי פעיל' : 'שדרוג לפרימיום'}</b><span>${s.premium ? 'אפשר לראות מה כלול' : 'ללמוד בלי גבולות. עד 50% הנחה'}${s.premium ? '' : '<span class="dtag">הדגמה</span>'}</span></div>${ic.back}</button>
     <div class="sec"><h3>הגדרות</h3></div>
     <button class="btn ghost" id="fbk" style="margin-bottom:10px">משוב על האפליקציה</button>
+    ${isInstalled() ? '' : '<button class="btn ghost" id="inst" style="margin-bottom:10px">הוספה למסך הבית</button>'}
     <button class="btn ghost" id="abt" style="margin-bottom:10px">על גרסת הניסוי</button>
     <button class="btn ghost" id="trm" style="margin-bottom:10px">תנאי שימוש ופרטיות</button>
     <button class="btn ghost" id="snd" style="margin-bottom:10px">${SFX.on ? 'סאונד ורטט: פעיל' : 'סאונד ורטט: כבוי'}</button>
@@ -371,7 +372,7 @@ screens.profile = () => {
     <button class="btn ghost" id="rs">מחיקת החשבון הזה</button>
     <p class="disc">התוכן באפליקציה לימודי בלבד. אין בו המלצות השקעה או הבטחות לרווח, ואין כסף אמיתי. ${WARN_DAY}</p>
     <p class="disc">נתונים לבדיקה פרטית בלבד, לא להפצה.</p></div>`;
-  $('#fbk').onclick = openFeedback; $('#abt').onclick = openAbout; $('#trm').onclick = () => go('terms', 'view');
+  $('#fbk').onclick = openFeedback; $('#abt').onclick = openAbout; if ($('#inst')) $('#inst').onclick = openInstall; $('#trm').onclick = () => go('terms', 'view');
   $('#snd').onclick = () => { SFX.set(!SFX.on); $('#snd').textContent = SFX.on ? 'סאונד ורטט: פעיל' : 'סאונד ורטט: כבוי'; };
   $('#ua').onclick = () => { A().openAll = !A().openAll; save(); toast(A().openAll ? 'כל הנושאים פתוחים להדגמה' : 'הנושאים ננעלו שוב'); go('profile'); };
   $('#un').onclick = () => { if (!portfolioOpen()) { A().demoUnlock = true; save(); toast('התיק נפתח להדגמה'); go('profile'); } };

@@ -59,6 +59,18 @@ function openFeedback() {
     if (!h) copy(t);
   };
 }
+/* add-to-home-screen help: opens from inside the app so the shortcut starts the app itself */
+let installEv = null; try { addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEv = e; }); } catch (e) { }
+const isInstalled = () => { try { return matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; } catch (e) { return false; } };
+function openInstall() {
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  openSheet(`<h3>הוספה למסך הבית</h3><span class="muted" style="font-size:13px">האפליקציה תיפתח ישר, כמו כל אפליקציה, ותעבוד גם בלי אינטרנט.</span>
+    <div class="about">${installEv ? '<button class="btn primary" id="instgo" style="margin:6px 0 12px">התקנה עכשיו</button>' : ''}
+    ${ios ? '<p><b>באייפון (Safari):</b> לחצו על כפתור השיתוף, הריבוע עם החץ כלפי מעלה, בחרו <b>הוספה למסך הבית</b> ואז "הוספה". חשוב לעשות את זה כשאתם כבר בתוך האפליקציה, ולא בדף הראשי.</p><p><b>שימו לב:</b> באייפון האפליקציה שבמסך הבית שומרת נתונים בנפרד מ-Safari. כדי שההתקדמות תישמר, התחברו עם Google.</p>'
+      : '<p><b>באנדרואיד (Chrome):</b> לחצו על שלוש הנקודות בפינה ובחרו <b>התקנת אפליקציה</b> (או "הוספה למסך הבית"). עשו את זה כשאתם בתוך האפליקציה.</p><p>ההתקדמות שלכם נשמרת, כי זה אותו אתר. אם התחברתם עם Google, היא נשמרת גם בענן.</p>'}
+    </div>`);
+  if (installEv) $('#instgo').onclick = async () => { installEv.prompt(); installEv = null; closeSheet(); };
+}
 function openAbout() {
   openSheet(`<h3>על גרסת הניסוי</h3><span class="muted" style="font-size:13px">${APP_VERSION} · ${BUILD_DATE}</span>
     <div class="about"><p><b>מה זה?</b> אב טיפוס של אפליקציה שמלמדת שוק הון לבני 15 ומעלה, עם שיעורים ותרגול על גרפים. אין כאן ייעוץ השקעות, המלצות או כסף אמיתי.</p>
