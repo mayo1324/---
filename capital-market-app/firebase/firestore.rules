@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Each signed-in user can read and write only their own progress document.
+    // Only the fields the app uses are allowed, so nobody can add fields such as a premium flag.
+    match /users/{uid} {
+      allow read, delete: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly([
+          'name', 'goal', 'stars', 'xp', 'lessonsDone', 'practiceDone', 'skills',
+          'days', 'watch', 'portfolio', 'posts', 'seenIntro', 'seenWelcome', 'updatedAt'
+        ]);
+    }
+
+    // Everything else is closed.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
