@@ -4952,15 +4952,22 @@ const CLOUD_ERR = {
   'auth/operation-not-allowed': 'ההתחברות הזאת עדיין לא הופעלה.',
   'auth/account-exists-with-different-credential': 'כבר יש חשבון עם האימייל הזה בדרך אחרת.'
 };
+let signTok = 0;
 async function cloudSignIn(kind, btn) {
-  const lab = btn && btn.innerHTML; if (btn) { btn.disabled = true; btn.innerHTML = '<span class="spin"></span> מתחברים...'; }
+  const my = ++signTok, lab = btn && btn.dataset.lab != null ? btn.dataset.lab : (btn && btn.innerHTML);
+  if (btn) { btn.dataset.lab = lab; btn.innerHTML = '<span class="spin"></span> מתחברים... (לחצו לביטול)'; btn.onclick = () => { signTok++; reset(); }; }
+  const reset = () => { window.removeEventListener('focus', onFocus); if (btn) { btn.innerHTML = lab; btn.onclick = () => cloudSignIn(kind, btn); } };
+  /* if the popup was closed or lost and nothing came back, free the button */
+  const onFocus = () => setTimeout(() => { if (my === signTok) { signTok++; reset(); } }, 2500);
+  setTimeout(() => window.addEventListener('focus', onFocus), 1500);
   try {
-    const u = await FBA.signIn(kind); if (!u) return; /* redirect in progress */
-    const ac = await onCloudUser(u); SFX.play('pop'); toast('שלום, ' + ac.name); go('home');
+    const u = await FBA.signIn(kind); if (my !== signTok) return; if (!u) return; /* redirect in progress */
+    const ac = await onCloudUser(u); reset(); SFX.play('pop'); toast('שלום, ' + ac.name); go('home');
   } catch (e) {
+    if (my !== signTok) return; reset();
     if (e && (e.code === 'auth/popup-closed-by-user' || e.code === 'auth/cancelled-popup-request')) { /* closed on purpose */ }
     else { toast(CLOUD_ERR[e && e.code] || 'ההתחברות נכשלה. אפשר לנסות שוב או להמשיך בלי Google.'); try { FB_ERRORS.push('auth ' + ((e && e.code) || e)); } catch (_) { } }
-  } finally { if (btn) { btn.disabled = false; btn.innerHTML = lab; } }
+  }
 }
 /* at start: finish a redirect login, and pull the latest progress for a signed-in user */
 async function cloudResume() {
