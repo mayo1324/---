@@ -1238,6 +1238,9 @@ const FIREBASE_CONFIG = {
   appId: '1:228220691798:web:5c3d6002085c61ab0222f7'
 };
 
+/* demo shortcuts in the profile (unlock all topics, open portfolio): hidden for everyone; open the app once with ?demo=1 to show them on this device */
+let DEMO_TOOLS = false; try { if (/[?&]demo=1/.test(location.search)) localStorage.setItem('cm_demo', '1'); DEMO_TOOLS = localStorage.getItem('cm_demo') === '1'; } catch (e) { }
+
 'use strict';
 /* ===== helpers ===== */
 const $ = (s, r = document) => r.querySelector(s);
@@ -4005,17 +4008,17 @@ screens.profile = () => {
     <button class="btn ghost" id="abt" style="margin-bottom:10px">על גרסת הניסוי</button>
     <button class="btn ghost" id="trm" style="margin-bottom:10px">תנאי שימוש ופרטיות</button>
     <button class="btn ghost" id="snd" style="margin-bottom:10px">${SFX.on ? 'סאונד ורטט: פעיל' : 'סאונד ורטט: כבוי'}</button>
-    <div class="sec"><h3>כלי הדגמה</h3></div>
+    ${DEMO_TOOLS ? `<div class="sec"><h3>כלי הדגמה</h3></div>
     <button class="btn ghost" id="un" style="margin-bottom:10px">${portfolioOpen() ? 'התיק פתוח' : 'פתח את התיק בלי לסיים שיעורים'}</button>
-    <button class="btn ghost" id="ua" style="margin-bottom:10px">${s.openAll ? 'נעל את הנושאים שוב' : 'פתח את כל הנושאים (הדגמה)'}</button>
+    <button class="btn ghost" id="ua" style="margin-bottom:10px">${s.openAll ? 'נעל את הנושאים שוב' : 'פתח את כל הנושאים (הדגמה)'}</button>` : ''}
     <button class="btn ghost" id="lo" style="margin-bottom:10px">התנתקות</button>
     <button class="btn ghost" id="rs">מחיקת החשבון הזה</button>
     <p class="disc">התוכן באפליקציה לימודי בלבד. אין בו המלצות השקעה או הבטחות לרווח, ואין כסף אמיתי. ${WARN_DAY}</p>
     <p class="disc">נתונים לבדיקה פרטית בלבד, לא להפצה.</p></div>`;
   $('#fbk').onclick = openFeedback; $('#abt').onclick = openAbout; if ($('#inst')) $('#inst').onclick = openInstall; $('#trm').onclick = () => go('terms', 'view');
   $('#snd').onclick = () => { SFX.set(!SFX.on); $('#snd').textContent = SFX.on ? 'סאונד ורטט: פעיל' : 'סאונד ורטט: כבוי'; };
-  $('#ua').onclick = () => { A().openAll = !A().openAll; save(); toast(A().openAll ? 'כל הנושאים פתוחים להדגמה' : 'הנושאים ננעלו שוב'); go('profile'); };
-  $('#un').onclick = () => { if (!portfolioOpen()) { A().demoUnlock = true; save(); toast('התיק נפתח להדגמה'); go('profile'); } };
+  if ($('#ua')) $('#ua').onclick = () => { A().openAll = !A().openAll; save(); toast(A().openAll ? 'כל הנושאים פתוחים להדגמה' : 'הנושאים ננעלו שוב'); go('profile'); };
+  if ($('#un')) $('#un').onclick = () => { if (!portfolioOpen()) { A().demoUnlock = true; save(); toast('התיק נפתח להדגמה'); go('profile'); } };
   $('#lo').onclick = async () => { await cloudSignOut(); loadDB().session = null; save(); go('login'); };
   let sure = false;
   $('#rs').onclick = async () => { if (!sure) { sure = true; $('#rs').textContent = 'בטוח? לחצו שוב כדי למחוק'; return; } try { await cloudDeleteAccount(); } catch (e) { toast('לא הצלחנו למחוק את החשבון בענן. נסו שוב מאוחר יותר.'); return; } delete loadDB().accounts[loadDB().session]; loadDB().session = null; save(); go('onboarding', 0); };

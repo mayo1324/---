@@ -17,3 +17,6 @@ const FIREBASE_CONFIG = {
   messagingSenderId: '228220691798',
   appId: '1:228220691798:web:5c3d6002085c61ab0222f7'
 };
+
+/* demo shortcuts in the profile (unlock all topics, open portfolio): hidden for everyone; open the app once with ?demo=1 to show them on this device */
+let DEMO_TOOLS = false; try { if (/[?&]demo=1/.test(location.search)) localStorage.setItem('cm_demo', '1'); DEMO_TOOLS = localStorage.getItem('cm_demo') === '1'; } catch (e) { }
