@@ -1,0 +1,454 @@
+[
+ {
+  "id": "l24",
+  "title": "פחד והתלהבות: למה אנשים טועים",
+  "min": 6,
+  "module": "E",
+  "color": "#f5a623",
+  "slides": [
+   {
+    "t": "פחד להחמיץ",
+    "b": "יש רגש שנקרא FOMO, פחד להחמיץ משהו. הוא יכול לדחוף אנשים לקנות רק כי כולם קונים.",
+    "v": "fomo_crowd",
+    "w": "לפי רשות ניירות הערך האמריקאית, לא כדאי לקבל החלטת השקעה רק בגלל פחד להחמיץ."
+   },
+   {
+    "t": "ללכת אחרי ההמון",
+    "b": "קל להצטרף למה שהקהל עושה. הרשות האמריקאית מזהירה שהליכה אחרי הקהל עלולה להסתיים בהפסדים משמעותיים.",
+    "v": "market"
+   },
+   {
+    "t": "בהלה בירידות",
+    "b": "כשהשוק זז חזק, התגובה הראשונה של הרבה אנשים היא בהלה. גם הרצון למכור מיד נפוץ בזמן ירידה.",
+    "v": "trendDown"
+   },
+   {
+    "t": "מי מגיב יותר מדי",
+    "b": "מסמך של הרשות מתאר סוחרי רעש: אנשים שמגיבים בצורה מוגזמת לחדשות טובות ורעות ובדרך כלל עם תזמון גרוע.",
+    "v": "coaster"
+   },
+   {
+    "t": "התנהגות עדר",
+    "b": "בכלכלה התנהגותית קוראים לזה התנהגות עדר: משקיעים נוטים לקנות או למכור לפי כיוון השוק. זה מקור משני.",
+    "v": "market",
+    "w": "מקור משני: ויקיפדיה."
+   }
+  ],
+  "qs": [
+   {
+    "q": "מה זה FOMO?",
+    "o": [
+     "פחד להחמיץ משהו",
+     "שיטה לחישוב רווח",
+     "סוג של מניה"
+    ],
+    "a": 0,
+    "why": "FOMO הוא פחד להחמיץ הזדמנות."
+   },
+   {
+    "q": "מה הרשות האמריקאית אומרת על הליכה אחרי הקהל?",
+    "o": [
+     "זה תמיד מרוויח",
+     "זה עלול להוביל להפסדים משמעותיים",
+     "זה לא משפיע על כלום"
+    ],
+    "a": 1,
+    "why": "במקור כתוב שהליכה אחרי הקהל עלולה להוביל להפסדים משמעותיים."
+   },
+   {
+    "q": "מהי התנהגות עדר?",
+    "o": [
+     "משקיעים קונים ומוכרים לפי כיוון השוק",
+     "משקיעים בוחרים מניות לפי חישוב קפדני",
+     "משקיעים לא עושים כלום"
+    ],
+    "a": 0,
+    "why": "זו ההגדרה במקור המשני."
+   }
+  ],
+  "src": [
+   {
+    "q": "Buying and selling investments along with trends and influencers because of a fear of missing out isn’t the best way to plan for a strong financial future.",
+    "f": "sources/web/fomo.txt",
+    "u": "https://www.investor.gov/additional-resources/spotlight/formerdirectorlorischock-directors-take/say-no-go-fomo"
+   },
+   {
+    "q": "It can be tempting to jump on the bandwagon and follow whatever the crowd seems to be doing. Sometimes, however, following the crowd may lead to significant investment losses.",
+    "f": "sources/web/hot-stock.txt",
+    "u": "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-alerts/investor-alert-thinking-about-investing-latest-hot-stock-understand-significant-risks-short-term"
+   },
+   {
+    "q": "Your first reaction during a time of market volatility may be to panic.",
+    "f": "sources/web/dont-panic.txt",
+    "u": "https://www.investor.gov/additional-resources/spotlight/formerdirectorlorischock-directors-take/dont-panic-plan-it"
+   },
+   {
+    "q": "Some initial reactions during a downturn may be to sell and get out of the market.",
+    "f": "sources/web/dont-panic.txt",
+    "u": "https://www.investor.gov/additional-resources/spotlight/formerdirectorlorischock-directors-take/dont-panic-plan-it"
+   },
+   {
+    "q": "Noise traders generally have poor timing, follow trends, and overreact to good and bad news in the market.",
+    "f": "sources/web/hot-stock.txt",
+    "u": "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-alerts/investor-alert-thinking-about-investing-latest-hot-stock-understand-significant-risks-short-term"
+   },
+   {
+    "q": "herd behavior, the fact that investors tend to buy or sell in the direction of the market trend.",
+    "f": "sources/web/wiki-bubble.txt",
+    "u": "https://en.wikipedia.org/wiki/Economic_bubble"
+   }
+  ],
+  "scene_requests": [
+   {
+    "key": "fomo_crowd",
+    "desc": "קהל קטן רץ לכיוון אחד, ודמות אחת עומדת בצד ומסתכלת"
+   }
+  ],
+  "status": "draft for expert review",
+  "to_verify": [
+   "קובץ wiki-bubble הוא מקור משני (ויקיפדיה), יש לאמת את ההגדרה של התנהגות עדר מול מקור ראשוני.",
+   "מאמרי Director's Take באתר investor.gov סומנו בעצמם כמאמרים שאינם מתעדכנים ועשויים להיות מיושנים.",
+   "לא נמצא מקור על כך ש-FOMO או בהלה גורמים להפסד בממוצע, ולכן לא נכתב."
+  ]
+ },
+ {
+  "id": "l25",
+  "title": "מסחר יומי מול טווח ארוך",
+  "min": 6,
+  "module": "E",
+  "color": "#4a90e2",
+  "slides": [
+   {
+    "t": "מסחר יומי",
+    "b": "מסחר יומי הוא קנייה ומכירה של ניירות ערך באותו יום, כדי לנסות להרוויח משינויי מחיר קצרים.",
+    "v": "styles"
+   },
+   {
+    "t": "מה צריך כדי לסחור יום",
+    "b": "לפי הרשות האמריקאית, זה דורש מעקב צמוד אחרי השוק והחדשות, והוא מהיר ומלא ספקולציה.",
+    "v": "candle1"
+   },
+   {
+    "t": "טווח ארוך",
+    "b": "בטווח ארוך מקבלים החלטות לפי יעדים וטווח זמן, ולא מגיבים לכל תנודה קצרה.",
+    "v": "trendUp"
+   },
+   {
+    "t": "אזהרה עובדתית",
+    "b": "מסחר יומי קשה יותר. הרשות האמריקאית כותבת שהסיכונים בו גבוהים משמעותית משיטות לטווח ארוך.",
+    "v": "riskline",
+    "w": "חשוב: זו אזהרה עובדתית של הרשות, ולא המלצה לשום סגנון."
+   },
+   {
+    "t": "מינוף מגדיל הפסדים",
+    "b": "סוחרים יומיים משתמשים לפעמים בכסף מושאל. זה יכול להגדיל רווח, אבל גם הפסד, ואפשר להפסיד יותר ממה שהושקע.",
+    "v": "coaster"
+   }
+  ],
+  "qs": [
+   {
+    "q": "מהו מסחר יומי?",
+    "o": [
+     "החזקת מניה שנים",
+     "קנייה ומכירה באותו יום",
+     "קניית אג\"ח בלבד"
+    ],
+    "a": 1,
+    "why": "מסחר יומי הוא פעולה בתוך אותו יום."
+   },
+   {
+    "q": "מה הרשות האמריקאית אומרת על הסיכון במסחר יומי?",
+    "o": [
+     "נמוך יותר משיטות ארוכות",
+     "זהה לשיטות ארוכות",
+     "גבוה משמעותית משיטות לטווח ארוך"
+    ],
+    "a": 2,
+    "why": "במקור כתוב שהסיכונים גבוהים משמעותית."
+   },
+   {
+    "q": "מה עלול לקרות במינוף?",
+    "o": [
+     "אי אפשר להפסיד",
+     "אפשר להפסיד יותר ממה שהושקע",
+     "הרווח מובטח"
+    ],
+    "a": 1,
+    "why": "המקור אומר שמינוף עלול לגרום להפסד גדול מהסכום ההתחלתי."
+   }
+  ],
+  "src": [
+   {
+    "q": "Day trading is extremely risky and can result in substantial financial losses in a very short period of time.",
+    "f": "sources/web/day-trading.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/day-trading"
+   },
+   {
+    "q": "Day trading involves actively buying and selling securities within the same day, trying to capitalize on short-term changes in price.",
+    "f": "sources/web/day-risks.txt",
+    "u": "https://www.investor.gov/additional-resources/spotlight/formerdirectorlorischock-directors-take/thinking-day-trading-know-risks"
+   },
+   {
+    "q": "This sophisticated level of investing requires meticulous market and news monitoring, is fast moving, and involves a large amount of speculation.",
+    "f": "sources/web/day-risks.txt",
+    "u": "https://www.investor.gov/additional-resources/spotlight/formerdirectorlorischock-directors-take/thinking-day-trading-know-risks"
+   },
+   {
+    "q": "The risks involved, however, are substantially higher than longer-term investing strategies.",
+    "f": "sources/web/day-risks.txt",
+    "u": "https://www.investor.gov/additional-resources/spotlight/formerdirectorlorischock-directors-take/thinking-day-trading-know-risks"
+   },
+   {
+    "q": "Leveraged investing can even result in losing more money, and in some cases substantially more, than initially invested.",
+    "f": "sources/web/day-risks.txt",
+    "u": "https://www.investor.gov/additional-resources/spotlight/formerdirectorlorischock-directors-take/thinking-day-trading-know-risks"
+   },
+   {
+    "q": "most investment plans are created for the long-term, allowing investors to not become distracted by short-term market fluctuations.",
+    "f": "sources/web/dont-panic.txt",
+    "u": "https://www.investor.gov/additional-resources/spotlight/formerdirectorlorischock-directors-take/dont-panic-plan-it"
+   }
+  ],
+  "scene_requests": [],
+  "status": "draft for expert review",
+  "to_verify": [
+   "לא נמצא באתר investor.gov משפט עם מספר או אחוז על כמה סוחרים יומיים מפסידים. לכן לא נכתב שרוב הסוחרים היומיים מפסידים. הניסוח שנתמך הוא: הסיכונים גבוהים משמעותית.",
+   "אם רוצים את הטענה 'רוב הסוחרים היומיים מפסידים' צריך מקור נוסף (למשל מסמך של SEC או FINRA), שלא נמצא באתרים המותרים.",
+   "מאמר 'Thinking of Day Trading?' סומן כמיושן ואינו מתעדכן."
+  ]
+ },
+ {
+  "id": "l26",
+  "title": "בועות ומשברים: מה אפשר ללמוד",
+  "min": 6,
+  "module": "E",
+  "color": "#e94f4f",
+  "slides": [
+   {
+    "t": "מה זו בועה",
+    "b": "לפי הרשות האמריקאית, בועה היא עלייה מהירה במחיר השקעה, עם התלהבות קולקטיבית גדולה לגבי העתיד שלה.",
+    "v": "trendUp"
+   },
+   {
+    "t": "מה זו התרסקות",
+    "b": "התרסקות שוק היא ירידה פתאומית ודרמטית במחירי המניות בחלק גדול מהשוק. זה מקור משני.",
+    "v": "trendDown",
+    "w": "מקור משני: ויקיפדיה."
+   },
+   {
+    "t": "בועת הדוט קום",
+    "b": "לפי ויקיפדיה, בועת האינטרנט הגיעה לשיא ב-10 במרץ 2000, ומדד נאסד\"ק ירד 78 אחוז עד אוקטובר 2002.",
+    "v": "index",
+    "w": "מקור משני: ויקיפדיה."
+   },
+   {
+    "t": "משבר 2008",
+    "b": "לפי ויקיפדיה, פשיטת הרגל של ליהמן ברדרס ב-15 בספטמבר 2008 נחשבת לשיא המשבר הפיננסי.",
+    "v": "coaster",
+    "w": "מקור משני: ויקיפדיה."
+   },
+   {
+    "t": "מנגנון עצירה",
+    "b": "בארה\"ב יש מנגנוני עצירת מסחר: אם יש ירידה חדה מאוד, המסחר יכול להיעצר זמנית.",
+    "v": "market"
+   }
+  ],
+  "qs": [
+   {
+    "q": "איך הרשות האמריקאית מתארת בועה?",
+    "o": [
+     "עלייה מהירה במחיר עם התלהבות גדולה",
+     "ירידה איטית וקבועה",
+     "מחיר שלא משתנה"
+    ],
+    "a": 0,
+    "why": "זו ההגדרה במקור."
+   },
+   {
+    "q": "מה זו התרסקות שוק לפי המקור המשני?",
+    "o": [
+     "עלייה קטנה במחיר",
+     "ירידה פתאומית ודרמטית במחירי מניות",
+     "שינוי בשעות המסחר"
+    ],
+    "a": 1,
+    "why": "המקור מגדיר התרסקות כירידה פתאומית ודרמטית."
+   },
+   {
+    "q": "מה עושה מנגנון עצירת מסחר?",
+    "o": [
+     "מעלה מחירים",
+     "מוחק הפסדים",
+     "עוצר את המסחר זמנית או סוגר את השוק"
+    ],
+    "a": 2,
+    "why": "לפי המקור הוא יכול לעצור זמנית מסחר או לסגור את השוק."
+   }
+  ],
+  "src": [
+   {
+    "q": "Financial “manias” or a “bubble” is the rapid rise in the price of an investment, reflecting a high degree of collective enthusiasm or exuberance regarding the investment’s prospects.",
+    "f": "sources/web/hot-stock.txt",
+    "u": "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-alerts/investor-alert-thinking-about-investing-latest-hot-stock-understand-significant-risks-short-term"
+   },
+   {
+    "q": "A stock market crash is a sudden dramatic decline of stock prices across a major cross-section of a stock market, resulting in a significant loss of paper wealth.",
+    "f": "sources/web/wiki-crash.txt",
+    "u": "https://en.wikipedia.org/wiki/Stock_market_crash"
+   },
+   {
+    "q": "was a stock market bubble that developed during the late 1990s and peaked on March 10, 2000.",
+    "f": "sources/web/wiki-dotcom.txt",
+    "u": "https://en.wikipedia.org/wiki/Dot-com_bubble"
+   },
+   {
+    "q": "only to fall 78% from its peak by October 2002, giving up all its gains during the bubble.",
+    "f": "sources/web/wiki-dotcom.txt",
+    "u": "https://en.wikipedia.org/wiki/Dot-com_bubble"
+   },
+   {
+    "q": "on September 15, 2008, is often considered the climax of the 2008 financial crisis.",
+    "f": "sources/web/wiki-2008.txt",
+    "u": "https://en.wikipedia.org/wiki/Financial_crisis_of_2007%E2%80%932008"
+   },
+   {
+    "q": "These procedures, known as market-wide circuit breakers, may halt trading temporarily or, under extreme circumstances, close the markets before the normal close of the trading session.",
+    "f": "sources/web/circuit.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/stock-market-circuit-breakers"
+   }
+  ],
+  "scene_requests": [],
+  "status": "draft for expert review",
+  "to_verify": [
+   "ויקיפדיה היא מקור משני: יש לאמת את התאריכים ואת 78 האחוז מול מקור ראשוני.",
+   "לא נכתבו סיבות או אשמים לאף אירוע.",
+   "מנגנון העצירה המתואר הוא של שווקים בארה\"ב, ולא של בורסת תל אביב. לא נבדק מנגנון דומה בישראל."
+  ]
+ },
+ {
+  "id": "l27",
+  "title": "תוכנית אישית: איך בונים הרגלים",
+  "min": 6,
+  "module": "E",
+  "color": "#2ec4a6",
+  "slides": [
+   {
+    "t": "קודם תוכנית",
+    "b": "הרשות האמריקאית אומרת שכדי להגיע ליעד צריך תוכנית פיננסית. שואלים מה רוצים וכותבים את היעדים החשובים ראשונים.",
+    "v": "scale"
+   },
+   {
+    "t": "כמה זמן יש",
+    "b": "לכל יעד מחליטים כמה שנים יש להשיג אותו. אפשרות שמתאימה ליעד קרוב לא תמיד מתאימה ליעד רחוק.",
+    "v": "riskline"
+   },
+   {
+    "t": "סיבולת סיכון",
+    "b": "סיבולת סיכון היא היכולת והנכונות להפסיד חלק מההשקעה בתמורה לרווח אפשרי גדול יותר. היא אישית.",
+    "v": "coaster"
+   },
+   {
+    "t": "כללים לפני רגשות",
+    "b": "תוכנית שנכתבה מראש עוזרת לא להגיב בחיפזון בזמן תנודות. כך כתוב במאמר של הרשות.",
+    "v": "scale",
+    "w": "טיפ הוראה נפוץ (common teaching advice): לרשום את הכללים על דף ולקרוא אותם לפני כל החלטה."
+   },
+   {
+    "t": "בדיקה ולמידה",
+    "b": "אפשר לחזור לתוכנית ולבדוק אם צריך שינוי. מומלץ ללמוד מטעויות, וזה טיפ הוראה נפוץ.",
+    "v": "candle2",
+    "w": "טיפ הוראה נפוץ (common teaching advice): לרשום כל החלטה ואת הסיבה לה, ולבדוק אחר כך מה למדת. זה לא נאמר במקורות."
+   }
+  ],
+  "qs": [
+   {
+    "q": "מה נכתב במקור על הצעד הראשון להגיע ליעד?",
+    "o": [
+     "לקנות מניה",
+     "להיות בעל תוכנית פיננסית",
+     "לחכות לעליית שוק"
+    ],
+    "a": 1,
+    "why": "המקור אומר שצריך תוכנית פיננסית."
+   },
+   {
+    "q": "מהי סיבולת סיכון לפי המקור?",
+    "o": [
+     "היכולת והנכונות להפסיד חלק מההשקעה בתמורה לרווח אפשרי",
+     "ההבטחה לרווח",
+     "מספר המניות בתיק"
+    ],
+    "a": 0,
+    "why": "זו ההגדרה במקור."
+   },
+   {
+    "q": "למה שימושית תוכנית כתובה בזמן תנודות?",
+    "o": [
+     "כדי לנבא את השוק",
+     "כדי לא לקבל החלטות חפוזות",
+     "כדי להפסיק להשקיע"
+    ],
+    "a": 1,
+    "why": "המקור אומר שעם תוכנית נכונה אין צורך בהחלטות חפוזות בזמן תנודתיות."
+   }
+  ],
+  "src": [
+   {
+    "q": "To end up where you want to be, you need a financial plan.",
+    "f": "sources/web/define-goals.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/save-and-invest/define-your-goals"
+   },
+   {
+    "q": "Decide how many years you have to meet each specific goal",
+    "f": "sources/web/define-goals.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/save-and-invest/define-your-goals"
+   },
+   {
+    "q": "Risk tolerance is your ability and willingness to lose some or all of your original investment in exchange for potentially greater returns.",
+    "f": "sources/web/risk-tol.txt",
+    "u": "https://www.investor.gov/introduction-investing/getting-started/assessing-your-risk-tolerance"
+   },
+   {
+    "q": "If you have the right investment plan, you shouldn’t need to make rash decisions during times of market volatility.",
+    "f": "sources/web/dont-panic.txt",
+    "u": "https://www.investor.gov/additional-resources/spotlight/formerdirectorlorischock-directors-take/dont-panic-plan-it"
+   },
+   {
+    "q": "If you have already created a personal investment plan, you may want to consider reviewing it to see if any adjustments need to be made to meet your financial goals.",
+    "f": "sources/web/dont-panic.txt",
+    "u": "https://www.investor.gov/additional-resources/spotlight/formerdirectorlorischock-directors-take/dont-panic-plan-it"
+   },
+   {
+    "q": "Do not let short-term emotions about investments disrupt your long-term financial objectives.",
+    "f": "sources/web/hot-stock.txt",
+    "u": "https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-alerts/investor-alert-thinking-about-investing-latest-hot-stock-understand-significant-risks-short-term"
+   }
+  ],
+  "scene_requests": [],
+  "status": "draft for expert review",
+  "to_verify": [
+   "הרעיון של לרשום כל החלטה ולהסיק מסקנות מטעויות הוא טיפ הוראה נפוץ ולא נמצא במקורות. מסומן כך בשקף.",
+   "המאמרים של Director's Take סומנו כמיושנים ואינם מתעדכנים."
+  ]
+ },
+ {
+  "id": "day_warning",
+  "review": true,
+  "title": "day trading warning source",
+  "src": [
+   {
+    "q": "The risks involved, however, are substantially higher than longer-term investing strategies.",
+    "f": "sources/web/day-risks.txt",
+    "u": "https://www.investor.gov/additional-resources/spotlight/formerdirectorlorischock-directors-take/thinking-day-trading-know-risks"
+   },
+   {
+    "q": "Day trading is extremely risky and can result in substantial financial losses in a very short period of time.",
+    "f": "sources/web/day-trading.txt",
+    "u": "https://www.investor.gov/introduction-investing/investing-basics/glossary/day-trading"
+   }
+  ],
+  "text_issues": [
+   "המשפט 'ובדרך כלל מפסידים בו יותר' נתמך רק חלקית: המקורות אומרים שהסיכון גבוה משמעותית ושעלולים להיות הפסדים משמעותיים, ולא שרוב הסוחרים מפסידים. לא נמצא מספר או אחוז. מומלץ לנסח: 'מסחר יומי קשה יותר ומסוכן יותר, והרשות האמריקאית מזהירה מהפסדים משמעותיים'."
+  ]
+ }
+]
