@@ -15,3 +15,15 @@ Object.assign(SCENES, {
     + dash(30, 150, 214, 150, GR, 1.2) + person(150, 76, GD, .9, 0) + `<circle cx="188" cy="42" r="14" fill="${GD}" fill-opacity=".16" stroke="${GD}"/>${T(188, 47, '?', GD, 16, 800)}`
     + pill(100, 176, 'כולם קונים', GR) + pill(240, 176, 'מחכים רגע?', GD)
 });
+
+Object.assign(SCENES, {
+  leverage: () => bgS() + T(160, 24, 'דוגמה: כסף שלך והלוואה מהברוקר', MUT, 11, 600)
+    + `<rect x="40" y="44" width="80" height="26" rx="8" fill="${GR}"/><rect x="124" y="44" width="160" height="26" rx="8" fill="${GD}" fill-opacity=".85"/>` + T(80, 62, 'הכסף שלך', '#06201a', 11, 800) + T(204, 62, 'הלוואה', '#2a1d00', 11, 800)
+    + `<path d="M162 82v22" stroke="#fff" stroke-opacity=".5" stroke-width="2" stroke-dasharray="3 4"/>` + T(162, 98, 'המחיר יורד', '#fff', 11, 700)
+    + `<rect x="40" y="116" width="80" height="26" rx="8" fill="${RD}" fill-opacity=".25" stroke="${RD}" stroke-dasharray="4 3"/><rect x="124" y="116" width="160" height="26" rx="8" fill="${GD}" fill-opacity=".85"/><rect x="40" y="116" width="80" height="26" rx="8" fill="${RD}" fill-opacity=".25"/>`
+    + `<path d="M62 124l36 10M98 124l-36 10" stroke="${RD}" stroke-width="3" stroke-linecap="round"/>` + pill(160, 170, 'הפסד קטן בשוק יכול למחוק את כל הכסף שלך', RD),
+  fees: () => bgS() + T(160, 26, 'דוגמה: מה אוכל מהתשואה', MUT, 11, 600)
+    + `<rect x="30" y="44" width="260" height="34" rx="10" fill="${GR}" fill-opacity=".9"/>` + T(160, 66, 'התשואה', '#06201a', 13, 800)
+    + `<rect x="30" y="96" width="150" height="34" rx="10" fill="${GR}" fill-opacity=".9"/><rect x="184" y="96" width="34" height="34" rx="8" fill="${RD}"/><rect x="222" y="96" width="34" height="34" rx="8" fill="${GD}"/><rect x="260" y="96" width="30" height="34" rx="8" fill="${VI}"/>`
+    + `<path d="M160 82v10" stroke="#fff" stroke-opacity=".5" stroke-width="2"/>` + pill(201, 150, 'עמלה', RD) + pill(239, 172, 'מרווח', GD) + pill(275, 150, 'דמי ניהול', VI) + T(100, 118, 'מה שנשאר', '#06201a', 12, 800)
+});
