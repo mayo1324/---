@@ -1026,6 +1026,27 @@ details.skills summary{display:flex;justify-content:space-between;align-items:ce
 .ccard{animation:rise .45s cubic-bezier(.2,.8,.2,1) both}.ccard:nth-child(2){animation-delay:.05s}.ccard:nth-child(3){animation-delay:.1s}.ccard:nth-child(4){animation-delay:.15s}
 @media (prefers-reduced-motion:reduce){.opt.ok,#nx:not(:disabled),.flash,.price.tkup,.price.tkdn,.replay .chart,.hero2::after,.hello .pill svg,.mod .pn,.ccard,.checks .ck{animation:none!important}.flash{display:none}}
 
+/* ===== home and market brought into the same calm style ===== */
+.logo.n{background:rgba(200,255,61,.1);color:var(--lime);border:1px solid rgba(200,255,61,.28);box-shadow:none;font-size:13px}
+.rows .row{padding:12px 0;gap:12px;border-bottom-color:rgba(255,255,255,.06)}
+.rows .row .nm{flex:1;min-width:0}.rows .row .nm b{display:block;font-size:15px;font-weight:600;line-height:1.3}.rows .row .nm span{font-size:12.5px;color:var(--muted)}
+.rows .row .px{text-align:end;flex:none}.rows .row .px b{display:block;font-size:15px}
+.rows .row .px span{display:inline-block;margin-top:3px;font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.07)}
+.rows .row .px span.up{background:var(--green-bg)}.rows .row .px span.down{background:var(--red-bg)}
+.rows .row .spark{opacity:.8}
+.hm-rows{padding:4px 16px;margin-top:6px}
+.mk-hero{padding:16px 18px}.mk-hero .mk-big{font-size:36px}
+.mseg{margin-top:14px}.mseg button{padding:11px 4px}
+.search{height:48px;margin-top:12px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+.tile{display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:16px;text-align:start;border-radius:22px;background:linear-gradient(160deg,rgba(26,26,26,.78),rgba(14,14,14,.84));border:1px solid var(--line);animation:rise .5s cubic-bezier(.2,.8,.2,1) both;transition:transform .16s,border-color .25s}
+.tile:active{transform:scale(.97)}
+.tile>i{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:rgba(200,255,61,.12);color:var(--lime)}
+.tile>i svg{width:22px;height:22px}
+.tile b{display:block;font-size:16px}.tile span{display:block;font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.4}
+.tile.lk>i{background:rgba(255,255,255,.07);color:var(--muted)}.tile.lk{opacity:.75}
+.tile:last-child{grid-column:1/-1;flex-direction:row;align-items:center}.tile:last-child>div{flex:1}
+
 body{background:#0b0d10}
 @media (min-width:481px){body{background:#d9dde3}}
 </style>
@@ -3415,8 +3436,8 @@ function sparkPath(vals, w, h) {
   for (let i = 1; i < pts.length; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], cx = (x0 + x1) / 2; d += ` C${cx.toFixed(1)},${y0.toFixed(1)} ${cx.toFixed(1)},${y1.toFixed(1)} ${x1.toFixed(1)},${y1.toFixed(1)}`; }
   return { d, area: d + ` L${w},${h} L0,${h} Z` };
 }
-function spark(vals, up, w = 74, h = 34) {
-  const c = up ? '#1ff0b0' : '#ff6048', id = 'sp' + (sid++), p = sparkPath(vals, w, h);
+function spark(vals, up, w = 74, h = 34, col) {
+  const c = col || (up ? '#1ff0b0' : '#ff6048'), id = 'sp' + (sid++), p = sparkPath(vals, w, h);
   return `<svg class="spark" viewBox="0 0 ${w} ${h}" style="width:${w}px;height:${h}px"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c}" stop-opacity=".4"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></linearGradient></defs><path d="${p.area}" fill="url(#${id})"/><path d="${p.d}" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" style="filter:drop-shadow(0 0 3px ${c})"/></svg>`;
 }
 function artCandles(seed) {
@@ -3430,8 +3451,8 @@ function artCandles(seed) {
 }
 const chgCls = (v) => v >= 0 ? 'up' : 'down';
 function assetRow(a) {
-  return `<button class="row" data-go="asset" data-arg="${a.id}"><div class="logo" style="background:${a.col}">${a.s.slice(0, 2)}</div>
-    <div class="nm"><b>${a.n}</b><span>${a.sec}</span></div>${spark(a.spark, a.chg >= 0)}
+  return `<button class="row" data-go="asset" data-arg="${a.id}"><div class="logo n">${a.s.slice(0, 2)}</div>
+    <div class="nm"><b>${a.n}</b><span>${a.sec}</span></div>${spark(a.spark, a.chg >= 0, 62, 30, '#c8ff3d')}
     <div class="px"><b data-px="${a.id}">${fmt(a.price)}</b><span class="${chgCls(a.chg)}" data-chg="${a.id}">${sgn(a.chg)}%</span></div></button>`;
 }
 /* live-update prices inside rows / tickers */
@@ -3612,11 +3633,12 @@ screens.home = () => {
   const movers = [...ASSETS].sort((x, y) => Math.abs(y.chg) - Math.abs(x.chg)).slice(0, 5);
   const heroVis = nextL ? (nextL.slides[0] || {}).v : 'riskline';
   const R = 52, C = 2 * Math.PI * R, ring = (frac, big) => `<svg viewBox="0 0 120 120" class="rg"><circle cx="60" cy="60" r="${R}" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="9"/><circle cx="60" cy="60" r="${R}" fill="none" stroke="#c8ff3d" stroke-width="9" stroke-linecap="round" stroke-dasharray="${C.toFixed(0)}" stroke-dashoffset="${(C * (1 - frac)).toFixed(0)}" transform="rotate(-90 60 60)" style="filter:drop-shadow(0 0 5px #c8ff3d)"/><text x="60" y="68" text-anchor="middle" fill="#fff" font-size="26" font-weight="800" font-family="Heebo,sans-serif">${big}</text></svg>`;
-  const xcards = [
-    ['practiceHome', 'תרגול', 'קוראים גרף ומחליטים', 'support', ''],
-    ['market', 'שוק', 'חוקרים מדדים ומניות', 'riskline', ''],
-    ['glossary', 'מילון', 'כל מילה בשפה פשוטה', 'candle1', ''],
-    ['portfolio', 'התיק שלי', open ? money(eq) : 'נפתח בסיום השיעורים', 'size', open ? '' : 'lk']
+  const tiles = [
+    ['practiceHome', 'תרגול', 'קוראים גרף ומחליטים', ic.chart, ''],
+    ['market', 'שוק', 'חוקרים מדדים ומניות', ic.trend, ''],
+    ['glossary', 'מילון', 'כל מילה בשפה פשוטה', ic.book, ''],
+    ['portfolio', 'התיק שלי', open ? money(eq) : 'נפתח בסיום השיעורים', ic.wallet, open ? '' : 'lk'],
+    ['community', 'קהילה', 'שואלים ועונים על הלמידה', ic.user, '']
   ];
   scr.innerHTML = `<div class="anim home">
     <div class="hello"><button class="avatar ringed" data-go="profile" aria-label="פרופיל"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="3"/><circle cx="28" cy="28" r="26" fill="none" stroke="#ffc94d" stroke-width="3" stroke-linecap="round" stroke-dasharray="163" stroke-dashoffset="${(163 * (1 - xp / 100)).toFixed(0)}" transform="rotate(-90 28 28)"/></svg><span>${s.name[0]}</span></button>
@@ -3629,10 +3651,9 @@ screens.home = () => {
         <div class="h2r">${ring(done / total, done + '/' + total)}</div></div>
       <span class="h2go">${nextL ? 'להמשיך' : 'לתיק שלי'} ${ic.back}</span></button>
     <div class="sec2"><h3>לחקור</h3></div>
-    <div class="rail">${xcards.map(([go, t, d, v, cls], i) => `<button class="xcard ${cls}" data-go="${go}" style="animation-delay:${.15 + i * .07}s"><div class="xart">${sceneSVG(v)}${cls ? `<div class="xlock">${ic.lock}</div>` : ''}</div><b>${t}</b><span>${d}</span></button>`).join('')}</div>
+    <div class="tiles">${tiles.map(([go, t, d, icon, lk], i) => `<button class="tile${lk ? ' lk' : ''}" data-go="${go}" style="animation-delay:${.12 + i * .06}s"><i>${lk ? ic.lock : icon}</i><div><b>${t}</b><span>${d}</span></div></button>`).join('')}</div>
     <div class="sec2"><h3>זזים עכשיו <span class="live"></span></h3><button class="link" data-go="market">הכול</button></div>
-    <div class="rail arail">${movers.map(a => `<button class="acard" data-go="asset" data-arg="${a.id}"><div class="ah"><div class="logo" style="background:${a.col}">${a.s.slice(0, 2)}</div><span>${a.s}</span></div>${spark(a.spark, a.chg >= 0, 128, 40)}<b data-px="${a.id}">${fmt(a.price)}</b><em class="${chgCls(a.chg)}" data-chg="${a.id}">${sgn(a.chg)}%</em></button>`).join('')}</div>
-    <button class="card gl-link" data-go="community" style="margin-top:14px"><div>${ic.user}</div><div><b>קהילה</b><span class="muted">שואלים ועונים על הלמידה, עם אחרים באפליקציה</span></div></button>
+    <div class="rows card hm-rows">${movers.slice(0, 3).map(assetRow).join('')}</div>
     <p class="demo-note" style="text-align:center">נתוני הדגמה בדויים שנעים בזמן אמת.</p></div>`;
   livePrices();
 };
@@ -3791,11 +3812,11 @@ screens.market = () => {
   const idx = byId('IDX100');
   scr.innerHTML = `<div class="anim"><div class="top"><h2>שוק <span class="live"></span></h2><span class="pill gold">${ic.star}${A().stars}</span></div>
     <div class="card mk-hero"><span class="eyebrow">${idx.n}</span>
-      <div class="mk-row"><div><div class="mk-big gtext" data-px="${idx.id}">${fmt(idx.price)}</div><span class="${chgCls(idx.chg)}" data-chg="${idx.id}">${sgn(idx.chg)}%</span></div>${spark(idx.spark, idx.chg >= 0, 130, 56)}</div></div>
-    ${learn(['index', 'share', 'exchange'])}
+      <div class="mk-row"><div><div class="mk-big gtext" data-px="${idx.id}">${fmt(idx.price)}</div><span class="${chgCls(idx.chg)}" data-chg="${idx.id}">${sgn(idx.chg)}%</span></div>${spark(idx.spark, idx.chg >= 0, 120, 52, '#c8ff3d')}</div></div>
     <label class="search">${ic.search}<input id="q" placeholder="חיפוש מדד או מניה" autocomplete="off"></label>
-    <div class="filters" id="flt">${[['all', 'הכול'], ['index', 'מדדים'], ['stock', 'מניות'], ['watch', 'מעקב']].map(([k, t], i) => `<button class="chip${i ? '' : ' on'}" data-f="${k}">${t}</button>`).join('')}</div>
-    <div class="rows card" id="mrows" style="padding:4px 16px;margin-top:10px"></div>
+    <div class="seg mseg" id="flt">${[['all', 'הכול'], ['index', 'מדדים'], ['stock', 'מניות'], ['watch', 'מעקב']].map(([k, t], i) => `<button class="${i ? '' : 'on'}" data-f="${k}"><b>${t}</b></button>`).join('')}</div>
+    <div class="rows card" id="mrows" style="padding:4px 16px;margin-top:12px"></div>
+    ${learn(['index', 'share', 'exchange'])}
     <p class="demo-note">נתוני הדגמה בדויים שנעים בזמן אמת, לא מחירים אמיתיים. אפשר ללחוץ על כל נכס ולחקור את הגרף שלו.</p></div>`;
   const list = () => {
     const w = A().watch;
@@ -3804,7 +3825,7 @@ screens.market = () => {
   };
   list();
   $('#q').oninput = (e) => { st.q = e.target.value.trim().toLowerCase(); list(); };
-  $('#flt').onclick = (e) => { const c = e.target.closest('.chip'); if (!c) return; $$('.chip', $('#flt')).forEach(x => x.classList.remove('on')); c.classList.add('on'); st.f = c.dataset.f; list(); };
+  $('#flt').onclick = (e) => { const c = e.target.closest('button'); if (!c) return; $$('button', $('#flt')).forEach(x => x.classList.remove('on')); c.classList.add('on'); st.f = c.dataset.f; list(); };
   livePrices();
 };
 

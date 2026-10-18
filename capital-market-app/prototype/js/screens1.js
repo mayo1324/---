@@ -8,8 +8,8 @@ function sparkPath(vals, w, h) {
   for (let i = 1; i < pts.length; i++) { const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], cx = (x0 + x1) / 2; d += ` C${cx.toFixed(1)},${y0.toFixed(1)} ${cx.toFixed(1)},${y1.toFixed(1)} ${x1.toFixed(1)},${y1.toFixed(1)}`; }
   return { d, area: d + ` L${w},${h} L0,${h} Z` };
 }
-function spark(vals, up, w = 74, h = 34) {
-  const c = up ? '#1ff0b0' : '#ff6048', id = 'sp' + (sid++), p = sparkPath(vals, w, h);
+function spark(vals, up, w = 74, h = 34, col) {
+  const c = col || (up ? '#1ff0b0' : '#ff6048'), id = 'sp' + (sid++), p = sparkPath(vals, w, h);
   return `<svg class="spark" viewBox="0 0 ${w} ${h}" style="width:${w}px;height:${h}px"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${c}" stop-opacity=".4"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></linearGradient></defs><path d="${p.area}" fill="url(#${id})"/><path d="${p.d}" fill="none" stroke="${c}" stroke-width="2" stroke-linecap="round" style="filter:drop-shadow(0 0 3px ${c})"/></svg>`;
 }
 function artCandles(seed) {
@@ -23,8 +23,8 @@ function artCandles(seed) {
 }
 const chgCls = (v) => v >= 0 ? 'up' : 'down';
 function assetRow(a) {
-  return `<button class="row" data-go="asset" data-arg="${a.id}"><div class="logo" style="background:${a.col}">${a.s.slice(0, 2)}</div>
-    <div class="nm"><b>${a.n}</b><span>${a.sec}</span></div>${spark(a.spark, a.chg >= 0)}
+  return `<button class="row" data-go="asset" data-arg="${a.id}"><div class="logo n">${a.s.slice(0, 2)}</div>
+    <div class="nm"><b>${a.n}</b><span>${a.sec}</span></div>${spark(a.spark, a.chg >= 0, 62, 30, '#c8ff3d')}
     <div class="px"><b data-px="${a.id}">${fmt(a.price)}</b><span class="${chgCls(a.chg)}" data-chg="${a.id}">${sgn(a.chg)}%</span></div></button>`;
 }
 /* live-update prices inside rows / tickers */
@@ -205,11 +205,12 @@ screens.home = () => {
   const movers = [...ASSETS].sort((x, y) => Math.abs(y.chg) - Math.abs(x.chg)).slice(0, 5);
   const heroVis = nextL ? (nextL.slides[0] || {}).v : 'riskline';
   const R = 52, C = 2 * Math.PI * R, ring = (frac, big) => `<svg viewBox="0 0 120 120" class="rg"><circle cx="60" cy="60" r="${R}" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="9"/><circle cx="60" cy="60" r="${R}" fill="none" stroke="#c8ff3d" stroke-width="9" stroke-linecap="round" stroke-dasharray="${C.toFixed(0)}" stroke-dashoffset="${(C * (1 - frac)).toFixed(0)}" transform="rotate(-90 60 60)" style="filter:drop-shadow(0 0 5px #c8ff3d)"/><text x="60" y="68" text-anchor="middle" fill="#fff" font-size="26" font-weight="800" font-family="Heebo,sans-serif">${big}</text></svg>`;
-  const xcards = [
-    ['practiceHome', 'תרגול', 'קוראים גרף ומחליטים', 'support', ''],
-    ['market', 'שוק', 'חוקרים מדדים ומניות', 'riskline', ''],
-    ['glossary', 'מילון', 'כל מילה בשפה פשוטה', 'candle1', ''],
-    ['portfolio', 'התיק שלי', open ? money(eq) : 'נפתח בסיום השיעורים', 'size', open ? '' : 'lk']
+  const tiles = [
+    ['practiceHome', 'תרגול', 'קוראים גרף ומחליטים', ic.chart, ''],
+    ['market', 'שוק', 'חוקרים מדדים ומניות', ic.trend, ''],
+    ['glossary', 'מילון', 'כל מילה בשפה פשוטה', ic.book, ''],
+    ['portfolio', 'התיק שלי', open ? money(eq) : 'נפתח בסיום השיעורים', ic.wallet, open ? '' : 'lk'],
+    ['community', 'קהילה', 'שואלים ועונים על הלמידה', ic.user, '']
   ];
   scr.innerHTML = `<div class="anim home">
     <div class="hello"><button class="avatar ringed" data-go="profile" aria-label="פרופיל"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="3"/><circle cx="28" cy="28" r="26" fill="none" stroke="#ffc94d" stroke-width="3" stroke-linecap="round" stroke-dasharray="163" stroke-dashoffset="${(163 * (1 - xp / 100)).toFixed(0)}" transform="rotate(-90 28 28)"/></svg><span>${s.name[0]}</span></button>
@@ -222,10 +223,9 @@ screens.home = () => {
         <div class="h2r">${ring(done / total, done + '/' + total)}</div></div>
       <span class="h2go">${nextL ? 'להמשיך' : 'לתיק שלי'} ${ic.back}</span></button>
     <div class="sec2"><h3>לחקור</h3></div>
-    <div class="rail">${xcards.map(([go, t, d, v, cls], i) => `<button class="xcard ${cls}" data-go="${go}" style="animation-delay:${.15 + i * .07}s"><div class="xart">${sceneSVG(v)}${cls ? `<div class="xlock">${ic.lock}</div>` : ''}</div><b>${t}</b><span>${d}</span></button>`).join('')}</div>
+    <div class="tiles">${tiles.map(([go, t, d, icon, lk], i) => `<button class="tile${lk ? ' lk' : ''}" data-go="${go}" style="animation-delay:${.12 + i * .06}s"><i>${lk ? ic.lock : icon}</i><div><b>${t}</b><span>${d}</span></div></button>`).join('')}</div>
     <div class="sec2"><h3>זזים עכשיו <span class="live"></span></h3><button class="link" data-go="market">הכול</button></div>
-    <div class="rail arail">${movers.map(a => `<button class="acard" data-go="asset" data-arg="${a.id}"><div class="ah"><div class="logo" style="background:${a.col}">${a.s.slice(0, 2)}</div><span>${a.s}</span></div>${spark(a.spark, a.chg >= 0, 128, 40)}<b data-px="${a.id}">${fmt(a.price)}</b><em class="${chgCls(a.chg)}" data-chg="${a.id}">${sgn(a.chg)}%</em></button>`).join('')}</div>
-    <button class="card gl-link" data-go="community" style="margin-top:14px"><div>${ic.user}</div><div><b>קהילה</b><span class="muted">שואלים ועונים על הלמידה, עם אחרים באפליקציה</span></div></button>
+    <div class="rows card hm-rows">${movers.slice(0, 3).map(assetRow).join('')}</div>
     <p class="demo-note" style="text-align:center">נתוני הדגמה בדויים שנעים בזמן אמת.</p></div>`;
   livePrices();
 };

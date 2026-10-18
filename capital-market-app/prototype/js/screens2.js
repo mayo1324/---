@@ -5,11 +5,11 @@ screens.market = () => {
   const idx = byId('IDX100');
   scr.innerHTML = `<div class="anim"><div class="top"><h2>שוק <span class="live"></span></h2><span class="pill gold">${ic.star}${A().stars}</span></div>
     <div class="card mk-hero"><span class="eyebrow">${idx.n}</span>
-      <div class="mk-row"><div><div class="mk-big gtext" data-px="${idx.id}">${fmt(idx.price)}</div><span class="${chgCls(idx.chg)}" data-chg="${idx.id}">${sgn(idx.chg)}%</span></div>${spark(idx.spark, idx.chg >= 0, 130, 56)}</div></div>
-    ${learn(['index', 'share', 'exchange'])}
+      <div class="mk-row"><div><div class="mk-big gtext" data-px="${idx.id}">${fmt(idx.price)}</div><span class="${chgCls(idx.chg)}" data-chg="${idx.id}">${sgn(idx.chg)}%</span></div>${spark(idx.spark, idx.chg >= 0, 120, 52, '#c8ff3d')}</div></div>
     <label class="search">${ic.search}<input id="q" placeholder="חיפוש מדד או מניה" autocomplete="off"></label>
-    <div class="filters" id="flt">${[['all', 'הכול'], ['index', 'מדדים'], ['stock', 'מניות'], ['watch', 'מעקב']].map(([k, t], i) => `<button class="chip${i ? '' : ' on'}" data-f="${k}">${t}</button>`).join('')}</div>
-    <div class="rows card" id="mrows" style="padding:4px 16px;margin-top:10px"></div>
+    <div class="seg mseg" id="flt">${[['all', 'הכול'], ['index', 'מדדים'], ['stock', 'מניות'], ['watch', 'מעקב']].map(([k, t], i) => `<button class="${i ? '' : 'on'}" data-f="${k}"><b>${t}</b></button>`).join('')}</div>
+    <div class="rows card" id="mrows" style="padding:4px 16px;margin-top:12px"></div>
+    ${learn(['index', 'share', 'exchange'])}
     <p class="demo-note">נתוני הדגמה בדויים שנעים בזמן אמת, לא מחירים אמיתיים. אפשר ללחוץ על כל נכס ולחקור את הגרף שלו.</p></div>`;
   const list = () => {
     const w = A().watch;
@@ -18,7 +18,7 @@ screens.market = () => {
   };
   list();
   $('#q').oninput = (e) => { st.q = e.target.value.trim().toLowerCase(); list(); };
-  $('#flt').onclick = (e) => { const c = e.target.closest('.chip'); if (!c) return; $$('.chip', $('#flt')).forEach(x => x.classList.remove('on')); c.classList.add('on'); st.f = c.dataset.f; list(); };
+  $('#flt').onclick = (e) => { const c = e.target.closest('button'); if (!c) return; $$('button', $('#flt')).forEach(x => x.classList.remove('on')); c.classList.add('on'); st.f = c.dataset.f; list(); };
   livePrices();
 };
 
