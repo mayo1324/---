@@ -4736,7 +4736,7 @@ function usageSummary() {
   return `שיעורים ${(ac.lessonsDone || []).length}/${LESSONS.length} · תרגול ${Object.values(pd).filter(v => v > 0).length}/${SCEN.length} · כוכבים ${ac.stars || 0} · מסך: ${cur.name}${cur.arg != null && typeof cur.arg !== 'object' ? ' ' + cur.arg : ''} · ${deviceShort()}${FB_ERRORS.length ? ' · שגיאות: ' + FB_ERRORS.slice(-2).join(' ; ') : ''}`;
 }
 /* the message is only the ready-made sentence, plus the friend's own words if they wrote any */
-function buildFeedbackText(f) { return [fbLine(f), f.msg].filter(Boolean).join('\n'); }
+function buildFeedbackText(f) { return ['משוב מהאפליקציה:', fbLine(f), f.msg].filter(Boolean).join('\n'); }
 function openFeedback() {
   const f = { rate: 0, topic: '' };
   const TOPICS = ['עיצוב', 'תוכן השיעורים', 'תרגול', 'קושי', 'באג', 'משהו אחר'];
@@ -4747,7 +4747,7 @@ function openFeedback() {
     <textarea class="gi cq" id="fbm" rows="3" maxlength="600" placeholder="רוצים להוסיף משהו משלכם? (לא חובה)"></textarea>
     <div class="fb-send"><button class="btn primary" id="fbs">שליחה</button><button class="btn ghost" id="fbc">העתקה</button></div>
     <div class="fb-extra" id="fbx"></div>
-    <p class="demo-note" style="margin-top:10px">הטקסט לא נשלח אוטומטית לשום מקום. "שליחה" פותחת שיחה בוואטסאפ עם המשפט כתוב, ואתם רק לוחצים על שלח. לא נשלח שום מידע אחר.</p>`);
+    <p class="demo-note" style="margin-top:10px">הטקסט לא נשלח אוטומטית לשום מקום. "שליחה" פותחת וואטסאפ עם המשפט כתוב, ואתם רק לוחצים על שלח. לא נשלח שום מידע אחר.</p>`);
   const cur_ = () => { f.msg = $('#fbm').value.trim(); return buildFeedbackText(f); };
   const prev = () => { const l = fbLine(f); $('#fbp').textContent = l ? '"' + l + '"' : 'בחרו כוכבים ונושא, ונכתוב בשבילכם משפט קצר.'; $('#fbp').classList.toggle('on', !!l); };
   $('#fbr').onclick = (e) => { const b = e.target.closest('button'); if (!b) return; f.rate = +b.dataset.r; $$('#fbr button').forEach(x => x.classList.toggle('on', +x.dataset.r <= f.rate)); prev(); };
@@ -4759,10 +4759,10 @@ function openFeedback() {
     const t = cur_(); if (!fbLine(f) && !f.msg) return toast('בחרו כוכבים ונושא, או כתבו משהו');
     if (FEEDBACK_WHATSAPP) {
       /* some viewers (for example a preview inside another page) block WhatsApp, so the text is also copied and shown as a fallback */
-      const url = `https://wa.me/${FEEDBACK_WHATSAPP}?text=${encodeURIComponent(t)}`, local = '0' + FEEDBACK_WHATSAPP.replace(/^972/, '');
+      const url = `https://wa.me/${FEEDBACK_WHATSAPP}?text=${encodeURIComponent(t)}`;
       try { await navigator.clipboard.writeText(t); } catch (e) { }
       try { window.open(url, '_blank', 'noopener'); } catch (e) { }
-      $('#fbx').innerHTML = `<p class="muted" style="font-size:13px;line-height:1.6">פותחים את וואטסאפ. אם הוא לא נפתח, ההודעה כבר הועתקה: הדביקו אותה בשיחה עם ${local}.</p><a class="btn ghost" target="_blank" rel="noopener noreferrer" href="${url}">לנסות שוב לפתוח את וואטסאפ</a>`;
+      $('#fbx').innerHTML = `<p class="muted" style="font-size:13px;line-height:1.6">פותחים את וואטסאפ עם הודעה מוכנה, ואתם רק לוחצים על שלח. אם הוא לא נפתח, ההודעה כבר הועתקה ואפשר להדביק אותה.</p><a class="btn ghost" target="_blank" rel="noopener noreferrer" href="${url}">לנסות שוב לפתוח את וואטסאפ</a>`;
       return;
     }
     if (navigator.share) { try { await navigator.share({ title: 'משוב על האפליקציה', text: t }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
