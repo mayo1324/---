@@ -41,6 +41,23 @@ function tickerHTML() {
   return `<div class="ticker"><div class="tr">${row}${row}</div></div>`;
 }
 const lessonsDone = () => A().lessonsDone;
+/* modules open one after another: the next module opens when every lesson of the one before is done */
+const modLessons = (m) => LESSONS.filter(l => l.module === m.id);
+const activeMods = () => MODULES.filter(m => modLessons(m).length);
+function modOpen(m) { if (A().openAll) return true; const ms = activeMods(), i = ms.findIndex(x => x.id === m.id); return i <= 0 || modLessons(ms[i - 1]).every(l => lessonsDone().includes(l.id)); }
+const lessonOpen = (l) => lessonsDone().includes(l.id) || modOpen(MODULES.find(m => m.id === l.module) || MODULES[0]);
+function showUnlock(mid) {
+  const m = MODULES.find(x => x.id === mid); if (!m) return;
+  const ph = $('#phone'); let ov = $('#unlockov'); if (!ov) { ov = document.createElement('div'); ov.id = 'unlockov'; ov.className = 'unlock-ov'; ph.appendChild(ov); }
+  const first = modLessons(m)[0];
+  ov.style.setProperty('--mc', m.color);
+  ov.innerHTML = `${confetti(34)}<div class="un-card" role="dialog" aria-modal="true"><div class="un-ic">${ic.lock}</div><span class="eyebrow">נפתח נושא חדש!</span><h2>${m.title}</h2><p>${m.sub}</p><span class="un-n">${modLessons(m).length} שיעורים מחכים לכם</span>
+    <div class="un-b"><button class="btn primary" id="un-go">ללמוד עכשיו</button><button class="btn ghost" id="un-no">אחר כך</button></div></div>`;
+  ov.hidden = false; requestAnimationFrame(() => ov.classList.add('show')); SFX.play('level');
+  const close = () => { ov.classList.remove('show'); setTimeout(() => { ov.hidden = true; ov.innerHTML = ''; }, 300); };
+  $('#un-go').onclick = () => { close(); go('lesson', first.id); };
+  $('#un-no').onclick = close;
+}
 /* ===== glossary helpers: any term can be tapped for a plain explanation ===== */
 const term = (id, label) => `<button class="term" data-term="${id}">${label || GLOSS[id].t}</button>`;
 const learn = (ids) => `<div class="learn"><span>לא בטוחים?</span>${ids.map(i => `<button class="lchip" data-term="${i}">מה זה ${GLOSS[i].t}?</button>`).join('')}</div>`;
@@ -228,12 +245,13 @@ screens.lessons = () => {
     <div class="card prog-card"><div style="display:flex;justify-content:space-between"><b>${d} מתוך ${LESSONS.length} שיעורים</b><span class="muted" style="font-size:13px">${portfolioOpen() ? 'התיק פתוח' : 'התיק נפתח בסיום'}</span></div>
       <div class="bar" style="margin-top:12px"><i style="width:${Math.round(d / LESSONS.length * 100)}%"></i></div></div>
     <button class="card gl-link" data-go="glossary"><div>${ic.book}</div><div><b>מילון מונחים</b><span class="muted">תמיכה, התנגדות, סטופ ועוד, בשפה פשוטה</span></div></button>
-    ${mods.map(m => { const n = m.ls.filter(l => done.includes(l.id)).length; return `<div class="mod" style="--mc:${m.color}">
-      <div class="mod-h"><div class="mod-ring">${modRing(n / m.ls.length, m.color)}<b>${n}/${m.ls.length}</b></div><div><b>${m.title}</b><span>${m.sub}</span></div></div>
-      <div class="path">${m.ls.map((l, i) => { const dn = done.includes(l.id); return `<button class="pn${dn ? ' done' : ''}${l.id === nextId ? ' next' : ''}" data-go="lesson" data-arg="${l.id}" style="animation-delay:${i * .05}s"><i>${dn ? ic.check : i + 1}</i><div><b>${l.title}</b><span>${l.min} דקות${l.id === nextId ? ' · המשך מכאן' : ''}</span></div></button>`; }).join('')}</div></div>`; }).join('')}</div>`;
+    ${mods.map((m, mi) => { const n = m.ls.filter(l => done.includes(l.id)).length, lk = !modOpen(m), prev = mods[mi - 1]; return `<div class="mod${lk ? ' locked' : ''}" style="--mc:${m.color}">
+      <div class="mod-h"><div class="mod-ring">${modRing(n / m.ls.length, m.color)}<b>${lk ? ic.lock : n + '/' + m.ls.length}</b></div><div><b>${m.title}</b><span>${lk ? 'נפתח אחרי שמסיימים את ' + prev.title : m.sub}</span></div></div>
+      <div class="path">${m.ls.map((l, i) => { const dn = done.includes(l.id); return lk && !dn ? `<div class="pn locked" style="animation-delay:${i * .05}s"><i>${ic.lock}</i><div><b>${l.title}</b><span>${l.min} דקות</span></div></div>` : `<button class="pn${dn ? ' done' : ''}${l.id === nextId ? ' next' : ''}" data-go="lesson" data-arg="${l.id}" style="animation-delay:${i * .05}s"><i>${dn ? ic.check : i + 1}</i><div><b>${l.title}</b><span>${l.min} דקות${l.id === nextId ? ' · המשך מכאן' : ''}</span></div></button>`; }).join('')}</div></div>`; }).join('')}</div>`;
 };
 screens.lesson = (id) => {
   const L = LESSONS.find(x => x.id === id) || LESSONS[0];
+  if (!lessonOpen(L)) { scr.innerHTML = ''; setTimeout(() => { toast('השיעור הזה ייפתח אחרי שמסיימים את הנושא הקודם'); go('lessons'); }, 0); return; }
   let i = 0, answered = false, dir = 1;
   let busy = false;
   /* leave the current slide first, then bring the next one in (RTL: forward comes from the left) */
@@ -283,10 +301,11 @@ screens.lesson = (id) => {
     swipe($('.slide'), quiz);
     $('#nx').onclick = () => {
       if (!quiz || qi < QS.length - 1) { step(1); return; }
-      const s = A(), first = !s.lessonsDone.includes(L.id);
+      const s = A(), first = !s.lessonsDone.includes(L.id), openBefore = activeMods().filter(modOpen).map(m => m.id);
       if (first) { s.lessonsDone.push(L.id); s.stars += 1; s.xp = (s.xp || 0) + 20; save(); }
       markActive(s);
-      go('lessonDone', { id: L.id, gained: first ? 20 : 0, before: (s.xp || 0) - (first ? 20 : 0) });
+      const unlocked = activeMods().filter(modOpen).map(m => m.id).find(mid => !openBefore.includes(mid));
+      go('lessonDone', { id: L.id, gained: first ? 20 : 0, before: (s.xp || 0) - (first ? 20 : 0), unlocked });
     };
     if (quiz) $$('.opt').forEach(b => b.onclick = (e) => {
       if (answered) return;
@@ -323,6 +342,7 @@ screens.lessonDone = (a) => {
     ${srcCard(L)}
     <div class="btns" style="margin-top:18px"><button class="btn primary" data-go="${all ? 'portfolio' : 'practiceHome'}">${all ? 'לתיק שלי' : 'עכשיו לתרגול'}</button><button class="btn ghost" data-go="home">חזרה לבית</button></div></div>`;
   setTimeout(() => { const f = $('#xpf'); if (f) f.style.width = (xp1 % 100) + '%'; }, 350);
+  if (a.unlocked) setTimeout(() => { if (cur.name === 'lessonDone') showUnlock(a.unlocked); }, 1300);
 };
 
 /* ===== profile ===== */
@@ -338,11 +358,13 @@ screens.profile = () => {
     <button class="btn ghost" id="snd" style="margin-bottom:10px">${SFX.on ? 'סאונד: פעיל' : 'סאונד: כבוי'}</button>
     <div class="sec"><h3>כלי הדגמה</h3></div>
     <button class="btn ghost" id="un" style="margin-bottom:10px">${portfolioOpen() ? 'התיק פתוח' : 'פתח את התיק בלי לסיים שיעורים'}</button>
+    <button class="btn ghost" id="ua" style="margin-bottom:10px">${s.openAll ? 'נעל את הנושאים שוב' : 'פתח את כל הנושאים (הדגמה)'}</button>
     <button class="btn ghost" id="lo" style="margin-bottom:10px">התנתקות</button>
     <button class="btn ghost" id="rs">מחיקת החשבון הזה</button>
     <p class="disc">התוכן באפליקציה לימודי בלבד. אין בו המלצות השקעה או הבטחות לרווח, ואין כסף אמיתי. ${WARN_DAY}</p>
     <p class="disc">נתונים לבדיקה פרטית בלבד, לא להפצה.</p></div>`;
   $('#snd').onclick = () => { SFX.set(!SFX.on); $('#snd').textContent = SFX.on ? 'סאונד: פעיל' : 'סאונד: כבוי'; };
+  $('#ua').onclick = () => { A().openAll = !A().openAll; save(); toast(A().openAll ? 'כל הנושאים פתוחים להדגמה' : 'הנושאים ננעלו שוב'); go('profile'); };
   $('#un').onclick = () => { if (!portfolioOpen()) { A().demoUnlock = true; save(); toast('התיק נפתח להדגמה'); go('profile'); } };
   $('#lo').onclick = () => { loadDB().session = null; save(); go('login'); };
   let sure = false;
