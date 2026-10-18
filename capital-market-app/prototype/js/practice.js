@@ -294,5 +294,7 @@ screens.feedback = ({ idx, st, sim }) => {
     <div class="card fbchecks"><b>מה עשיתם</b>${ev.checks.map(rowOf).join('')}
       <details class="ck2 info"><summary><i>i</i><b>על המקרה</b></summary><p>${sc.why}</p></details></div>
     <div class="btns">${ok ? `<button class="btn primary" data-go="practice" data-arg="${(idx + 1) % SCEN.length}">למקרה הבא</button>` : `<button class="btn primary" data-go="practice" data-arg="${idx}">לנסות שוב</button>`}<button class="btn ghost" data-go="practiceHome">לכל המקרים</button></div>
+    <button class="link fbl" id="pfb">משוב על המקרה</button>
     <p class="disc">תרגיל לימודי על נתוני שוק אמיתיים מהעבר, בלי כסף אמיתי. אין כאן המלצת השקעה.</p></div>`;
+  $('#pfb').onclick = openFeedback;
 };

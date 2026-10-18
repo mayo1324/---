@@ -1090,3 +1090,17 @@ details.more p{font-size:13.5px;line-height:1.65;color:var(--muted);margin:8px 0
 .need span{min-width:0;flex:1;color:#e8d9a8}.need .link{flex:none;color:var(--gold);font-size:12.5px;font-weight:700}
 .fb.ok .big-ic{box-shadow:0 0 0 7px rgba(31,240,176,.07),0 0 34px rgba(31,240,176,.3)}
 .fb.no .big-ic{box-shadow:0 0 0 7px rgba(255,96,72,.07),0 0 30px rgba(255,96,72,.24)}
+
+/* ===== feedback, about, error notice ===== */
+.fb-rate{display:flex;gap:6px;justify-content:center;margin:14px 0 6px}
+.fb-rate button{font-size:34px;line-height:1;color:rgba(255,255,255,.18);transition:transform .15s,color .2s}
+.fb-rate button.on{color:#ffc94d;text-shadow:0 0 14px rgba(255,201,77,.45)}.fb-rate button:active{transform:scale(.88)}
+.fb-topics{justify-content:center;margin:8px 0 12px}
+#fbm{width:100%}
+.fb-send{display:flex;gap:10px;margin-top:12px}.fb-send .btn{flex:1}
+.fb-extra{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.about p{font-size:14px;line-height:1.7;color:#d6dbe3;margin:10px 0}.about b{color:var(--text)}
+.btn.danger{color:#ff8a78;border-color:rgba(255,96,72,.35)}
+.fbl{display:block;margin:14px auto 0;font-size:13px;color:var(--muted)!important;text-decoration:underline}
+.errbar{position:absolute;top:10px;left:12px;right:12px;z-index:60;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:16px;background:rgba(60,28,24,.96);border:1px solid rgba(255,96,72,.45);font-size:13px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.errbar span{flex:1;line-height:1.45}.errbar .link{flex:none;color:#ffb4a6}
