@@ -2,6 +2,7 @@
 /* ===== practice: learn to decide, not to guess =====
    Flow: read the chart -> decide (buy or wait) -> mark the floor (support) -> stop -> how much to risk -> target -> run.
    Entry is fixed at the market price, so nothing is a blind guess. Feedback scores the PROCESS. */
+const lrn = (ids) => `<button class="lrn" data-term="${ids[0]}">${ic.bulb}<span>מה זה ${GLOSS[ids[0]].t}?</span></button>`;
 const TREND_NAME = { up: 'עולה', down: 'יורדת', side: 'בלי כיוון' };
 const RISK_OPTS = [[.5, 'זהיר'], [1, 'מומלץ ללמידה'], [2, 'בסדר'], [5, 'גבוה מדי']];
 const STEPS = [['read', 'כיוון'], ['line', 'קו'], ['volume', 'נפח'], ['decide', 'החלטה'], ['support', 'רצפה'], ['stop', 'סטופ'], ['size', 'סכום'], ['target', 'יעד']];
@@ -48,7 +49,7 @@ function evaluate(sc, P, st) {
 function needBanner() {
   const need = ['l4', 'l5', 'l7', 'l9'].map(id => LESSONS.find(l => l.id === id)).filter(l => !lessonsDone().includes(l.id));
   if (!need.length) return '';
-  return `<div class="need"><b>חדשים בנושא?</b><span>מומלץ לראות קודם את השיעור: ${need[0].title}</span><button class="btn ghost small" data-go="lesson" data-arg="${need[0].id}">לשיעור</button></div>`;
+  return `<div class="need"><span>מומלץ לראות קודם את השיעור: ${need[0].title}</span><button class="link" data-go="lesson" data-arg="${need[0].id}">לשיעור</button></div>`;
 }
 /* skills tracked from the checks of every finished case */
 const SKILLS = { trend: ['כיוון הגרף', 'l4'], trendline: ['קו מגמה', 'l4'], volume: ['נפח', 'l3'], wait: ['קנייה או המתנה', 'l9'], support: ['רצפה', 'l5'], stop: ['סטופ', 'l7'], risk: ['גודל סיכון', 'l9'], rr: ['יעד', 'l8'] };
@@ -96,15 +97,15 @@ screens.practiceHome = () => {
 screens.practice = (idx = 0) => {
   idx = (+idx || 0) % SCEN.length;
   const sc = SCEN[idx], P = buildScen(sc);
-  const W = 358, H = 300, VH = 54, VBH = H + VH + 24, AX = 46, plotW = W - AX, slot = (plotW - 8) / (P.N + P.M), bw = Math.max(1.4, slot * .62);
+  const W = 358, H = 300, VH = 54, AX = 46, plotW = W - AX, slot = (plotW - 8) / (P.N + P.M), bw = Math.max(1.4, slot * .62);
   const all = P.candles, lo = Math.min(...all.map(c => c.l)) - 3, hi = Math.max(...all.map(c => c.h)) + 3;
   const y = (v) => 8 + (hi - v) / (hi - lo) * (H - 24), priceAt = (py) => hi - (py - 8) / (H - 24) * (hi - lo), cx = (k) => 6 + k * slot + slot / 2;
   const st = { step: 'read', line: null, drag: null, volAns: null, trend: null, decision: null, support: null, stop: null, risk: null, target: null, hint: false, running: false, shown: P.N, mark: null, intro: true };
+  const vbh = () => H + (st.step === 'volume' ? VH + 6 : 0) + 24;  /* the volume panel only shows while it is needed */
   scr.innerHTML = `<div class="anim">
     <div class="pr-head"><button class="icon-btn" id="bk">${ic.back}</button><div class="tt"><b>מקרה ${idx + 1}</b><span>נכס X, בלי כסף אמיתי</span></div><button class="icon-btn" id="hb" style="color:var(--gold)" aria-label="רמז">${ic.bulb}</button></div>
-    <div class="pbox"><div class="meta"><div><span class="hl">מחיר עכשיו</span><div class="price" id="px">${fmt(P.last)}</div></div><div class="hl" style="text-align:left">תיק תרגול ${money(START_CASH)}</div></div>
-      <svg class="chart" id="ch" viewBox="0 0 ${W} ${VBH}"></svg></div>
-    <p class="demo-note" style="margin:6px 4px 0">המחירים מותאמים כך שהמחיר עכשיו הוא 100, ולכן לא נחשף איזה נכס זה.</p>
+    <div class="pbox"><div class="meta"><div><span class="hl">מחיר עכשיו</span><div class="price" id="px">${fmt(P.last)}</div></div></div>
+      <svg class="chart" id="ch" viewBox="0 0 ${W} ${vbh()}"></svg></div>
     <div class="steps" id="dots"></div><div id="panel" class="panel task"></div><div id="hintBox"></div></div>`;
   const svg = $('#ch');
   const el = (n, a, p) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); (p || svg).appendChild(e); return e; };
@@ -112,7 +113,7 @@ screens.practice = (idx = 0) => {
   const plan = () => ({ support: st.support, stop: st.stop, target: st.target, risk: st.risk });
   const tapStep = () => ['support', 'stop', 'target'].includes(st.step) && !st.running;
   function draw() {
-    svg.innerHTML = '';
+    svg.innerHTML = ''; svg.setAttribute('viewBox', `0 0 ${W} ${vbh()}`);
     const step = (hi - lo) > 40 ? 10 : 5;
     for (let v = Math.ceil(lo / step) * step; v < hi; v += step) { el('line', { x1: 0, x2: plotW, y1: y(v), y2: y(v), stroke: '#fff', 'stroke-opacity': .06, 'stroke-dasharray': '3 5' }); txt(W - 4, y(v) + 4, Math.round(v), '#5d6571', 11, 'end', 400); }
     el('rect', { x: 6 + P.N * slot, y: 0, width: plotW - 6 - P.N * slot, height: H, fill: '#fff', opacity: .03 });
@@ -122,11 +123,11 @@ screens.practice = (idx = 0) => {
     const intro = st.intro; st.intro = false;
     for (let k = 0; k < st.shown; k++) { const c = P.candles[k], up = c.c >= c.o, col = up ? '#1ff0b0' : '#ff6048', x = cx(k), gk = el('g', intro && k < P.N && !reduceMotion ? { style: `animation:cin .4s ease-out ${(k * 11)}ms both` } : {}); el('line', { x1: x, x2: x, y1: y(c.h), y2: y(c.l), stroke: col, 'stroke-width': slot < 4 ? 1 : 1.4, 'stroke-linecap': 'round' }, gk); el('rect', { x: x - bw / 2, y: y(Math.max(c.o, c.c)), width: bw, height: Math.max(2, Math.abs(y(c.o) - y(c.c))), rx: 1.5, fill: col }, gk); }
     /* volume panel */
-    { const top = H + 6, vmax = 150; txt(8, top + 12, 'נפח', '#8b93a1', 10.5, 'start', 600);
+    if (st.step === 'volume') { const top = H + 6, vmax = 150; txt(8, top + 12, 'נפח', '#8b93a1', 10.5, 'start', 600);
       if (st.step === 'volume') el('rect', { x: 2, y: top - 2, width: plotW + 2, height: VH + 4, rx: 8, fill: '#fbbf24', opacity: .1, stroke: '#fbbf24', 'stroke-opacity': .5 });
       for (let k = 0; k < st.shown; k++) { const c = P.candles[k], hh = c.v / vmax * (VH - 6), up = c.c >= c.o; el('rect', { x: cx(k) - bw / 2, y: top + VH - hh, width: bw, height: hh, rx: 1.5, fill: up ? '#1ff0b0' : '#ff6048', opacity: .55 }); } }
     /* time axis, relative only (no dates) */
-    { const ty = VBH - 3; txt(6, ty, 'לפני 60 ימים', '#5d6571', 10, 'start', 400); txt(cx(30), ty, 'לפני 30', '#5d6571', 10, 'middle', 400); txt(cx(P.N - 1), ty, 'עכשיו', '#5d6571', 10, 'middle', 400); }
+    { const ty = vbh() - 3; txt(6, ty, 'לפני 60 ימים', '#5d6571', 10, 'start', 400); txt(cx(30), ty, 'לפני 30', '#5d6571', 10, 'middle', 400); txt(cx(P.N - 1), ty, 'עכשיו', '#5d6571', 10, 'middle', 400); }
     /* trend line drawn by the learner (extends into the future as a dashed projection) */
     { const ln = st.drag || st.line; if (ln && ln.i2 !== ln.i1) { const m = (ln.p2 - ln.p1) / (ln.i2 - ln.i1), last = P.N + P.M - 1, yAt = (i) => y(ln.p1 + m * (i - ln.i1));
       el('line', { x1: cx(ln.i1), y1: yAt(ln.i1), x2: cx(ln.i2), y2: yAt(ln.i2), stroke: '#fbbf24', 'stroke-width': 2.4, 'stroke-linecap': 'round' });
@@ -150,7 +151,7 @@ screens.practice = (idx = 0) => {
     if (st.mark) { const m = st.mark; el('circle', { cx: cx(m.at + P.N), cy: y(m.res === 'target' ? st.target : st.stop), r: 7, fill: m.res === 'target' ? '#1fd69b' : '#ff6048', stroke: '#0b0d10', 'stroke-width': 2 }); }
   }
   function setFromEvent(e) {
-    const rect = svg.getBoundingClientRect(), py = (e.clientY - rect.top) * (VBH / rect.height);
+    const rect = svg.getBoundingClientRect(), py = (e.clientY - rect.top) * (vbh() / rect.height);
     let v = clamp(priceAt(py), lo + 1, hi - 1);
     const snap = (arr) => { let best = null, bd = 12; arr.forEach(p => { const d = Math.abs(y(p) - py); if (d < bd) { bd = d; best = p; } }); return best; };
     if (st.step === 'support') { const s = snap(P.candles.slice(0, P.N).map(c => c.l)); if (s != null) v = s; }
@@ -158,14 +159,14 @@ screens.practice = (idx = 0) => {
     v = Math.round(v * 10) / 10; st[st.step] = v; draw(); readout();
   }
   let dragging = false;
-  const idxPrice = (e) => { const rect = svg.getBoundingClientRect(), px = (e.clientX - rect.left) * (W / rect.width); const i = clamp(Math.round((px - 6 - slot / 2) / slot), 0, P.N - 1); let v = clamp(priceAt((e.clientY - rect.top) * (VBH / rect.height)), lo + 1, hi - 1); const c = P.candles[i], yy = (e.clientY - rect.top) * (VBH / rect.height); [c.l, c.h].forEach(q => { if (Math.abs(y(q) - yy) < 12) v = q; }); return { i, v: Math.round(v * 10) / 10 }; };
+  const idxPrice = (e) => { const rect = svg.getBoundingClientRect(), px = (e.clientX - rect.left) * (W / rect.width); const i = clamp(Math.round((px - 6 - slot / 2) / slot), 0, P.N - 1); let v = clamp(priceAt((e.clientY - rect.top) * (vbh() / rect.height)), lo + 1, hi - 1); const c = P.candles[i], yy = (e.clientY - rect.top) * (vbh() / rect.height); [c.l, c.h].forEach(q => { if (Math.abs(y(q) - yy) < 12) v = q; }); return { i, v: Math.round(v * 10) / 10 }; };
   svg.addEventListener('pointerdown', (e) => { if (st.step === 'line' && !st.running) { const q = idxPrice(e); st.drag = { i1: q.i, p1: q.v, i2: q.i, p2: q.v }; dragging = 'line'; try { svg.setPointerCapture(e.pointerId); } catch (_) { } draw(); return; } if (!tapStep()) return; dragging = true; try { svg.setPointerCapture(e.pointerId); } catch (_) { } setFromEvent(e); });
   svg.addEventListener('pointermove', (e) => { if (dragging === 'line' && st.drag) { const q = idxPrice(e); st.drag.i2 = q.i; st.drag.p2 = q.v; draw(); } else if (dragging) setFromEvent(e); });
   const end = () => { if (dragging === 'line' && st.drag) { const d = st.drag; st.drag = null; if (Math.abs(d.i2 - d.i1) >= 15) { if (d.i2 < d.i1) Object.assign(d, { i1: d.i2, p1: d.p2, i2: d.i1, p2: d.p1 }); st.line = d; } else toast('מתחו קו ארוך יותר, לפחות 15 נרות'); draw(); panel(); } dragging = false; }; svg.addEventListener('pointerup', end); svg.addEventListener('pointercancel', end);
 
   const path = () => st.decision === 'wait' ? ['read', 'line', 'volume', 'decide'] : STEPS.map(s => s[0]);
-  const hd = (title, body) => { const p = path(), n = p.indexOf(st.step) + 1; return `<span class="tk-n">שלב ${n} מתוך ${p.length}</span><h3>${title}</h3><p>${body}</p>`; };
-  function dots() { const p = path(), cur = p.indexOf(st.step); $('#dots').innerHTML = STEPS.filter(s => p.includes(s[0])).map((s, i) => `<span class="${i < cur ? 'done' : i === cur ? 'on' : ''}"><i>${i < cur ? '✓' : i + 1}</i>${s[1]}</span>`).join(''); }
+  const hd = (title, body) => `<h3>${title}</h3><p>${body}</p>`;
+  function dots() { const p = path(), cur = p.indexOf(st.step); $('#dots').innerHTML = p.map((k, i) => `<i class="${i < cur ? 'done' : i === cur ? 'on' : ''}"></i>`).join(''); }
   function nav(label, disabled) { return `<div class="pnav">${st.step !== 'read' ? '<button class="btn ghost small" id="pb" style="flex:none;width:84px">חזרה</button>' : ''}<button class="btn primary small" id="pn" ${disabled ? 'disabled' : ''}>${label || 'הבא'}</button></div>`; }
   function goStep(s) { st.step = s; panel(); draw(); }
   function roSize() {
@@ -181,24 +182,24 @@ screens.practice = (idx = 0) => {
   function panel() {
     dots(); const p = $('#panel'); let h = '', next = null, label = '', dis = false;
     if (st.step === 'read') {
-      h = needBanner() + hd('לאן הגרף הולך?', 'הסתכלו על הנרות. האם המחיר בגדול <b>עולה</b>, <b>יורד</b>, או קופץ <b>בלי כיוון</b>?') + `<div class="opts">${[['up', 'עולה'], ['down', 'יורד'], ['side', 'בלי כיוון']].map(([k, t]) => `<button class="opt${st.trend === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>${learn(['trend', 'candle'])}`; next = 'line'; dis = !st.trend;
+      h = needBanner() + hd('לאן הגרף הולך?', 'הסתכלו על הנרות. האם המחיר בגדול <b>עולה</b>, <b>יורד</b>, או קופץ <b>בלי כיוון</b>?') + `<div class="opts">${[['up', 'עולה'], ['down', 'יורד'], ['side', 'בלי כיוון']].map(([k, t]) => `<button class="opt${st.trend === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>${lrn(['trend', 'candle'])}`; next = 'line'; dis = !st.trend;
     } else if (st.step === 'line') {
       const ln = st.line, sl = ln ? (ln.p2 - ln.p1) / (ln.i2 - ln.i1) : 0, cls = !ln ? '' : sl > P.slopeTh ? 'עולה' : sl < -P.slopeTh ? 'יורד' : 'כמעט ישר';
-      h = hd('מתחו קו מגמה', 'גררו עם האצבע על הגרף, מנקודה אחת לאחרת, <b>לאורך הנקודות הנמוכות</b> (או הגבוהות). הקו המקווקו ממשיך לעתיד. זה נקרא ' + term('trendline') + '.') + `<div class="chips"><button class="chip" id="clr">נקה קו</button></div><div class="ro" id="ro">${ln ? 'הקו שציירתם: <b>' + cls + '</b>' : 'עוד לא ציירתם קו'}</div>${learn(['trendline', 'trend'])}`; next = 'volume'; dis = !ln;
+      h = hd('מתחו קו מגמה', 'גררו עם האצבע על הגרף, מנקודה אחת לאחרת, <b>לאורך הנקודות הנמוכות</b> (או הגבוהות). הקו המקווקו ממשיך לעתיד. זה נקרא ' + term('trendline') + '.') + `<div class="chips"><button class="chip" id="clr">נקה קו</button></div><div class="ro" id="ro">${ln ? 'הקו שציירתם: <b>' + cls + '</b>' : 'עוד לא ציירתם קו'}</div>${lrn(['trendline', 'trend'])}`; next = 'volume'; dis = !ln;
     } else if (st.step === 'volume') {
       const vq = sc.volq;
-      h = hd('מה אומר הנפח?', 'הסתכלו על העמודות בתחתית הגרף. כל עמודה היא כמה מסחר היה באותו נר. ' + vq.q) + `<div class="opts">${[['low', 'נמוך'], ['normal', 'רגיל'], ['high', 'גבוה']].map(([k, t]) => `<button class="opt${st.volAns === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>${learn(['volume'])}`; next = 'decide'; dis = !st.volAns;
+      h = hd('מה אומר הנפח?', 'הסתכלו על העמודות בתחתית הגרף. כל עמודה היא כמה מסחר היה באותו נר. ' + vq.q) + `<div class="opts">${[['low', 'נמוך'], ['normal', 'רגיל'], ['high', 'גבוה']].map(([k, t]) => `<button class="opt${st.volAns === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>${lrn(['volume'])}`; next = 'decide'; dis = !st.volAns;
     } else if (st.step === 'decide') {
-      h = hd('האם כדאי לקנות עכשיו?', 'קונים רק כשיש סיבה טובה. אם אין, <b>מחכים</b>, וגם זו תשובה נכונה לפעמים.') + `<div class="opts">${[['enter', 'כן, יש סיבה לקנות'], ['wait', 'לא, מחכים']].map(([k, t]) => `<button class="opt${st.decision === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>${learn(['wait', 'entry'])}`; dis = !st.decision; next = st.decision === 'wait' ? 'run' : 'support'; label = st.decision === 'wait' ? 'ראו מה קרה' : 'הבא';
+      h = hd('האם כדאי לקנות עכשיו?', 'קונים רק כשיש סיבה טובה. אם אין, <b>מחכים</b>, וגם זו תשובה נכונה לפעמים.') + `<div class="opts">${[['enter', 'כן, יש סיבה לקנות'], ['wait', 'לא, מחכים']].map(([k, t]) => `<button class="opt${st.decision === k ? ' sel' : ''}" data-k="${k}">${t}</button>`).join('')}</div>${lrn(['wait', 'entry'])}`; dis = !st.decision; next = st.decision === 'wait' ? 'run' : 'support'; label = st.decision === 'wait' ? 'ראו מה קרה' : 'הבא';
     } else if (st.step === 'support') {
-      h = hd('סמנו את הרצפה', 'מצאו מקום שהמחיר ירד אליו ואז חזר למעלה. <b>לחצו על הגרף ליד אחת הנקודות הנמוכות.</b> הסימון יתפוס לנקודה הקרובה. זה נקרא ' + term('support') + '.') + `<div class="ro" id="ro">${st.support != null ? 'סימנתם: <b>' + fmt(st.support) + '</b>' : 'עוד לא סימנתם'}</div>${learn(['support'])}`; next = 'stop'; dis = st.support == null;
+      h = hd('סמנו את הרצפה', 'מצאו מקום שהמחיר ירד אליו ואז חזר למעלה. <b>לחצו על הגרף ליד אחת הנקודות הנמוכות.</b> הסימון יתפוס לנקודה הקרובה. זה נקרא ' + term('support') + '.') + `<div class="ro" id="ro">${st.support != null ? 'סימנתם: <b>' + fmt(st.support) + '</b>' : 'עוד לא סימנתם'}</div>${lrn(['support'])}`; next = 'stop'; dis = st.support == null;
     } else if (st.step === 'stop') {
-      h = hd('מתי יוצאים אם טעיתם?', 'בחרו מחיר קצת <b>מתחת לרצפה</b>. אם המחיר ירד עד לשם, יוצאים מהעסקה כדי לא להפסיד יותר. זה נקרא ' + term('stop') + '.') + `<div class="chips"><button class="chip" id="auto">שים לי מתחת לרצפה</button></div><div class="ro" id="ro">${st.stop != null ? 'סטופ: <b>' + fmt(st.stop) + '</b> (אם המחיר יורד לשם, מפסידים ' + fmt(P.last - st.stop) + ' על כל מניה)' : 'לחצו על הגרף או על הכפתור'}</div>${learn(['stop'])}`; next = 'size'; dis = st.stop == null || st.stop >= P.last;
+      h = hd('מתי יוצאים אם טעיתם?', 'בחרו מחיר קצת <b>מתחת לרצפה</b>. אם המחיר ירד עד לשם, יוצאים מהעסקה כדי לא להפסיד יותר. זה נקרא ' + term('stop') + '.') + `<div class="chips"><button class="chip" id="auto">שים לי מתחת לרצפה</button></div><div class="ro" id="ro">${st.stop != null ? 'סטופ: <b>' + fmt(st.stop) + '</b> (אם המחיר יורד לשם, מפסידים ' + fmt(P.last - st.stop) + ' על כל מניה)' : 'לחצו על הגרף או על הכפתור'}</div>${lrn(['stop'])}`; next = 'size'; dis = st.stop == null || st.stop >= P.last;
     } else if (st.step === 'size') {
-      h = hd('כמה כסף מוכנים להפסיד אם טעיתם?', 'מחליטים קודם כמה מפסידים, ורק אז כמה לקנות. בתיק של ' + money(START_CASH) + ' כדאי להפסיד סכום קטן.') + `<div class="riskgrid" id="rk">${RISK_OPTS.map(([v, t]) => `<button class="rk${st.risk === v ? ' on' : ''}${v >= 5 ? ' warn' : ''}" data-v="${v}"><b>${money(START_CASH * v / 100)}</b><span>${v}% · ${t}</span></button>`).join('')}</div><div class="ro" id="ro">${roSize()}</div>${learn(['risk'])}`; next = 'target'; dis = !st.risk;
+      h = hd('כמה כסף מוכנים להפסיד אם טעיתם?', 'מחליטים קודם כמה מפסידים, ורק אז כמה לקנות. בתיק של ' + money(START_CASH) + ' כדאי להפסיד סכום קטן.') + `<div class="riskgrid" id="rk">${RISK_OPTS.map(([v, t]) => `<button class="rk${st.risk === v ? ' on' : ''}${v >= 5 ? ' warn' : ''}" data-v="${v}"><b>${money(START_CASH * v / 100)}</b><span>${v}% · ${t}</span></button>`).join('')}</div><div class="ro" id="ro">${roSize()}</div>${lrn(['risk'])}`; next = 'target'; dis = !st.risk;
     } else if (st.step === 'target') {
       const risk = P.last - st.stop;
-      h = hd('עד איזה מחיר מחכים לרווח?', 'בחרו מחיר שבו יוצאים עם רווח. הרווח האפשרי צריך להיות <b>גדול מההפסד האפשרי</b>, לפחות פי 1.5. זה נקרא ' + term('target') + '.') + `<div class="chips" id="tg"><button class="chip" data-t="${P.last + risk * 2}">רווח כפול מההפסד</button><button class="chip" data-t="${P.last + risk * 3}">רווח פי 3</button><button class="chip" data-t="${P.recentHigh}">הגבוה האחרון בגרף</button></div><div class="ro" id="ro">${roTarget()}</div>${learn(['target', 'rr', 'resistance'])}`; next = 'run'; label = 'הרץ את הגרף'; dis = st.target == null || st.target <= P.last;
+      h = hd('עד איזה מחיר מחכים לרווח?', 'בחרו מחיר שבו יוצאים עם רווח. הרווח האפשרי צריך להיות <b>גדול מההפסד האפשרי</b>, לפחות פי 1.5. זה נקרא ' + term('target') + '.') + `<div class="chips" id="tg"><button class="chip" data-t="${P.last + risk * 2}">רווח כפול מההפסד</button><button class="chip" data-t="${P.last + risk * 3}">רווח פי 3</button><button class="chip" data-t="${P.recentHigh}">הגבוה האחרון בגרף</button></div><div class="ro" id="ro">${roTarget()}</div>${lrn(['target', 'rr', 'resistance'])}`; next = 'run'; label = 'הרץ את הגרף'; dis = st.target == null || st.target <= P.last;
     }
     p.innerHTML = h + nav(label, dis);
     $$('.opt', p).forEach(b => b.onclick = () => { if (st.step === 'read') st.trend = b.dataset.k; else if (st.step === 'volume') st.volAns = b.dataset.k; else st.decision = b.dataset.k; draw(); panel(); });
@@ -255,11 +256,6 @@ screens.feedback = ({ idx, st, sim }) => {
   const raw = sc.raw, fut0 = P.candles.slice(P.N), S = sc.S;
   const rel = (v) => `${fmt(Math.abs(v), 1)}% ${v < 0 ? 'מתחת' : 'מעל'} למחיר ההחלטה`;
   const trendWhy = S.trend === 'side' ? `שינוי של ${fmt(Math.abs(S.ch60), 1)}% בלבד, פחות מ-${TREND_PCT}%, ולכן בלי כיוון` : `${S.ch60 > 0 ? 'עלייה' : 'ירידה'} של ${fmt(Math.abs(S.ch60), 1)}%, יותר מ-${TREND_PCT}%`;
-  const reveal = `<div class="card pnl"><span class="eyebrow">עכשיו מגלים איזה נכס זה היה</span><div class="wbig" style="font-size:22px">${sc.asset}</div>
-    <span class="muted" style="display:block;font-size:13.5px;line-height:1.6;margin-top:6px">נקודת ההחלטה: ${fmtDate(raw.c[raw.di][0])}. הגרף נמשך עד ${fmtDate(raw.c[raw.c.length - 1][0])}.</span>
-    <span class="muted" style="display:block;font-size:13.5px;line-height:1.6;margin-top:6px">מה קרה בפועל ב-${P.M} ימי המסחר אחרי נקודת ההחלטה: השפל היה ${rel(Math.min(...fut0.map(c => c.l)) - 100)}, השיא היה ${rel(Math.max(...fut0.map(c => c.h)) - 100)}, והמחיר בסוף התקופה היה ${rel(fut0[fut0.length - 1].c - 100)}.</span>
-    <span class="muted" style="display:block;font-size:13.5px;line-height:1.6;margin-top:6px">איך קבענו את המגמה: הנר הראשון מול האחרון ב-${P.N} הנרות שלפני ההחלטה. ${trendWhy}.</span>
-    <span class="muted" style="display:block;font-size:12.5px;margin-top:8px">נתוני שוק אמיתיים מהעבר. העבר לא מבטיח את העתיד.</span></div>`;
   const replay = (() => {
     const W = 358, H = 210, AX = 6, n = P.candles.length, slot = (W - 2 * AX) / n, bw = Math.max(1.3, slot * .6);
     const hi = Math.max(...P.candles.map(c => c.h)) + 3, lo = Math.min(...P.candles.map(c => c.l)) - 3, y = (v) => 6 + (hi - v) / (hi - lo) * (H - 12), x = (k) => AX + k * slot + slot / 2, pl = st.plan;
@@ -269,34 +265,34 @@ screens.feedback = ({ idx, st, sim }) => {
     if (pl) { g += L(P.last, '#6aa8ff', 'קנייה', '0') + L(pl.stop, '#ff6048', 'סטופ', '6 4') + L(pl.target, '#1fd69b', 'יעד', '6 4'); if (pl.support != null) g += L(pl.support, '#fbbf24', 'רצפה', '2 4'); }
     if (st.line) { const ln = st.line, m = (ln.p2 - ln.p1) / (ln.i2 - ln.i1), yy = (i) => y(ln.p1 + m * (i - ln.i1)); g += `<line x1="${x(ln.i1)}" y1="${yy(ln.i1)}" x2="${x(ln.i2)}" y2="${yy(ln.i2)}" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round"/>`; }
     if (pl && sim && sim.res !== 'none') g += `<circle cx="${x(P.N + sim.at)}" cy="${y(sim.res === 'target' ? pl.target : pl.stop)}" r="6" fill="${sim.res === 'target' ? '#1fd69b' : '#ff6048'}" stroke="#0b0d10" stroke-width="2"/>`;
-    return `<div class="card replay"><b>איך זה נראה בגרף</b><svg viewBox="0 0 ${W} ${H}" class="chart" direction="ltr">${g}</svg><div class="rlegend"><span>הקו המקווקו: נקודת ההחלטה</span>${st.line ? '<span style="color:#fbbf24">קו המגמה שלכם</span>' : ''}</div></div>`;
+    return `<svg viewBox="0 0 ${W} ${H}" class="chart replay-svg" direction="ltr">${g}</svg><div class="rlegend"><span>הקו המקווקו: נקודת ההחלטה</span>${st.line ? '<span style="color:#fbbf24">קו המגמה שלכם</span>' : ''}</div>`;
   })();
-  let result = '', alt = '', title, sub;
+  let resBig = '', resTxt = '', title, sub;
   const pl = st.plan;
   if (pl) {
     const sz = sizing(P, pl), fut = P.candles.slice(P.N);
     const pnl = sim.res === 'target' ? sz.qty * (pl.target - P.last) : sim.res === 'stop' ? -sz.qty * (P.last - pl.stop) : sz.qty * (fut[sim.at].c - P.last);
-    const outcome = { target: 'המחיר הגיע ליעד, יצאתם עם רווח', stop: 'המחיר ירד לסטופ, יצאתם והפסדתם סכום קטן שהחלטתם עליו מראש', none: 'המחיר לא הגיע לא ליעד ולא לסטופ' }[sim.res];
-    result = `<div class="card pnl"><span class="eyebrow">מה קרה בגרף הזה (כסף וירטואלי)</span><div class="wbig ${chgCls(pnl)}" data-cu="${pnl}" data-d="0" data-pre="₪" data-plus="1">${pnl >= 0 ? '+' : '-'}${money(Math.abs(pnl))}</div><span class="muted" style="font-size:13.5px;line-height:1.5">${outcome}.</span></div>`;
-    alt = `<div class="card alt"><b>עתיד אחד בלבד</b>
-      <span class="muted" style="font-size:13.5px;line-height:1.65">זה העתיד האמיתי היחיד שיש כרגע לנכס הזה. תוצאה אחת לא מוכיחה כלום, ולכן בודקים את התוכנית ולא רק את התוצאה.</span></div>`;
-    if (ok) { title = sim.res === 'target' ? 'תוכנית מצוינת!' : sim.res === 'stop' ? 'תוכנית טובה, אבל הפעם לא הצליח' : 'תוכנית טובה'; sub = sim.res === 'stop' ? 'זה קורה גם לתוכניות טובות. הסטופ עשה את שלו: ההפסד נשאר קטן.' : 'כל החלקים בתוכנית נכונים.'; }
+    resTxt = { target: 'המחיר הגיע ליעד', stop: 'המחיר ירד לסטופ וההפסד נשאר קטן', none: 'לא הגיע לא ליעד ולא לסטופ' }[sim.res];
+    resBig = `<div class="wbig ${chgCls(pnl)}" data-cu="${pnl}" data-d="0" data-pre="₪" data-plus="1">${pnl >= 0 ? '+' : '-'}${money(Math.abs(pnl))}</div>`;
+    if (ok) { title = sim.res === 'target' ? 'תוכנית מצוינת!' : sim.res === 'stop' ? 'תוכנית טובה, אבל הפעם לא הצליח' : 'תוכנית טובה'; sub = sim.res === 'stop' ? 'זה קורה גם לתוכניות טובות. הסטופ עשה את שלו.' : 'כל החלקים בתוכנית נכונים.'; }
   } else if (st.decision === 'wait') {
-    result = `<div class="card pnl"><span class="eyebrow">מה קרה בגרף</span><div class="wbig" style="font-size:20px">${sc.action === 'wait' ? 'לא הפסדתם כלום' : 'לא קניתם'}</div><span class="muted" style="font-size:13.5px;line-height:1.5">${sc.why}</span></div>`;
+    resBig = `<div class="wbig" style="font-size:20px">${sc.action === 'wait' ? 'לא הפסדתם כלום' : 'לא קניתם'}</div>`; resTxt = 'בחרתם לחכות';
   }
   if (!title) { title = ok ? 'החלטה מצוינת!' : ev.stars === 2 ? 'כמעט!' : 'לא הפעם'; sub = ok ? 'הכול נכון.' : 'יש כאן משהו לתקן, וזה בסדר. הכי חשוב להבין למה.'; }
   $('#tabbar').hidden = true;
+  const rowOf = (c) => `<details class="ck2 ${c.ok ? 'ok' : 'no'}"${c.ok ? '' : ' open'}><summary><i>${c.ok ? '✓' : '✕'}</i><b>${c.term ? term(c.term, c.t) : c.t}</b></summary><p>${c.ok ? c.good : c.bad}</p></details>`;
   scr.innerHTML = `${ok ? confetti() : ''}<div class="fb ${ok ? 'ok' : 'no'} anim">
     <div class="big-ic" style="color:${ok ? 'var(--green)' : 'var(--red)'}">${ok ? ic.check : ic.x}</div>
-    <h1 style="font-size:24px;padding:0 10px">${title}</h1><p class="muted" style="margin:0 24px;line-height:1.55">${sub}</p>
+    <h1>${title}</h1><p class="muted fb-sub">${sub}</p>
     <div class="stars">${[0, 1, 2].map(k => `<span class="${k < ev.stars ? 'pop' : ''}" style="animation-delay:${k * .18}s">${starSvg(k < ev.stars)}</span>`).join('')}</div>
-    <p class="muted" style="font-size:12.5px">הכוכבים על החשיבה שלכם, לא על המזל</p>
-    ${result}
-    ${reveal}
-    ${replay}
-    <div class="checks"><b style="display:block;margin:6px 2px 10px;font-size:16px">מה עשיתם טוב ומה לתקן</b>${ev.checks.map(c => `<div class="ck ${c.ok ? 'ok' : 'no'}"><div class="m">${c.ok ? '✓' : '✕'}</div><div><b>${c.term ? term(c.term, c.t) : c.t}</b><span>${c.ok ? c.good : c.bad}</span></div></div>`).join('')}
-      <div class="ck ok"><div class="m" style="background:var(--card2);color:var(--text)">i</div><div><b>על המקרה</b><span>${sc.why}</span></div></div></div>
-    ${alt}
+    <div class="card fbcard"><span class="eyebrow">הנכס האמיתי</span><b class="fb-asset">${sc.asset}</b><span class="muted fb-date">נקודת ההחלטה: ${fmtDate(raw.c[raw.di][0])}</span>
+      ${replay}
+      <div class="fb-res">${resBig}<span class="muted">${resTxt}</span></div>
+      <details class="more"><summary>מה קרה בפועל</summary><p>ב-${P.M} ימי המסחר אחרי נקודת ההחלטה, השפל היה ${rel(Math.min(...fut0.map(c => c.l)) - 100)}, השיא היה ${rel(Math.max(...fut0.map(c => c.h)) - 100)}, והמחיר בסוף התקופה היה ${rel(fut0[fut0.length - 1].c - 100)}. הגרף נמשך עד ${fmtDate(raw.c[raw.c.length - 1][0])}.</p>
+        <p>איך קבענו את המגמה: הנר הראשון מול האחרון ב-${P.N} הנרות שלפני ההחלטה. ${trendWhy}.</p>
+        <p>זה העתיד האמיתי היחיד שיש כרגע לנכס הזה. תוצאה אחת לא מוכיחה כלום, ולכן בודקים את התוכנית ולא רק את התוצאה. נתוני שוק אמיתיים מהעבר. העבר לא מבטיח את העתיד.</p></details></div>
+    <div class="card fbchecks"><b>מה עשיתם</b>${ev.checks.map(rowOf).join('')}
+      <details class="ck2 info"><summary><i>i</i><b>על המקרה</b></summary><p>${sc.why}</p></details></div>
     <div class="btns">${ok ? `<button class="btn primary" data-go="practice" data-arg="${(idx + 1) % SCEN.length}">למקרה הבא</button>` : `<button class="btn primary" data-go="practice" data-arg="${idx}">לנסות שוב</button>`}<button class="btn ghost" data-go="practiceHome">לכל המקרים</button></div>
     <p class="disc">תרגיל לימודי על נתוני שוק אמיתיים מהעבר, בלי כסף אמיתי. אין כאן המלצת השקעה.</p></div>`;
 };

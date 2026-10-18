@@ -198,6 +198,8 @@ screens.signup = () => {
 };
 
 /* ===== home ===== */
+/* abstract candles for the practice tile (no labels) */
+function homeArt() { const a = genC(23, 26, 100, .5, 3.4), c = chartBox(a, 10, 310, 24, 126); return `<svg direction="ltr" viewBox="0 0 320 150" preserveAspectRatio="xMidYMid slice">${c.svg}</svg>`; }
 screens.home = () => {
   const s = A(), nextL = LESSONS.find(l => !s.lessonsDone.includes(l.id));
   const done = s.lessonsDone.length, total = LESSONS.length, open = portfolioOpen();
@@ -205,13 +207,6 @@ screens.home = () => {
   const movers = [...ASSETS].sort((x, y) => Math.abs(y.chg) - Math.abs(x.chg)).slice(0, 5);
   const heroVis = nextL ? (nextL.slides[0] || {}).v : 'riskline';
   const R = 52, C = 2 * Math.PI * R, ring = (frac, big) => `<svg viewBox="0 0 120 120" class="rg"><circle cx="60" cy="60" r="${R}" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="9"/><circle cx="60" cy="60" r="${R}" fill="none" stroke="#c8ff3d" stroke-width="9" stroke-linecap="round" stroke-dasharray="${C.toFixed(0)}" stroke-dashoffset="${(C * (1 - frac)).toFixed(0)}" transform="rotate(-90 60 60)" style="filter:drop-shadow(0 0 5px #c8ff3d)"/><text x="60" y="68" text-anchor="middle" fill="#fff" font-size="26" font-weight="800" font-family="Heebo,sans-serif">${big}</text></svg>`;
-  const tiles = [
-    ['practiceHome', 'תרגול', 'קוראים גרף ומחליטים', ic.chart, ''],
-    ['market', 'שוק', 'חוקרים מדדים ומניות', ic.trend, ''],
-    ['glossary', 'מילון', 'כל מילה בשפה פשוטה', ic.book, ''],
-    ['portfolio', 'התיק שלי', open ? money(eq) : 'נפתח בסיום השיעורים', ic.wallet, open ? '' : 'lk'],
-    ['community', 'קהילה', 'שואלים ועונים על הלמידה', ic.user, '']
-  ];
   scr.innerHTML = `<div class="anim home">
     <div class="hello"><button class="avatar ringed" data-go="profile" aria-label="פרופיל"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="26" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="3"/><circle cx="28" cy="28" r="26" fill="none" stroke="#ffc94d" stroke-width="3" stroke-linecap="round" stroke-dasharray="163" stroke-dashoffset="${(163 * (1 - xp / 100)).toFixed(0)}" transform="rotate(-90 28 28)"/></svg><span>${s.name[0]}</span></button>
       <div class="t"><span class="eyebrow">שלום, רמה ${lvl(s)}</span><b>${s.name}</b></div>
@@ -223,7 +218,9 @@ screens.home = () => {
         <div class="h2r">${ring(done / total, done + '/' + total)}</div></div>
       <span class="h2go">${nextL ? 'להמשיך' : 'לתיק שלי'} ${ic.back}</span></button>
     <div class="sec2"><h3>לחקור</h3></div>
-    <div class="tiles">${tiles.map(([go, t, d, icon, lk], i) => `<button class="tile${lk ? ' lk' : ''}" data-go="${go}" style="animation-delay:${.12 + i * .06}s"><i>${lk ? ic.lock : icon}</i><div><b>${t}</b><span>${d}</span></div></button>`).join('')}</div>
+    <button class="tile big" data-go="practiceHome"><div class="tart" aria-hidden="true">${homeArt()}</div><div class="tt"><i>${ic.chart}</i><b>תרגול</b><span>קוראים גרף אמיתי ומחליטים</span></div><em>${ic.back}</em></button>
+    <div class="tiles3">${[['market', 'שוק', ic.trend], ['glossary', 'מילון', ic.book], ['community', 'קהילה', ic.user]].map(([go, t, icon], i) => `<button class="tile sm" data-go="${go}" style="animation-delay:${.12 + i * .06}s"><i>${icon}</i><b>${t}</b></button>`).join('')}</div>
+    <button class="tile wide${open ? '' : ' lk'}" data-go="portfolio"><i>${open ? ic.wallet : ic.lock}</i><div><b>התיק שלי</b><span>${open ? 'כסף וירטואלי לתרגול' : 'נפתח בסיום השיעורים'}</span></div><strong>${open ? money(eq) : ''}</strong></button>
     <div class="sec2"><h3>זזים עכשיו <span class="live"></span></h3><button class="link" data-go="market">הכול</button></div>
     <div class="rows card hm-rows">${movers.slice(0, 3).map(assetRow).join('')}</div>
     <p class="demo-note" style="text-align:center">נתוני הדגמה בדויים שנעים בזמן אמת.</p></div>`;

@@ -1039,3 +1039,54 @@ details.skills summary{display:flex;justify-content:space-between;align-items:ce
 .tile b{display:block;font-size:16px}.tile span{display:block;font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.4}
 .tile.lk>i{background:rgba(255,255,255,.07);color:var(--muted)}.tile.lk{opacity:.75}
 .tile:last-child{grid-column:1/-1;flex-direction:row;align-items:center}.tile:last-child>div{flex:1}
+
+/* ===== lighter practice and feedback ===== */
+.steps{display:flex;justify-content:stretch;gap:5px;margin:12px 2px 8px}
+.steps i{flex:1;width:auto;height:4px;border-radius:3px;background:rgba(255,255,255,.1);border:0;transition:background .35s,box-shadow .35s}
+.steps i.done{background:rgba(200,255,61,.5)}.steps i.on{background:var(--lime);box-shadow:0 0 8px rgba(200,255,61,.5)}
+.lrn{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-size:13px;color:var(--lime);opacity:.9}.lrn svg{width:15px;height:15px}
+.task h3{margin-top:0}
+.pbox{padding-bottom:6px}
+.fb h1{font-size:23px;padding:0 10px;margin-top:2px}.fb .fb-sub{margin:4px 24px 0;line-height:1.5;font-size:14px}
+.fb .big-ic{width:64px;height:64px;margin:4px 0 10px}.fb .big-ic svg{width:32px;height:32px}
+.fb .stars{margin:8px 0 4px}
+.fbcard{width:100%;margin-top:14px;text-align:start;padding:16px}
+.fb-asset{display:block;font-size:21px;margin-top:2px}.fb-date{display:block;font-size:13px;margin-top:2px}
+.fbcard .replay-svg{width:100%;height:auto;display:block;margin-top:12px;animation:reveal 1.2s cubic-bezier(.4,0,.2,1) .35s both}
+.fbcard .rlegend{margin-top:4px}
+.fb-res{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.07)}
+.fb-res .wbig{font-size:26px}.fb-res .muted{font-size:13.5px;text-align:end}
+details.more{margin-top:10px}details.more summary{cursor:pointer;font-size:13.5px;color:var(--lime);list-style:none}details.more summary::-webkit-details-marker{display:none}
+details.more summary::after{content:" ▾"}details.more[open] summary::after{content:" ▴"}
+details.more p{font-size:13.5px;line-height:1.65;color:var(--muted);margin:8px 0 0}
+.fbchecks{width:100%;margin-top:12px;text-align:start;padding:14px 16px}.fbchecks>b{display:block;font-size:16px;margin-bottom:4px}
+.ck2{border-bottom:1px solid rgba(255,255,255,.06)}.ck2:last-child{border:0}
+.ck2 summary{display:flex;align-items:center;gap:10px;padding:11px 0;cursor:pointer;list-style:none}.ck2 summary::-webkit-details-marker{display:none}
+.ck2 summary i{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:800;background:var(--green-bg);color:var(--green)}
+.ck2.no summary i{background:var(--red-bg);color:var(--red)}.ck2.info summary i{background:rgba(255,255,255,.08);color:var(--text)}
+.ck2 summary b{flex:1;font-size:15px;font-weight:600}
+.ck2 p{margin:0 0 12px;padding-inline-start:34px;font-size:13.5px;line-height:1.65;color:var(--muted)}
+.ck2.ok summary::after,.ck2.info summary::after{content:'';width:7px;height:7px;border-inline-end:2px solid var(--dim);border-bottom:2px solid var(--dim);transform:rotate(45deg);transition:transform .2s}
+.ck2[open].ok summary::after,.ck2[open].info summary::after{transform:rotate(-135deg)}
+.fb .need,.need{padding:9px 12px;margin-bottom:10px;font-size:13px}
+
+/* ===== home: one big practice card, three small tiles, a slim portfolio card ===== */
+.tile.big{position:relative;display:block;width:100%;min-height:128px;padding:0;overflow:hidden;margin-top:6px;border-color:rgba(200,255,61,.3)}
+.tile.big .tart{position:absolute;inset:0;opacity:.55;-webkit-mask-image:linear-gradient(90deg,#000 0,transparent 78%);mask-image:linear-gradient(90deg,#000 0,transparent 78%)}
+.tile.big .tart svg{width:100%;height:100%;display:block}
+.tile.big .tt{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:18px 20px;max-width:62%}
+.tile.big .tt i{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:var(--lime);color:#0b0d10;margin-bottom:6px}.tile.big .tt i svg{width:21px;height:21px}
+.tile.big .tt b{font-size:20px}.tile.big .tt span{font-size:13px;color:#cfd6df}
+.tile.big>em{position:absolute;inset-inline-start:18px;bottom:16px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(200,255,61,.16);color:var(--lime);font-style:normal}.tile.big>em svg{width:18px;height:18px}
+.tiles3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.tile.sm{flex-direction:column;align-items:center;gap:9px;padding:16px 6px;text-align:center}.tile.sm b{font-size:14.5px}
+.tile.wide{width:100%;flex-direction:row;align-items:center;gap:14px;margin-top:10px;padding:14px 16px}.tile.wide>div{flex:1}.tile.wide strong{font-size:18px}
+.tile.wide .muted,.tile.wide span{margin-top:0}
+.tile.sm:last-child{flex-direction:column;align-items:center;grid-column:auto}
+
+.tile.big>em{inset-inline-start:auto;left:18px}
+.tile.big .tt span{max-width:200px}
+.need{display:flex;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:10px;padding:8px 12px;margin-bottom:10px;font-size:12.5px;border-radius:14px}
+.need span{min-width:0;flex:1;color:#e8d9a8}.need .link{flex:none;color:var(--gold);font-size:12.5px;font-weight:700}
+.fb.ok .big-ic{box-shadow:0 0 0 7px rgba(31,240,176,.07),0 0 34px rgba(31,240,176,.3)}
+.fb.no .big-ic{box-shadow:0 0 0 7px rgba(255,96,72,.07),0 0 30px rgba(255,96,72,.24)}
