@@ -50,35 +50,7 @@ disc = "גרסת ניסוי. התוכן לימודי בלבד ואינו ייע�
 h2{{font-size:20px;margin:30px 0 4px}}p{{margin:0;color:#cfd6dd}}.top{{padding:26px 0 6px}}.note{{background:var(--card);border-radius:14px;padding:14px 16px;color:var(--mu);font-size:15px}}</style></head><body><div class="w">
 <div class="top"><a href="./">&rarr; חזרה לדף הראשי</a><h1>תקנון, תנאי שימוש ופרטיות</h1><p class="note">טיוטה לגרסת ניסוי, עדיין לא נבדקה על ידי עורך דין. גרסה {ver}.</p></div>
 {sec}<p style="margin:40px 0 60px;color:var(--mu)">{disc}</p></div></body></html>""", encoding="utf-8")
-# landing page
-(out / "index.html").write_text(f"""<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>לומדים שוק הון</title><meta name="description" content="ללמוד, לתרגל ולהבין את שוק ההון בעברית, לבני 15 ומעלה. שיעורים קצרים ותרגול על גרפים אמיתיים, בלי כסף אמיתי.">
-<meta name="theme-color" content="#07090c"><link rel="icon" href="icon-512.png"><link rel="apple-touch-icon" href="icon-512.png">
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&display=swap" rel="stylesheet"><style>{CSS}
-.hero{{text-align:center;padding:56px 0 40px;background:radial-gradient(600px 300px at 50% 0,rgba(200,255,61,.16),transparent)}}
-.hero img{{width:92px;height:92px;border-radius:26px;box-shadow:0 0 40px rgba(200,255,61,.3)}}h1{{font-size:clamp(32px,7vw,48px);margin:18px 0 8px}}h1 b{{color:var(--li)}}
-.sub{{color:var(--mu);font-size:19px;margin:0 auto 26px;max-width:520px}}.cta{{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}}
-section{{padding:34px 0}}h2{{font-size:26px;margin:0 0 16px}}.g{{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}}
-.c{{background:var(--card);border-radius:18px;padding:18px}}.c h3{{margin:0 0 4px;font-size:18px}}.c p{{margin:0;color:var(--mu);font-size:15.5px}}
-.step{{display:flex;gap:12px;align-items:flex-start;margin:10px 0}}.n{{flex:none;width:30px;height:30px;border-radius:50%;background:var(--li);color:#10180a;font-weight:800;display:grid;place-items:center}}
-.tabs{{display:flex;gap:8px;margin-bottom:12px}}.tabs button{{flex:1;min-height:48px;border-radius:14px;border:1.5px solid #3a434d;background:transparent;color:var(--tx);font:inherit;font-weight:700;cursor:pointer}}.tabs button.on{{background:var(--li);color:#10180a;border-color:var(--li)}}
-.pane{{display:none;background:var(--card);border-radius:18px;padding:12px 18px}}.pane.on{{display:block}}
-.warn{{background:var(--card);border-radius:18px;padding:16px 18px;color:#cfd6dd;font-size:15.5px}}footer{{padding:30px 0 60px;color:var(--mu);font-size:14.5px;text-align:center}}
-#ins{{display:none}}</style></head><body>
-<header class="hero"><div class="w"><img src="icon-512.png" alt="" width="92" height="92"><h1>לומדים <b>שוק הון</b></h1>
-<p class="sub">ללמוד, לתרגל ולהבין. שיעורים קצרים בעברית ותרגול על גרפים אמיתיים מהעבר, בלי כסף אמיתי. לבני 15 ומעלה.</p>
-<div class="cta"><a class="btn" href="app/">פתיחת האפליקציה</a><button class="btn o" id="ins">התקנה בטלפון</button><a class="btn o" href="#install">איך מתקינים?</a></div></div></header>
-<main class="w"><section><h2>מה בפנים</h2><div class="g">
-<div class="c"><h3>שיעורים קצרים</h3><p>27 שיעורים בחמישה נושאים, מהיסודות ועד סיכון וניהול כסף. כל שיעור נגמר בשאלות קצרות.</p></div>
-<div class="c"><h3>תרגול על גרפים</h3><p>20 מקרים אמיתיים מהעבר. מחליטים בלי לדעת מה הנכס, ובסוף רואים מה קרה ולמה.</p></div>
-<div class="c"><h3>בלי כסף אמיתי</h3><p>הכול הדמיה לימודית. אין קנייה, אין מכירה ואין המלצות השקעה.</p></div>
-<div class="c"><h3>עובד גם בלי אינטרנט</h3><p>אחרי הפתיחה הראשונה האפליקציה נשמרת בטלפון, והשיעורים והתרגול זמינים בכל מקום.</p></div></div></section>
-<section id="install"><h2>איך מורידים לטלפון</h2><div class="tabs" role="tablist"><button class="on" data-t="a">אנדרואיד</button><button data-t="i">אייפון</button></div>
-<div class="pane on" id="p-a"><div class="step"><span class="n">1</span><span>פתחו את הדף הזה ב-Chrome.</span></div><div class="step"><span class="n">2</span><span>לחצו על "התקנה בטלפון" למעלה. אם אין כפתור, לחצו על שלוש הנקודות בפינה ובחרו <b>התקנת אפליקציה</b>.</span></div><div class="step"><span class="n">3</span><span>האייקון יופיע במסך הבית. פותחים ממנו כמו כל אפליקציה.</span></div></div>
-<div class="pane" id="p-i"><div class="step"><span class="n">1</span><span>פתחו את הדף הזה ב-<b>Safari</b> (לא בדפדפן אחר).</span></div><div class="step"><span class="n">2</span><span>לחצו על כפתור השיתוף, הריבוע עם החץ כלפי מעלה.</span></div><div class="step"><span class="n">3</span><span>גללו ובחרו <b>הוספה למסך הבית</b>, ואז "הוספה".</span></div></div></section>
-<section><div class="warn"><b>חשוב לדעת:</b> {disc} התחברות עם Google וסנכרון ההתקדמות דורשים אינטרנט. השיעורים והתרגול עובדים גם בלי.</div></section></main>
-<footer><div class="w"><a href="terms.html">תקנון ופרטיות</a><p>© לומדים שוק הון, גרסת ניסוי</p></div></footer>
-<script>document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{{document.querySelectorAll('.tabs button,.pane').forEach(x=>x.classList.remove('on'));b.classList.add('on');document.getElementById('p-'+b.dataset.t).classList.add('on')}});
-/iphone|ipad/i.test(navigator.userAgent)&&document.querySelector('[data-t=i]').click();
-let dp;addEventListener('beforeinstallprompt',e=>{{e.preventDefault();dp=e;const i=document.getElementById('ins');i.style.display='inline-flex';i.onclick=()=>{{dp.prompt();dp=null;i.style.display='none'}}}});</script></body></html>""", encoding="utf-8")
+# landing page (pwa/landing.html) with app screenshots
+shutil.copytree(R / "pwa/shots", out / "shots")
+(out / "index.html").write_text((R / "pwa/landing.html").read_text(encoding="utf-8").replace("{{DISC}}", disc), encoding="utf-8")
 print("site ->", out, sorted(p.name for p in out.rglob("*") if p.is_file()))

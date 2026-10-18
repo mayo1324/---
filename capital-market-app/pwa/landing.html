@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>לומדים שוק הון</title>
+<meta name="description" content="ללמוד, לתרגל ולהבין את שוק ההון בעברית, לבני 15 ומעלה. שיעורים קצרים ותרגול על גרפים אמיתיים, בלי כסף אמיתי.">
+<meta name="theme-color" content="#05070a">
+<link rel="icon" href="icon-512.png"><link rel="apple-touch-icon" href="icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#05070a;--card:rgba(255,255,255,.045);--line:rgba(255,255,255,.1);--tx:#f2f5f7;--mu:#98a3ae;--li:#c8ff3d;--li2:#8fd10a;--rd:#ff5d6c}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Heebo,system-ui,sans-serif;line-height:1.65;font-size:17px;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+a{color:inherit}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block}
+.veil{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(1100px 600px at 70% 8%,rgba(200,255,61,.10),transparent 60%),linear-gradient(180deg,rgba(5,7,10,.25),rgba(5,7,10,.78) 55%,#05070a 100%)}
+main,header,footer{position:relative;z-index:2;overflow-x:clip}
+.hero{overflow:clip}
+.w{max-width:1180px;margin:0 auto;padding:0 22px}
+/* nav */
+nav{position:fixed;top:0;inset-inline:0;z-index:20;transition:.3s}
+nav .w{display:flex;align-items:center;justify-content:space-between;height:68px}
+nav.s{background:rgba(5,7,10,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;font-size:19px}
+.brand img{width:34px;height:34px;border-radius:10px}.brand b{color:var(--li)}
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 30px;border-radius:18px;background:linear-gradient(180deg,#dcff7a,#aee21a);color:#0e1505;font:inherit;font-weight:800;font-size:17px;text-decoration:none;border:0;cursor:pointer;box-shadow:0 0 0 1px rgba(255,255,255,.35) inset,0 14px 40px -8px rgba(200,255,61,.55);transition:transform .25s,box-shadow .25s}
+.btn:hover{box-shadow:0 0 0 1px rgba(255,255,255,.5) inset,0 20px 50px -6px rgba(200,255,61,.75)}
+.btn:after{content:"";position:absolute;top:0;bottom:0;width:60px;left:-90px;background:linear-gradient(100deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);animation:shine 4.5s ease-in-out infinite}
+@keyframes shine{0%,60%{left:-90px}100%{left:130%}}
+.btn.o{background:rgba(255,255,255,.04);color:var(--tx);box-shadow:0 0 0 1.5px var(--line) inset;backdrop-filter:blur(8px)}.btn.o:after{display:none}.btn.o:hover{box-shadow:0 0 0 1.5px rgba(200,255,61,.6) inset}
+.btn.sm{min-height:42px;padding:0 20px;font-size:15px;border-radius:14px}
+/* hero */
+.hero{min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:110px 0 60px}
+.hg{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;width:100%}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);backdrop-filter:blur(10px);font-size:14px;color:#d7dee5;margin-bottom:22px}
+.pill i{width:8px;height:8px;border-radius:50%;background:var(--li);box-shadow:0 0 12px var(--li);animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.35;transform:scale(.7)}}
+h1{font-size:clamp(38px,5.4vw,70px);line-height:1.02;margin:0 0 22px;font-weight:900;letter-spacing:-.02em}
+h1 .ln{display:block;overflow:hidden;padding-bottom:.1em;white-space:nowrap}
+h1 .ln span{display:inline-block;transform:translateY(110%);animation:up .9s cubic-bezier(.2,.8,.2,1) forwards}
+h1 .ln:nth-child(2) span{animation-delay:.12s}
+@keyframes up{to{transform:none}}
+.grad{background:linear-gradient(100deg,#f4ffc4,var(--li) 40%,#6fe0a0 80%);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% 100%;animation:gs 6s linear infinite}
+@keyframes gs{to{background-position:-200% 0}}
+.sub{font-size:clamp(17px,2vw,21px);color:#b5bfc9;max-width:540px;margin:0 0 30px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px;color:var(--mu);font-size:14.5px}
+.chips span{display:flex;align-items:center;gap:7px}.chips span:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--li)}
+.fade{opacity:0;transform:translateY(24px);animation:fin .9s .35s cubic-bezier(.2,.8,.2,1) forwards}
+.fade.d2{animation-delay:.5s}.fade.d3{animation-delay:.65s}
+@keyframes fin{to{opacity:1;transform:none}}
+/* phone */
+.stage{perspective:1500px;display:grid;place-items:center;min-height:620px;position:relative}
+.glow{position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(200,255,61,.32),transparent 65%);filter:blur(40px);animation:fl 7s ease-in-out infinite}
+.rig{transform-style:preserve-3d;position:relative;transition:transform .15s ease-out}
+.float{transform-style:preserve-3d;animation:flt 6s ease-in-out infinite}
+@keyframes flt{50%{transform:translateY(-14px)}}@keyframes fl{50%{transform:scale(1.12)}}
+.phone{position:relative;width:292px;aspect-ratio:390/844;border-radius:50px;padding:9px;background:linear-gradient(145deg,#3a424c,#12161b 40%,#2a313a);box-shadow:0 0 0 1.5px #4a5561 inset,0 60px 90px -20px rgba(0,0,0,.8),0 0 120px -20px rgba(200,255,61,.35);transform-style:preserve-3d}
+.phone:before{content:"";position:absolute;top:18px;left:50%;width:84px;height:24px;border-radius:14px;background:#05070a;transform:translateX(-50%);z-index:5}
+.scr{position:relative;width:100%;height:100%;border-radius:42px;overflow:hidden;background:#07090c}
+.scr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.05);transition:opacity .8s,transform 1.2s}
+.scr img.on{opacity:1;transform:none}
+.scr:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.14),transparent 30%,transparent 70%,rgba(255,255,255,.05));pointer-events:none}
+.fc{position:absolute;display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:18px;background:rgba(18,22,27,.72);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 20px 40px -10px rgba(0,0,0,.6);font-weight:700;font-size:14.5px;white-space:nowrap;transform:translateZ(90px)}
+.fc i{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:rgba(200,255,61,.14);color:var(--li);font-style:normal;font-size:17px}
+.fc small{display:block;color:var(--mu);font-weight:400;font-size:12px}
+.fc.a{top:8%;right:-34%;animation:bob 5s ease-in-out infinite}.fc.b{bottom:30%;left:-46%;animation:bob 6s -2s ease-in-out infinite}.fc.c{bottom:6%;right:-30%;animation:bob 5.5s -1s ease-in-out infinite}
+@keyframes bob{50%{margin-top:-12px}}
+.dots{display:flex;gap:8px;margin-top:26px;justify-content:center}
+.dots button{width:9px;height:9px;border-radius:99px;border:0;background:rgba(255,255,255,.25);padding:0;cursor:pointer;transition:.3s}.dots button.on{width:30px;background:var(--li)}
+/* ticker */
+.tick{border-block:1px solid var(--line);background:rgba(255,255,255,.02);overflow:hidden;padding:18px 0;direction:ltr}
+.tr{display:flex;gap:46px;width:max-content;animation:mq 38s linear infinite;font-weight:800;font-size:22px;color:#cdd6de;white-space:nowrap}
+.tr span{display:flex;align-items:center;gap:46px}.tr span:after{content:"";width:8px;height:8px;background:var(--li);transform:rotate(45deg)}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* sections */
+section{padding:110px 0;position:relative}
+.eyebrow{color:var(--li);font-weight:700;letter-spacing:.06em;font-size:14.5px;margin-bottom:12px}
+h2{font-size:clamp(30px,4.6vw,56px);line-height:1.1;margin:0 0 16px;font-weight:900;letter-spacing:-.015em}
+.lead{color:#aab4be;font-size:19px;max-width:620px;margin:0}
+.rv{opacity:0;transform:translateY(44px);transition:opacity 1s cubic-bezier(.2,.8,.2,1),transform 1s cubic-bezier(.2,.8,.2,1)}.rv.in{opacity:1;transform:none}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:10px}
+.st{padding:34px 20px;border-radius:26px;background:var(--card);border:1px solid var(--line);text-align:center;backdrop-filter:blur(10px)}
+.st b{display:block;font-size:clamp(44px,6vw,72px);font-weight:900;line-height:1;background:linear-gradient(180deg,#fff,var(--li));-webkit-background-clip:text;background-clip:text;color:transparent}
+.st span{color:var(--mu);font-size:15.5px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:46px;perspective:1200px}
+.card{position:relative;padding:30px 26px;border-radius:28px;background:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.02));border:1px solid var(--line);transform-style:preserve-3d;transition:transform .2s ease-out,border-color .3s;overflow:hidden}
+.card:hover{border-color:rgba(200,255,61,.45)}
+.card:before{content:"";position:absolute;inset:0;background:radial-gradient(260px 200px at var(--mx,50%) var(--my,0%),rgba(200,255,61,.18),transparent 70%);opacity:0;transition:.3s}.card:hover:before{opacity:1}
+.ico{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;margin-bottom:20px;background:linear-gradient(145deg,rgba(200,255,61,.22),rgba(200,255,61,.05));border:1px solid rgba(200,255,61,.3);transform:translateZ(40px)}
+.ico svg{width:28px;height:28px;stroke:var(--li);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.card h3{margin:0 0 8px;font-size:22px;transform:translateZ(28px)}.card p{margin:0;color:var(--mu);font-size:16px;transform:translateZ(14px)}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:54px;position:relative}
+.steps:before{content:"";position:absolute;top:34px;inset-inline:16%;height:2px;background:linear-gradient(90deg,transparent,var(--li),transparent);opacity:.45}
+.sp{text-align:center;position:relative}.sp .n{width:68px;height:68px;border-radius:50%;margin:0 auto 20px;display:grid;place-items:center;font-size:26px;font-weight:900;color:#0e1505;background:linear-gradient(145deg,#e8ff8c,var(--li2));box-shadow:0 0 0 8px rgba(200,255,61,.1),0 0 40px rgba(200,255,61,.45)}
+.sp h3{margin:0 0 6px;font-size:22px}.sp p{margin:0 auto;color:var(--mu);max-width:300px;font-size:16px}
+/* try it */
+.try{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:center}
+.cw{padding:20px;border-radius:30px;background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border:1px solid var(--line);backdrop-filter:blur(14px)}
+.cw .hd{display:flex;justify-content:space-between;color:var(--mu);font-size:14px;margin-bottom:8px;direction:rtl}
+#mini{width:100%;height:250px;display:block;border-radius:16px;background:rgba(0,0,0,.25)}
+.gb{display:flex;gap:10px;margin-top:14px}.gb button{flex:1;min-height:52px;border-radius:16px;border:1.5px solid var(--line);background:rgba(255,255,255,.04);color:var(--tx);font:inherit;font-weight:800;font-size:17px;cursor:pointer;transition:.2s}
+.gb button:hover{border-color:var(--li);background:rgba(200,255,61,.1)}.gb button:disabled{opacity:.5;cursor:default}
+#res{min-height:48px;margin-top:12px;color:#d5dde4;font-size:15.5px}
+.fine{color:var(--mu);font-size:13px;margin-top:6px}
+/* install */
+.tabs{display:inline-flex;gap:6px;padding:6px;border-radius:18px;background:var(--card);border:1px solid var(--line);margin:30px 0 20px}
+.tabs button{min-height:44px;padding:0 26px;border-radius:13px;border:0;background:transparent;color:var(--tx);font:inherit;font-weight:700;cursor:pointer}.tabs button.on{background:var(--li);color:#0e1505}
+.pane{display:none;max-width:640px}.pane.on{display:block}
+.step{display:flex;gap:14px;align-items:flex-start;margin:14px 0;padding:16px 18px;border-radius:18px;background:var(--card);border:1px solid var(--line)}
+.step .n{flex:none;width:32px;height:32px;border-radius:50%;background:var(--li);color:#0e1505;font-weight:800;display:grid;place-items:center}
+.warn{margin-top:40px;padding:20px 24px;border-radius:22px;background:var(--card);border:1px solid var(--line);color:#c5ced7;font-size:16px}
+.final{text-align:center;padding:140px 0}.final h2{font-size:clamp(34px,6vw,72px)}
+footer{padding:36px 0 60px;border-top:1px solid var(--line);color:var(--mu);font-size:14.5px;text-align:center}footer a{color:var(--li)}
+#ins{display:none}
+@media(max-width:900px){
+ .hg{grid-template-columns:1fr;text-align:center}.sub{margin-inline:auto}.cta,.chips{justify-content:center}
+ .stage{min-height:560px;margin-top:20px}.fc.a{right:-14%}.fc.b{left:-16%}.glow{width:300px;height:300px}h1 .ln{white-space:normal}
+ .stats{grid-template-columns:repeat(2,1fr)}.grid,.steps,.try{grid-template-columns:1fr}.steps:before{display:none}
+ section{padding:80px 0}.hero{padding-top:96px}.phone{width:260px}
+}
+@media(max-width:420px){.fc.c{display:none}.fc.a{top:4%;right:-8%}.fc.b{left:-8%}.fc{font-size:12.5px;padding:9px 11px}.fc i{width:28px;height:28px}h1{font-size:36px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}h1 .ln span,.fade,.rv{opacity:1!important;transform:none!important}.btn:after{display:none}}
+</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas><div class="veil"></div>
+
+<nav id="nav"><div class="w"><a class="brand" href="./"><img src="icon-512.png" alt="">לומדים <b>שוק הון</b></a><a class="btn sm" href="app/">פתיחת האפליקציה</a></div></nav>
+
+<header class="hero"><div class="w hg">
+  <div>
+    <div class="pill fade"><i></i>גרסת ניסוי · בחינם · לבני 15 ומעלה</div>
+    <h1><span class="ln"><span>תבינו את שוק ההון.</span></span><span class="ln"><span class="grad">בלי לסכן שקל.</span></span></h1>
+    <p class="sub fade d2">שיעורים קצרים בעברית ותרגול על גרפים אמיתיים מהעבר. מחליטים, רואים מה קרה ולומדים למה. הכול הדמיה, בלי כסף אמיתי.</p>
+    <div class="cta fade d3"><a class="btn" href="app/" data-mag>פתיחת האפליקציה</a><button class="btn o" id="ins" data-mag>התקנה בטלפון</button><a class="btn o" href="#install" data-mag>איך מתקינים?</a></div>
+    <div class="chips fade d3"><span>27 שיעורים</span><span>20 מקרי תרגול</span><span>עובד גם בלי אינטרנט</span></div>
+  </div>
+  <div class="stage" id="stage">
+    <div class="glow"></div>
+    <div class="rig" id="rig"><div class="float">
+      <div class="phone"><div class="scr" id="scr">
+        <img class="on" src="shots/home.jpg" alt="מסך הבית של האפליקציה" width="780" height="1688">
+        <img src="shots/lessons.jpg" alt="רשימת השיעורים" width="780" height="1688" loading="lazy">
+        <img src="shots/lesson.jpg" alt="שיעור על נרות יפניים" width="780" height="1688" loading="lazy">
+        <img src="shots/practice.jpg" alt="תרגול על גרף" width="780" height="1688" loading="lazy">
+      </div></div>
+      <div class="fc a"><i>★</i><div>שיעור הושלם<small>עוד צעד קדימה</small></div></div>
+      <div class="fc b"><i>📈</i><div>גרף אמיתי מהעבר<small>בלי לדעת מה הנכס</small></div></div>
+      <div class="fc c"><i>₪</i><div>0 ₪ סיכון<small>כסף וירטואלי בלבד</small></div></div>
+    </div></div>
+    <div class="dots" id="dots" style="position:absolute;bottom:-4px;inset-inline:0"></div>
+  </div>
+</div></header>
+
+<div class="tick" aria-hidden="true"><div class="tr" id="tr"></div></div>
+
+<main>
+<section><div class="w">
+  <div class="rv"><div class="eyebrow">במספרים</div><h2>הכול מוכן ללמידה</h2></div>
+  <div class="stats rv">
+    <div class="st"><b data-n="27">0</b><span>שיעורים קצרים</span></div>
+    <div class="st"><b data-n="5">0</b><span>נושאים, שלב אחרי שלב</span></div>
+    <div class="st"><b data-n="20">0</b><span>מקרי תרגול מהעבר</span></div>
+    <div class="st"><b data-n="0">0</b><span>שקלים אמיתיים בסיכון</span></div>
+  </div>
+</div></section>
+
+<section><div class="w">
+  <div class="rv"><div class="eyebrow">מה בפנים</div><h2>ללמוד כמו שצריך,<br>לתרגל כמו שרוצים</h2><p class="lead">לא הרצאה משעממת ולא קזינו. שיעור קצר, שאלות, ואז תרגול על גרף שנראה כמו האמיתי.</p></div>
+  <div class="grid">
+    <div class="card tilt rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 5.5h10a3 3 0 013 3V20H7a3 3 0 01-3-3z"/><path d="M8 10h5M8 13.5h5"/></svg></div><h3>שיעורים קצרים</h3><p>חמישה נושאים, מהיסודות ועד סיכון וניהול כסף. כל שיעור נגמר בשאלות קצרות והסבר.</p></div>
+    <div class="card tilt rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M6 4v16M12 8v12M18 3v14"/><rect x="4" y="8" width="4" height="7" rx="1"/><rect x="10" y="11" width="4" height="6" rx="1"/><rect x="16" y="6" width="4" height="6" rx="1"/></svg></div><h3>תרגול על גרפים אמיתיים</h3><p>20 מקרים מהעבר. מחליטים בלי לדעת מה הנכס או מתי זה היה, ובסוף רואים מה קרה.</p></div>
+    <div class="card tilt rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>בלי כסף אמיתי</h3><p>הכול הדמיה לימודית. אין קנייה ואין מכירה, ואין שום המלצת השקעה.</p></div>
+    <div class="card tilt rv"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></div><h3>משוב על התהליך</h3><p>מקבלים הסבר על ההחלטה עצמה: האם זיהיתם את המגמה, ומה אפשר לשפר בפעם הבאה.</p></div>
+    <div class="card tilt rv"><div class="ico"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.6"/><path d="M11 18.5h2"/></svg></div><h3>עובד גם בלי אינטרנט</h3><p>מתקינים על מסך הבית פעם אחת, והשיעורים והתרגול זמינים בכל מקום.</p></div>
+    <div class="card tilt rv"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3.5l2.5 5.2 5.7.8-4.1 4 1 5.7-5.1-2.7-5.1 2.7 1-5.7-4.1-4 5.7-.8z"/></svg></div><h3>מתקדמים בקצב שלכם</h3><p>כוכבים, רצף ימים ופתיחת נושאים חדשים כשמסיימים את הבסיס. בלי לחץ.</p></div>
+  </div>
+</div></section>
+
+<section><div class="w">
+  <div class="rv" style="text-align:center"><div class="eyebrow">איך זה עובד</div><h2>שלושה צעדים</h2></div>
+  <div class="steps">
+    <div class="sp rv"><div class="n">1</div><h3>לומדים</h3><p>שיעור של כמה דקות עם איורים ושאלות.</p></div>
+    <div class="sp rv"><div class="n">2</div><h3>מתרגלים</h3><p>רואים גרף, מחליטים, ומסמנים רמת סיכון.</p></div>
+    <div class="sp rv"><div class="n">3</div><h3>מבינים</h3><p>חושפים מה קרה, ומקבלים הסבר על התהליך.</p></div>
+  </div>
+</div></section>
+
+<section><div class="w try">
+  <div class="rv"><div class="eyebrow">נסו בעצמכם</div><h2>ככה מרגיש תרגול</h2><p class="lead">הגרף משמאל נוצר אקראית כל פעם. נסו לנחש לאן ימשיך, ותראו.</p></div>
+  <div class="cw rv"><div class="hd"><span>הדגמה עם נתונים מדומים</span><span id="rnd">סבב 1</span></div><canvas id="mini"></canvas>
+    <div class="gb"><button id="up">עולה</button><button id="dn">יורד</button></div><div id="res" aria-live="polite">מה לדעתכם יקרה בנרות הבאים?</div></div>
+</div></section>
+
+<section id="install"><div class="w">
+  <div class="rv"><div class="eyebrow">התקנה</div><h2>האפליקציה בטלפון שלכם</h2><p class="lead">בלי חנות אפליקציות ובלי הורדה כבדה. מוסיפים למסך הבית, וזה נפתח כמו אפליקציה רגילה.</p>
+    <div class="tabs"><button class="on" data-t="a">אנדרואיד</button><button data-t="i">אייפון</button></div>
+    <div class="pane on" id="p-a"><div class="step"><span class="n">1</span><span>פתחו את הדף הזה ב-Chrome.</span></div><div class="step"><span class="n">2</span><span>לחצו על "התקנה בטלפון" למעלה. אם אין כפתור, לחצו על שלוש הנקודות בפינה ובחרו <b>התקנת אפליקציה</b>.</span></div><div class="step"><span class="n">3</span><span>האייקון יופיע במסך הבית.</span></div></div>
+    <div class="pane" id="p-i"><div class="step"><span class="n">1</span><span>פתחו את הדף הזה ב-<b>Safari</b> (לא בדפדפן אחר).</span></div><div class="step"><span class="n">2</span><span>לחצו על כפתור השיתוף, הריבוע עם החץ כלפי מעלה.</span></div><div class="step"><span class="n">3</span><span>גללו ובחרו <b>הוספה למסך הבית</b>, ואז "הוספה".</span></div></div>
+  </div>
+  <div class="warn rv"><b>חשוב לדעת:</b> {{DISC}} התחברות עם Google וסנכרון ההתקדמות דורשים אינטרנט. השיעורים והתרגול עובדים גם בלי.</div>
+</div></section>
+
+<section class="final"><div class="w rv"><h2>מוכנים להתחיל?</h2><p class="lead" style="margin:0 auto 30px">כמה דקות ביום, ושוק ההון כבר לא נראה כמו שפה זרה.</p><a class="btn" href="app/" data-mag>פתיחת האפליקציה</a></div></section>
+</main>
+
+<footer><div class="w"><a href="terms.html">תקנון ופרטיות</a><p>© לומדים שוק הון · גרסת ניסוי · תוכן לימודי בלבד, לא ייעוץ השקעות</p></div></footer>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches, small=innerWidth<800;
+/* ticker */
+const words=['מניות','אג"ח','מדדים','קרנות סל','סיכון','תשואה','נזילות','פיזור','אינפלציה','ריבית','נרות יפניים','מגמה','תנודתיות','עמלות'];
+$('#tr').innerHTML=[0,1].map(()=>words.map(w=>`<span>${w}</span>`).join('')).join('');
+/* nav */
+addEventListener('scroll',()=>$('#nav').classList.toggle('s',scrollY>30),{passive:true});
+/* reveal + counters */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('in');io.unobserve(e.target);
+ $$('[data-n]',e.target);e.target.querySelectorAll&&e.target.querySelectorAll('[data-n]').forEach(count)}),{threshold:.15});
+$$('.rv').forEach((el,i)=>{el.style.transitionDelay=(el.classList.contains('card')||el.classList.contains('sp')?(i%3)*90:0)+'ms';io.observe(el)});
+function count(el){const to=+el.dataset.n,t0=performance.now(),d=1400;if(RM||!to){el.textContent=to;return}(function f(t){const k=Math.min(1,(t-t0)/d),e=1-Math.pow(1-k,3);el.textContent=Math.round(to*e);if(k<1)requestAnimationFrame(f)})(t0)}
+/* tilt cards */
+$$('.tilt').forEach(c=>{c.addEventListener('pointermove',e=>{if(e.pointerType==='touch'||RM)return;const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;c.style.transform=`rotateY(${(x-.5)*14}deg) rotateX(${(.5-y)*14}deg)`;c.style.setProperty('--mx',x*100+'%');c.style.setProperty('--my',y*100+'%')});c.addEventListener('pointerleave',()=>c.style.transform='')});
+/* magnetic buttons */
+$$('[data-mag]').forEach(b=>{b.addEventListener('pointermove',e=>{if(e.pointerType==='touch'||RM)return;const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.18}px,${(e.clientY-r.top-r.height/2)*.28}px)`});b.addEventListener('pointerleave',()=>b.style.transform='')});
+/* phone: pointer + scroll tilt, slideshow */
+const rig=$('#rig');let px=0,py=0;
+addEventListener('pointermove',e=>{px=e.clientX/innerWidth-.5;py=e.clientY/innerHeight-.5},{passive:true});
+(function loop(){const s=Math.min(1,scrollY/700);rig.style.transform=`rotateY(${-16+px*26-s*20}deg) rotateX(${6-py*16+s*10}deg) rotateZ(${s*-4}deg)`;if(!RM)requestAnimationFrame(loop)})();
+const imgs=$$('#scr img'),dots=$('#dots');let cur=0,tm;
+imgs.forEach((_,i)=>{const b=document.createElement('button');b.setAttribute('aria-label','מסך '+(i+1));b.onclick=()=>{show(i);auto()};dots.appendChild(b)});
+function show(i){cur=i;imgs.forEach((m,k)=>m.classList.toggle('on',k===i));[...dots.children].forEach((d,k)=>d.classList.toggle('on',k===i))}
+function auto(){clearInterval(tm);if(!RM)tm=setInterval(()=>show((cur+1)%imgs.length),3800)}show(0);auto();
+/* install */
+$$('.tabs button').forEach(b=>b.onclick=()=>{$$('.tabs button,.pane').forEach(x=>x.classList.remove('on'));b.classList.add('on');$('#p-'+b.dataset.t).classList.add('on')});
+if(/iphone|ipad/i.test(navigator.userAgent))$('[data-t=i]').click();
+let dp;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;const i=$('#ins');i.style.display='inline-flex';i.onclick=()=>{dp.prompt();dp=null;i.style.display='none'}});
+
+/* ---------- 3D candlestick landscape (canvas, no libraries) ---------- */
+const cv=$('#bg'),cx=cv.getContext('2d');let W,H,DPR;
+const COLS=small?13:24,ROWS=small?9:15,GAP=small?1.25:1.1;
+function size(){DPR=Math.min(devicePixelRatio||1,2);W=cv.width=innerWidth*DPR;H=cv.height=innerHeight*DPR}
+size();addEventListener('resize',size);
+const seed=(i,j)=>{const x=Math.sin(i*127.1+j*311.7)*43758.5453;return x-Math.floor(x)};
+let mx=0,my=0;addEventListener('pointermove',e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5},{passive:true});
+function frame(t){
+ t=(t||0)/1000;cx.clearRect(0,0,W,H);
+ const yaw=Math.sin(t*.12)*.35+mx*.35-.15,cyw=Math.cos(yaw),syw=Math.sin(yaw);
+ const f=H*(small?1.05:.95),horizon=H*(.34+my*.03),camH=3.4,camZ=-5.2;
+ const P=(x,y,z)=>{const rx=x*cyw-z*syw,rz=x*syw+z*cyw-camZ,s=f/Math.max(.3,rz);return[W/2+rx*s,horizon+(camH-y)*s,s,rz]};
+ const list=[];
+ for(let j=0;j<ROWS;j++)for(let i=0;i<COLS;i++){
+  const x=(i-COLS/2)*GAP,z=j*GAP*1.15+1;
+  const w1=Math.sin(i*.45+t*.9+j*.35)+Math.sin(i*.17-t*.6+j*.5)*.9,w2=Math.sin(i*.45+t*.9+j*.35+.55)+Math.sin(i*.17-t*.6+j*.5+.55)*.9;
+  const a=1.3+w1*.8+seed(i,j)*.6,b=1.3+w2*.8+seed(i,j)*.6;
+  list.push({x,z,a,b,i,j});
+ }
+ list.sort((p,q)=>{const zp=p.x*syw+p.z*cyw,zq=q.x*syw+q.z*cyw;return zq-zp});
+ const bw=GAP*.26;
+ for(const c of list){
+  const up=c.b>=c.a,lo=Math.min(c.a,c.b),hi=Math.max(c.a,c.b),wl=Math.max(0,lo-.35-seed(c.j,c.i)*.5),wh=hi+.35+seed(c.i+3,c.j)*.6;
+  const near=P(c.x,0,c.z),fade=Math.max(0,Math.min(1,1.15-near[3]/(ROWS*GAP*1.15+4)))*Math.min(1,near[3]/3.2);
+  if(fade<.02)continue;
+  const col=up?[200,255,61]:[255,93,108],al=fade*(up?.9:.78);
+  const x0=c.x-bw,x1=c.x+bw,z0=c.z-bw,z1=c.z+bw;
+  const wick=P(c.x,wl,c.z),wick2=P(c.x,wh,c.z);
+  cx.strokeStyle=`rgba(${col},${al*.55})`;cx.lineWidth=Math.max(1,wick[2]*.035);cx.beginPath();cx.moveTo(wick[0],wick[1]);cx.lineTo(wick2[0],wick2[1]);cx.stroke();
+  const A=P(x0,lo,z0),B=P(x1,lo,z0),C2=P(x1,hi,z0),D=P(x0,hi,z0),E=P(x0,hi,z1),F=P(x1,hi,z1),Gp=P(x1,lo,z1),Hp=P(x0,lo,z1);
+  const poly=(pts,fill)=>{cx.beginPath();cx.moveTo(pts[0][0],pts[0][1]);for(let k=1;k<pts.length;k++)cx.lineTo(pts[k][0],pts[k][1]);cx.closePath();cx.fillStyle=fill;cx.fill()};
+  const side=(c.x*cyw-c.z*syw)>0?[A,D,E,Hp]:[B,C2,F,Gp];
+  poly(side,`rgba(${col},${al*.32})`);
+  poly([A,B,C2,D],`rgba(${col},${al*.62})`);
+  poly([D,C2,F,E],`rgba(${up?'235,255,150':'255,170,178'},${al*.95})`);
+ }
+ /* horizon glow line */
+ const g=cx.createLinearGradient(0,horizon-2,0,horizon+H*.2);g.addColorStop(0,'rgba(200,255,61,.10)');g.addColorStop(1,'rgba(200,255,61,0)');cx.fillStyle=g;cx.fillRect(0,horizon,W,H*.2);
+ if(!RM)requestAnimationFrame(frame)
+}
+let vis=true;document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!RM)requestAnimationFrame(frame)});
+requestAnimationFrame(frame);
+
+/* ---------- mini practice chart ---------- */
+const mc=$('#mini'),mg=mc.getContext('2d');let seq=[],cut=0,round=0,done=false,anim=0;
+function gen(){round++;$('#rnd').textContent='סבב '+round;const n=44;let p=100,drift=(Math.random()-.5)*1.4;seq=[];
+ for(let i=0;i<n;i++){if(i===30)drift=(Math.random()<.5?-1:1)*(.9+Math.random()*.9);const o=p,c=o+drift*.7+(Math.random()-.5)*2.6,h=Math.max(o,c)+Math.random()*1.3,l=Math.min(o,c)-Math.random()*1.3;seq.push([o,h,l,c]);p=c}
+ cut=30;done=false;$('#up').disabled=$('#dn').disabled=false;$('#res').textContent='מה לדעתכם יקרה בנרות הבאים?';draw()}
+function draw(){const r=mc.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);mc.width=r.width*d;mc.height=r.height*d;const w=mc.width,h=mc.height;mg.clearRect(0,0,w,h);
+ const v=seq.slice(0,cut),lo=Math.min(...seq.map(s=>s[2]))-2,hi=Math.max(...seq.map(s=>s[1]))+2,Y=y=>h-(y-lo)/(hi-lo)*(h-20)-10,sw=w/seq.length;
+ mg.strokeStyle='rgba(255,255,255,.06)';mg.lineWidth=1;for(let i=1;i<5;i++){mg.beginPath();mg.moveTo(0,h*i/5);mg.lineTo(w,h*i/5);mg.stroke()}
+ v.forEach((s,i)=>{const x=(i+.5)*sw,up=s[3]>=s[0],col=up?'#c8ff3d':'#ff5d6c';mg.strokeStyle=col;mg.fillStyle=col;mg.lineWidth=Math.max(1,sw*.12);mg.beginPath();mg.moveTo(x,Y(s[1]));mg.lineTo(x,Y(s[2]));mg.stroke();const t=Y(Math.max(s[0],s[3])),b=Y(Math.min(s[0],s[3]));mg.fillRect(x-sw*.3,t,sw*.6,Math.max(2,b-t))});
+ if(cut<seq.length){mg.setLineDash([6,6]);mg.strokeStyle='rgba(255,255,255,.25)';mg.beginPath();mg.moveTo(cut*sw,0);mg.lineTo(cut*sw,h);mg.stroke();mg.setLineDash([])}}
+function guess(dir){if(done)return;done=true;$('#up').disabled=$('#dn').disabled=true;const start=seq[29][3],step=()=>{if(cut<seq.length){cut++;draw();setTimeout(step,RM?0:70)}else{const end=seq[seq.length-1][3],up=end>start,ok=(dir==='up')===up;
+ $('#res').innerHTML=(ok?'<b style="color:#c8ff3d">ניחשתם נכון.</b> ':'<b style="color:#ff8a95">הפעם לא.</b> ')+'אבל בשוק האמיתי ניחוש הוא לא שיטה. בתרגול האמיתי לומדים לקרוא מגמה, רמות וסיכון.<br><a href="app/" style="color:#c8ff3d;font-weight:700">לתרגול האמיתי</a> · <a href="#" id="again" style="color:#9aa4af">סבב נוסף</a>';
+ $('#again').onclick=e=>{e.preventDefault();gen()}}};step()}
+$('#up').onclick=()=>guess('up');$('#dn').onclick=()=>guess('dn');
+gen();addEventListener('resize',draw);
+})();
+</script>
+</body>
+</html>
