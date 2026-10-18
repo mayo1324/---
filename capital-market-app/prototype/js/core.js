@@ -94,9 +94,9 @@ function go(name, arg) {
   };
   if (!booted || reduceMotion) { booted = true; render(); return; }
   const fi = TAB_ORDER.indexOf(from), ti = TAB_ORDER.indexOf(name), d = fi >= 0 && ti >= 0 ? (ti > fi ? 1 : -1) : 1;
-  scr.style.setProperty('--dx', (34 * d) + 'px'); ripple();
+  scr.style.setProperty('--dx', (34 * d) + 'px');
   scr.classList.add('leaving');
-  setTimeout(() => { if (tok !== navToken) return; render(); scr.classList.add('entering'); setTimeout(() => scr.classList.remove('entering'), 520); }, 170);
+  setTimeout(() => { if (tok !== navToken) return; render(); scr.classList.add('entering'); setTimeout(() => scr.classList.remove('entering'), 300); }, 120);
 }
 const lvl = (a) => 1 + Math.floor((a.xp || 0) / 100);
 const dayKey = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
