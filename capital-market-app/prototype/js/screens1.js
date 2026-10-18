@@ -146,6 +146,18 @@ function demoProviderFlow(kind) {
   };
 }
 
+/* after asking for a password reset: tell clearly where to look (the email often lands in spam) */
+function openResetSent(em) {
+  const safe = String(em).replace(/[<>&"]/g, '');
+  openSheet(`<h3>שלחנו קישור לאיפוס סיסמה</h3>
+    <p class="muted" style="font-size:14px;margin:4px 0 10px">לכתובת <b dir="ltr" style="color:var(--text)">${safe}</b></p>
+    <div class="spambox"><b>לא רואים את המייל? בדקו בספאם!</b><span>המייל מגיע הרבה פעמים ל<b>תיקיית הספאם (דואר זבל)</b> או ל"קידומי מכירות". אם מצאתם אותו שם, לחצו <b>"זה לא ספאם"</b>, ואז הקישור יהפוך ללחיץ.</span><small>השולח: <span dir="ltr">noreply@learn-markets.firebaseapp.com</span></small></div>
+    <div class="steps2"><div><i>1</i><span>פתחו את המייל</span></div><div><i>2</i><span>לחצו על הקישור שבו (או העתיקו אותו לדפדפן)</span></div><div><i>3</i><span>בחרו סיסמה חדשה וחזרו להתחבר</span></div></div>
+    <button class="btn primary" data-close="1" style="margin-top:12px">הבנתי</button>
+    <button class="btn ghost" id="rsend" style="margin-top:8px">לא הגיע? שליחה מחדש</button>`);
+  const b = $('#rsend'); if (b) { b.disabled = true; let n = 30; const t = setInterval(() => { if (!$('#rsend')) { clearInterval(t); return; } n--; b.textContent = n > 0 ? 'שליחה מחדש בעוד ' + n + ' שניות' : 'לא הגיע? שליחה מחדש'; if (n <= 0) { b.disabled = false; clearInterval(t); } }, 1000); b.textContent = 'שליחה מחדש בעוד 30 שניות';
+    b.onclick = async () => { b.disabled = true; try { await cloudReset(em); toast('שלחנו שוב. בדקו גם בספאם.'); } catch (e) { toast('לא הצלחנו לשלוח. נסו שוב.'); } }; }
+}
 screens.login = () => {
   track('login_view');
   scr.innerHTML = `<div class="auth anim">
@@ -164,7 +176,7 @@ screens.login = () => {
   $('#fg').onclick = async () => {
     if (!emailCloud()) { toast('באב הטיפוס אין איפוס סיסמה'); return; }
     const em = $('#em').value.trim().toLowerCase(); if (!/^\S+@\S+\.\S+$/.test(em)) { toast('כתבו קודם את האימייל בשדה למעלה'); return; }
-    try { await cloudReset(em); toast('אם יש חשבון עם האימייל הזה, שלחנו אליו קישור לאיפוס סיסמה. בדקו גם בספאם.'); } catch (e) { toast(CLOUD_ERR[e && e.code] || 'לא הצלחנו לשלוח. נסו שוב.'); }
+    try { await cloudReset(em); openResetSent(em); } catch (e) { toast(CLOUD_ERR[e && e.code] || 'לא הצלחנו לשלוח. נסו שוב.'); }
   };
   const setErr = (id, msg) => { $('#e-' + id).textContent = msg || ''; $('#' + id).closest('.gf').classList.toggle('err', !!msg); return !!msg; };
   const submit = () => {

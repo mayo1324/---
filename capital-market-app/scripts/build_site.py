@@ -54,4 +54,5 @@ h2{{font-size:20px;margin:30px 0 4px}}p{{margin:0;color:#cfd6dd}}.top{{padding:2
 shutil.copytree(R / "pwa/shots", out / "shots")
 (out / "index.html").write_text((R / "pwa/landing.html").read_text(encoding="utf-8").replace("{{DISC}}", disc).replace("{{BUILD}}", datetime.datetime.now().strftime("%d.%m.%Y %H:%M")), encoding="utf-8")
 shutil.copy(R / "pwa/admin.html", out / "admin.html")
+shutil.copy(R / "pwa/reset.html", out / "reset.html")
 print("site ->", out, sorted(p.name for p in out.rglob("*") if p.is_file()))

@@ -1,0 +1,10 @@
+const { launch, APP } = require('./lib');
+(async()=>{ const {b,p,errs}=await launch(390,844); const issues=[];
+ await p.addInitScript(()=>{ window.__log=[]; window.__FBMOCK={ async sendReset(em){ __log.push('reset '+em); }, async getDoc(){return null}, async setDoc(){}, async signOut(){}, async redirectUser(){return null}, async currentUser(){return null} }; localStorage.setItem('cm_ea','1'); localStorage.setItem('cm_proto_v2', JSON.stringify({accounts:{}, session:null, terms:{v:3}, seenOnboarding:true})); });
+ await p.goto(APP); await p.waitForTimeout(500); await p.evaluate(()=>go('login')); await p.waitForTimeout(400);
+ await p.fill('#em','dana@example.com'); await p.click('#fg'); await p.waitForTimeout(700);
+ if(!(await p.evaluate(()=>!!document.querySelector('.spambox')))) issues.push('spam box missing'); if(!/ספאם/.test(await p.innerText('#sheet'))) issues.push('no spam text');
+ await p.screenshot({path:'/tmp/claude-0/qa/spam.png'});
+ if(!(await p.evaluate(()=>document.querySelector('#rsend').disabled))) issues.push('resend should wait');
+ const u=[...new Set(errs)].filter(e=>!/ERR_FAILED/.test(e)); if(u.length) issues.push('errors '+u.join('|'));
+ console.log('ISSUES',issues.length,issues); await b.close(); })();

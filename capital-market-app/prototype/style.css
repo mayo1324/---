@@ -1196,3 +1196,7 @@ details.more p{font-size:13.5px;line-height:1.65;color:var(--muted);margin:8px 0
 .today{padding:14px 16px;margin:0 0 6px}.today b{display:block;margin-bottom:8px;font-size:15px}
 .today .td{display:flex;gap:18px;flex-wrap:wrap;color:var(--muted);font-size:14.5px}.today .td .ok{color:var(--lime);font-weight:700}
 .pn.paced,.ccard.paced{opacity:.55}.ccard.paced .cc-t em{color:var(--muted)}
+
+/* password reset sent: make the spam hint impossible to miss */
+.spambox{display:flex;flex-direction:column;gap:6px;padding:14px 16px;border-radius:18px;background:rgba(255,201,77,.12);border:1.5px solid rgba(255,201,77,.6);margin:6px 0 14px}
+.spambox>b{color:#ffc94d;font-size:17px}.spambox>span{color:var(--text);font-size:14.5px;line-height:1.55}.spambox small{color:var(--muted);font-size:12.5px}
