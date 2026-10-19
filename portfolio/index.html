@@ -26,8 +26,8 @@
     --ease: cubic-bezier(.2, .8, .2, 1);
   }
   body {
-    --bg-inner: #0b8a78; --bg-mid: #044e3b; --bg-outer: #011411;
-    background: #011411;
+    --bg-inner: #3f5f0a; --bg-mid: #17260a; --bg-outer: #050805;
+    background: #050805;
     background: radial-gradient(circle at center, var(--bg-inner) 0%, var(--bg-mid) 50%, var(--bg-outer) 100%) fixed;
     color: var(--text); font-family: var(--font-body); font-weight: 300; line-height: 1.7;
     -webkit-font-smoothing: antialiased; overflow-x: clip;
@@ -174,6 +174,8 @@
   .mini img { border-radius: 24px; width: 100%; }
   .mini.l { inset-inline-start: 2%; transform: rotateY(18deg); } .mini.r2 { inset-inline-end: 2%; transform: rotateY(-18deg); }
   .note { position: absolute; z-index: 4; font-size: 12px; padding: 6px 13px; border-radius: 99px; background: rgba(12,14,22,.85); border: 1px solid var(--glass-border); color: #fff; backdrop-filter: blur(8px); white-space: nowrap; }
+  .case.app { --pink: #c8ff3d; --on-pink: #07090c; }
+  .appstage .mini { top: 18%; width: 27%; }
   .note.n1 { inset-inline-start: 5%; top: 28%; border-color: #8f9bff; } .note.n2 { inset-inline-start: 7%; top: 54%; border-color: #f87171; } .note.n3 { inset-inline-end: 5%; top: 14%; border-color: #34d399; }
 
   /* ---------- method ---------- */
@@ -276,10 +278,10 @@
         </div>
 
         <div class="hero-center" aria-hidden="true">
-          <div class="slot hero-slot" id="hero-slot" data-phone data-screen="hero" data-yaw="-14" data-roll="9" data-scale="1" data-c="#d9ad5f"><img class="fb" loading="lazy" id="hero-fb" src="img/finance-phone.jpg" alt=""></div>
+          <div class="slot hero-slot" id="hero-slot" data-phone data-screen="hero" data-yaw="-14" data-roll="9" data-scale="1" data-c="#c8ff3d"><img class="fb" loading="lazy" id="hero-fb" src="img/capital-home.jpg" alt=""></div>
         </div>
 
-        <a class="hero-cap glass" id="hero-cap" href="#p1"><span id="cap-tag">דף נחיתה · מותג · אוטומציה</span><b id="cap-name">שדרן הפיננסים</b><i class="ic" aria-hidden="true">←</i></a>
+        <a class="hero-cap glass" id="hero-cap" href="#p1"><span id="cap-tag">אפליקציה · גרסת ניסוי</span><b id="cap-name">לומדים שוק הון</b><i class="ic" aria-hidden="true">←</i></a>
 
         <div class="hero-right">
           <div class="product-carousel">
@@ -291,7 +293,7 @@
               <button class="nav-arrow" id="next" type="button" aria-label="הפרויקט הבא">←</button>
             </div>
           </div>
-          <div class="now enter d3"><div class="num" id="now-num">01</div><div class="nm" id="now-name">שדרן הפיננסים</div><div class="tg" id="now-tag">דף נחיתה</div></div>
+          <div class="now enter d3"><div class="num" id="now-num">01</div><div class="nm" id="now-name">לומדים שוק הון</div><div class="tg" id="now-tag">אפליקציה</div></div>
         </div>
       </div>
     </section>
@@ -310,10 +312,31 @@
         <p>הטלפון הזה עובר איתכם בין העבודות ומראה את המסך של כל אחת. הזיזו את העכבר כדי להטות אותו.</p>
       </div>
 
-      <article class="case" id="p1" data-theme="gold">
+      <article class="case app" id="p1" data-theme="lime">
         <div class="wrap case-grid">
           <div class="copy">
-            <div class="idx"><b>01</b><span class="label">דף נחיתה · מותג · אוטומציה</span></div>
+            <div class="idx"><b>01</b><span class="label">אפליקציה · גרסת ניסוי</span></div>
+            <h3>לומדים שוק הון</h3>
+            <dl class="brief">
+              <div><dt>האתגר</dt><dd>ללמד בני נוער שוק הון בעברית, בלי להפחיד אותם ובלי לסכן שקל אמיתי.</dd></div>
+              <div><dt>מה בניתי</dt><dd>אפליקציית ווב שמתקינים על מסך הבית: 27 שיעורים קצרים בחמישה נושאים, 20 תרגולי גרף על נתוני שוק אמיתיים מהעבר, מילון, תיק וירטואלי, כוכבים ורצף ימים. וגם דף נחיתה משלה.</dd></div>
+              <div><dt>מאחורי הקלעים</dt><dd>כניסה עם Google או אימייל, מדידה אנונימית עם לוח ניהול, וקצב יומי של שיעור ותרגול חדשים.</dd></div>
+            </dl>
+          </div>
+          <div class="stage appstage" style="--c:#c8ff3d">
+            <div class="rig">
+              <div class="glow"></div>
+              <div class="mini l"><img src="img/capital-lessons.jpg" width="780" height="1688" alt="מסך השיעורים באפליקציה" loading="lazy"></div>
+              <div class="mini r2"><img src="img/capital-lesson.jpg" width="780" height="1688" alt="שיעור באפליקציה" loading="lazy"></div>
+            </div>
+            <div class="slot c" data-phone data-screen="4" data-cycle="4,8" data-yaw="-10" data-roll="0" data-scale="1.06" data-c="#c8ff3d"><img class="fb" loading="lazy" src="img/capital-home.jpg" alt=""></div>
+          </div>
+        </div>
+      </article>
+      <article class="case flip" id="p2" data-theme="gold">
+        <div class="wrap case-grid">
+          <div class="copy">
+            <div class="idx"><b>02</b><span class="label">דף נחיתה · מותג · אוטומציה</span></div>
             <h3>שדרן הפיננסים</h3>
             <dl class="brief">
               <div><dt>האתגר</dt><dd>להפוך כלכלה למשהו שאנשים רוצים לקרוא בבוקר, ולגרום להם להשאיר מייל.</dd></div>
@@ -329,15 +352,14 @@
                 <div class="screen"><img src="img/finance-full.jpg" width="1100" height="3303" alt="דף הנחיתה של שדרן הפיננסים" data-scroll><div class="glare"></div></div>
               </div></div></div>
             </div>
-            <div class="slot r" data-phone data-screen="0" data-yaw="-16" data-roll="0" data-scale="1" data-c="#d9ad5f"><img class="fb" loading="lazy" src="img/finance-phone.jpg" alt=""></div>
+            <div class="slot r" data-phone data-screen="0" data-yaw="16" data-roll="0" data-scale="1" data-c="#d9ad5f"><img class="fb" loading="lazy" src="img/finance-phone.jpg" alt=""></div>
           </div>
         </div>
       </article>
-
-      <article class="case flip" id="p2" data-theme="olive">
+      <article class="case" id="p3" data-theme="olive">
         <div class="wrap case-grid">
           <div class="copy">
-            <div class="idx"><b>02</b><span class="label">אתר תדמית · צילום</span></div>
+            <div class="idx"><b>03</b><span class="label">אתר תדמית · צילום</span></div>
             <h3>צופיה קזיוף, צלמת</h3>
             <dl class="brief">
               <div><dt>האתגר</dt><dd>לתת לצלמת אתר שמרגיש כמו הצילום שלה: רך, טבעי ובלי רעש.</dd></div>
@@ -353,15 +375,14 @@
                 <div class="screen"><img src="img/sofia-full.jpg" width="1100" height="4924" alt="אתר הצלמת צופיה קזיוף" data-scroll loading="lazy"><div class="glare"></div></div>
               </div></div></div>
             </div>
-            <div class="slot r" data-phone data-screen="1" data-yaw="16" data-roll="0" data-scale="1" data-c="#b9bd96"><img class="fb" loading="lazy" src="img/sofia-phone.jpg" alt=""></div>
+            <div class="slot r" data-phone data-screen="1" data-yaw="-16" data-roll="0" data-scale="1" data-c="#b9bd96"><img class="fb" loading="lazy" src="img/sofia-phone.jpg" alt=""></div>
           </div>
         </div>
       </article>
-
-      <article class="case" id="p3" data-theme="orange">
+      <article class="case flip" id="p4" data-theme="orange">
         <div class="wrap case-grid">
           <div class="copy">
-            <div class="idx"><b>03</b><span class="label">אפליקציה · חיסכון</span></div>
+            <div class="idx"><b>04</b><span class="label">אפליקציה · חיסכון</span></div>
             <h3>ג׳מסלי</h3>
             <dl class="brief">
               <div><dt>האתגר</dt><dd>לאסוף קופונים, מבצעים והנחות של אלי אקספרס במקום אחד, בעברית ובלי בלגן.</dd></div>
@@ -379,11 +400,10 @@
           </div>
         </div>
       </article>
-
-      <article class="case flip" id="p4" data-theme="blue">
+      <article class="case" id="p5" data-theme="blue">
         <div class="wrap case-grid">
           <div class="copy">
-            <div class="idx"><b>04</b><span class="label">דשבורד · אפליקציית ווב</span></div>
+            <div class="idx"><b>05</b><span class="label">דשבורד · אפליקציית ווב</span></div>
             <h3>הארנק שלי</h3>
             <dl class="brief">
               <div><dt>האתגר</dt><dd>לראות את כל הכסף במבט אחד, בלי להיכנס לגיליון.</dd></div>
@@ -403,25 +423,6 @@
           </div>
         </div>
       </article>
-
-      <article class="case" id="p5" data-theme="rose">
-        <div class="wrap case-grid">
-          <div class="copy">
-            <div class="idx"><b>05</b><span class="label">אפליקציה · אב טיפוס</span></div>
-            <h3>אפליקציית שוק ההון</h3>
-            <dl class="brief">
-              <div><dt>האתגר</dt><dd>ללמד בני נוער שוק הון בלי להפחיד אותם ובלי לסכן כסף אמיתי.</dd></div>
-              <div><dt>מה בניתי</dt><dd>אב טיפוס: שיעור קצר, ואז תרגול על גרף נרות היסטורי. מסמנים כניסה, סטופ ויעד, מריצים את הגרף ומקבלים משוב וכוכבים.</dd></div>
-              <div><dt>איפה זה עומד</dt><dd>שלב אב טיפוס. המסך בטלפון הוא הדגמה חיה של מסך התרגול, לא צילום.</dd></div>
-            </dl>
-          </div>
-          <div class="stage" style="--c:#f0627f">
-            <div class="rig"><div class="glow"></div></div>
-            <div class="slot c" data-phone data-screen="4" data-yaw="0" data-roll="0" data-scale="1" data-c="#f0627f"><img class="fb" loading="lazy" src="img/wallet-phone.jpg" alt=""></div>
-            <div class="note n1">כניסה</div><div class="note n2">סטופ</div><div class="note n3">יעד ★★★</div>
-          </div>
-        </div>
-      </article>
     </section>
 
     <!-- ================= METHOD ================= -->
@@ -434,7 +435,7 @@
           <div><dt>תנועה עם סיבה</dt><dd>אנימציה שמסבירה ומובילה את העין, ושקטה למי שמעדיף בלי אנימציות.</dd></div>
           <div><dt>עברית וטלפון קודם</dt><dd>RTL מהיסוד, מותאם למסך קטן, עם שרת ואוטומציה כשצריך: שליחה יומית, עדכון פיד, שמירה בענן.</dd></div>
         </dl>
-        <div class="slot method-slot" data-phone data-screen="hero" data-yaw="-12" data-roll="6" data-scale="1" data-c="#8f7dff"><img class="fb" loading="lazy" src="img/finance-phone.jpg" alt=""></div></div>
+        <div class="slot method-slot" data-phone data-screen="hero" data-yaw="-12" data-roll="6" data-scale="1" data-c="#8f7dff"><img class="fb" loading="lazy" src="img/capital-home.jpg" alt=""></div></div>
       </div>
     </section>
 
@@ -481,7 +482,7 @@
 
   /* ---------- colour worlds ---------- */
   const THEMES = {
-    hero: ['#0b8a78', '#044e3b', '#011411'], gold: ['#8a6827', '#47330f', '#120b03'], olive: ['#656b45', '#2d3220', '#0b0d07'],
+    hero: ['#0b8a78', '#044e3b', '#011411'], lime: ['#3f5f0a', '#17260a', '#050805'], gold: ['#8a6827', '#47330f', '#120b03'], olive: ['#656b45', '#2d3220', '#0b0d07'],
     orange: ['#c4590f', '#5c2a08', '#150803'], blue: ['#0b4f8a', '#04294e', '#010c14'], rose: ['#b02a52', '#531229', '#150409'], violet: ['#5a45c7', '#2a2062', '#0a0821']
   };
   function applyTheme(key, dur = 1.5) {
@@ -491,13 +492,13 @@
   }
 
   const P = [
+    { name: 'לומדים שוק הון', cat: 'אפליקציה', tag: 'אפליקציה · גרסת ניסוי', theme: 'lime', c: '#c8ff3d', img: 'img/capital-home.jpg', screen: 4 },
     { name: 'שדרן הפיננסים', cat: 'דף נחיתה', tag: 'דף נחיתה · מותג · אוטומציה', theme: 'gold', c: '#d9ad5f', img: 'img/finance-phone.jpg', screen: 0 },
     { name: 'צופיה קזיוף', cat: 'אתר תדמית', tag: 'אתר תדמית · צילום', theme: 'olive', c: '#b9bd96', img: 'img/sofia-phone.jpg', screen: 1 },
     { name: 'ג׳מסלי', cat: 'אפליקציה', tag: 'אפליקציה · חיסכון', theme: 'orange', c: '#ff7a2f', img: 'img/jamsly-home.jpg', screen: 2 },
-    { name: 'הארנק שלי', cat: 'דשבורד', tag: 'דשבורד · אפליקציית ווב', theme: 'blue', c: '#6f7dff', img: 'img/wallet-phone.jpg', screen: 3 },
-    { name: 'שוק ההון', cat: 'אב טיפוס', tag: 'אפליקציה · אב טיפוס', theme: 'rose', c: '#f0627f', img: null, screen: 4 }
+    { name: 'הארנק שלי', cat: 'דשבורד', tag: 'דשבורד · אפליקציית ווב', theme: 'blue', c: '#6f7dff', img: 'img/wallet-phone.jpg', screen: 3 }
   ];
-  let cur = 0, heroTheme = 'hero', isSwitching = false, pending = null;
+  let cur = 0, heroTheme = 'lime', isSwitching = false, pending = null;
 
   /* ---------- bubbles ---------- */
   const bubbles = $('#bubbles');
@@ -510,50 +511,7 @@
     bubbles.appendChild(b); setTimeout(() => b.remove(), dur * 1000);
   }, 750);
 
-  /* ---------- canvas screens: live candles + chat ---------- */
-  const drawCandles = (() => {
-    let seed = 11; const rnd = () => (seed = seed * 16807 % 2147483647) / 2147483647;
-    const N = 30, data = []; let p = 100;
-    for (let i = 0; i < N; i++) { const o = p, c = o + (rnd() - 0.47) * 5 + (i > 16 ? 2.1 : 0) - (i > 8 && i < 14 ? 1.4 : 0); data.push({ o, c, h: Math.max(o, c) + rnd() * 2.6, l: Math.min(o, c) - rnd() * 2.6 }); p = c; }
-    const entry = data[14].c, stop = entry - 7, target = entry + 15;
-    const lo = Math.min(stop, ...data.map(d => d.l)) - 3, hi = Math.max(target, ...data.map(d => d.h)) + 4;
-    const up = '#34d399', dn = '#f87171', blue = '#8f9bff';
-    return (ctx, W, H, D, prog) => {
-      const y = v => H * 0.2 + (1 - (v - lo) / (hi - lo)) * H * 0.62;
-      ctx.clearRect(0, 0, W, H); ctx.fillStyle = '#0c1020'; ctx.fillRect(0, 0, W, H);
-      ctx.fillStyle = 'rgba(255,255,255,.92)'; ctx.font = `500 ${15 * D}px Rubik, sans-serif`; ctx.textAlign = 'right'; ctx.fillText('תרגול · מקרה היסטורי', W - 18 * D, 62 * D);
-      ctx.fillStyle = 'rgba(255,255,255,.5)'; ctx.font = `400 ${11 * D}px Rubik, sans-serif`; ctx.fillText('סמנו כניסה, סטופ ויעד', W - 18 * D, 80 * D);
-      ctx.strokeStyle = 'rgba(255,255,255,.06)'; ctx.lineWidth = D;
-      for (let i = 0; i < 6; i++) { const gy = H * 0.2 + i * H * 0.124; ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke(); }
-      const cw = (W - 28 * D) / N, shown = Math.floor(prog * N), lineP = Math.min(Math.max((prog - 0.4) / 0.2, 0), 1);
-      [[target, up, 'יעד'], [entry, blue, 'כניסה'], [stop, dn, 'סטופ']].forEach(([v, col, name]) => {
-        ctx.save(); ctx.globalAlpha = lineP; ctx.strokeStyle = col; ctx.lineWidth = 1.4 * D; ctx.setLineDash([6 * D, 5 * D]);
-        ctx.beginPath(); ctx.moveTo(14 * D, y(v)); ctx.lineTo(14 * D + (W - 28 * D) * lineP, y(v)); ctx.stroke(); ctx.setLineDash([]);
-        ctx.fillStyle = col; ctx.font = `500 ${11 * D}px Rubik, sans-serif`; ctx.textAlign = 'left'; ctx.fillText(name, 18 * D, y(v) - 5 * D); ctx.restore();
-      });
-      for (let i = 0; i <= shown && i < N; i++) {
-        const d = data[i], px = W - 14 * D - (i + 0.5) * cw, col = d.c >= d.o ? up : dn;
-        ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = Math.max(1, D);
-        ctx.beginPath(); ctx.moveTo(px, y(d.h)); ctx.lineTo(px, y(d.l)); ctx.stroke();
-        ctx.fillRect(px - cw * 0.3, y(Math.max(d.o, d.c)), cw * 0.6, Math.max(2 * D, Math.abs(y(d.o) - y(d.c))));
-      }
-      if (prog > 0.9) {
-        const a = Math.min((prog - 0.9) / 0.08, 1), bx = 24 * D, bw = W - 48 * D, by = H - 140 * D - (1 - a) * 10 * D, bh = 78 * D;
-        ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = 'rgba(52,211,153,.16)'; ctx.strokeStyle = up; ctx.lineWidth = 1.4 * D;
-        ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(bx, by, bw, bh, 18 * D); else ctx.rect(bx, by, bw, bh); ctx.fill(); ctx.stroke();
-        ctx.fillStyle = up; ctx.textAlign = 'center'; ctx.font = `500 ${26 * D}px Rubik, sans-serif`; ctx.fillText('★ ★ ★', W / 2, by + 36 * D);
-        ctx.fillStyle = '#fff'; ctx.font = `500 ${13 * D}px Rubik, sans-serif`; ctx.fillText('מעולה! פגעתם ביעד', W / 2, by + 60 * D); ctx.restore();
-      }
-      ctx.fillStyle = 'rgba(255,255,255,.1)'; ctx.fillRect(24 * D, H - 74 * D, W - 48 * D, 32 * D);
-      ctx.fillStyle = 'rgba(255,255,255,.75)'; ctx.font = `500 ${12 * D}px Rubik, sans-serif`; ctx.textAlign = 'center'; ctx.fillText('הרץ את הגרף', W / 2, H - 53 * D);
-    };
-  })();
-  const candleCv = document.createElement('canvas'); candleCv.width = 780; candleCv.height = 1688;
-  const candleCtx = candleCv.getContext('2d');
-  const paintCandles = prog => drawCandles(candleCtx, 780, 1688, 2, prog);
-  paintCandles(1);
-  function candleCardImage() { const c = document.createElement('canvas'); c.width = 390; c.height = 844; drawCandles(c.getContext('2d'), 390, 844, 1, 1); return c.toDataURL('image/jpeg', 0.85); }
-  P[4].img = candleCardImage();
+  /* ---------- canvas screen: contact chat ---------- */
 
   const chatCv = document.createElement('canvas'); chatCv.width = 780; chatCv.height = 1688;
   let chatN = 4;
@@ -578,7 +536,7 @@
 
   /* ---------- the one 3D phone ---------- */
   const heroSlot = $('#hero-slot');
-  let heroScreen = 0;
+  let heroScreen = 4;
   const PH = (() => { try { return (() => {
     if (!window.THREE) return null;
     const canvas = $('#gl'); let renderer;
@@ -633,9 +591,10 @@
 
     const loader = new THREE.TextureLoader(), maxA = renderer.capabilities.getMaxAnisotropy();
     const prep = t => { t.generateMipmaps = false; t.minFilter = THREE.LinearFilter; t.magFilter = THREE.LinearFilter; t.anisotropy = maxA; return t; };
-    const tex = ['img/finance-phone.jpg', 'img/sofia-phone.jpg', 'img/jamsly-home.jpg', 'img/wallet-phone.jpg'].map(u => prep(loader.load(u, t => { if (renderer.initTexture) renderer.initTexture(t); schedule(); })));
-    const candleTex = prep(new THREE.CanvasTexture(candleCv)), chatTex = prep(new THREE.CanvasTexture(chatCv));
-    tex.push(candleTex, chatTex);
+    const tex = ['img/finance-phone.jpg', 'img/sofia-phone.jpg', 'img/jamsly-home.jpg', 'img/wallet-phone.jpg', 'img/capital-home.jpg'].map(u => prep(loader.load(u, t => { if (renderer.initTexture) renderer.initTexture(t); schedule(); })));
+    const chatTex = prep(new THREE.CanvasTexture(chatCv));
+    tex.push(chatTex);
+    ['img/capital-lessons.jpg', 'img/capital-lesson.jpg', 'img/capital-practice.jpg'].forEach(u => tex.push(prep(loader.load(u, t => { if (renderer.initTexture) renderer.initTexture(t); schedule(); }))));
 
     const slots = $$('[data-phone]');
     const st = { x: 0, y: 0, s: 0.001, yaw: 0, pitch: 0, roll: 0, flip: 0, spin: 0, appear: 0, gap: 0.2, scr: -1, cand: 0 };
@@ -672,7 +631,7 @@
       return active && ad <= bd + vh * 0.15 ? active : best;
     }
     function onChange(el, first) {
-      active = el; const i = screenFor(el);
+      active = el; const i = screenFor(el); cycleI = 0; lastCycle = performance.now();
       U.uTint.value.set(el.dataset.c);
       if (i === 5 && !reduce) { chatN = 0; paintChat(); chatTex.needsUpdate = true; const iv = setInterval(() => { chatN++; paintChat(); chatTex.needsUpdate = true; if (chatN >= 4) clearInterval(iv); }, 1100); } else if (i === 5) { chatN = 4; paintChat(); chatTex.needsUpdate = true; }
       if (first || reduce || !hasGsap) { setScreen(i, false); return; }
@@ -681,7 +640,7 @@
       if (swapCall) swapCall.kill();
       swapCall = gsap.delayedCall(0.5, () => setScreen(screenFor(active), true));
     }
-    const cA = new THREE.Color(), t0 = performance.now(); let candT = 0, lastCandle = 0, lastTintEl = null;
+    const cA = new THREE.Color(), t0 = performance.now(); let lastCycle = 0, cycleI = 0, lastTintEl = null;
     function frame(now) {
       rafId = 0; now = now || performance.now();
       const sy = scrollY; vel += ((sy - lastY) * 0.002 - vel) * 0.1; lastY = sy;
@@ -706,18 +665,18 @@
       rig.rotation.set(mouse.sy * 0.28 + vel * 0.4, st.yaw + mouse.sx * 0.5 + (st.flip + st.spin) * rad + (1 - app) * 3, st.roll);
       U.uM.value.set(mouse.sx, mouse.sy);
       layers.forEach((l, i) => { l.position.z = -(i + 1) * st.gap * 0.6 - 0.05; l.scale.setScalar(1 + (i + 1) * 0.03); });
-      if ((st.scr === 4 || U.tB.value === candleTex) && now - lastCandle > 55) { lastCandle = now; candT = ((now - t0) % 11000) / 11000; paintCandles(0.3 + 0.7 * Math.min(candT / 0.82, 1)); candleTex.needsUpdate = true; }
+      if (active && active.dataset.cycle && !reduce && now - lastCycle > 2800 && !(flipTween && flipTween.isActive())) { const arr = active.dataset.cycle.split(',').map(Number); cycleI = (cycleI + 1) % arr.length; lastCycle = now; setScreen(arr[cycleI], true); }
       renderer.render(scene, cam);
       if (!reduce && !document.hidden) schedule();
     }
     document.addEventListener('visibilitychange', () => { if (!document.hidden && !reduce) schedule(); });
     schedule();
-    if (reduce) { addEventListener('scroll', schedule, { passive: true }); candleTex.needsUpdate = true; }
+    if (reduce) { addEventListener('scroll', schedule, { passive: true }); }
     else if (hasGsap) gsap.to(st, { appear: 1, duration: 1.8, ease: 'expo.out', delay: 0.4 });
     return { st, setHero(i) { heroScreen = i; if (active === heroSlot) setScreen(i, true); }, refreshChat() { chatTex.needsUpdate = true; } };
   })(); } catch (e) { console.warn('3D phone disabled', e); return null; } })();
   if (!PH) root.classList.add('no-gl');
-  if (document.fonts && document.fonts.load) Promise.all([document.fonts.load('500 20px Rubik'), document.fonts.load('400 20px Rubik'), document.fonts.load('40px Galada')]).catch(() => {}).then(() => { P[4].img = candleCardImage(); const f = $('#p5 .fb'); if (f) f.src = P[4].img; renderCards(); paintChat(); if (PH) PH.refreshChat(); });
+  if (document.fonts && document.fonts.load) Promise.all([document.fonts.load('500 20px Rubik'), document.fonts.load('400 20px Rubik')]).catch(() => {}).then(() => { paintChat(); if (PH) PH.refreshChat(); });
 
   /* ---------- hero carousel ---------- */
   const cardsEl = $('#cards'), dotsEl = $('#dots');
