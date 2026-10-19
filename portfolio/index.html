@@ -78,8 +78,6 @@
   /* ---------- hero ---------- */
   .hero { overflow-x: clip; position: relative; z-index: 2; height: 100vh; min-height: 640px; display: flex; align-items: center; justify-content: center; padding: 5rem 4% 0; }
   .hero-content { display: flex; justify-content: space-between; align-items: stretch; width: 100%; height: 100%; position: relative; }
-  .gl { position: absolute; left: -80px; top: -80px; width: calc(100% + 160px); height: calc(100% + 160px); pointer-events: none; }
-  #gl-bg { z-index: 0; } #gl-fg { z-index: 110; }
   .main-title, .side-title { font-family: var(--font-heading); font-size: clamp(4.4rem, min(10vw, 17vh), 12rem); line-height: .8; font-weight: 400; white-space: nowrap; }
   .main-title .pk { color: var(--pink); }
   .hero-left { display: flex; flex-direction: column; height: 100%; padding: 6rem 0; gap: 2rem; z-index: 100; }
@@ -261,8 +259,6 @@
     <!-- ================= HERO ================= -->
     <section class="hero" data-theme="hero">
       <div class="hero-content" id="hero-content">
-        <canvas id="gl-bg" class="gl" aria-hidden="true"></canvas>
-
         <div class="hero-left">
           <h1 class="main-title enter d1"><span class="pk">Pure</span><br>Craft</h1>
           <p class="description enter d2">אני מעצב ובונה אתרים, דפי נחיתה ואפליקציות בעברית. מאפיון ועיצוב ועד קוד שרץ באמת, הכול בשפה חזותית אחת, נקייה ומלאת תנועה.</p>
@@ -303,7 +299,6 @@
           <h2 class="side-title enter d2"><span class="pk">Selected</span><br>Work</h2>
         </div>
 
-        <canvas id="gl-fg" class="gl" aria-hidden="true"></canvas>
       </div>
     </section>
 
@@ -492,13 +487,12 @@
   </main>
 
   <footer>
-    <div class="wrap label"><span>© 2026 יהודה צברי</span><span>עוצב ונבנה ביד · Three.js + GSAP</span></div>
+    <div class="wrap label"><span>© 2026 יהודה צברי</span><span>עוצב ונבנה ביד · GSAP</span></div>
   </footer>
 </div>
 
 <div id="bubbles" aria-hidden="true"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
@@ -531,11 +525,11 @@
 
   /* ---------- projects shown in the hero carousel ---------- */
   const P = [
-    { name: 'שדרן הפיננסים', cat: 'דף נחיתה', tag: 'דף נחיתה · מותג · אוטומציה', theme: 'gold', c: '#d9ad5f', berry: 'cherry', img: 'img/finance-phone.jpg', screen: 0 },
-    { name: 'צופיה קזיוף', cat: 'אתר תדמית', tag: 'אתר תדמית · צילום', theme: 'olive', c: '#b9bd96', berry: 'cherry', img: 'img/sofia-phone.jpg', screen: 1 },
-    { name: 'ג׳מסלי', cat: 'אפליקציה', tag: 'אפליקציה · חיסכון', theme: 'orange', c: '#ff7a2f', berry: 'cherry', img: 'img/jamsly-home.jpg', screen: 2 },
-    { name: 'הארנק שלי', cat: 'דשבורד', tag: 'דשבורד · אפליקציית ווב', theme: 'blue', c: '#6f7dff', berry: 'blue', img: 'img/wallet-phone.jpg', screen: 3 },
-    { name: 'שוק ההון', cat: 'אב טיפוס', tag: 'אפליקציה · אב טיפוס', theme: 'rose', c: '#f0627f', berry: 'blue', img: null, screen: 4 }
+    { name: 'שדרן הפיננסים', cat: 'דף נחיתה', tag: 'דף נחיתה · מותג · אוטומציה', theme: 'gold', c: '#d9ad5f', img: 'img/finance-phone.jpg', screen: 0 },
+    { name: 'צופיה קזיוף', cat: 'אתר תדמית', tag: 'אתר תדמית · צילום', theme: 'olive', c: '#b9bd96', img: 'img/sofia-phone.jpg', screen: 1 },
+    { name: 'ג׳מסלי', cat: 'אפליקציה', tag: 'אפליקציה · חיסכון', theme: 'orange', c: '#ff7a2f', img: 'img/jamsly-home.jpg', screen: 2 },
+    { name: 'הארנק שלי', cat: 'דשבורד', tag: 'דשבורד · אפליקציית ווב', theme: 'blue', c: '#6f7dff', img: 'img/wallet-phone.jpg', screen: 3 },
+    { name: 'שוק ההון', cat: 'אב טיפוס', tag: 'אפליקציה · אב טיפוס', theme: 'rose', c: '#f0627f', img: null, screen: 4 }
   ];
   let cur = 0, isSwitching = false, switchSpin = 0;
 
@@ -641,147 +635,18 @@
     $('#hero-center').style.setProperty('--c', p.c);
   }
 
-  /* ---------- 3D fruit (procedural stand-ins for the cherry / blueberry / leaf models) ---------- */
-  const hero = $('#hero-content');
-  const GL = (() => {
-    if (!window.THREE) return null;
-    function setup(canvas) {
-      let renderer;
-      try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true }); } catch (e) { return null; }
-      renderer.setClearColor(0x000000, 0);
-      const scene = new THREE.Scene();
-      const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, -3000, 3000);
-      // soft studio reflections so the glossy skins catch light
-      const envScene = new THREE.Scene();
-      envScene.add(new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), new THREE.MeshBasicMaterial({ color: 0x1c2433, side: THREE.BackSide })));
-      const panel = (c, x, y, z, w, h) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: c, side: THREE.DoubleSide })); m.position.set(x, y, z); m.lookAt(0, 0, 0); envScene.add(m); };
-      panel(0xffffff, -6, 7, 6, 8, 5); panel(0xffd7b0, 8, 1, 4, 3, 7); panel(0xa9c9ff, -2, -7, 5, 9, 2);
-      const pm = new THREE.PMREMGenerator(renderer);
-      scene.environment = pm.fromScene(envScene, 0.03).texture;
-      scene.add(new THREE.HemisphereLight(0xffffff, 0x223344, 0.55));
-      const key = new THREE.DirectionalLight(0xfff1e0, 1.15); key.position.set(-300, 500, 800); scene.add(key);
-      const rim = new THREE.DirectionalLight(0x9fd2ff, 0.5); rim.position.set(500, -100, -300); scene.add(rim);
-      return { renderer, scene, cam, w: 1, h: 1 };
-    }
-    const bg = setup($('#gl-bg')), fg = setup($('#gl-fg'));
-    if (!bg || !fg) return null;
-
-    const mats = (g, base) => { const arr = []; g.traverse(o => { if (o.material) { o.material.transparent = true; arr.push([o.material, base]); } }); return arr; };
-    const tube = (a, b, c, r, mat) => new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(...a), new THREE.Vector3(...b), new THREE.Vector3(...c)), 20, r, 8), mat);
-    function cherry() {
-      const g = new THREE.Group();
-      const red = new THREE.MeshPhysicalMaterial({ color: 0xc8102e, roughness: 0.3, clearcoat: 1, clearcoatRoughness: 0.06, envMapIntensity: 1.2 });
-      const stem = new THREE.MeshStandardMaterial({ color: 0x5f7f2c, roughness: 0.6 });
-      const sph = new THREE.SphereGeometry(0.55, 40, 28);
-      const a = new THREE.Mesh(sph, red); a.position.set(-0.62, -0.5, 0); a.scale.y = 0.94;
-      const b = new THREE.Mesh(sph, red); b.position.set(0.58, -0.62, 0.1); b.scale.set(0.97, 0.9, 0.97);
-      g.add(a, b, tube([-0.62, 0.4, 0], [-0.55, 1.0, 0], [0.02, 1.45, 0], 0.035, stem), tube([0.58, 0.3, 0.1], [0.45, 1.0, 0.05], [0.02, 1.45, 0], 0.035, stem), tube([0.02, 1.45, 0], [0.1, 1.75, 0], [0.28, 1.98, 0], 0.04, stem));
-      g.position.y = -0.2; const w = new THREE.Group(); w.add(g); return w;
-    }
-    function blueberries() {
-      const g = new THREE.Group();
-      const m = new THREE.MeshPhysicalMaterial({ color: 0x2f45c9, roughness: 0.42, clearcoat: 0.7, clearcoatRoughness: 0.25 });
-      const dark = new THREE.MeshStandardMaterial({ color: 0x141a52, roughness: 0.7 });
-      [[-0.55, -0.3, 0, 0.62], [0.55, -0.4, 0.1, 0.7], [0, 0.55, -0.1, 0.5]].forEach(([x, y, z, r]) => {
-        const b = new THREE.Mesh(new THREE.SphereGeometry(r, 36, 26), m); b.position.set(x, y, z);
-        const crown = new THREE.Mesh(new THREE.TorusGeometry(r * 0.26, r * 0.07, 8, 5), dark); crown.position.set(x, y + r * 0.92, z); crown.rotation.x = Math.PI / 2;
-        g.add(b, crown);
-      });
-      const w = new THREE.Group(); w.add(g); return w;
-    }
-    function leaf() {
-      const s = new THREE.Shape(); s.moveTo(0, 0); s.bezierCurveTo(0.55, 0.3, 0.62, 1.15, 0, 2); s.bezierCurveTo(-0.62, 1.15, -0.55, 0.3, 0, 0);
-      const geo = new THREE.ExtrudeGeometry(s, { depth: 0.03, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.03, bevelSegments: 2, curveSegments: 24 });
-      const p = geo.attributes.position; for (let i = 0; i < p.count; i++) { const x = p.getX(i), y = p.getY(i); p.setZ(i, p.getZ(i) + x * x * 0.55 + y * 0.06 * y * 0.3); }
-      geo.computeVertexNormals(); geo.translate(0, -1, 0);
-      const mat = new THREE.MeshStandardMaterial({ color: 0x2fa35e, roughness: 0.5, side: THREE.DoubleSide });
-      const g = new THREE.Group(); g.add(new THREE.Mesh(geo, mat));
-      g.add(tube([0, -1, 0.05], [0.03, 0, 0.1], [0, 0.95, 0.05], 0.018, new THREE.MeshStandardMaterial({ color: 0x1d7a45, roughness: 0.6 })));
-      return g;
-    }
-
-    const SPEC = [ // [scene, kind, left%, top%, size, opacity]
-      ['fg', 'b', 30, 25, 220, 1], ['fg', 'b', 42, 60, 100, 1], ['fg', 'b', 62, 30, 250, 1], ['fg', 'b', 48, 15, 140, 1], ['fg', 'b', 20, 75, 120, 1], ['fg', 'b', 75, 45, 180, 1],
-      ['bg', 'b', 40, 15, 80, 0.7], ['bg', 'b', 55, 50, 70, 0.6], ['bg', 'b', 35, 80, 75, 0.7]
-    ];
-    const LEAF = [[15, 10, 60, 1], [80, 40, 140, 0.4], [75, 70, 80, 1], [20, 85, 120, 0.3]];
-    const berries = SPEC.map(([sc, , l, t, size, op], i) => {
-      const S = sc === 'fg' ? fg : bg, ch = cherry(), bl = blueberries(), root = new THREE.Group();
-      root.add(ch, bl); bl.visible = false; S.scene.add(root);
-      const m = [...mats(ch, op), ...mats(bl, op)];
-      return { S, root, ch, bl, m, l, t, size, op, base: { x: 0, y: 0 }, r: { x: 0, y: 0 }, angle: Math.random() * 360, g: { x: 0, y: 0, rot: 0, s: 1, o: 1 }, kind: 'cherry', i };
-    });
-    const leaves = LEAF.map(([l, t, size, op], i) => { const g = leaf(); bg.scene.add(g); return { g, m: mats(g, op), l, t, size, op, i }; });
-
-    function resize() {
-      const r = hero.getBoundingClientRect(); const W = r.width + 160, H = r.height + 160;
-      [bg, fg].forEach(S => {
-        S.w = W; S.h = H; S.renderer.setPixelRatio(Math.min(devicePixelRatio || 1, innerWidth < 800 ? 1.25 : 1.5));
-        S.renderer.setSize(W, H, false);
-        S.cam.left = -W / 2; S.cam.right = W / 2; S.cam.top = H / 2; S.cam.bottom = -H / 2; S.cam.updateProjectionMatrix();
-      });
-      const k = Math.min(1, Math.max(0.5, r.width / 1400));
-      [...berries, ...leaves].forEach(b => {
-        b.px = r.width - (b.l / 100) * r.width - b.size * k / 2 - r.width / 2; // mirrored for RTL: world x of the home centre
-        b.py = r.height / 2 - (b.t / 100) * r.height - b.size * k / 2;
-        b.sc = (b.size * k) / (b.root ? 2.3 : 2.1);
-      });
-    }
-    resize(); addEventListener('resize', resize);
-    new ResizeObserver(resize).observe(hero);
-    return { bg, fg, berries, leaves, resize };
-  })();
-
   /* ---------- pointer + main loop ---------- */
-  const mouse = { x: 0, y: 0, px: -9999, py: -9999 }, cm = { x: 0, y: 0 };
-  addEventListener('pointermove', e => { mouse.x = e.clientX / innerWidth - 0.5; mouse.y = e.clientY / innerHeight - 0.5; mouse.px = e.clientX; mouse.py = e.clientY; }, { passive: true });
+  const mouse = { x: 0, y: 0 }, cm = { x: 0, y: 0 };
+  addEventListener('pointermove', e => { mouse.x = e.clientX / innerWidth - 0.5; mouse.y = e.clientY / innerHeight - 0.5; }, { passive: true });
   let heroVisible = true;
   new IntersectionObserver(es => { heroVisible = es[0].isIntersecting; }, { rootMargin: '120px' }).observe($('.hero'));
-  const tilt = $('#hp-tilt'), fgEl = $('#gl-fg'), bgEl = $('#gl-bg');
-  const DUR = [5, 7, 6, 8, 5.5, 6.5, 9, 11, 10];
-  const rad = Math.PI / 180;
-
+  const tilt = $('#hp-tilt');
   function frame() {
-    const time = Date.now() * 0.001;
     cm.x += (mouse.x - cm.x) * 0.05; cm.y += (mouse.y - cm.y) * 0.05;
-    if (heroVisible) {
-      if (!reduce) tilt.style.transform = `rotateY(${-cm.x * 34 + switchSpin}deg) rotateX(${-cm.y * 20}deg)`;
-      fgEl.style.transform = `translate(${cm.x * 60}px, ${cm.y * 60}px)`;
-      bgEl.style.transform = `translate(${cm.x * -30}px, ${cm.y * -30}px)`;
-      if (GL) {
-        const rf = fgEl.getBoundingClientRect(), rb = bgEl.getBoundingClientRect();
-        GL.berries.forEach((b, i) => {
-          const S = b.S, r = S === GL.fg ? rf : rb;
-          const phase = (time + i * 0.7) * (Math.PI * 2 / DUR[i % 9]);
-          const floatY = Math.sin(phase) * 15, floatA = Math.cos(phase) * 6;
-          let x, y, rot, sc = 1, op = b.op;
-          if (isSwitching) {
-            x = b.px + b.g.x; y = b.py - b.g.y; rot = b.g.rot; sc = b.g.s; op = b.op * b.g.o;
-          } else {
-            const wx = b.px + b.base.x + b.r.x, wy = b.py - b.base.y - b.r.y - floatY;
-            const dx = mouse.px - (r.left + S.w / 2 + wx), dy = mouse.py - (r.top + S.h / 2 - wy);
-            const dist = Math.hypot(dx, dy) || 1; let tx = 0, ty = 0, sm = 1;
-            if (dist < 400 && !reduce) { const f = (400 - dist) / 400; tx = (dx / dist) * f * -80; ty = (dy / dist) * f * -80; sm = 1 + f * 5; }
-            b.r.x += (tx - b.r.x) * 0.1; b.r.y += (ty - b.r.y) * 0.1; if (!reduce) b.angle += 0.2 * sm;
-            x = b.px + b.base.x + b.r.x; y = b.py - b.base.y - b.r.y - floatY; rot = b.angle;
-          }
-          b.root.position.set(x, y, 0); b.root.scale.setScalar(Math.max(b.sc * sc, 0.001));
-          b.root.rotation.set(0.28, rot * rad * 0.9, floatA * rad);
-          b.m.forEach(([m, base]) => { m.opacity = op; });
-        });
-        GL.leaves.forEach((l, i) => {
-          const dur = 10 + i * 2, phase = (time + i * 1.2) * (Math.PI * 2 / dur);
-          l.g.position.set(l.px + Math.cos(phase * 0.5) * 15, l.py - Math.sin(phase) * 20, -100);
-          l.g.scale.setScalar(l.sc); l.g.rotation.set(0.4, i * 1.3 + time * 0.2, (Math.sin(phase * 0.3) * 15 + i * 40) * rad);
-          l.m.forEach(([m, base]) => { m.opacity = base; });
-        });
-        GL.bg.renderer.render(GL.bg.scene, GL.bg.cam); GL.fg.renderer.render(GL.fg.scene, GL.fg.cam);
-      }
-    }
+    if (heroVisible && !reduce) tilt.style.transform = `rotateY(${-cm.x * 34 + switchSpin}deg) rotateX(${-cm.y * 20}deg)`;
     if (!reduce) requestAnimationFrame(frame);
   }
   frame();
-  if (reduce) addEventListener('scroll', () => requestAnimationFrame(frame), { passive: true });
 
   /* ---------- choreographed project switch ---------- */
   function select(i) {
@@ -800,26 +665,11 @@
         gsap.to(spin, {
           val: 720, blur: 0, duration: 1.5, ease: 'back.out(0.7)',
           onUpdate: () => { switchSpin = spin.val; phone.style.filter = `blur(${spin.blur}px)`; },
-          onComplete: () => { switchSpin = 0; phone.style.filter = 'none'; }
+          onComplete: () => { switchSpin = 0; phone.style.filter = 'none'; isSwitching = false; }
         });
       }
     });
 
-    if (!GL) { isSwitching = false; return; }
-    let done = 0;
-    GL.berries.forEach(b => {
-      const startAngle = b.angle, nx = (Math.random() - 0.5) * 200, ny = (Math.random() - 0.5) * 200;
-      b.g.x = b.base.x; b.g.y = b.base.y; b.g.rot = startAngle; b.g.s = 1; b.g.o = 1;
-      gsap.timeline()
-        .to(b.g, { x: -b.px, y: b.py, rot: startAngle + 45, s: 0.1, o: 0, duration: 0.5, ease: 'power2.in',
-          onComplete: () => { b.ch.visible = p.berry !== 'blue'; b.bl.visible = p.berry === 'blue'; } })
-        .to(b.g, { duration: 0.3 })
-        .to(b.g, { x: nx, y: ny, rot: startAngle + 90, s: 1, o: 1, duration: 0.9, ease: 'back.out(1.5)',
-          onComplete: () => {
-            b.angle = startAngle + 90; b.base.x = nx; b.base.y = ny; b.r.x = 0; b.r.y = 0;
-            if (++done === GL.berries.length) isSwitching = false;
-          } });
-    });
   }
 
   /* ---------- scroll: themes, nav, devices, reveals ---------- */
