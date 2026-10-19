@@ -310,10 +310,14 @@ gen();addEventListener('resize',draw);
   function g(k){try{return localStorage.getItem(k)}catch(e){return null}}
   if(navigator.doNotTrack==='1'||g(OFF)==='1'||!/^https?:$/.test(location.protocol))return;
   var v=g(K);if(!v){v=(crypto.randomUUID?crypto.randomUUID():Math.random().toString(36).slice(2)+Date.now().toString(36)).replace(/-/g,'').slice(0,24);try{localStorage.setItem(K,v)}catch(e){}}
-  function ev(e,p){try{fetch('https://firestore.googleapis.com/v1/projects/'+cfg.p+'/databases/(default)/documents/events?key='+cfg.k,{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({fields:{vid:{stringValue:v},e:{stringValue:e},p:{stringValue:String(p||'').slice(0,40)},s:{stringValue:'landing'},t:{integerValue:String(Date.now())}}})}).catch(function(){})}catch(x){}}
+  function ev(e,p){try{return fetch('https://firestore.googleapis.com/v1/projects/'+cfg.p+'/databases/(default)/documents/events?key='+cfg.k,{method:'POST',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({fields:{vid:{stringValue:v},e:{stringValue:e},p:{stringValue:String(p||'').slice(0,40)},s:{stringValue:'landing'},t:{integerValue:String(Date.now())}}})}).catch(function(){})}catch(x){return Promise.resolve()}}
   var src=(new URLSearchParams(location.search).get('src')||'').replace(/[^a-zA-Z0-9_-]/g,'').slice(0,20),ref='';try{ref=new URL(document.referrer).hostname.replace(/^www\./,'')}catch(e){}
   ev('landing_view',src||ref);
-  document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href],button');if(!a)return;var h=a.getAttribute('href')||'';if(h.indexOf('app/')===0)ev('cta_click',a.id||a.textContent.trim().slice(0,20));else if(a.id==='ins')ev('install_click','landing')});
+  /* the click on "open the app" leaves the page right away, which can cancel the request: wait for it (at most 0.6 s) before going */
+  document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href],button');if(!a)return;var h=a.getAttribute('href')||'';
+    if(h.indexOf('app/')===0&&!e.defaultPrevented&&e.button===0&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey){e.preventDefault();var go=function(){location.href=h},done=false,fin=function(){if(!done){done=true;go()}};ev('cta_click',a.id||a.textContent.trim().slice(0,20)).then(fin,fin);setTimeout(fin,600)}
+    else if(h.indexOf('app/')===0)ev('cta_click',a.id||a.textContent.trim().slice(0,20));
+    else if(a.id==='ins')ev('install_click','landing')});
   var sent=false;addEventListener('scroll',function(){if(!sent&&scrollY+innerHeight>document.body.scrollHeight*.75){sent=true;ev('landing_scroll','75')}},{passive:true});
 })();
 </script>
