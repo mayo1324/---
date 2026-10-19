@@ -150,7 +150,8 @@ h2 strong,h1 strong,blockquote strong,h2 strong .w>i,h1 strong .w>i,blockquote s
 .hero{padding-top:84px;padding-bottom:64px;overflow:hidden}
 .hero .fern.f1{width:72vw;max-width:520px;top:-30px;inset-inline-end:-18vw;opacity:.85;transform:rotate(8deg)}
 .hero .fern.f2{width:46vw;max-width:340px;bottom:6%;inset-inline-start:-14vw;opacity:.55;animation-delay:-4s}
-.hero h1{font-size:clamp(42px,12.2vw,92px);font-weight:400;line-height:1.04;letter-spacing:.005em}
+.hero h1{font-size:clamp(54px,17vw,124px);font-weight:400;line-height:1;letter-spacing:.005em}
+.hlead{font:400 clamp(20px,5.4vw,27px)/1.45 var(--serif);color:var(--cream2);margin-top:16px;max-width:22em}
 .stage{position:relative;height:max(46vh,360px);height:max(44svh,360px);margin-top:22px}
 .ring{position:absolute;left:50%;top:50%;width:min(112%,560px);aspect-ratio:1;transform:translate(-50%,-50%);color:rgba(201,169,110,.55);animation:spin 50s linear infinite;pointer-events:none}
 .ring svg{width:100%;height:100%;overflow:visible}
@@ -232,6 +233,7 @@ h2 strong,h1 strong,blockquote strong,h2 strong .w>i,h1 strong .w>i,blockquote s
 .about-img img{position:absolute;inset:-8% 0;width:100%;height:116%;object-fit:cover}
 .about-slot{position:absolute;inset-inline-end:-6%;bottom:-12%;width:42%;height:52%;z-index:3}
 .about blockquote{font-family:var(--serif);font-weight:400;font-size:clamp(29px,7.6vw,46px);line-height:1.4;color:var(--fg)}
+.about-p{margin-top:22px;font-size:18px;line-height:1.85;color:var(--fg2);max-width:30em}
 .who{display:block;margin-top:24px;font:400 15px var(--sans);color:var(--acc);letter-spacing:.24em}
 
 /* תוצאות */
@@ -418,7 +420,8 @@ if(rm)d.classList.add('rm');else d.classList.add('intro-lock');})();
   <div class="wrap hero-grid">
     <div class="h-head">
       <p class="eyebrow h-anim">קורס מעשי לקוסמטיקאיות</p>
-      <h1 data-split class="h-anim">מקוסמטיקאית עם חלום, לאשת עסקים עם <strong>קליניקה מלאה בלקוחות</strong></h1>
+      <h1 data-split class="h-anim">מחלום לקליניקה <strong>מלאה</strong></h1>
+      <p class="hlead h-anim">מקוסמטיקאית עם חלום, לאשת עסקים עם קליניקה מלאה בלקוחות</p>
     </div>
     <div class="stage h-anim" id="stage">
       <div class="halo" aria-hidden="true"></div>
@@ -497,7 +500,8 @@ if(rm)d.classList.add('rm');else d.classList.add('intro-lock');})();
     </div>
     <div>
       <p class="eyebrow">מי זאת ענבר</p>
-      <blockquote data-split>"אמרו לי כל החיים שלא יצא ממני כלום. היום אני מנהלת <strong>קליניקה עם אלפי לקוחות</strong>, צוות מקצועי וליין מוצרים משלי. לקח לי שנים ללמוד את זה לבד, ובקורס אני נותנת לך <strong>את הקיצור</strong>."</blockquote>
+      <blockquote data-split>"אמרו לי שלא יצא ממני <strong>כלום</strong>."</blockquote>
+      <p class="about-p" data-reveal>היום אני מנהלת קליניקה עם אלפי לקוחות, צוות מקצועי וליין מוצרים משלי. לקח לי שנים ללמוד את זה לבד, ובקורס אני נותנת לך את הקיצור.</p>
       <span class="who">ענבר בן אדרת</span>
     </div>
   </div>
