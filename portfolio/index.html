@@ -3,302 +3,296 @@
 <meta name="description" content="תיק עבודות: אתרים, דפי נחיתה ואפליקציות בעברית, עם עיצוב, תנועה ותלת־מימד.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Rubik:wght@300;400;500;600&family=Inter:wght@400;500&family=Manrope:wght@400;500;700&family=Galada&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Secular+One&family=Rubik:wght@300;400;500;600&family=Galada&display=swap" rel="stylesheet">
 <script>
   document.documentElement.lang = 'he';
   document.documentElement.dir = 'rtl';
 </script>
 <style>
-  /* Layout concept: a Soda-style hero (cursive headline, glass nav, tilting center object, floating
-     3D fruit that flees the pointer, rising bubbles) whose radial background morphs to each project's
-     theme; the case studies below keep that glass-and-gradient language. */
+  /* Layout concept: one real 3D phone lives in a fixed WebGL layer and docks onto an empty "slot"
+     in each section (hero, five projects, contact), swapping its screen as it travels. The page
+     background is a radial gradient that morphs to each project's colour world. */
   :root {
     color-scheme: dark;
     --text: #ffffff;
-    --muted: rgba(255, 255, 255, .72);
-    --glass-bg: rgba(255, 255, 255, .06);
-    --glass-border: rgba(255, 255, 255, .14);
+    --muted: rgba(255, 255, 255, .86);
+    --glass-bg: rgba(255, 255, 255, .07);
+    --glass-border: rgba(255, 255, 255, .16);
     --pink: #fbcfe8;
     --on-pink: #011d17;
-    --ink: #011411;
-    --font-body: 'Inter', 'Rubik', system-ui, sans-serif;
-    --font-heading: 'Galada', cursive;
-    --font-he: 'Frank Ruhl Libre', 'David Libre', Georgia, serif;
-    --font-nav: 'Manrope', 'Rubik', sans-serif;
+    --font-he: 'Secular One', 'Rubik', system-ui, sans-serif;
+    --font-body: 'Rubik', system-ui, 'Segoe UI', Arial, sans-serif;
+    --font-script: 'Galada', cursive;
     --ease: cubic-bezier(.2, .8, .2, 1);
   }
   body {
     --bg-inner: #0b8a78; --bg-mid: #044e3b; --bg-outer: #011411;
     background: #011411;
     background: radial-gradient(circle at center, var(--bg-inner) 0%, var(--bg-mid) 50%, var(--bg-outer) 100%) fixed;
-    color: var(--text); font-family: var(--font-body); font-weight: 400; line-height: 1.7;
+    color: var(--text); font-family: var(--font-body); font-weight: 300; line-height: 1.7;
     -webkit-font-smoothing: antialiased; overflow-x: clip;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html { scroll-behavior: smooth; overflow-x: hidden; }
+  html { scroll-behavior: smooth; overflow-x: hidden; scroll-padding-top: 72px; }
   a { color: inherit; text-decoration: none; }
   button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
   img { display: block; max-width: 100%; height: auto; }
+  [hidden] { display: none !important; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   :focus-visible { outline: 2px solid var(--pink); outline-offset: 4px; border-radius: 8px; }
   ::selection { background: var(--pink); color: var(--on-pink); }
-  .wrap {
-    width: 100%; max-width: 1280px; margin-inline: auto;
-    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
-  }
-  .label { font-family: var(--font-nav); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
-  .glass {
-    background: var(--glass-bg); border: 1px solid var(--glass-border);
-    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
-  }
+  .wrap { width: 100%; max-width: 1280px; margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .label { font-family: var(--font-body); font-size: 13px; font-weight: 500; letter-spacing: .1em; color: rgba(255,255,255,.9); }
+  .glass { background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
 
-  /* ---------- bubbles ---------- */
+  #gl { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 110; pointer-events: none; }
   #bubbles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-  .bubble {
-    position: absolute; bottom: -50px; border-radius: 50%; pointer-events: none;
-    background: radial-gradient(circle at 32% 30%, rgba(255,255,255,.9) 0, rgba(255,255,255,.16) 22%, rgba(255,255,255,.05) 58%, rgba(255,255,255,0) 70%);
-    border: 1px solid rgba(255,255,255,.38); box-shadow: inset -2px -3px 6px rgba(255,255,255,.18);
-  }
-  @keyframes floatUp {
-    0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
-    10% { opacity: var(--o, .4); } 90% { opacity: var(--o, .4); }
-    100% { transform: translateY(-110vh) translateX(30px) rotate(360deg); opacity: 0; }
-  }
+  .bubble { position: absolute; bottom: -50px; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(circle at 32% 30%, rgba(255,255,255,.85) 0, rgba(255,255,255,.14) 22%, rgba(255,255,255,.04) 58%, rgba(255,255,255,0) 70%);
+    border: 1px solid rgba(255,255,255,.3); }
+  @keyframes floatUp { 0% { transform: translateY(0) translateX(0) rotate(0); opacity: 0; } 10% { opacity: var(--o, .3); } 90% { opacity: var(--o, .3); } 100% { transform: translateY(-110vh) translateX(30px) rotate(360deg); opacity: 0; } }
   .page { position: relative; z-index: 1; }
-  .progress { position: fixed; top: 0; inset-inline: 0; height: 3px; z-index: 300; transform-origin: right center; transform: scaleX(0); background: linear-gradient(270deg, var(--pink), #fff); }
+  .progress { position: fixed; top: 0; inset-inline: 0; height: 3px; z-index: 300; transform-origin: right center; transform: scaleX(0); background: var(--pink); }
 
-  /* ---------- header ---------- */
-  .header { position: fixed; top: 0; width: 100%; z-index: 200; padding: calc(1.6rem + env(safe-area-inset-top, 0px)) 4% 1.2rem; display: flex; justify-content: space-between; align-items: center; }
-  .logo { display: flex; align-items: center; gap: .5rem; font-weight: 700; font-size: 1.35rem; font-family: var(--font-heading); }
-  .nav { display: flex; gap: .5rem; padding: .4rem; border-radius: 100px; box-shadow: 0 8px 32px rgba(0,0,0,.12), inset 0 0 0 1px rgba(255,255,255,.08); background: rgba(255,255,255,.08); }
-  .nav-item { font-family: var(--font-nav); color: var(--muted); font-size: .88rem; font-weight: 500; padding: .5rem 1.2rem; border-radius: 100px; transition: all .3s ease; white-space: nowrap; }
+  /* ---------- header + menu ---------- */
+  .header { position: fixed; top: 0; width: 100%; z-index: 200; padding: calc(1.2rem + env(safe-area-inset-top, 0px)) 4% 1rem; display: flex; justify-content: space-between; align-items: center; gap: 12px; transition: background .4s, padding .4s, box-shadow .4s; }
+  .header.scrolled { background: rgba(1, 16, 14, .55); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); padding-top: calc(.7rem + env(safe-area-inset-top, 0px)); padding-bottom: .7rem; box-shadow: 0 1px 0 rgba(255,255,255,.08); }
+  .logo { display: flex; align-items: center; gap: .5rem; font-size: 1.5rem; font-family: var(--font-script); }
+  .nav { display: flex; gap: .4rem; padding: .35rem; border-radius: 100px; background: rgba(255,255,255,.08); }
+  .nav-item { color: var(--muted); font-size: .9rem; font-weight: 400; padding: .45rem 1.2rem; border-radius: 100px; transition: all .3s ease; white-space: nowrap; }
   .nav-item:hover, .nav-item.active { background: var(--pink); color: var(--on-pink); }
-  .contact-btn { background: rgba(0,0,0,.5); color: #fff; padding: .9rem 2rem; border-radius: 100px; font-weight: 600; font-size: .88rem; transition: all .3s ease; display: inline-block; }
-  .contact-btn:hover { background: rgba(0,0,0,.7); transform: translateY(-2px); }
+  .contact-btn { background: rgba(0,0,0,.5); color: #fff; padding: .8rem 1.8rem; border-radius: 100px; font-weight: 500; font-size: .9rem; transition: all .3s ease; display: inline-block; }
+  .contact-btn:hover { background: rgba(0,0,0,.72); transform: translateY(-2px); }
+  .burger { display: none; width: 44px; height: 44px; border-radius: 50%; align-items: center; justify-content: center; }
+  .burger span, .burger span::before { display: block; width: 20px; height: 2px; background: #fff; border-radius: 2px; position: relative; transition: transform .3s var(--ease); }
+  .burger span::before { content: ""; position: absolute; top: 6px; }
+  .menu { position: fixed; inset: 0; z-index: 190; display: none; flex-direction: column; justify-content: center; gap: 6px; padding: 96px 28px 40px; background: rgba(1, 14, 12, .86); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); }
+  .menu.open { display: flex; }
+  .menu a { font-family: var(--font-he); font-size: clamp(34px, 11vw, 56px); line-height: 1.25; }
+  .menu a small { font-family: var(--font-body); font-size: 13px; color: var(--muted); margin-inline-start: 10px; }
 
   /* ---------- hero ---------- */
-  .hero { overflow-x: clip; position: relative; z-index: 2; height: 100vh; min-height: 640px; display: flex; align-items: center; justify-content: center; padding: 5rem 4% 0; }
+  .hero { position: relative; z-index: 2; height: 100vh; min-height: 660px; display: flex; align-items: center; justify-content: center; padding: 5rem 4% 0; }
   .hero-content { display: flex; justify-content: space-between; align-items: stretch; width: 100%; height: 100%; position: relative; }
-  .main-title, .side-title { font-family: var(--font-heading); font-size: clamp(4.4rem, min(10vw, 17vh), 12rem); line-height: .8; font-weight: 400; white-space: nowrap; }
-  .main-title .pk { color: var(--pink); }
-  .hero-left { display: flex; flex-direction: column; height: 100%; padding: 6rem 0; gap: 2rem; z-index: 100; }
-  .description { color: var(--muted); font-size: 1.1rem; line-height: 1.7; max-width: 400px; font-family: 'Rubik', var(--font-body); font-weight: 300; }
-  .primary-btn { display: flex; align-items: center; gap: 1.5rem; background: rgba(0,0,0,.5); color: #fff; padding: .4rem 1.5rem .4rem .4rem; border-radius: 100px; font-weight: 700; width: fit-content; transition: all .3s ease; }
-  .primary-btn:hover { background: rgba(0,0,0,.7); transform: translateY(-3px); }
-  .plus-icon { background: var(--pink); color: var(--on-pink); width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1.4rem; font-weight: 900; line-height: 1; padding-bottom: 2px; }
-  .award-badge { display: flex; align-items: center; gap: 1rem; margin-top: auto; }
-  .award-icon { width: 48px; height: 48px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
-  .award-text { display: flex; flex-direction: column; }
-  .award-title { font-size: .7rem; letter-spacing: .1em; color: var(--muted); font-family: var(--font-nav); }
-  .award-subtitle { font-size: .88rem; font-weight: 600; }
+  h1.main { font-family: var(--font-he); font-weight: 400; font-size: clamp(2.8rem, min(4.5vw, 8.4vh), 5.4rem); line-height: 1.04; letter-spacing: -.01em; text-wrap: balance; }
+  h1.main .pk { color: var(--pink); }
+  .hero-left { display: flex; flex-direction: column; height: 100%; padding: 5.6rem 0 4rem; gap: 1.6rem; z-index: 100; max-width: 520px; }
+  .hero-left .lead { color: var(--muted); font-size: 1.08rem; max-width: 40ch; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .primary-btn { display: inline-flex; align-items: center; gap: 1.2rem; background: rgba(0,0,0,.5); color: #fff; padding: .4rem 1.5rem .4rem .4rem; border-radius: 100px; font-weight: 500; transition: all .3s ease; min-height: 46px; }
+  .primary-btn:hover { background: rgba(0,0,0,.72); transform: translateY(-3px); }
+  .primary-btn .ic { background: var(--pink); color: var(--on-pink); width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1.1rem; font-weight: 600; line-height: 1; flex: none; }
+  .ghost-btn { display: inline-flex; align-items: center; min-height: 46px; padding: 0 1.5rem; border-radius: 100px; border: 1px solid var(--glass-border); font-weight: 400; transition: background .3s; }
+  .ghost-btn:hover { background: rgba(255,255,255,.12); }
+  .scroll-cue { margin-top: auto; display: flex; align-items: center; gap: 10px; }
+  .scroll-cue i { width: 1px; height: 34px; background: var(--pink); display: block; animation: cue 2.2s ease-in-out infinite; transform-origin: top; }
+  @keyframes cue { 0%, 100% { transform: scaleY(.3); opacity: .4; } 50% { transform: scaleY(1); opacity: 1; } }
   @keyframes fadeInEntry { to { opacity: 1; transform: none; } }
   .enter { opacity: 0; transform: translateY(30px); animation: fadeInEntry 1s ease-out forwards; }
   .enter.d1 { animation-delay: .15s; } .enter.d2 { animation-delay: .35s; } .enter.d3 { animation-delay: .55s; } .enter.d4 { animation-delay: .75s; }
 
-  .hero-center { display: flex; justify-content: center; align-items: center; position: absolute; inset: 0; z-index: 1; opacity: 0; perspective: 1700px; pointer-events: none;
-    animation: fadeIn 1.5s ease-out .3s forwards, float 6s ease-in-out infinite;
-    background: radial-gradient(circle at center, color-mix(in srgb, var(--c, #10b981) 22%, transparent) 0%, transparent 62%); }
-  @keyframes fadeIn { to { opacity: 1; } }
-  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-  .hp-rot { transform: rotate(12deg); transform-style: preserve-3d; }
-  .hp-tilt { transform-style: preserve-3d; will-change: transform; }
-  .phone { border-radius: 34px; padding: 8px; background: linear-gradient(145deg, #2d3040, #0a0b10); border: 1px solid rgba(255,255,255,.22); box-shadow: 0 50px 80px -20px rgba(0,0,0,.7), 0 0 60px -10px color-mix(in srgb, var(--c, #10b981) 55%, transparent); }
-  .phone .screen { position: relative; overflow: hidden; aspect-ratio: 390 / 844; border-radius: 27px; background: #111; }
-  .phone .screen::before { content: ""; position: absolute; z-index: 5; top: 8px; left: 50%; width: 30%; height: 14px; margin-left: -15%; border-radius: 99px; background: #05060a; }
-  .phone.big { height: min(74vh, 720px); aspect-ratio: 390 / 844; display: block; }
-  .phone.big .screen { height: 100%; aspect-ratio: auto; }
-  #hp-screen > img, #hp-screen > canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; }
-  #hp-screen > .on { opacity: 1; }
-  .case .screen canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .glare { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: soft-light; z-index: 4; background: radial-gradient(520px circle at var(--gx, 30%) var(--gy, 0%), rgba(255,255,255,.34), transparent 48%); }
-  .hero-cap { position: absolute; z-index: 120; bottom: 1.6rem; left: 0; right: 0; margin-inline: auto; width: fit-content; max-width: calc(100% - 32px); display: flex; align-items: center; gap: 14px; padding: .55rem .6rem .55rem 1.3rem; border-radius: 100px; font-size: .92rem; font-family: 'Rubik', sans-serif; transition: background .3s; }
-  .hero-cap:hover { background: rgba(255,255,255,.14); }
-  .hero-cap b { font-weight: 600; } .hero-cap span { color: var(--muted); font-size: .8rem; }
+  .hero-center { display: flex; justify-content: center; align-items: center; position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+  .slot { aspect-ratio: 390 / 844; pointer-events: none; position: relative; }
+  .slot .fb { display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 30px; border: 6px solid #15171f; box-shadow: 0 30px 60px -20px rgba(0,0,0,.7); }
+  html.no-gl .slot .fb { display: block; }
+  .hero-slot { height: min(72vh, 700px); animation: float 6s ease-in-out infinite; }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+  .hero-cap { position: absolute; z-index: 120; bottom: 1.4rem; left: 0; right: 0; margin-inline: auto; width: fit-content; max-width: calc(100% - 32px); display: flex; align-items: center; gap: 14px; padding: .5rem .5rem .5rem 1.3rem; border-radius: 100px; font-size: .95rem; transition: background .3s; }
+  .hero-cap:hover { background: rgba(255,255,255,.16); }
+  .hero-cap b { font-weight: 500; white-space: nowrap; } .hero-cap span { color: var(--muted); font-size: .82rem; white-space: nowrap; }
+  .hero-cap .ic { background: var(--pink); color: var(--on-pink); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; flex: none; }
 
-  .hero-right { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; text-align: end; height: 100%; padding: 6rem 0; z-index: 100; width: 450px; pointer-events: none; }
-  .product-carousel { display: flex; flex-direction: column; gap: 1.5rem; align-items: flex-end; pointer-events: auto; }
+  .hero-right { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; text-align: end; height: 100%; padding: 6.2rem 0 4rem; z-index: 100; width: 420px; pointer-events: none; }
+  .product-carousel { display: flex; flex-direction: column; gap: 1.3rem; align-items: flex-end; pointer-events: auto; }
+  .product-carousel > .label { margin-bottom: 1.8rem; }
   .carousel-cards { display: flex; gap: 1rem; }
   .card { border: 1px solid var(--glass-border); background: var(--glass-bg); padding: 1rem; padding-top: 5rem; border-radius: 28px; display: flex; flex-direction: column; align-items: center; gap: 1.1rem; cursor: pointer; transition: all .4s cubic-bezier(.175, .885, .32, 1.275); width: 135px; position: relative; backdrop-filter: blur(10px); text-align: center; color: inherit; }
-  .card:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.4); }
+  .card:hover { background: rgba(255,255,255,.13); border-color: rgba(255,255,255,.4); }
   .card.active { border-color: var(--pink); }
-  .card img { width: 118px; height: auto; margin-top: -7rem; border-radius: 16px; border: 1px solid rgba(255,255,255,.2); filter: drop-shadow(0 20px 30px rgba(0,0,0,.5)); transition: transform .5s cubic-bezier(.34, 1.56, .64, 1); will-change: transform; pointer-events: none; }
+  .card img { width: 118px; height: auto; margin-top: -7rem; border-radius: 16px; border: 1px solid rgba(255,255,255,.2); filter: drop-shadow(0 20px 30px rgba(0,0,0,.5)); transition: transform .5s cubic-bezier(.34, 1.56, .64, 1); pointer-events: none; }
   .card:hover img { transform: translateY(-30px) rotate(-12deg) scale(1.12); }
-  .card-info { display: flex; flex-direction: column; font-size: .76rem; line-height: 1.35; width: 100%; font-family: 'Rubik', sans-serif; }
-  .card-info span:first-child { font-weight: 600; } .card-info span:last-child { color: var(--muted); }
-  .carousel-nav { display: flex; gap: 1rem; }
-  .nav-arrow { background: var(--glass-bg); border: 1px solid var(--glass-border); color: #fff; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background .3s; }
-  .nav-arrow:hover { background: rgba(255,255,255,.16); }
-  .side-title { align-self: flex-end; text-align: end; }
-  .side-title .pk { color: var(--pink); }
+  .card-info { display: flex; flex-direction: column; font-size: .8rem; line-height: 1.35; width: 100%; }
+  .card-info span:first-child { font-weight: 500; } .card-info span:last-child { color: var(--muted); }
+  .carousel-nav { display: flex; align-items: center; gap: 12px; }
+  .nav-arrow { background: var(--glass-bg); border: 1px solid var(--glass-border); color: #fff; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background .3s; font-size: 1.1rem; }
+  .nav-arrow:hover { background: rgba(255,255,255,.18); }
+  .dots { display: flex; gap: 8px; align-items: center; }
+  .dots { gap: 0; }
+  .dots button { width: 26px; height: 32px; display: flex; align-items: center; justify-content: center; padding: 0; }
+  .dots button::before { content: ""; width: 10px; height: 10px; border-radius: 99px; background: rgba(255,255,255,.4); transition: width .4s var(--ease), background .3s; }
+  .dots button.on { width: 44px; }
+  .dots button.on::before { width: 28px; background: var(--pink); }
+  .now { align-self: flex-end; text-align: end; }
+  .now .num { font-family: var(--font-script); font-size: clamp(4.5rem, 9vh, 7rem); line-height: .9; color: var(--pink); }
+  .now .nm { font-family: var(--font-he); font-size: 1.7rem; line-height: 1.2; }
+  .now .tg { color: var(--muted); font-size: .9rem; }
 
   /* ---------- marquee ---------- */
-  .marq { position: relative; z-index: 3; border-block: 1px solid var(--glass-border); overflow: hidden; background: rgba(0,0,0,.22); backdrop-filter: blur(8px); }
-  .marq-t { display: flex; width: max-content; direction: ltr; animation: marq 42s linear infinite; }
-  .marq-t span { font-family: var(--font-he); font-weight: 900; font-size: clamp(28px, 4.4vw, 56px); padding: 18px 28px; white-space: nowrap; direction: rtl; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.5); }
+  .marq { position: relative; z-index: 3; border-block: 1px solid var(--glass-border); overflow: hidden; background: rgba(0,0,0,.22); backdrop-filter: blur(8px); padding-block: 4px; }
+  .marq-t { display: flex; width: max-content; direction: ltr; animation: marq 46s linear infinite; }
+  .marq-t span { font-family: var(--font-he); font-size: clamp(28px, 4.4vw, 54px); padding: 14px 28px; white-space: nowrap; direction: rtl; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.5); }
   .marq-t span:nth-child(even) { color: #fff; -webkit-text-stroke: 0; }
   .marq-t b { color: var(--pink); font-weight: 400; margin-inline: 10px; -webkit-text-stroke: 0; }
   @keyframes marq { to { transform: translateX(-50%); } }
 
   /* ---------- work ---------- */
   .work-head { padding-block: 120px 24px; display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 18px 40px; }
-  .work-head h2 { font-family: var(--font-he); font-weight: 900; font-size: clamp(38px, 6vw, 84px); line-height: 1; letter-spacing: -.02em; }
+  .work-head h2 { font-family: var(--font-he); font-weight: 400; font-size: clamp(38px, 6vw, 84px); line-height: 1.05; }
   .work-head p { max-width: 38ch; color: var(--muted); }
-  .case { padding-block: clamp(56px, 9vw, 130px); position: relative; }
+  .case { padding-block: clamp(72px, 9vw, 130px); position: relative; }
   .case-grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(28px, 5vw, 80px); align-items: center; }
   .case.flip .case-grid { grid-template-columns: 7fr 5fr; }
   .case.flip .stage { order: -1; }
   .case-grid > * { min-width: 0; }
-  .idx { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
-  .idx b { font-family: var(--font-heading); font-weight: 400; font-size: clamp(64px, 8vw, 112px); line-height: .9; color: var(--pink); }
-  .tag { color: var(--pink); }
-  .case h3 { font-family: var(--font-he); font-weight: 900; font-size: clamp(38px, 5.2vw, 72px); line-height: 1; letter-spacing: -.02em; text-wrap: balance; }
-  .case p.d { margin-top: 20px; max-width: 46ch; color: var(--muted); font-family: 'Rubik', sans-serif; font-weight: 300; }
-  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); margin-top: 30px; border-block: 1px solid var(--glass-border); }
-  .facts div { padding: 16px 0; padding-inline-end: 14px; }
-  .facts div + div { padding-inline-start: 18px; border-inline-start: 1px solid var(--glass-border); }
-  .facts b { display: block; font-family: var(--font-heading); font-weight: 400; font-size: 36px; line-height: 1.1; direction: ltr; text-align: right; }
-  .facts span { display: block; margin-top: 4px; font-size: 13px; line-height: 1.4; color: var(--muted); font-family: 'Rubik', sans-serif; }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; list-style: none; }
-  .chips li { font-family: var(--font-nav); font-size: 12px; padding: 5px 14px; border-radius: 99px; border: 1px solid var(--glass-border); background: var(--glass-bg); color: #fff; }
+  .idx { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .idx b { font-family: var(--font-script); font-weight: 400; font-size: clamp(64px, 8vw, 110px); line-height: .9; color: var(--pink); }
+  .case h3 { font-family: var(--font-he); font-weight: 400; font-size: clamp(36px, 4.8vw, 66px); line-height: 1.05; text-wrap: balance; }
+  .brief { margin-top: 26px; display: grid; gap: 0; max-width: 54ch; border-top: 1px solid var(--glass-border); }
+  .brief div { display: grid; grid-template-columns: 7.5em 1fr; gap: 18px; padding: 15px 0; border-bottom: 1px solid var(--glass-border); }
+  .brief dt { font-size: 13px; font-weight: 500; color: var(--pink); letter-spacing: .04em; padding-top: 2px; }
+  .brief dd { color: var(--muted); font-size: 1rem; line-height: 1.6; }
 
   .stage { position: relative; aspect-ratio: 1.12 / 1; perspective: 1500px; }
   .rig { position: absolute; inset: 0; transform-style: preserve-3d; }
   .layer { position: absolute; transform-style: preserve-3d; }
   .float { animation: bob 7s ease-in-out infinite; } .float.b { animation-duration: 9s; animation-delay: -3s; }
   @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-  .glow { position: absolute; inset: 8% 6%; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--c, #fff) 55%, transparent), transparent); filter: blur(34px); transform: translateZ(-80px); }
+  .glow { position: absolute; inset: 8% 6%; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--c, #fff) 50%, transparent), transparent); filter: blur(34px); transform: translateZ(-80px); }
   .desk { inset-inline-start: 0; top: 7%; width: 90%; }
   .frame { border-radius: 14px; overflow: hidden; background: #0a0b10; border: 1px solid rgba(255,255,255,.18); box-shadow: 0 50px 90px -20px rgba(0,0,0,.7); }
-  .bar { display: flex; align-items: center; gap: 7px; height: 30px; padding-inline: 14px; background: #14161e; border-bottom: 1px solid var(--glass-border); }
+  .bar { display: flex; align-items: center; gap: 7px; height: 32px; padding-inline: 14px; background: #14161e; border-bottom: 1px solid var(--glass-border); }
   .bar i { width: 9px; height: 9px; border-radius: 50%; background: #3a3e4c; }
   .bar i:nth-child(1) { background: #ff6159; } .bar i:nth-child(2) { background: #ffbd2e; } .bar i:nth-child(3) { background: #28c93f; }
-  .bar em { margin-inline-start: 12px; font-style: normal; font-family: var(--font-nav); font-size: 10.5px; color: var(--muted); direction: ltr; }
+  .bar em { margin-inline-start: 12px; font-style: normal; font-size: 11.5px; color: var(--muted); direction: ltr; }
   .frame .screen { position: relative; overflow: hidden; aspect-ratio: 16 / 10; background: #111; }
-  .frame .screen img { width: 100%; height: auto; will-change: transform; }
-  .case .phone .screen { aspect-ratio: 390 / 844; }
-  .ph-a { inset-inline-end: -1%; bottom: -3%; width: 27%; transform: translateZ(90px); }
-  .tri .ph { width: 29%; }
-  .tri .ph-l { inset-inline-start: 2%; top: 16%; transform: translateZ(10px) rotateY(18deg); }
-  .tri .ph-m { inset-inline-start: 35.5%; top: 0%; width: 31%; transform: translateZ(100px); }
-  .tri .ph-r { inset-inline-end: 2%; top: 16%; transform: translateZ(10px) rotateY(-18deg); }
-  .cap-phone { inset-inline-start: 50%; top: 0; width: 38%; margin-inline-start: -19%; transform: translateZ(70px); }
-  .note { position: absolute; z-index: 4; font-family: var(--font-nav); font-size: 11px; padding: 6px 12px; border-radius: 99px; background: rgba(12,14,22,.85); border: 1px solid var(--glass-border); color: #fff; backdrop-filter: blur(8px); white-space: nowrap; }
-  .note.n1 { inset-inline-start: 4%; top: 28%; transform: translateZ(120px); border-color: #8f9bff; }
-  .note.n2 { inset-inline-start: 6%; top: 52%; transform: translateZ(140px); border-color: #f87171; }
-  .note.n3 { inset-inline-end: 4%; top: 14%; transform: translateZ(130px); border-color: #34d399; }
+  .frame .screen img { width: 100%; height: auto; }
+  .glare { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: soft-light; z-index: 4; background: radial-gradient(520px circle at var(--gx, 30%) var(--gy, 0%), rgba(255,255,255,.34), transparent 48%); }
+  .stage .slot { position: absolute; }
+  .slot.r { inset-inline-end: -3%; bottom: -12%; height: 70%; }
+  .slot.c { left: 0; right: 0; margin-inline: auto; top: 0; height: 100%; }
+  .mini { position: absolute; width: 28%; top: 20%; border-radius: 30px; padding: 7px; background: linear-gradient(145deg, #2d3040, #0a0b10); border: 1px solid rgba(255,255,255,.2); box-shadow: 0 40px 60px -16px rgba(0,0,0,.7); }
+  .mini img { border-radius: 24px; width: 100%; }
+  .mini.l { inset-inline-start: 2%; transform: rotateY(18deg); } .mini.r2 { inset-inline-end: 2%; transform: rotateY(-18deg); }
+  .note { position: absolute; z-index: 4; font-size: 12px; padding: 6px 13px; border-radius: 99px; background: rgba(12,14,22,.85); border: 1px solid var(--glass-border); color: #fff; backdrop-filter: blur(8px); white-space: nowrap; }
+  .note.n1 { inset-inline-start: 5%; top: 28%; border-color: #8f9bff; } .note.n2 { inset-inline-start: 7%; top: 54%; border-color: #f87171; } .note.n3 { inset-inline-end: 5%; top: 14%; border-color: #34d399; }
 
-  /* ---------- skills ---------- */
-  .skills { padding-block: 110px 40px; }
-  .skills h2 { font-family: var(--font-he); font-weight: 900; font-size: clamp(34px, 5vw, 68px); line-height: 1.04; letter-spacing: -.02em; max-width: 16ch; margin-top: 14px; }
-  .sk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 44px; perspective: 1200px; }
-  .sk { position: relative; padding: 30px 26px 28px; border-radius: 28px; transform-style: preserve-3d; transition: border-color .4s, background .4s; overflow: hidden; }
-  .sk:hover { border-color: var(--pink); background: rgba(255,255,255,.1); }
-  .sk h4 { font-family: var(--font-he); font-weight: 900; font-size: 28px; line-height: 1.1; transform: translateZ(40px); }
-  .sk p { margin-top: 12px; color: var(--muted); font-size: 15px; transform: translateZ(24px); font-family: 'Rubik', sans-serif; font-weight: 300; }
-  .sk .chips { transform: translateZ(30px); }
-  .sk .ico { display: block; width: 44px; height: 44px; margin-bottom: 26px; color: var(--pink); transform: translateZ(56px); }
+  /* ---------- method ---------- */
+  .method { padding-block: 110px 40px; }
+  .method h2 { font-family: var(--font-he); font-weight: 400; font-size: clamp(34px, 5vw, 68px); line-height: 1.08; max-width: 16ch; margin-top: 14px; }
+  .method-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px; align-items: center; margin-top: 48px; }
+  .method-slot { height: min(62vh, 560px); margin-inline: auto; }
+  .pillars { border-top: 1px solid var(--glass-border); }
+  .pillars div { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px 48px; padding: 28px 0; border-bottom: 1px solid var(--glass-border); align-items: baseline; }
+  .pillars dt { font-family: var(--font-he); font-size: clamp(24px, 3vw, 38px); line-height: 1.2; }
+  .pillars dd { color: var(--muted); font-size: 1.08rem; max-width: 52ch; }
 
   /* ---------- contact ---------- */
   .contact { padding-block: 120px 80px; }
-  .contact h2 { font-family: var(--font-heading); font-weight: 400; font-size: clamp(5rem, 13vw, 12rem); line-height: .85; }
+  .contact-grid { display: grid; grid-template-columns: 1.3fr .7fr; gap: 30px; align-items: center; }
+  .contact h2 { font-family: var(--font-he); font-weight: 400; font-size: clamp(44px, 7.4vw, 112px); line-height: 1; text-wrap: balance; }
   .contact h2 .pk { color: var(--pink); }
-  .contact p { margin-top: 28px; font-family: var(--font-he); font-weight: 700; font-size: clamp(22px, 3vw, 34px); max-width: 24ch; line-height: 1.25; }
-  .mail-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 32px; }
-  .mail { font-family: var(--font-nav); font-size: clamp(15px, 2.4vw, 22px); padding: 12px 20px; border-radius: 99px; user-select: all; direction: ltr; overflow-wrap: anywhere; }
+  .contact p.sub { margin-top: 22px; color: var(--muted); font-size: 1.15rem; max-width: 38ch; }
+  .contact-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 32px; }
+  .mail { font-size: clamp(15px, 2.2vw, 20px); padding: 11px 20px; border-radius: 99px; user-select: all; direction: ltr; overflow-wrap: anywhere; }
+  .contact .slot { height: min(64vh, 560px); margin-inline: auto; }
   footer { position: relative; z-index: 2; padding-block: 30px 40px; border-top: 1px solid var(--glass-border); }
   footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
 
   /* ---------- responsive ---------- */
-  @media (max-width: 1200px) {
-    .hero-right { width: 330px; }
-  }
+  @media (max-width: 1200px) { .hero-right { width: 330px; } }
   @media (max-width: 900px) {
-    .header { padding-inline: 16px; } .nav { display: none; }
-    .hero { height: auto; min-height: 100svh; padding-top: 5.6rem; padding-bottom: 3rem; }
-    .hero-content { flex-direction: column; height: auto; gap: 2rem; }
-    .hero-left { height: auto; padding: 1rem 0 0; gap: 1.4rem; order: 1; }
-    .award-badge { margin-top: 0; }
-    .hero-center { position: relative; inset: auto; height: 560px; order: 2; }
-    .phone.big { height: 500px; }
-    .hero-cap { bottom: .4rem; }
-    .hero-right { width: 100%; height: auto; padding: 1.6rem 0 0; align-items: center; order: 3; text-align: center; }
-    .product-carousel { align-items: center; padding-top: 6rem; }
-    .side-title { display: none; }
-    .main-title { font-size: 4.6rem; }
+    .header { padding-inline: 16px; } .nav, .contact-btn { display: none; } .burger { display: flex; }
+    .hero { height: auto; min-height: 100svh; padding-top: 4.6rem; padding-bottom: 2.4rem; }
+    .hero-content { flex-direction: column; height: auto; gap: 1.4rem; align-items: stretch; }
+    .hero-center { position: relative; inset: auto; order: 1; height: 54svh; min-height: 330px; }
+    .hero-slot { height: 100%; }
+    .hero-cap { position: relative; bottom: auto; order: 3; margin-top: 0; }
+    .hero-cap span { display: none; }
+    .hero-left { order: 4; height: auto; padding: 0; gap: 1.2rem; max-width: none; }
+    .scroll-cue { display: none; }
+    .hero-right { order: 2; width: 100%; height: auto; padding: 0; align-items: center; }
+    .product-carousel { align-items: center; padding-top: 0; }
+    .carousel-cards, .now { display: none; }
+    h1.main { font-size: clamp(2.5rem, 11.5vw, 3.8rem); }
     .case-grid, .case.flip .case-grid { grid-template-columns: 1fr; }
-    .case.flip .stage { order: 0; }
+    .case .stage, .case.flip .stage { order: -1; }
+    .case { padding-top: 96px; }
     .work-head { padding-top: 80px; }
-    .ph-a { width: 30%; } .cap-phone { width: 48%; margin-inline-start: -24%; } .tri .ph { width: 30%; }
-    .note { font-size: 10px; padding: 4px 9px; }
+    .brief div { grid-template-columns: 1fr; gap: 4px; }
+    .slot.r { height: 74%; bottom: -10%; }
+    .mini { width: 25%; } .mini.l { inset-inline-start: 6%; } .mini.r2 { inset-inline-end: 6%; }
+    .hero-right .label { display: none; }
+    .note { font-size: 11px; padding: 4px 10px; }
+    .pillars div { grid-template-columns: 1fr; gap: 8px; }
+    .method-grid { grid-template-columns: 1fr; } .method-slot { height: 46svh; order: -1; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .contact .slot { height: 52svh; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .marq-t, .float { animation: none; }
-    .hero-center { animation: fadeIn .01s forwards; }
+    .marq-t, .float, .hero-slot, .scroll-cue i { animation: none; }
     .enter { animation: fadeInEntry .01s forwards; }
   }
 </style>
 
 <div class="page">
   <div class="progress" id="progress"></div>
+  <canvas id="gl" aria-hidden="true"></canvas>
 
-  <header class="header">
+  <header class="header" id="header">
     <a href="#top" class="logo">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       <span>Yehuda</span>
     </a>
-    <nav class="nav glass">
+    <nav class="nav glass" aria-label="ראשי">
       <a href="#top" class="nav-item active" data-sec="top">בית</a>
       <a href="#work" class="nav-item" data-sec="work">עבודות</a>
-      <a href="#skills" class="nav-item" data-sec="skills">מה אני עושה</a>
+      <a href="#method" class="nav-item" data-sec="method">איך אני עובד</a>
       <a href="#contact" class="nav-item" data-sec="contact">צור קשר</a>
     </nav>
     <a href="#contact" class="contact-btn">בואו נדבר</a>
+    <button class="burger glass" id="burger" type="button" aria-label="תפריט" aria-expanded="false" aria-controls="menu"><span></span></button>
   </header>
+  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="תפריט">
+    <a href="#top">בית</a>
+    <a href="#work">עבודות<small>5 פרויקטים</small></a>
+    <a href="#method">איך אני עובד</a>
+    <a href="#contact">צור קשר</a>
+  </div>
 
   <main id="top">
     <!-- ================= HERO ================= -->
     <section class="hero" data-theme="hero">
-      <div class="hero-content" id="hero-content">
+      <div class="hero-content">
         <div class="hero-left">
-          <h1 class="main-title enter d1"><span class="pk">Pure</span><br>Craft</h1>
-          <p class="description enter d2">אני מעצב ובונה אתרים, דפי נחיתה ואפליקציות בעברית. מאפיון ועיצוב ועד קוד שרץ באמת, הכול בשפה חזותית אחת, נקייה ומלאת תנועה.</p>
-          <div class="enter d3">
-            <a href="#work" class="primary-btn">לעבודות <span class="plus-icon">+</span></a>
+          <div class="label enter d1">יהודה צברי · מעצב ובונה</div>
+          <h1 class="main enter d1">אתרים שנראים<br>כמו מותג, <span class="pk">ונבנים<br>כמו מוצר.</span></h1>
+          <p class="lead enter d2">דפי נחיתה, אתרי תדמית ואפליקציות בעברית. מהמסך הראשון ועד הקוד שרץ באוויר, אצל אדם אחד.</p>
+          <div class="cta enter d3">
+            <a href="#work" class="primary-btn"><span class="ic" aria-hidden="true">↓</span>לעבודות</a>
+            <a href="#contact" class="ghost-btn">בואו נדבר</a>
           </div>
-          <div class="award-badge enter d4">
-            <div class="award-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15L15 18L19 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <div class="award-text"><span class="award-title">PORTFOLIO 2026</span><span class="award-subtitle">5 פרויקטים נבחרים</span></div>
-          </div>
+          <div class="scroll-cue label enter d4"><i></i>גללו, הטלפון ילווה אתכם</div>
         </div>
 
-        <div class="hero-center" id="hero-center" style="--c:#d9ad5f" aria-hidden="true">
-          <div class="hp-rot"><div class="hp-tilt" id="hp-tilt">
-            <div class="phone big"><div class="screen" id="hp-screen">
-              <img src="img/finance-phone.jpg" width="780" height="1688" alt="" class="on">
-              <img src="img/sofia-phone.jpg" width="780" height="1688" alt="">
-              <img src="img/jamsly-home.jpg" width="780" height="1688" alt="">
-              <img src="img/wallet-phone.jpg" width="780" height="1688" alt="">
-              <canvas class="candles-cv" id="hp-cv"></canvas>
-              <div class="glare"></div>
-            </div></div>
-          </div></div>
+        <div class="hero-center" aria-hidden="true">
+          <div class="slot hero-slot" id="hero-slot" data-phone data-screen="hero" data-yaw="-14" data-roll="9" data-scale="1" data-c="#d9ad5f"><img class="fb" loading="lazy" id="hero-fb" src="img/finance-phone.jpg" alt=""></div>
         </div>
 
-        <a class="hero-cap glass" id="hero-cap" href="#p1"><span id="cap-tag">דף נחיתה · מותג · אוטומציה</span><b id="cap-name">שדרן הפיננסים</b><i class="plus-icon" style="font-style:normal">+</i></a>
+        <a class="hero-cap glass" id="hero-cap" href="#p1"><span id="cap-tag">דף נחיתה · מותג · אוטומציה</span><b id="cap-name">שדרן הפיננסים</b><i class="ic" aria-hidden="true">←</i></a>
 
         <div class="hero-right">
           <div class="product-carousel">
+            <div class="label">בחרו פרויקט</div>
             <div class="carousel-cards" id="cards"></div>
             <div class="carousel-nav">
               <button class="nav-arrow" id="prev" type="button" aria-label="הפרויקט הקודם">→</button>
+              <div class="dots" id="dots" role="group" aria-label="פרויקטים"></div>
               <button class="nav-arrow" id="next" type="button" aria-label="הפרויקט הבא">←</button>
             </div>
           </div>
-          <h2 class="side-title enter d2"><span class="pk">Selected</span><br>Work</h2>
+          <div class="now enter d3"><div class="num" id="now-num">01</div><div class="nm" id="now-name">שדרן הפיננסים</div><div class="tg" id="now-tag">דף נחיתה</div></div>
         </div>
-
       </div>
     </section>
 
@@ -312,32 +306,30 @@
     <!-- ================= WORK ================= -->
     <section id="work">
       <div class="wrap work-head">
-        <h2>עבודות נבחרות</h2>
-        <p>חמישה פרויקטים שעיצבתי ובניתי מאפס. הזיזו את העכבר על המכשירים וגללו, הרקע משנה צבע עם כל פרויקט.</p>
+        <h2>חמישה פרויקטים,<br>אותו טלפון.</h2>
+        <p>הטלפון הזה עובר איתכם בין העבודות ומראה את המסך של כל אחת. הזיזו את העכבר כדי להטות אותו.</p>
       </div>
 
       <article class="case" id="p1" data-theme="gold">
         <div class="wrap case-grid">
           <div class="copy">
-            <div class="idx"><b>01</b><span class="label tag">דף נחיתה · מותג · אוטומציה</span></div>
+            <div class="idx"><b>01</b><span class="label">דף נחיתה · מותג · אוטומציה</span></div>
             <h3>שדרן הפיננסים</h3>
-            <p class="d">ניוזלטר כלכלי יומי בעברית של בני אדם. עיצבתי את דף הנחיתה, דמות המותג, מודעת פרסום ופוסט לפייסבוק, דף תודה וחדר בקרה לניהול הנרשמים. המהדורה יוצאת אוטומטית בבוקר, ימים שני עד שישי, ובמוצאי שבת.</p>
-            <div class="facts">
-              <div><b>5</b><span>מסכים: נחיתה, מודעה, פוסט, תודה, בקרה</span></div>
-              <div><b>24</b><span>תנוחות לדמות המותג</span></div>
-              <div><b>2</b><span>מהדורות: בוקר ומוצ״ש</span></div>
-            </div>
-            <ul class="chips"><li>Landing</li><li>Brand character</li><li>Ad creative</li><li>Admin</li><li>GitHub Actions</li></ul>
+            <dl class="brief">
+              <div><dt>האתגר</dt><dd>להפוך כלכלה למשהו שאנשים רוצים לקרוא בבוקר, ולגרום להם להשאיר מייל.</dd></div>
+              <div><dt>מה בניתי</dt><dd>דף נחיתה, דמות מותג עם 24 תנוחות, מודעת פרסום, פוסט לפייסבוק, דף תודה וחדר בקרה לניהול הנרשמים.</dd></div>
+              <div><dt>מאחורי הקלעים</dt><dd>המהדורה יוצאת לבד: בבוקר בימים שני עד שישי, ובמוצאי שבת.</dd></div>
+            </dl>
           </div>
           <div class="stage" style="--c:#d9ad5f">
             <div class="rig">
               <div class="glow"></div>
               <div class="layer desk"><div class="float"><div class="frame">
                 <div class="bar"><i></i><i></i><i></i><em>shidur-finance</em></div>
-                <div class="screen"><img src="img/finance-full.jpg" width="1920" height="5766" alt="דף הנחיתה של שדרן הפיננסים" data-scroll><div class="glare"></div></div>
+                <div class="screen"><img src="img/finance-full.jpg" width="1100" height="3303" alt="דף הנחיתה של שדרן הפיננסים" data-scroll><div class="glare"></div></div>
               </div></div></div>
-              <div class="layer ph-a"><div class="float b"><div class="phone"><div class="screen"><img src="img/finance-phone.jpg" width="780" height="1688" alt="שדרן הפיננסים בטלפון"><div class="glare"></div></div></div></div></div>
             </div>
+            <div class="slot r" data-phone data-screen="0" data-yaw="-16" data-roll="0" data-scale="1" data-c="#d9ad5f"><img class="fb" loading="lazy" src="img/finance-phone.jpg" alt=""></div>
           </div>
         </div>
       </article>
@@ -345,25 +337,23 @@
       <article class="case flip" id="p2" data-theme="olive">
         <div class="wrap case-grid">
           <div class="copy">
-            <div class="idx"><b>02</b><span class="label tag">אתר תדמית · צילום</span></div>
+            <div class="idx"><b>02</b><span class="label">אתר תדמית · צילום</span></div>
             <h3>צופיה קזיוף, צלמת</h3>
-            <p class="d">אתר תדמית ללקוחה בסגנון צילום טבעי. גווני זית וקרם, טיפוגרפיה בעברית שמרגישה כמו מגזין, סמן מותאם ואנימציות גלילה שמובילות את העין מהתמונה הראשונה ועד הפנייה בוואטסאפ.</p>
-            <div class="facts">
-              <div><b>4</b><span>תחומי צילום: זוגות, משפחות, בריתות, אירועים</span></div>
-              <div><b>3</b><span>חבילות מחיר</span></div>
-              <div><b>GSAP</b><span>אנימציית גלילה וסמן מותאם</span></div>
-            </div>
-            <ul class="chips"><li>Photography</li><li>Scroll motion</li><li>Custom cursor</li><li>WhatsApp CTA</li></ul>
+            <dl class="brief">
+              <div><dt>האתגר</dt><dd>לתת לצלמת אתר שמרגיש כמו הצילום שלה: רך, טבעי ובלי רעש.</dd></div>
+              <div><dt>מה בניתי</dt><dd>אתר תדמית עם ארבעה תחומי צילום (זוגות, משפחות, בריתות ואירועים), שלוש חבילות מחיר, גלריה ופנייה ישירה בוואטסאפ.</dd></div>
+              <div><dt>התחושה</dt><dd>גווני זית וקרם, סמן מותאם ואנימציות גלילה שמובילות את העין מתמונה לתמונה.</dd></div>
+            </dl>
           </div>
           <div class="stage" style="--c:#b9bd96">
             <div class="rig">
               <div class="glow"></div>
               <div class="layer desk"><div class="float"><div class="frame">
                 <div class="bar"><i></i><i></i><i></i><em>sofia-photography</em></div>
-                <div class="screen"><img src="img/sofia-full.jpg" width="1920" height="8594" alt="אתר הצלמת צופיה קזיוף" data-scroll loading="lazy"><div class="glare"></div></div>
+                <div class="screen"><img src="img/sofia-full.jpg" width="1100" height="4924" alt="אתר הצלמת צופיה קזיוף" data-scroll loading="lazy"><div class="glare"></div></div>
               </div></div></div>
-              <div class="layer ph-a"><div class="float b"><div class="phone"><div class="screen"><img src="img/sofia-phone.jpg" width="780" height="1688" alt="אתר הצלמת בטלפון" loading="lazy"><div class="glare"></div></div></div></div></div>
             </div>
+            <div class="slot r" data-phone data-screen="1" data-yaw="16" data-roll="0" data-scale="1" data-c="#b9bd96"><img class="fb" loading="lazy" src="img/sofia-phone.jpg" alt=""></div>
           </div>
         </div>
       </article>
@@ -371,22 +361,21 @@
       <article class="case" id="p3" data-theme="orange">
         <div class="wrap case-grid">
           <div class="copy">
-            <div class="idx"><b>03</b><span class="label tag">אפליקציה · חיסכון</span></div>
+            <div class="idx"><b>03</b><span class="label">אפליקציה · חיסכון</span></div>
             <h3>ג׳מסלי</h3>
-            <p class="d">מרכז חיסכון באלי אקספרס בעברית: קופונים, מדרגות הנחה, הכי נמכרים וגלגל מזל. שפה צבעונית של אפליקציה, מסך פתיחה מונפש וסרגל תחתון צף שמסדר את כל החיסכון במקום אחד.</p>
-            <div class="facts">
-              <div><b>5</b><span>מסכים ראשיים בסרגל התחתון</span></div>
-              <div><b>Auto</b><span>פיד מבצעים שמתרענן לבד</span></div>
-            </div>
-            <ul class="chips"><li>App UI</li><li>Splash motion</li><li>Cloudflare Workers</li><li>Auto-updating feed</li></ul>
+            <dl class="brief">
+              <div><dt>האתגר</dt><dd>לאסוף קופונים, מבצעים והנחות של אלי אקספרס במקום אחד, בעברית ובלי בלגן.</dd></div>
+              <div><dt>מה בניתי</dt><dd>אפליקציה עם חמישה מסכים: בית, מבצעים, גלגל מזל, מעקב חיסכון ו"איך זה עובד". מסך פתיחה מונפש וסרגל תחתון צף.</dd></div>
+              <div><dt>מאחורי הקלעים</dt><dd>פיד המבצעים מתרענן אוטומטית, בלי שאעדכן אותו ידנית.</dd></div>
+            </dl>
           </div>
-          <div class="stage tri" style="--c:#ff7a2f">
+          <div class="stage" style="--c:#ff7a2f">
             <div class="rig">
               <div class="glow"></div>
-              <div class="layer ph ph-l"><div class="float b"><div class="phone"><div class="screen"><img src="img/jamsly-deals.jpg" width="780" height="1688" alt="מסך המבצעים בג׳מסלי" loading="lazy"><div class="glare"></div></div></div></div></div>
-              <div class="layer ph ph-r"><div class="float"><div class="phone"><div class="screen"><img src="img/jamsly-wheel.jpg" width="780" height="1688" alt="גלגל המזל בג׳מסלי" loading="lazy"><div class="glare"></div></div></div></div></div>
-              <div class="layer ph ph-m"><div class="float"><div class="phone"><div class="screen"><img src="img/jamsly-home.jpg" width="780" height="1688" alt="מסך הבית של ג׳מסלי" loading="lazy"><div class="glare"></div></div></div></div></div>
+              <div class="mini l"><img src="img/jamsly-deals.jpg" width="780" height="1688" alt="מסך המבצעים בג׳מסלי" loading="lazy"></div>
+              <div class="mini r2"><img src="img/jamsly-wheel.jpg" width="780" height="1688" alt="גלגל המזל בג׳מסלי" loading="lazy"></div>
             </div>
+            <div class="slot c" data-phone data-screen="2" data-yaw="0" data-roll="0" data-scale="1" data-c="#ff7a2f"><img class="fb" loading="lazy" src="img/jamsly-home.jpg" alt=""></div>
           </div>
         </div>
       </article>
@@ -394,24 +383,23 @@
       <article class="case flip" id="p4" data-theme="blue">
         <div class="wrap case-grid">
           <div class="copy">
-            <div class="idx"><b>04</b><span class="label tag">דשבורד · אפליקציית ווב</span></div>
+            <div class="idx"><b>04</b><span class="label">דשבורד · אפליקציית ווב</span></div>
             <h3>הארנק שלי</h3>
-            <p class="d">תמונה כספית אישית במבט אחד: יתרות, הכנסות והוצאות, גרף חודשי, פילוח הוצאות ויעדי חיסכון עם פס התקדמות. מצב כהה, מספרים גדולים, וצבע שמסמן כסף נכנס וכסף יוצא.</p>
-            <div class="facts">
-              <div><b>5</b><span>מדדים בשורת הראש</span></div>
-              <div><b>Cloud</b><span>שמירה ב-Netlify Blobs</span></div>
-            </div>
-            <ul class="chips"><li>Dashboard</li><li>Chart.js</li><li>Dark UI</li><li>Netlify</li></ul>
+            <dl class="brief">
+              <div><dt>האתגר</dt><dd>לראות את כל הכסף במבט אחד, בלי להיכנס לגיליון.</dd></div>
+              <div><dt>מה בניתי</dt><dd>דשבורד עם יתרות, הכנסות והוצאות, גרף חודשי, פילוח הוצאות ויעדי חיסכון עם פס התקדמות. מצב כהה ומספרים גדולים.</dd></div>
+              <div><dt>מאחורי הקלעים</dt><dd>הנתונים נשמרים בענן. במצב הדגמה הם נשארים רק בדפדפן.</dd></div>
+            </dl>
           </div>
           <div class="stage" style="--c:#6f7dff">
             <div class="rig">
               <div class="glow"></div>
               <div class="layer desk"><div class="float"><div class="frame">
                 <div class="bar"><i></i><i></i><i></i><em>my-wallet</em></div>
-                <div class="screen"><img src="img/wallet-full.jpg" width="1920" height="2021" alt="לוח הבקרה הכספי הארנק שלי" data-scroll loading="lazy"><div class="glare"></div></div>
+                <div class="screen"><img src="img/wallet-full.jpg" width="1100" height="1158" alt="לוח הבקרה הכספי הארנק שלי" data-scroll loading="lazy"><div class="glare"></div></div>
               </div></div></div>
-              <div class="layer ph-a"><div class="float b"><div class="phone"><div class="screen"><img src="img/wallet-phone.jpg" width="780" height="1688" alt="הארנק שלי בטלפון" loading="lazy"><div class="glare"></div></div></div></div></div>
             </div>
+            <div class="slot r" data-phone data-screen="3" data-yaw="-16" data-roll="0" data-scale="1" data-c="#6f7dff"><img class="fb" loading="lazy" src="img/wallet-phone.jpg" alt=""></div>
           </div>
         </div>
       </article>
@@ -419,111 +407,89 @@
       <article class="case" id="p5" data-theme="rose">
         <div class="wrap case-grid">
           <div class="copy">
-            <div class="idx"><b>05</b><span class="label tag">אפליקציה · אב טיפוס</span></div>
+            <div class="idx"><b>05</b><span class="label">אפליקציה · אב טיפוס</span></div>
             <h3>אפליקציית שוק ההון</h3>
-            <p class="d">אפליקציה בעברית שמלמדת שוק הון לבני נוער. שיעור קצר, ואז תרגול על מקרה היסטורי: מסמנים כניסה, סטופ ויעד, מריצים את הגרף ומקבלים משוב וכוכבים. בלי כסף אמיתי. כרגע בשלב אב טיפוס, ומה שמוצג כאן הוא הדגמה חיה של מסך התרגול.</p>
-            <div class="facts">
-              <div><b>15+</b><span>גיל המשתמשים</span></div>
-              <div><b>390×844</b><span>מותאם לטלפון</span></div>
-              <div><b>0 ₪</b><span>כסף אמיתי באפליקציה</span></div>
-            </div>
-            <ul class="chips"><li>Prototype</li><li>Candlestick chart</li><li>Gamified learning</li><li>Vanilla JS</li></ul>
+            <dl class="brief">
+              <div><dt>האתגר</dt><dd>ללמד בני נוער שוק הון בלי להפחיד אותם ובלי לסכן כסף אמיתי.</dd></div>
+              <div><dt>מה בניתי</dt><dd>אב טיפוס: שיעור קצר, ואז תרגול על גרף נרות היסטורי. מסמנים כניסה, סטופ ויעד, מריצים את הגרף ומקבלים משוב וכוכבים.</dd></div>
+              <div><dt>איפה זה עומד</dt><dd>שלב אב טיפוס. המסך בטלפון הוא הדגמה חיה של מסך התרגול, לא צילום.</dd></div>
+            </dl>
           </div>
           <div class="stage" style="--c:#f0627f">
-            <div class="rig">
-              <div class="glow"></div>
-              <div class="layer cap-phone"><div class="float"><div class="phone"><div class="screen"><canvas class="candles-cv on" id="candles" aria-label="הדגמה חיה של מסך התרגול: גרף נרות עם כניסה, סטופ ויעד"></canvas><div class="glare"></div></div></div></div></div>
-              <div class="note n1">כניסה</div>
-              <div class="note n2">סטופ</div>
-              <div class="note n3">יעד ★★★</div>
-            </div>
+            <div class="rig"><div class="glow"></div></div>
+            <div class="slot c" data-phone data-screen="4" data-yaw="0" data-roll="0" data-scale="1" data-c="#f0627f"><img class="fb" loading="lazy" src="img/wallet-phone.jpg" alt=""></div>
+            <div class="note n1">כניסה</div><div class="note n2">סטופ</div><div class="note n3">יעד ★★★</div>
           </div>
         </div>
       </article>
     </section>
 
-    <!-- ================= SKILLS ================= -->
-    <section class="skills" id="skills" data-theme="violet">
+    <!-- ================= METHOD ================= -->
+    <section class="method" id="method" data-theme="violet">
       <div class="wrap">
-        <div class="label">מה אני עושה</div>
-        <h2>מרעיון למסך, ומהמסך לאוויר.</h2>
-        <div class="sk-grid">
-          <div class="sk glass tilt">
-            <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="8" width="36" height="26" rx="3"/><path d="M16 40h16M24 34v6M12 26l7-8 6 6 5-5 6 7"/></svg>
-            <h4>עיצוב ומיתוג</h4>
-            <p>זהות חזותית, דמויות, מסכי אפליקציה, דפי נחיתה וקריאייטיב לפרסום. פלטה וטיפוגרפיה שנבחרו לנושא, לא מתבנית.</p>
-            <ul class="chips"><li>UI</li><li>Brand</li><li>Hebrew type</li></ul>
-            <div class="glare"></div>
-          </div>
-          <div class="sk glass tilt">
-            <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 5l16 9v20l-16 9-16-9V14z"/><path d="M8 14l16 9 16-9M24 23v20"/></svg>
-            <h4>תנועה ותלת־מימד</h4>
-            <p>אנימציות גלילה, מעברים, מכשירים שמסתובבים ועולמות WebGL. תנועה שמסבירה ומובילה, ושמכבדת מי שמעדיף בלי אנימציות.</p>
-            <ul class="chips"><li>GSAP</li><li>Three.js</li><li>WebGL</li></ul>
-            <div class="glare"></div>
-          </div>
-          <div class="sk glass tilt">
-            <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 14L7 24l10 10M31 14l10 10-10 10M27 9l-6 30"/></svg>
-            <h4>בנייה ועלייה לאוויר</h4>
-            <p>קוד נקי, מותאם לטלפון, עם שרת ואוטומציה כשצריך: שליחה יומית, עדכון פיד, שמירה בענן. מה שנראה טוב גם עובד.</p>
-            <ul class="chips"><li>Netlify</li><li>Cloudflare</li><li>GitHub Actions</li></ul>
-            <div class="glare"></div>
-          </div>
-        </div>
+        <div class="label">איך אני עובד</div>
+        <h2>מי שמעצב הוא גם מי שבונה.</h2>
+        <div class="method-grid"><dl class="pillars">
+          <div><dt>מהסקיצה עד הקוד</dt><dd>אותו אדם מעצב, מזיז ובונה, אז מה שרואים בעיצוב הוא מה שעולה לאוויר.</dd></div>
+          <div><dt>תנועה עם סיבה</dt><dd>אנימציה שמסבירה ומובילה את העין, ושקטה למי שמעדיף בלי אנימציות.</dd></div>
+          <div><dt>עברית וטלפון קודם</dt><dd>RTL מהיסוד, מותאם למסך קטן, עם שרת ואוטומציה כשצריך: שליחה יומית, עדכון פיד, שמירה בענן.</dd></div>
+        </dl>
+        <div class="slot method-slot" data-phone data-screen="hero" data-yaw="-12" data-roll="6" data-scale="1" data-c="#8f7dff"><img class="fb" loading="lazy" src="img/finance-phone.jpg" alt=""></div></div>
       </div>
     </section>
 
     <!-- ================= CONTACT ================= -->
     <section class="contact" id="contact" data-theme="hero">
-      <div class="wrap">
-        <h2><span class="pk">Let's</span><br>Create</h2>
-        <p>יש לכם רעיון? בואו נבנה אותו.</p>
-        <div class="mail-row">
-          <span class="mail glass" id="mail">yehudatzabari52@gmail.com</span>
-          <button class="primary-btn" id="copy" type="button"><span id="copy-t" style="padding-inline:.4rem">העתק כתובת</span><span class="plus-icon">+</span></button>
+      <div class="wrap contact-grid">
+        <div>
+          <h2>יש לכם פרויקט?<br><span class="pk">בואו נדבר.</span></h2>
+          <p class="sub">ספרו לי מה אתם צריכים: דף נחיתה, אתר או אפליקציה. אחזור אליכם עם כיוון וזמנים.</p>
+          <div class="contact-actions">
+            <a class="primary-btn" id="wa" href="#" target="_blank" rel="noopener" hidden><span class="ic" aria-hidden="true">✆</span>שלחו הודעה בוואטסאפ</a>
+            <span class="mail glass" id="mail">yehudatzabari52@gmail.com</span>
+            <button class="primary-btn" id="copy" type="button"><span class="ic" aria-hidden="true">⧉</span><span id="copy-t">העתק כתובת</span></button>
+          </div>
         </div>
+        <div class="slot" data-phone data-screen="5" data-yaw="12" data-roll="-4" data-scale="1" data-c="#d9ad5f"><img class="fb" loading="lazy" src="img/jamsly-home.jpg" alt=""></div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="wrap label"><span>© 2026 יהודה צברי</span><span>עוצב ונבנה ביד · GSAP</span></div>
+    <div class="wrap label"><span>© 2026 יהודה צברי</span><span>עוצב ונבנה ביד</span></div>
   </footer>
 </div>
 
 <div id="bubbles" aria-hidden="true"></div>
+<div class="sr" id="sr" aria-live="polite"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 (() => {
+  /* Add a WhatsApp number here (country code, digits only, e.g. '972501234567') to show the WhatsApp button. */
+  const WHATSAPP_NUMBER = '';
+
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const hasGsap = !!window.gsap;
   if (hasGsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
-  const body = document.body;
+  const body = document.body, root = document.documentElement;
 
-  /* ---------- themes (radial background morph) ---------- */
+  /* ---------- colour worlds ---------- */
   const THEMES = {
-    hero:   ['#0b8a78', '#044e3b', '#011411'],
-    gold:   ['#9a7430', '#4d3913', '#140d03'],
-    olive:  ['#7b8159', '#363c27', '#0c0f08'],
-    orange: ['#c4590f', '#5c2a08', '#150803'],
-    blue:   ['#0b4f8a', '#04294e', '#010c14'],
-    rose:   ['#b02a52', '#531229', '#150409'],
-    violet: ['#5a45c7', '#2a2062', '#0a0821']
+    hero: ['#0b8a78', '#044e3b', '#011411'], gold: ['#8a6827', '#47330f', '#120b03'], olive: ['#656b45', '#2d3220', '#0b0d07'],
+    orange: ['#c4590f', '#5c2a08', '#150803'], blue: ['#0b4f8a', '#04294e', '#010c14'], rose: ['#b02a52', '#531229', '#150409'], violet: ['#5a45c7', '#2a2062', '#0a0821']
   };
-  let themeKey = 'hero';
   function applyTheme(key, dur = 1.5) {
     const t = THEMES[key]; if (!t) return;
-    themeKey = key;
     if (hasGsap && !reduce) gsap.to(body, { '--bg-inner': t[0], '--bg-mid': t[1], '--bg-outer': t[2], duration: dur, ease: 'power2.inOut', overwrite: 'auto' });
     else { body.style.setProperty('--bg-inner', t[0]); body.style.setProperty('--bg-mid', t[1]); body.style.setProperty('--bg-outer', t[2]); }
   }
 
-  /* ---------- projects shown in the hero carousel ---------- */
   const P = [
     { name: 'שדרן הפיננסים', cat: 'דף נחיתה', tag: 'דף נחיתה · מותג · אוטומציה', theme: 'gold', c: '#d9ad5f', img: 'img/finance-phone.jpg', screen: 0 },
     { name: 'צופיה קזיוף', cat: 'אתר תדמית', tag: 'אתר תדמית · צילום', theme: 'olive', c: '#b9bd96', img: 'img/sofia-phone.jpg', screen: 1 },
@@ -531,47 +497,39 @@
     { name: 'הארנק שלי', cat: 'דשבורד', tag: 'דשבורד · אפליקציית ווב', theme: 'blue', c: '#6f7dff', img: 'img/wallet-phone.jpg', screen: 3 },
     { name: 'שוק ההון', cat: 'אב טיפוס', tag: 'אפליקציה · אב טיפוס', theme: 'rose', c: '#f0627f', img: null, screen: 4 }
   ];
-  let cur = 0, isSwitching = false, switchSpin = 0;
+  let cur = 0, heroTheme = 'hero', isSwitching = false, pending = null;
 
-  /* ---------- rising bubbles ---------- */
+  /* ---------- bubbles ---------- */
   const bubbles = $('#bubbles');
-  function makeBubble() {
-    if (document.hidden || !bubbles) return;
+  if (!reduce) setInterval(() => {
+    if (document.hidden) return;
     const b = document.createElement('div'); b.className = 'bubble';
-    const size = Math.random() * 20 + 10;
-    const dur = Math.random() * 6 + 4;
-    b.style.width = b.style.height = size + 'px';
-    b.style.left = Math.random() * 100 + '%';
-    b.style.setProperty('--o', (Math.random() * 0.4 + 0.2).toFixed(2));
-    b.style.animation = `floatUp ${dur}s linear forwards`;
+    const size = Math.random() * 18 + 8, dur = Math.random() * 6 + 5;
+    b.style.width = b.style.height = size + 'px'; b.style.left = Math.random() * 100 + '%';
+    b.style.setProperty('--o', (Math.random() * 0.3 + 0.15).toFixed(2)); b.style.animation = `floatUp ${dur}s linear forwards`;
     bubbles.appendChild(b); setTimeout(() => b.remove(), dur * 1000);
-  }
-  if (!reduce) setInterval(makeBubble, 400);
+  }, 750);
 
-  /* ---------- candlestick demo (shared by hero phone, case 05 and the carousel card) ---------- */
+  /* ---------- canvas screens: live candles + chat ---------- */
   const drawCandles = (() => {
     let seed = 11; const rnd = () => (seed = seed * 16807 % 2147483647) / 2147483647;
     const N = 30, data = []; let p = 100;
-    for (let i = 0; i < N; i++) {
-      const o = p, c = o + (rnd() - 0.47) * 5 + (i > 16 ? 2.1 : 0) - (i > 8 && i < 14 ? 1.4 : 0);
-      data.push({ o, c, h: Math.max(o, c) + rnd() * 2.6, l: Math.min(o, c) - rnd() * 2.6 }); p = c;
-    }
+    for (let i = 0; i < N; i++) { const o = p, c = o + (rnd() - 0.47) * 5 + (i > 16 ? 2.1 : 0) - (i > 8 && i < 14 ? 1.4 : 0); data.push({ o, c, h: Math.max(o, c) + rnd() * 2.6, l: Math.min(o, c) - rnd() * 2.6 }); p = c; }
     const entry = data[14].c, stop = entry - 7, target = entry + 15;
     const lo = Math.min(stop, ...data.map(d => d.l)) - 3, hi = Math.max(target, ...data.map(d => d.h)) + 4;
     const up = '#34d399', dn = '#f87171', blue = '#8f9bff';
-    return function (ctx, W, H, D, prog) {
+    return (ctx, W, H, D, prog) => {
       const y = v => H * 0.2 + (1 - (v - lo) / (hi - lo)) * H * 0.62;
       ctx.clearRect(0, 0, W, H); ctx.fillStyle = '#0c1020'; ctx.fillRect(0, 0, W, H);
-      ctx.fillStyle = 'rgba(255,255,255,.9)'; ctx.font = `600 ${15 * D}px Rubik, sans-serif`; ctx.textAlign = 'right';
-      ctx.fillText('תרגול · מקרה היסטורי', W - 18 * D, 44 * D);
-      ctx.fillStyle = 'rgba(255,255,255,.45)'; ctx.font = `400 ${11 * D}px Rubik, sans-serif`; ctx.fillText('סמנו כניסה, סטופ ויעד', W - 18 * D, 62 * D);
+      ctx.fillStyle = 'rgba(255,255,255,.92)'; ctx.font = `500 ${15 * D}px Rubik, sans-serif`; ctx.textAlign = 'right'; ctx.fillText('תרגול · מקרה היסטורי', W - 18 * D, 62 * D);
+      ctx.fillStyle = 'rgba(255,255,255,.5)'; ctx.font = `400 ${11 * D}px Rubik, sans-serif`; ctx.fillText('סמנו כניסה, סטופ ויעד', W - 18 * D, 80 * D);
       ctx.strokeStyle = 'rgba(255,255,255,.06)'; ctx.lineWidth = D;
       for (let i = 0; i < 6; i++) { const gy = H * 0.2 + i * H * 0.124; ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke(); }
       const cw = (W - 28 * D) / N, shown = Math.floor(prog * N), lineP = Math.min(Math.max((prog - 0.4) / 0.2, 0), 1);
       [[target, up, 'יעד'], [entry, blue, 'כניסה'], [stop, dn, 'סטופ']].forEach(([v, col, name]) => {
         ctx.save(); ctx.globalAlpha = lineP; ctx.strokeStyle = col; ctx.lineWidth = 1.4 * D; ctx.setLineDash([6 * D, 5 * D]);
         ctx.beginPath(); ctx.moveTo(14 * D, y(v)); ctx.lineTo(14 * D + (W - 28 * D) * lineP, y(v)); ctx.stroke(); ctx.setLineDash([]);
-        ctx.fillStyle = col; ctx.font = `500 ${10.5 * D}px Rubik, sans-serif`; ctx.textAlign = 'left'; ctx.fillText(name, 18 * D, y(v) - 5 * D); ctx.restore();
+        ctx.fillStyle = col; ctx.font = `500 ${11 * D}px Rubik, sans-serif`; ctx.textAlign = 'left'; ctx.fillText(name, 18 * D, y(v) - 5 * D); ctx.restore();
       });
       for (let i = 0; i <= shown && i < N; i++) {
         const d = data[i], px = W - 14 * D - (i + 0.5) * cw, col = d.c >= d.o ? up : dn;
@@ -580,151 +538,275 @@
         ctx.fillRect(px - cw * 0.3, y(Math.max(d.o, d.c)), cw * 0.6, Math.max(2 * D, Math.abs(y(d.o) - y(d.c))));
       }
       if (prog > 0.9) {
-        const a = Math.min((prog - 0.9) / 0.08, 1), bx = 24 * D, bw = W - 48 * D, by = H - 128 * D - (1 - a) * 10 * D, bh = 78 * D;
+        const a = Math.min((prog - 0.9) / 0.08, 1), bx = 24 * D, bw = W - 48 * D, by = H - 140 * D - (1 - a) * 10 * D, bh = 78 * D;
         ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = 'rgba(52,211,153,.16)'; ctx.strokeStyle = up; ctx.lineWidth = 1.4 * D;
         ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(bx, by, bw, bh, 18 * D); else ctx.rect(bx, by, bw, bh); ctx.fill(); ctx.stroke();
-        ctx.fillStyle = up; ctx.textAlign = 'center'; ctx.font = `600 ${26 * D}px Rubik, sans-serif`; ctx.fillText('★ ★ ★', W / 2, by + 36 * D);
+        ctx.fillStyle = up; ctx.textAlign = 'center'; ctx.font = `500 ${26 * D}px Rubik, sans-serif`; ctx.fillText('★ ★ ★', W / 2, by + 36 * D);
         ctx.fillStyle = '#fff'; ctx.font = `500 ${13 * D}px Rubik, sans-serif`; ctx.fillText('מעולה! פגעתם ביעד', W / 2, by + 60 * D); ctx.restore();
       }
-      ctx.fillStyle = 'rgba(255,255,255,.08)'; ctx.fillRect(24 * D, H - 50 * D, W - 48 * D, 30 * D);
-      ctx.fillStyle = 'rgba(255,255,255,.7)'; ctx.font = `500 ${12 * D}px Rubik, sans-serif`; ctx.textAlign = 'center'; ctx.fillText('הרץ את הגרף', W / 2, H - 30 * D);
+      ctx.fillStyle = 'rgba(255,255,255,.1)'; ctx.fillRect(24 * D, H - 74 * D, W - 48 * D, 32 * D);
+      ctx.fillStyle = 'rgba(255,255,255,.75)'; ctx.font = `500 ${12 * D}px Rubik, sans-serif`; ctx.textAlign = 'center'; ctx.fillText('הרץ את הגרף', W / 2, H - 53 * D);
     };
   })();
-  function runCandles(cv) {
-    const ctx = cv.getContext('2d'); let W = 0, H = 0, D = 1, visible = false;
-    function size() { D = Math.min(devicePixelRatio || 1, 2); W = cv.width = Math.max(2, Math.round((cv.offsetWidth || 240) * D)); H = cv.height = Math.max(2, Math.round((cv.offsetHeight || 520) * D)); }
-    size(); addEventListener('resize', size);
-    if (reduce) { drawCandles(ctx, W, H, D, 1); return; }
-    new IntersectionObserver(es => { visible = es[0].isIntersecting; }, { threshold: 0.05 }).observe(cv);
-    const T = 11000, st = performance.now();
-    (function loop(now) {
-      if (visible && cv.classList.contains('on')) { if (cv.width < 10 || cv.width !== Math.round(cv.offsetWidth * D)) size(); drawCandles(ctx, W, H, D, Math.min((((now - st) % T) / T) / 0.82, 1)); }
-      requestAnimationFrame(loop);
-    })(st);
-  }
-  $$('.candles-cv').forEach(runCandles);
-  // static candle picture for the carousel card
-  function candleCardImage() {
-    const c = document.createElement('canvas'); c.width = 390; c.height = 844;
-    drawCandles(c.getContext('2d'), 390, 844, 1, 1); return c.toDataURL('image/jpeg', 0.85);
-  }
+  const candleCv = document.createElement('canvas'); candleCv.width = 780; candleCv.height = 1688;
+  const candleCtx = candleCv.getContext('2d');
+  const paintCandles = prog => drawCandles(candleCtx, 780, 1688, 2, prog);
+  paintCandles(1);
+  function candleCardImage() { const c = document.createElement('canvas'); c.width = 390; c.height = 844; drawCandles(c.getContext('2d'), 390, 844, 1, 1); return c.toDataURL('image/jpeg', 0.85); }
   P[4].img = candleCardImage();
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { P[4].img = candleCardImage(); renderCards(); });
 
-  /* ---------- carousel + hero phone ---------- */
-  const cardsEl = $('#cards');
+  const chatCv = document.createElement('canvas'); chatCv.width = 780; chatCv.height = 1688;
+  let chatN = 4;
+  function paintChat() {
+    const c = chatCv.getContext('2d'), W = 780, H = 1688; c.direction = 'rtl';
+    const g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#0f3d36'); g.addColorStop(1, '#06201c'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+    c.fillStyle = 'rgba(255,255,255,.08)'; c.fillRect(0, 0, W, 210);
+    c.fillStyle = '#fbcfe8'; c.beginPath(); c.arc(W - 90, 130, 38, 0, 7); c.fill();
+    c.fillStyle = '#011d17'; c.font = '600 40px Galada, Rubik, sans-serif'; c.textAlign = 'center'; c.fillText('Y', W - 90, 144);
+    c.fillStyle = '#fff'; c.textAlign = 'right'; c.font = '500 36px Rubik, sans-serif'; c.fillText('יהודה', W - 150, 122); c.fillStyle = 'rgba(255,255,255,.55)'; c.font = '400 26px Rubik, sans-serif'; c.fillText('עונה בדרך כלל באותו יום', W - 150, 160);
+    const bubble = (txt, y, mine) => {
+      c.font = '400 38px Rubik, sans-serif'; const w = Math.min(c.measureText(txt).width + 64, 560), h = 104, x = mine ? W - 40 - w : 40;
+      c.fillStyle = mine ? '#fbcfe8' : 'rgba(255,255,255,.14)'; c.beginPath(); if (c.roundRect) c.roundRect(x, y, w, h, 40); else c.rect(x, y, w, h); c.fill();
+      c.fillStyle = mine ? '#011d17' : '#fff'; c.textAlign = mine ? 'right' : 'left'; c.fillText(txt, mine ? x + w - 32 : x + 32, y + 66);
+    };
+    const msgs = [['היי, יש לי רעיון לאתר', 330, true], ['ספרו לי עוד', 470, false], ['דף נחיתה לעסק חדש', 610, true], ['מעולה. אחזור עם כיוון וזמנים', 750, false]];
+    msgs.slice(0, chatN).forEach(m => bubble(...m));
+    c.fillStyle = 'rgba(255,255,255,.1)'; c.beginPath(); if (c.roundRect) c.roundRect(40, H - 210, W - 80, 96, 48); else c.rect(40, H - 210, W - 80, 96); c.fill();
+    c.fillStyle = 'rgba(255,255,255,.45)'; c.font = '400 32px Rubik, sans-serif'; c.textAlign = 'right'; c.fillText('כתבו הודעה...', W - 90, H - 148);
+  }
+  paintChat();
+
+  /* ---------- the one 3D phone ---------- */
+  const heroSlot = $('#hero-slot');
+  let heroScreen = 0;
+  const PH = (() => { try { return (() => {
+    if (!window.THREE) return null;
+    const canvas = $('#gl'); let renderer;
+    try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' }); } catch (e) { return null; }
+    renderer.setClearColor(0x000000, 0);
+    canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); root.classList.add('no-gl'); });
+    canvas.addEventListener('webglcontextrestored', () => root.classList.remove('no-gl'));
+    const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(30, 1, 0.1, 100); cam.position.z = 10;
+    const envScene = new THREE.Scene();
+    envScene.add(new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), new THREE.MeshBasicMaterial({ color: 0x1b2230, side: THREE.BackSide })));
+    const panel = (c, x, y, z, w, h) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: c, side: THREE.DoubleSide })); m.position.set(x, y, z); m.lookAt(0, 0, 0); envScene.add(m); };
+    panel(0xffffff, -6, 7, 6, 9, 5); panel(0xffd7b0, 8, 1, 4, 3, 8); panel(0xa9c9ff, -2, -7, 5, 10, 2); panel(0xffffff, 0, 3, -8, 8, 3);
+    scene.environment = new THREE.PMREMGenerator(renderer).fromScene(envScene, 0.03).texture;
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x223344, 0.4));
+    const key = new THREE.DirectionalLight(0xfff1e0, 0.9); key.position.set(-3, 5, 8); scene.add(key);
+    const rim = new THREE.PointLight(0xffffff, 1.6, 30); rim.position.set(4, -1, 3); scene.add(rim);
+
+    const W = 1, H = 2.14, R = 0.17, D = 0.1;
+    const rr = (w, h, r) => { const s = new THREE.Shape(), x = -w / 2, y = -h / 2; s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r); s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h); s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r); s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y); return s; };
+    const rig = new THREE.Group(); scene.add(rig);
+    const phone = new THREE.Group(); rig.add(phone);
+    const bodyGeo = new THREE.ExtrudeGeometry(rr(W, H, R), { depth: D, bevelEnabled: true, bevelThickness: 0.025, bevelSize: 0.025, bevelSegments: 5, curveSegments: 28 }); bodyGeo.translate(0, 0, -D / 2);
+    const metal = new THREE.MeshPhysicalMaterial({ color: 0x1a1d26, metalness: 0.9, roughness: 0.26, clearcoat: 0.6, clearcoatRoughness: 0.2, envMapIntensity: 1.3 });
+    phone.add(new THREE.Mesh(bodyGeo, metal));
+    [[-1, 0.55, 0.2], [-1, 0.25, 0.14], [1, 0.45, 0.28]].forEach(([s, y, h]) => { const b = new THREE.Mesh(new THREE.BoxGeometry(0.02, h, 0.05), metal); b.position.set(s * (W / 2 + 0.03), y, 0); phone.add(b); });
+
+    const sw = W - 0.1, sh = H - 0.1, scrGeo = new THREE.ShapeGeometry(rr(sw, sh, R - 0.05), 28);
+    const pos = scrGeo.attributes.position, uv = new Float32Array(pos.count * 2);
+    for (let i = 0; i < pos.count; i++) { uv[i * 2] = (pos.getX(i) + sw / 2) / sw; uv[i * 2 + 1] = (pos.getY(i) + sh / 2) / sh; }
+    scrGeo.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+    const blank = new THREE.DataTexture(new Uint8Array([12, 14, 20, 255]), 1, 1); blank.needsUpdate = true;
+    const U = { tA: { value: blank }, tB: { value: blank }, uMix: { value: 0 }, uM: { value: new THREE.Vector2() }, uTint: { value: new THREE.Color('#d9ad5f') } };
+    const screen = new THREE.Mesh(scrGeo, new THREE.ShaderMaterial({ uniforms: U,
+      vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.); }',
+      fragmentShader: `uniform sampler2D tA; uniform sampler2D tB; uniform float uMix; uniform vec2 uM; uniform vec3 uTint; varying vec2 vUv;
+        void main(){ vec2 uv = vec2(.5 + (vUv.x - .5) * .955, vUv.y);
+          vec3 c = mix(texture2D(tA, uv).rgb, texture2D(tB, uv).rgb, uMix);
+          float d = dot(vUv - .5, normalize(vec2(.6, 1.))) + uM.x * .45 - uM.y * .25;
+          float sheen = smoothstep(-.05, .45, d) * smoothstep(.95, .35, d) * .1;
+          c += sheen * (uTint * .8 + .4);
+          gl_FragColor = vec4(c, 1.); }` }));
+    screen.position.z = D / 2 + 0.0265; phone.add(screen);
+    const notch = new THREE.Mesh(new THREE.ShapeGeometry(rr(0.26, 0.07, 0.035), 12), new THREE.MeshBasicMaterial({ color: 0x05060a }));
+    notch.position.set(0, sh / 2 - 0.085, D / 2 + 0.0275); phone.add(notch);
+
+    const layers = [0, 1].map(i => {
+      const g = new THREE.Group(), sh2 = rr(W + 0.2, H + 0.2, R + 0.08);
+      g.add(new THREE.Mesh(new THREE.ShapeGeometry(sh2, 24), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.05, side: THREE.DoubleSide, depthWrite: false })));
+      const line = new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(sh2.getPoints(40)), new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.35 })); g.add(line);
+      rig.add(g); return g;
+    });
+
+    const loader = new THREE.TextureLoader(), maxA = renderer.capabilities.getMaxAnisotropy();
+    const prep = t => { t.generateMipmaps = false; t.minFilter = THREE.LinearFilter; t.magFilter = THREE.LinearFilter; t.anisotropy = maxA; return t; };
+    const tex = ['img/finance-phone.jpg', 'img/sofia-phone.jpg', 'img/jamsly-home.jpg', 'img/wallet-phone.jpg'].map(u => prep(loader.load(u, t => { if (renderer.initTexture) renderer.initTexture(t); schedule(); })));
+    const candleTex = prep(new THREE.CanvasTexture(candleCv)), chatTex = prep(new THREE.CanvasTexture(chatCv));
+    tex.push(candleTex, chatTex);
+
+    const slots = $$('[data-phone]');
+    const st = { x: 0, y: 0, s: 0.001, yaw: 0, pitch: 0, roll: 0, flip: 0, spin: 0, appear: 0, gap: 0.2, scr: -1, cand: 0 };
+    let vw = 1, vh = 1, halfH = 1, halfW = 1, active = null, flipTween = null, swapCall = null, vel = 0, lastY = scrollY, mix = null;
+    const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
+    addEventListener('pointermove', e => { mouse.x = e.clientX / innerWidth * 2 - 1; mouse.y = e.clientY / innerHeight * 2 - 1; }, { passive: true });
+    let lastW = 0, lastH = 0;
+    function resize() {
+      if (lastW && !fine && Math.abs(innerWidth - lastW) < 2 && Math.abs(innerHeight - lastH) < 140) return;
+      lastW = innerWidth; lastH = innerHeight;
+      vw = innerWidth; vh = innerHeight; renderer.setPixelRatio(Math.min(devicePixelRatio || 1, vw < 800 ? 1.25 : 1.75)); renderer.setSize(vw, vh, false);
+      cam.aspect = vw / vh; cam.updateProjectionMatrix(); halfH = Math.tan(THREE.MathUtils.degToRad(cam.fov / 2)) * cam.position.z; halfW = halfH * cam.aspect;
+    }
+    let rafId = 0;
+    const schedule = () => { if (!rafId) rafId = requestAnimationFrame(frame); };
+    resize(); addEventListener('resize', () => { resize(); schedule(); });
+
+    function screenFor(el) { return el.dataset.screen === 'hero' ? heroScreen : +el.dataset.screen; }
+    function setScreen(i, animate) {
+      if (i === st.scr) return; st.scr = i; const t = tex[i];
+      if (mix) { mix.kill(); mix = null; if (U.uMix.value > 0.5) U.tA.value = U.tB.value; U.uMix.value = 0; }
+      if (!animate || reduce || !hasGsap) { U.tA.value = t; U.tB.value = t; U.uMix.value = 0; return; }
+      U.tB.value = t; const o = { v: 0 };
+      mix = gsap.to(o, { v: 1, duration: 0.4, ease: 'power2.inOut', onUpdate: () => { U.uMix.value = o.v; }, onComplete: () => { U.tA.value = t; U.uMix.value = 0; } });
+    }
+    function nearest() {
+      let best = null, bd = 1e9, ad = 1e9;
+      for (const el of slots) {
+        const r = el.getBoundingClientRect(); if (!r.height) continue;
+        const cy = r.top + r.height / 2, off = (r.bottom < 0 || r.top > vh) ? 3000 : 0, d = Math.abs(cy - vh / 2) + off;
+        if (el === active) ad = d;
+        if (d < bd) { bd = d; best = el; }
+      }
+      return active && ad <= bd + vh * 0.15 ? active : best;
+    }
+    function onChange(el, first) {
+      active = el; const i = screenFor(el);
+      U.uTint.value.set(el.dataset.c);
+      if (i === 5 && !reduce) { chatN = 0; paintChat(); chatTex.needsUpdate = true; const iv = setInterval(() => { chatN++; paintChat(); chatTex.needsUpdate = true; if (chatN >= 4) clearInterval(iv); }, 1100); } else if (i === 5) { chatN = 4; paintChat(); chatTex.needsUpdate = true; }
+      if (first || reduce || !hasGsap) { setScreen(i, false); return; }
+      if (flipTween && flipTween.isActive()) { setScreen(i, true); return; }
+      flipTween = gsap.to(st, { flip: st.flip + 360, duration: 1.15, ease: 'power3.inOut' });
+      if (swapCall) swapCall.kill();
+      swapCall = gsap.delayedCall(0.5, () => setScreen(screenFor(active), true));
+    }
+    const cA = new THREE.Color(), t0 = performance.now(); let candT = 0, lastCandle = 0, lastTintEl = null;
+    function frame(now) {
+      rafId = 0; now = now || performance.now();
+      const sy = scrollY; vel += ((sy - lastY) * 0.002 - vel) * 0.1; lastY = sy;
+      const el = nearest();
+      if (el && el !== active) onChange(el, active === null);
+      if (el) {
+        const r = el.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        const tx = ((cx / vw) * 2 - 1) * halfW, ty = -((cy / vh) * 2 - 1) * halfH, ts = (r.height / vh) * 2 * halfH / H * (+el.dataset.scale || 1);
+        const k = reduce ? 1 : 0.1;
+        st.x += (tx - st.x) * k; st.y += (ty - st.y) * k; st.s += (ts - st.s) * k;
+        const by = (+el.dataset.yaw || 0) * Math.PI / 180, br = (+el.dataset.roll || 0) * Math.PI / 180;
+        const lk = reduce ? 1 : 0.08; st.yaw += (by - st.yaw) * lk; st.roll += (br - st.roll) * lk;
+        if (el !== lastTintEl) { cA.set(el.dataset.c); lastTintEl = el; }
+        const tk = reduce ? 1 : 0.06; U.uTint.value.lerp(cA, tk); rim.color.lerp(cA, tk);
+        layers.forEach(l => { l.children[1].material.color.lerp(cA, tk); l.children[0].material.color.lerp(cA, tk); });
+      }
+      mouse.sx += (mouse.x - mouse.sx) * 0.06; mouse.sy += (mouse.y - mouse.sy) * 0.06;
+      st.gap += ((0.2 + Math.min(Math.abs(vel), 1) * 1.5) - st.gap) * 0.08;
+      const app = reduce ? 1 : st.appear, rad = Math.PI / 180;
+      rig.position.set(st.x, st.y + (active && active !== heroSlot && !reduce ? Math.sin((now - t0) / 1400) * 0.05 : 0), 0);
+      rig.scale.setScalar(Math.max(st.s * app, 0.0001));
+      rig.rotation.set(mouse.sy * 0.28 + vel * 0.4, st.yaw + mouse.sx * 0.5 + (st.flip + st.spin) * rad + (1 - app) * 3, st.roll);
+      U.uM.value.set(mouse.sx, mouse.sy);
+      layers.forEach((l, i) => { l.position.z = -(i + 1) * st.gap * 0.6 - 0.05; l.scale.setScalar(1 + (i + 1) * 0.03); });
+      if ((st.scr === 4 || U.tB.value === candleTex) && now - lastCandle > 55) { lastCandle = now; candT = ((now - t0) % 11000) / 11000; paintCandles(0.3 + 0.7 * Math.min(candT / 0.82, 1)); candleTex.needsUpdate = true; }
+      renderer.render(scene, cam);
+      if (!reduce && !document.hidden) schedule();
+    }
+    document.addEventListener('visibilitychange', () => { if (!document.hidden && !reduce) schedule(); });
+    schedule();
+    if (reduce) { addEventListener('scroll', schedule, { passive: true }); candleTex.needsUpdate = true; }
+    else if (hasGsap) gsap.to(st, { appear: 1, duration: 1.8, ease: 'expo.out', delay: 0.4 });
+    return { st, setHero(i) { heroScreen = i; if (active === heroSlot) setScreen(i, true); }, refreshChat() { chatTex.needsUpdate = true; } };
+  })(); } catch (e) { console.warn('3D phone disabled', e); return null; } })();
+  if (!PH) root.classList.add('no-gl');
+  if (document.fonts && document.fonts.load) Promise.all([document.fonts.load('500 20px Rubik'), document.fonts.load('400 20px Rubik'), document.fonts.load('40px Galada')]).catch(() => {}).then(() => { P[4].img = candleCardImage(); const f = $('#p5 .fb'); if (f) f.src = P[4].img; renderCards(); paintChat(); if (PH) PH.refreshChat(); });
+
+  /* ---------- hero carousel ---------- */
+  const cardsEl = $('#cards'), dotsEl = $('#dots');
   function renderCards() {
+    const hadFocus = !!(document.activeElement && document.activeElement.closest && document.activeElement.closest('#dots'));
     const a = P[cur], bi = (cur + 1) % P.length, b = P[bi];
-    cardsEl.innerHTML = [[a, cur], [b, bi]].map(([p, i], k) =>
-      `<button class="card${k === 0 ? ' active' : ''}" data-i="${i}" type="button"><img src="${p.img}" alt="${p.name}"><span class="card-info"><span>${p.name}</span><span>${p.cat}</span></span></button>`).join('');
+    cardsEl.innerHTML = [[a, cur], [b, bi]].map(([p, i], k) => `<button class="card${k === 0 ? ' active' : ''}" data-i="${i}" type="button" aria-label="${p.name}, ${p.cat}"><img src="${p.img}" alt=""><span class="card-info"><span>${p.name}</span><span>${p.cat}</span></span></button>`).join('');
+    dotsEl.innerHTML = P.map((p, i) => `<button type="button" class="${i === cur ? 'on' : ''}" data-i="${i}" ${i === cur ? 'aria-current="true"' : ''} aria-label="${p.name}"></button>`).join('');
+    if (hadFocus) { const b = dotsEl.children[cur]; if (b) b.focus({ preventScroll: true }); }
   }
   renderCards();
-  cardsEl.addEventListener('click', e => {
-    const c = e.target.closest('.card'); if (!c) return;
-    const i = +c.dataset.i;
-    if (i === cur) { const t = $('#p' + (i + 1)); if (t) t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); return; }
-    select(i);
-  });
+  cardsEl.addEventListener('click', e => { const c = e.target.closest('.card'); if (!c) return; const i = +c.dataset.i; if (i === cur) { const t = $('#p' + (i + 1)); if (t) t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); } else select(i); });
+  dotsEl.addEventListener('click', e => { const b = e.target.closest('button'); if (b) select(+b.dataset.i); });
   $('#next').addEventListener('click', () => select((cur + 1) % P.length));
   $('#prev').addEventListener('click', () => select((cur - 1 + P.length) % P.length));
-
-  const screens = $$('#hp-screen > img, #hp-screen > canvas');
-  function showScreen(i) { screens.forEach((s, k) => s.classList.toggle('on', k === i)); }
-  function setCaption(p, i) {
+  function setNow(p, i) {
     $('#cap-tag').textContent = p.tag; $('#cap-name').textContent = p.name; $('#hero-cap').setAttribute('href', '#p' + (i + 1));
-    $('#hero-center').style.setProperty('--c', p.c);
+    $('#now-num').textContent = '0' + (i + 1); $('#now-name').textContent = p.name; $('#now-tag').textContent = p.cat;
+    $('#sr').textContent = 'פרויקט ' + (i + 1) + ' מתוך 5: ' + p.name + ', ' + p.cat;
+    heroSlot.dataset.c = p.c; $('#hero-fb').src = p.img || 'img/wallet-phone.jpg';
   }
-
-  /* ---------- pointer + main loop ---------- */
-  const mouse = { x: 0, y: 0 }, cm = { x: 0, y: 0 };
-  addEventListener('pointermove', e => { mouse.x = e.clientX / innerWidth - 0.5; mouse.y = e.clientY / innerHeight - 0.5; }, { passive: true });
-  let heroVisible = true;
-  new IntersectionObserver(es => { heroVisible = es[0].isIntersecting; }, { rootMargin: '120px' }).observe($('.hero'));
-  const tilt = $('#hp-tilt');
-  function frame() {
-    cm.x += (mouse.x - cm.x) * 0.05; cm.y += (mouse.y - cm.y) * 0.05;
-    if (heroVisible && !reduce) tilt.style.transform = `rotateY(${-cm.x * 34 + switchSpin}deg) rotateX(${-cm.y * 20}deg)`;
-    if (!reduce) requestAnimationFrame(frame);
-  }
-  frame();
-
-  /* ---------- choreographed project switch ---------- */
+  setNow(P[0], 0);
   function select(i) {
-    if (isSwitching || i === cur) return;
-    isSwitching = true; cur = i; const p = P[i];
-    heroTheme = p.theme; applyTheme(p.theme, 1.5);
-    renderCards(); setCaption(p, i);
-    if (!hasGsap || reduce) { showScreen(p.screen); isSwitching = false; return; }
-
-    const spin = { val: 0, blur: 0 }, phone = $('.phone.big');
-    gsap.to(spin, {
-      val: 360, blur: 15, duration: 0.6, ease: 'power2.in',
-      onUpdate: () => { switchSpin = spin.val; phone.style.filter = `blur(${spin.blur}px)`; },
+    if (isSwitching) { pending = i; return; }
+    if (i === cur) return;
+    isSwitching = true; cur = i; const p = P[i]; heroTheme = p.theme; applyTheme(p.theme, 1.5); renderCards(); setNow(p, i);
+    const finish = () => { isSwitching = false; if (pending !== null) { const n = pending; pending = null; select(n); } };
+    if (!PH || reduce || !hasGsap) { if (PH) PH.setHero(p.screen); finish(); return; }
+    const o = { v: 0 };
+    gsap.to(o, { v: 360, duration: 0.6, ease: 'power2.in', onUpdate: () => { PH.st.spin = o.v; },
       onComplete: () => {
-        showScreen(p.screen);
-        gsap.to(spin, {
-          val: 720, blur: 0, duration: 1.5, ease: 'back.out(0.7)',
-          onUpdate: () => { switchSpin = spin.val; phone.style.filter = `blur(${spin.blur}px)`; },
-          onComplete: () => { switchSpin = 0; phone.style.filter = 'none'; isSwitching = false; }
-        });
-      }
-    });
-
+        PH.setHero(p.screen);
+        gsap.to(o, { v: 720, duration: 1.5, ease: 'back.out(0.7)', onUpdate: () => { PH.st.spin = o.v; }, onComplete: () => { PH.st.spin = 0; finish(); } });
+      } });
   }
 
-  /* ---------- scroll: themes, nav, devices, reveals ---------- */
-  let heroTheme = 'hero';
-  // the hero starts on the first project's theme once the visitor interacts; initial look is the teal default
+  /* ---------- header, menu, nav ---------- */
+  const header = $('#header'), burger = $('#burger'), menu = $('#menu');
+  const onScroll = () => header.classList.toggle('scrolled', scrollY > 24);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const mainEl = $('main'), footEl = $('footer');
+  function setMenu(open) {
+    menu.classList.toggle('open', open); burger.setAttribute('aria-expanded', String(open)); root.style.overflow = open ? 'hidden' : '';
+    [mainEl, footEl].forEach(e => { if (open) e.setAttribute('inert', ''); else e.removeAttribute('inert'); });
+    if (open) { const a = $('a', menu); if (a) a.focus(); } else if (document.activeElement && menu.contains(document.activeElement)) burger.focus();
+  }
+  matchMedia('(max-width: 900px)').addEventListener('change', e => { if (!e.matches) setMenu(false); });
+  burger.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
+  menu.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+  addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+  function setNav(k) { $$('.nav-item').forEach(a => a.classList.toggle('active', a.dataset.sec === k)); }
+
+  /* ---------- scroll choreography ---------- */
   if (hasGsap && window.ScrollTrigger) {
     gsap.to('#progress', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.2 } });
-    ScrollTrigger.create({ trigger: '.hero', start: 'top 60%', end: 'bottom 60%', onToggle: s => { if (s.isActive) { applyTheme(heroTheme === 'hero' ? 'hero' : heroTheme); setNav('top'); } } });
+    ScrollTrigger.create({ trigger: '.hero', start: 'top 60%', end: 'bottom 60%', onToggle: s => { if (s.isActive) { applyTheme(heroTheme); setNav('top'); } } });
     $$('.case').forEach(c => ScrollTrigger.create({ trigger: c, start: 'top 58%', end: 'bottom 58%', onToggle: s => { if (s.isActive) { applyTheme(c.dataset.theme); setNav('work'); } } }));
-    ScrollTrigger.create({ trigger: '#skills', start: 'top 60%', end: 'bottom 60%', onToggle: s => { if (s.isActive) { applyTheme('violet'); setNav('skills'); } } });
+    ScrollTrigger.create({ trigger: '#method', start: 'top 60%', end: 'bottom 60%', onToggle: s => { if (s.isActive) { applyTheme('violet'); setNav('method'); } } });
     ScrollTrigger.create({ trigger: '#contact', start: 'top 70%', end: 'bottom bottom', onToggle: s => { if (s.isActive) { applyTheme('hero'); setNav('contact'); } } });
-
     $$('img[data-scroll]').forEach(img => {
       const screen = img.parentElement;
-      gsap.to(img, { y: () => -Math.max(0, img.offsetHeight - screen.offsetHeight), ease: 'none',
-        scrollTrigger: { trigger: screen.closest('.stage'), start: 'top 85%', end: 'bottom 15%', scrub: 0.7, invalidateOnRefresh: true } });
+      gsap.to(img, { y: () => -Math.max(0, img.offsetHeight - screen.offsetHeight), ease: 'none', scrollTrigger: { trigger: screen.closest('.stage'), start: 'top 85%', end: 'bottom 15%', scrub: 0.7, invalidateOnRefresh: true } });
     });
     if (!reduce) {
-      $$('.case .copy > *, .work-head > *, .skills .wrap > *, .contact .wrap > *').forEach(el => {
-        gsap.from(el, { y: 36, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 94%', once: true } });
-      });
-      $$('.stage').forEach(st => gsap.from($('.rig', st), { y: 60, scale: 0.94, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: st, start: 'top 95%', once: true } }));
+      $$('.case .copy > *, .work-head > *, .method .wrap > *, .contact .wrap > div:first-child > *').forEach(el => gsap.from(el, { y: 36, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 94%', once: true } }));
+      $$('.stage .rig').forEach(r => gsap.from(r, { y: 60, scale: 0.95, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: r, start: 'top 95%', once: true } }));
       gsap.to('.marq-t', { skewX: -6, ease: 'none', scrollTrigger: { trigger: '.marq', start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
-      if (!fine) $$('.stage').forEach(st => gsap.fromTo($('.rig', st), { rotationY: -14, rotationX: 4 }, { rotationY: 14, rotationX: -4, ease: 'none', scrollTrigger: { trigger: st, start: 'top bottom', end: 'bottom top', scrub: 0.8 } }));
+      if (!fine) $$('.stage .rig').forEach(r => gsap.fromTo(r, { rotationY: -12, rotationX: 4 }, { rotationY: 12, rotationX: -4, ease: 'none', scrollTrigger: { trigger: r, start: 'top bottom', end: 'bottom top', scrub: 0.8 } }));
     }
     addEventListener('load', () => ScrollTrigger.refresh());
   }
-  function setNav(k) { $$('.nav-item').forEach(a => a.classList.toggle('active', a.dataset.sec === k)); }
-
-  /* ---------- pointer tilt on device rigs and skill cards ---------- */
-  if (fine && !reduce && hasGsap) {
-    $$('.stage').forEach(st => {
-      const rig = $('.rig', st);
-      const rx = gsap.quickTo(rig, 'rotationX', { duration: 0.9, ease: 'power3.out' }), ry = gsap.quickTo(rig, 'rotationY', { duration: 0.9, ease: 'power3.out' });
-      st.addEventListener('pointermove', e => {
-        const r = st.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-        ry((x - 0.5) * -26); rx((y - 0.5) * 18);
-        $$('.glare', st).forEach(g => { g.style.setProperty('--gx', (x * 100).toFixed(0) + '%'); g.style.setProperty('--gy', (y * 100).toFixed(0) + '%'); });
-      });
-      st.addEventListener('pointerleave', () => { ry(0); rx(0); });
+  if (fine && !reduce && hasGsap) $$('.stage').forEach(st => {
+    const rig = $('.rig', st); if (!rig) return;
+    const rx = gsap.quickTo(rig, 'rotationX', { duration: 0.9, ease: 'power3.out' }), ry = gsap.quickTo(rig, 'rotationY', { duration: 0.9, ease: 'power3.out' });
+    st.addEventListener('pointermove', e => {
+      const r = st.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height; ry((x - 0.5) * -22); rx((y - 0.5) * 16);
+      $$('.glare', st).forEach(g => { g.style.setProperty('--gx', (x * 100).toFixed(0) + '%'); g.style.setProperty('--gy', (y * 100).toFixed(0) + '%'); });
     });
-    $$('.tilt').forEach(c => {
-      const rx = gsap.quickTo(c, 'rotationX', { duration: 0.6, ease: 'power3.out' }), ry = gsap.quickTo(c, 'rotationY', { duration: 0.6, ease: 'power3.out' }), g = $('.glare', c);
-      c.addEventListener('pointermove', e => { const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height; ry((x - 0.5) * -14); rx((y - 0.5) * 10); g.style.setProperty('--gx', x * 100 + '%'); g.style.setProperty('--gy', y * 100 + '%'); });
-      c.addEventListener('pointerleave', () => { ry(0); rx(0); });
-    });
-  }
+    st.addEventListener('pointerleave', () => { ry(0); rx(0); });
+  });
 
-  /* ---------- copy email ---------- */
+  /* ---------- contact ---------- */
+  const wa = $('#wa');
+  if (WHATSAPP_NUMBER) { wa.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent('היי יהודה, ראיתי את התיק עבודות ויש לי פרויקט'); wa.hidden = false; }
   $('#copy').addEventListener('click', async () => {
     const t = $('#copy-t'), txt = $('#mail').textContent.trim();
     try { await navigator.clipboard.writeText(txt); t.textContent = 'הועתק'; setTimeout(() => t.textContent = 'העתק כתובת', 1800); }
-    catch (e) { const r = document.createRange(); r.selectNodeContents($('#mail')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+    catch (e) { const r = document.createRange(); r.selectNodeContents($('#mail')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); t.textContent = 'סומן, העתיקו ידנית'; }
   });
-  setCaption(P[0], 0);
 })();
 </script>
 </body></html>
