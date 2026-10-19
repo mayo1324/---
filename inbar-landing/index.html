@@ -147,12 +147,13 @@ h2 strong,h1 strong,blockquote strong,h2 strong .w>i,h1 strong .w>i,blockquote s
 .gl-on .bf{visibility:hidden}
 
 /* ===== פתיח ===== */
-.hero{padding-top:84px;padding-bottom:64px;overflow:hidden}
+.hero{padding-top:84px;padding-bottom:28px;overflow:hidden;min-height:100vh;min-height:100svh;display:flex;flex-direction:column}
+.hero-grid{display:flex;flex-direction:column;flex:1}
 .hero .fern.f1{width:72vw;max-width:520px;top:-30px;inset-inline-end:-18vw;opacity:.85;transform:rotate(8deg)}
 .hero .fern.f2{width:46vw;max-width:340px;bottom:6%;inset-inline-start:-14vw;opacity:.55;animation-delay:-4s}
 .hero h1{font-size:clamp(54px,17vw,124px);font-weight:400;line-height:1;letter-spacing:.005em}
 .hlead{font:400 clamp(20px,5.4vw,27px)/1.45 var(--serif);color:var(--cream2);margin-top:16px;max-width:22em}
-.stage{position:relative;height:max(46vh,360px);height:max(44svh,360px);margin-top:22px}
+.stage{position:relative;flex:1 1 auto;min-height:300px;margin-top:18px}
 .ring{position:absolute;left:50%;top:50%;width:min(112%,560px);aspect-ratio:1;transform:translate(-50%,-50%);color:rgba(201,169,110,.55);animation:spin 50s linear infinite;pointer-events:none}
 .ring svg{width:100%;height:100%;overflow:visible}
 .ring text{font:italic 300 16px var(--lat);letter-spacing:.3em;fill:currentColor}
@@ -168,7 +169,7 @@ h2 strong,h1 strong,blockquote strong,h2 strong .w>i,h1 strong .w>i,blockquote s
 .chip.c2{top:32%;inset-inline-end:0;animation-delay:-2s}
 .chip.c3{bottom:34%;inset-inline-start:0;animation-delay:-4s}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.h-foot{margin-top:30px}
+.h-foot{margin-top:22px}
 .hero .btn{width:100%}
 .hero .sub{margin-top:26px;font-size:17px}
 .cue{display:none;align-items:center;gap:10px;margin-top:34px;font-size:13px;letter-spacing:.1em;color:var(--cream2)}
@@ -326,6 +327,13 @@ footer{position:relative;z-index:2;background:var(--ink0);color:var(--cream2);te
 .sticky.show{transform:none}
 .sticky .btn{width:100%;min-height:52px}
 
+@media (max-height:720px) and (max-width:899px){
+  .hero{padding-top:76px}
+  .hero h1{font-size:clamp(40px,12vw,64px)}
+  .hlead{display:none}
+  .stage{min-height:220px;margin-top:10px}
+  .eyebrow{margin-bottom:10px}
+}
 @media (min-width:900px){
   :root{--pad:48px}
   body{font-size:18px;padding-bottom:0}
@@ -335,11 +343,11 @@ footer{position:relative;z-index:2;background:var(--ink0);color:var(--cream2);te
   .burger{display:none}
   .nav,.hbtn{display:flex}
   .header{padding-inline:48px}
-  .hero{padding-top:110px;padding-bottom:90px}
+  .hero{padding-top:110px;padding-bottom:90px;display:block;min-height:0}
   .hero-grid{display:grid;grid-template-columns:1fr 1.05fr;column-gap:56px;align-items:center}
   .h-head{grid-column:1;grid-row:1;align-self:end}
   .h-foot{grid-column:1;grid-row:2;align-self:start}
-  .stage{grid-column:2;grid-row:1/3;height:min(74vh,700px);margin-top:0}
+  .stage{grid-column:2;grid-row:1/3;height:min(74vh,700px);flex:none;margin-top:0}
   .hero-slot{width:46%}
   .portrait-c{width:24%;inset-inline-start:2%}
   .hero .btn{width:auto}
