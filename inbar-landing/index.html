@@ -926,17 +926,33 @@ window.addEventListener('load',function(){
     var glowLight=new THREE.PointLight(0xffd38a,0,5,2);
 
     // פרופיל הבקבוק (מקור הגוף במרכז הבקבוק)
-    var BH=3.0,CY=BH/2;
+    var BH=3.0,CY=BH/2,LEVEL=.7*1.92;
     var ctrl=[[0,0],[.42,0],[.57,.03],[.62,.14],[.62,1.05],[.6,1.22],[.5,1.38],[.36,1.52],[.27,1.6],[.235,1.7],[.235,1.92]];
     var outer=new THREE.SplineCurve(ctrl.map(function(a){return new THREE.Vector2(a[0],a[1]);})).getPoints(90).map(function(v){return new THREE.Vector2(Math.max(0,v.x),v.y);});
-    var glass=new THREE.Mesh(new THREE.LatheGeometry(outer,64),new THREE.MeshPhysicalMaterial({color:0x072015,roughness:.1,metalness:.22,clearcoat:1,clearcoatRoughness:.03,envMapIntensity:1.25,emissive:0x031109,emissiveIntensity:.5,side:THREE.DoubleSide}));
+
+    // זכוכית: מעטפת ירוקה כהה שקופה למחצה + שכבת שיקופים מוספת, כדי שהנוזל הזהב יראה מבפנים
+    var latheG=new THREE.LatheGeometry(outer,64);
+    var glassTint=new THREE.Mesh(latheG,new THREE.MeshBasicMaterial({color:0x07241a,transparent:true,opacity:.17,side:THREE.DoubleSide,depthWrite:false}));glassTint.renderOrder=1;
+    var glassRef=new THREE.Mesh(latheG,new THREE.MeshPhysicalMaterial({color:0x000000,roughness:.04,metalness:0,clearcoat:1,clearcoatRoughness:.02,envMapIntensity:2.6,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false}));glassRef.renderOrder=2;
+
+    // נוזל זהב: שיידר עם שיקוף, קאוסטיקה, חום עמוק בקצוות וליבה זוהרת. פני השטח מתנדנדים עם התנועה
+    var LU={uTime:{value:0},uGlow:{value:0},uTilt:{value:new THREE.Vector2()}};
+    function liquidMat(base,span,surf){
+      return new THREE.ShaderMaterial({uniforms:{uTime:LU.uTime,uGlow:LU.uGlow,uTilt:LU.uTilt,uBase:{value:base},uSpan:{value:span},uSurf:{value:surf},uLevel:{value:LEVEL}},
+        vertexShader:'uniform float uTime,uBase,uSpan,uSurf,uLevel;uniform vec2 uTilt;varying vec3 vN;varying vec3 vW;varying float vH;void main(){vec3 p=position;float top=uSurf*smoothstep(uLevel-.06,uLevel-.01,p.y);float wob=sin(uTime*2.1+p.x*9.)*.004+cos(uTime*2.6+p.z*8.)*.004;p.y+=top*(dot(uTilt,p.xz)*.75+wob);vec3 n=normal+top*vec3(-uTilt.x*.75,0.,-uTilt.y*.75);vec4 w=modelMatrix*vec4(p,1.);vW=w.xyz;vN=normalize(mat3(modelMatrix)*n);vH=clamp((position.y-uBase)/uSpan,0.,1.);gl_Position=projectionMatrix*viewMatrix*w;}',
+        fragmentShader:'uniform float uTime,uGlow;varying vec3 vN;varying vec3 vW;varying float vH;void main(){vec3 N=normalize(vN);vec3 V=normalize(cameraPosition-vW);if(!gl_FrontFacing)N=-N;float ndv=clamp(dot(N,V),0.,1.);float fres=pow(1.-ndv,3.);float h=clamp(vH,0.,1.);vec3 deep=vec3(.16,.04,.0);vec3 mid=vec3(.6,.23,.0);vec3 hi=vec3(.88,.45,.02);float core=pow(ndv,2.2);vec3 col=mix(deep,mid,smoothstep(.0,.7,core*.8+h*.35));col=mix(col,hi,smoothstep(.45,1.,core)*.85);float b1=pow(max(dot(N,normalize(vec3(.62,.2,.76))),0.),34.);float b2=pow(max(dot(N,normalize(vec3(-.74,.1,.66))),0.),44.);col+=b1*vec3(1.,.8,.4)*.7+b2*vec3(1.,.75,.3)*.35;vec3 L1=normalize(vec3(.5,.8,.6));vec3 L2=normalize(vec3(-.6,.3,-.7));float s1=pow(max(dot(reflect(-L1,N),V),0.),90.);float s2=pow(max(dot(reflect(-L2,N),V),0.),45.);float c=sin(vW.x*14.+uTime*1.2+sin(vW.z*9.+uTime))*sin(vW.y*11.-uTime*.8+vW.z*7.)*.5+.5;col+=.12*pow(c,3.)*vec3(1.,.65,.12);col+=(s1*.8+s2*.35)*vec3(1.,.9,.6);col+=fres*vec3(.9,.32,.02)*.4;col+=smoothstep(.75,1.,N.y)*vec3(.22,.11,.01);col*=.95+uGlow*.5;gl_FragColor=vec4(col,1.);\n#include <tonemapping_fragment>\n#include <colorspace_fragment>\n}'});
+    }
+    var lp=outer.filter(function(v){return v.y<=LEVEL-.04;}).map(function(v){return new THREE.Vector2(v.x*.93,v.y*.97+.06);});
+    var lr=lp[lp.length-1].x;
+    lp.push(new THREE.Vector2(lr,LEVEL),new THREE.Vector2(lr-.04,LEVEL-.012),new THREE.Vector2(lr*.55,LEVEL-.02),new THREE.Vector2(0,LEVEL-.022));
+    var liquid=new THREE.Mesh(new THREE.LatheGeometry(lp,64),liquidMat(.06,LEVEL,1));
 
     // תווית זהב (השורה התחתונה מתחלפת בין הפרקים)
     var cv=document.createElement('canvas');cv.width=680;cv.height=400;
     var cx=cv.getContext('2d'),tex=new THREE.CanvasTexture(cv);tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=4;
     var subText='SERUM';
     function drawLabel(){
-      cx.clearRect(0,0,680,400);cx.textAlign='center';cx.fillStyle='#E9D6A4';cx.strokeStyle='#E9D6A4';
+      cx.clearRect(0,0,680,400);cx.textAlign='center';cx.fillStyle='#0b2418';cx.strokeStyle='#0b2418';
       cx.save();cx.translate(340,92);cx.lineWidth=3;cx.beginPath();cx.moveTo(0,40);cx.bezierCurveTo(-34,22,-30,-24,0,-40);cx.bezierCurveTo(30,-24,34,22,0,40);cx.stroke();cx.beginPath();cx.moveTo(0,-34);cx.lineTo(0,46);cx.stroke();cx.restore();
       cx.font='300 92px Cormorant Garamond, Georgia, serif';if('letterSpacing' in cx)cx.letterSpacing='22px';
       cx.fillText('INBAR',340+11,245);
@@ -945,30 +961,38 @@ window.addEventListener('load',function(){
     }
     drawLabel();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(drawLabel);
     var len=1.9,label=new THREE.Mesh(new THREE.CylinderGeometry(.628,.628,.72,64,1,true,-len/2,len),
-      new THREE.MeshStandardMaterial({map:tex,transparent:true,roughness:.35,metalness:.75,envMapIntensity:1.4,depthWrite:false}));
-    label.position.y=.62;
+      new THREE.MeshStandardMaterial({map:tex,transparent:true,roughness:.35,metalness:.15,envMapIntensity:.8,depthWrite:false}));
+    label.position.y=.62;label.renderOrder=3;
 
     var ring=new THREE.Mesh(new THREE.CylinderGeometry(.3,.3,.2,48),new THREE.MeshStandardMaterial({color:0xdcc78f,metalness:1,roughness:.28,envMapIntensity:1.5}));ring.position.y=1.9;
     var rubber=new THREE.MeshPhysicalMaterial({color:0x0a0a0a,roughness:.55,clearcoat:.35,clearcoatRoughness:.4});
     var cap=new THREE.Group();
     var capCyl=new THREE.Mesh(new THREE.CylinderGeometry(.21,.23,.4,40),rubber);capCyl.position.y=2.2;
     var bulb=new THREE.Mesh(new THREE.SphereGeometry(.21,40,32),rubber);bulb.scale.y=1.7;bulb.position.y=2.52;
-    var pip=new THREE.Mesh(new THREE.CylinderGeometry(.04,.04,1.5,20),new THREE.MeshPhysicalMaterial({color:0xdfeee0,transparent:true,opacity:.3,roughness:.05,clearcoat:1,envMapIntensity:1.6,depthWrite:false}));pip.position.y=1.35;
-    var pipLiq=new THREE.Mesh(new THREE.CylinderGeometry(.026,.026,.9,16),new THREE.MeshStandardMaterial({color:0xE9B85A,emissive:0xB8772A,emissiveIntensity:.8,roughness:.2}));pipLiq.position.y=1.07;
+    var pip=new THREE.Mesh(new THREE.CylinderGeometry(.04,.04,1.5,20),new THREE.MeshPhysicalMaterial({color:0xdfeee0,transparent:true,opacity:.28,roughness:.05,clearcoat:1,envMapIntensity:1.8,depthWrite:false}));pip.position.y=1.35;pip.renderOrder=2;
+    var pipLiq=new THREE.Mesh(new THREE.CylinderGeometry(.026,.026,.9,16),liquidMat(-.45,.9,0));pipLiq.position.y=1.07;
     cap.add(capCyl,bulb,pip,pipLiq);
 
-    var dropM=new THREE.Mesh(new THREE.SphereGeometry(.058,24,16),new THREE.MeshStandardMaterial({color:0xF2C96A,emissive:0xE0A33A,emissiveIntensity:1.4,roughness:.15}));dropM.visible=false;
+    var dropM=new THREE.Mesh(new THREE.SphereGeometry(.058,32,24),liquidMat(-.058,.116,0));dropM.visible=false;
 
-    var liqTop=new THREE.Mesh(new THREE.CircleGeometry(.2,32).rotateX(-Math.PI/2),new THREE.MeshBasicMaterial({color:0xf5cf7d,transparent:true,opacity:0,depthWrite:false}));
+    // התזה של טיפות זהב בנחיתה
+    var BN=64,bv=new Float32Array(BN*3),br=new Float32Array(BN),bp=new Float32Array(BN*3);
+    for(var q=0;q<BN;q++){var ang=Math.random()*6.283,sp=Math.random();bv[q*3]=Math.cos(ang)*(.25+sp*.55);bv[q*3+1]=.7+Math.random()*1.4;bv[q*3+2]=Math.sin(ang)*(.25+sp*.55);br[q]=Math.random();}
+    var bg2=new THREE.BufferGeometry();bg2.setAttribute('position',new THREE.BufferAttribute(bp,3));bg2.setAttribute('aV',new THREE.BufferAttribute(bv,3));bg2.setAttribute('aR',new THREE.BufferAttribute(br,1));
+    var bmat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,uniforms:{uT:{value:0},uPx:{value:renderer.getPixelRatio()}},
+      vertexShader:'attribute vec3 aV;attribute float aR;uniform float uT;uniform float uPx;varying float vA;void main(){vec3 p=position+aV*uT+vec3(0.,-2.4*uT*uT*(.4+aR),0.);vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;vA=(1.-uT)*step(.001,uT);gl_PointSize=(2.4+aR*2.2)*uPx*(40./-mv.z)*(1.-uT*.5);}',
+      fragmentShader:'varying float vA;void main(){float d=length(gl_PointCoord-.5);float a=smoothstep(.5,.05,d);vec3 c=mix(vec3(1.,.5,.04),vec3(1.,.92,.55),a);gl_FragColor=vec4(c,a*vA);}'});
+    var burst=new THREE.Points(bg2,bmat);burst.frustumCulled=false;
+
     var sc=document.createElement('canvas');sc.width=64;sc.height=256;var sx=sc.getContext('2d'),id=sx.createImageData(64,256);
     for(var yy=0;yy<256;yy++)for(var xx=0;xx<64;xx++){var gx=Math.exp(-Math.pow((xx-31.5)/13,2)),gy=Math.pow(1-yy/255,1.6),a=gx*gy,k=(yy*64+xx)*4;id.data[k]=255;id.data[k+1]=222;id.data[k+2]=150;id.data[k+3]=Math.round(a*255);}
     sx.putImageData(id,0,0);
     var shaft=new THREE.Mesh(new THREE.PlaneGeometry(1.2,3.6),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(sc),transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthWrite:false}));
 
-    var bottle=new THREE.Group();bottle.add(glass,label,ring,cap);
-    var rig=new THREE.Group();rig.add(bottle,dropM,shaft,liqTop,glowLight);scene.add(rig);
+    var bottle=new THREE.Group();bottle.add(liquid,glassTint,glassRef,label,ring,cap);
+    var rig=new THREE.Group();rig.add(bottle,dropM,shaft,burst,glowLight);scene.add(rig);
 
-    // צללית רפאים: שני הדהודים מאחורי הבקבוק, נפתחים עם מהירות הגלילה
+    // צללית רפאים ושובל: הדהודים מאחורי הבקבוק שנמשכים אחרי התנועה
     var sil=[],capPts=[[.3,1.9],[.3,2.02],[.23,2.02],[.23,2.4],[.2,2.62],[.12,2.84],[0,2.93]];
     outer.forEach(function(v){sil.push([v.x,v.y]);});
     capPts.forEach(function(v){sil.push(v);});
@@ -976,7 +1000,7 @@ window.addEventListener('load',function(){
     sil.forEach(function(v){pts.push(new THREE.Vector2(v[0]+.06,v[1]-CY));});
     for(var i2=sil.length-1;i2>=0;i2--)pts.push(new THREE.Vector2(-(sil[i2][0]+.06),sil[i2][1]-CY));
     var shp=new THREE.Shape(pts);
-    var ghosts=[0,1].map(function(){
+    var ghosts=[0,1,2].map(function(){
       var g=new THREE.Group();
       g.add(new THREE.Mesh(new THREE.ShapeGeometry(shp),new THREE.MeshBasicMaterial({color:0xE6D09C,transparent:true,opacity:0,side:THREE.DoubleSide,depthWrite:false})));
       g.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0xE6D09C,transparent:true,opacity:0})));
@@ -995,10 +1019,10 @@ window.addEventListener('load',function(){
     var points=new THREE.Points(pg,pmat);points.frustumCulled=false;scene.add(points);
 
     // מצב: S לפתיחה, st לעגינה
-    var S={introY:0,rot:0,capLift:0,capSpin:0,glow:0,dropOn:0,dropT:0,dive:0,poseK:1,boost:1};
+    var S={introX:0,introY:0,rot:0,rotX:0,rotZ:0,sc:1,fly:0,capLift:0,capSpin:0,glow:0,dropOn:0,dropS:0,dropT:0,burstT:0,kick:0,dive:0,poseK:1,boost:1};
     var st={x:0,y:0,s:.001,yaw:0,roll:0,flip:0,spin:0,appear:1,gap:.2,open:0,glowT:0};
-    var introScale=visH*1.26/BH,introPos=new THREE.Vector3(0,.5,0),rad=Math.PI/180;
-    var mouse={x:0,y:0,sx:0,sy:0},vel=0,lastY=scrollY;
+    var introScale=Math.min(visH*.78/BH,1.4),introPos=new THREE.Vector3(0,-.1,0),rad=Math.PI/180;
+    var mouse={x:0,y:0,sx:0,sy:0},vel=0,lastY=scrollY,pX=0,pY=0,rvx=0,rvy=0;
     addEventListener('pointermove',function(e){if(e.pointerType==='mouse'){mouse.x=e.clientX/innerWidth*2-1;mouse.y=e.clientY/innerHeight*2-1;}},{passive:true});
     function onOrient(e){if(e.gamma==null)return;mouse.x=THREE.MathUtils.clamp(e.gamma/30,-1,1);mouse.y=THREE.MathUtils.clamp((e.beta-50)/30,-1,1);}
     if(window.DeviceOrientationEvent){
@@ -1045,7 +1069,7 @@ window.addEventListener('load',function(){
     }
 
     var clock=new THREE.Clock(),t=0,tl=null,flashEl=$('#flash');
-    var wordEl=$('#introWord'),countEl=$('#introCount');
+    var wordEl=$('#introWord'),countEl=$('#introCount'),clampV=THREE.MathUtils.clamp;
     renderer.setAnimationLoop(function(){
       var dt=Math.min(clock.getDelta(),.05);t+=dt;
       var sy=scrollY;vel+=((sy-lastY)*.002-vel)*.1;lastY=sy;
@@ -1065,8 +1089,8 @@ window.addEventListener('load',function(){
         var tx=((r.left+r.width/2)-vw/2)*wpp,ty=-((r.top+r.height/2)-vh/2)*wpp;
         var lerpK=(k<1||rm)?1:1-Math.exp(-dt*11);
         st.x+=(tx-st.x)*lerpK;st.y+=(ty-st.y)*lerpK;st.s+=(s-st.s)*lerpK;
-        var by=(+el.dataset.yaw||0)*rad,br=(+el.dataset.roll||0)*rad,lk=rm?1:1-Math.exp(-dt*5);
-        st.yaw+=(by-st.yaw)*lk;st.roll+=(br-st.roll)*lk;
+        var by=(+el.dataset.yaw||0)*rad,br2=(+el.dataset.roll||0)*rad,lk=rm?1:1-Math.exp(-dt*5);
+        st.yaw+=(by-st.yaw)*lk;st.roll+=(br2-st.roll)*lk;
         st.open+=((+el.dataset.open||0)-st.open)*.06;st.glowT+=((+el.dataset.glow||0)-st.glowT)*.06;
         rim.color.lerp(cA,.06);
         ghosts.forEach(function(g){g.children[0].material.color.lerp(cA,.06);g.children[1].material.color.lerp(cA,.06);});
@@ -1074,63 +1098,82 @@ window.addEventListener('load',function(){
       mouse.sx+=(mouse.x-mouse.sx)*.06;mouse.sy+=(mouse.y-mouse.sy)*.06;
       st.gap+=((.2+vabs*1.5)-st.gap)*.08;
       var app=st.appear,bob=Math.sin(t*1.1)*.04;
-      var iy=introPos.y+S.introY;
-      rig.position.set(st.x*k,iy*(1-k)+st.y*k,0);
-      rig.scale.setScalar(Math.max(introScale*(1-k)+st.s*app*k,.0001));
+      var ix=introPos.x+S.introX,iy=introPos.y+S.introY;
+      var nx=ix*(1-k)+st.x*k,ny2=iy*(1-k)+st.y*k;
+      rvx+=(((nx-pX)/Math.max(dt,.001))-rvx)*.25;rvy+=(((ny2-pY)/Math.max(dt,.001))-rvy)*.25;pX=nx;pY=ny2;
+      rig.position.set(nx,ny2,0);
+      rig.scale.setScalar(Math.max(introScale*S.sc*(1-k)+st.s*app*k,.0001));
       var yawTot=S.rot+mouse.sx*.5+(st.yaw+(st.flip+st.spin)*rad+(1-app)*3+Math.sin(t*.35)*.35)*k;
-      rig.rotation.set(mouse.sy*.28+vel*.4,yawTot,st.roll*k);
+      rig.rotation.set(mouse.sy*.28+vel*.4+S.rotX,yawTot,st.roll*k+S.rotZ);
       bottle.position.y=-CY+bob;
       bottle.visible=k<1?true:(Math.abs(rig.position.y)<visH*1.2);
       cap.position.y=S.capLift+st.open*k;cap.rotation.y=S.capSpin;
+      // נוזל: תנודה לפי התנועה, העכבר והגלילה
+      var ttx=clampV(-rvx*.012+mouse.sx*.12+Math.sin(t*13)*S.kick*.22,-.55,.55),tty=clampV(-rvy*.01-vel*.6+mouse.sy*.1+Math.cos(t*11)*S.kick*.2,-.55,.55);
+      LU.uTilt.value.x+=(ttx-LU.uTilt.value.x)*.14;LU.uTilt.value.y+=(tty-LU.uTilt.value.y)*.14;
+      LU.uTime.value=t;
+      // טיפה
       dropM.visible=S.dropOn>0;
-      if(S.dropOn>0){var tip=.6+S.capLift-.05,yv=tip+(1.98-tip)*S.dropT,sst=1+1.3*S.dropT;dropM.position.set(0,yv-CY+bob,0);dropM.scale.set(1/Math.sqrt(sst),sst,1/Math.sqrt(sst));}
-      var gl=Math.max(S.glow,st.glowT*k);
-      glowLight.intensity=gl*7;liqTop.material.opacity=gl;shaft.material.opacity=gl*.85;
-      glowLight.position.set(0,1.92-CY+.4,.4);liqTop.position.set(0,1.55-CY+bob,0);shaft.position.set(0,3.5-CY+bob,.2);
-      pipLiq.material.emissiveIntensity=.8+gl*1.5;
-      ghosts.forEach(function(g,i2){g.position.z=-(i2+1)*st.gap*.6-.05;g.scale.setScalar(1+(i2+1)*.03);var o=Math.min(1,k*app);g.children[0].material.opacity=.05*o;g.children[1].material.opacity=.35*o;});
+      if(S.dropOn>0){var tip=.6+S.capLift-.05,yv=tip+(1.5-tip)*S.dropT,sst=1+1.3*S.dropT,ds=Math.max(S.dropS,.001);dropM.position.set(0,yv-CY+bob-(1-S.dropS)*.03,0);dropM.scale.set(ds/Math.sqrt(sst),ds*sst,ds/Math.sqrt(sst));}
+      burst.position.set(0,1.38-CY+bob,0);bmat.uniforms.uT.value=S.burstT;
+      var gl=Math.max(S.glow,st.glowT*k);LU.uGlow.value=gl;
+      glowLight.intensity=gl*7;shaft.material.opacity=gl*.85;
+      glowLight.position.set(0,1.92-CY+.4,.4);shaft.position.set(0,3.5-CY+bob,.2);
+      // שובל: ההדהודים נמשכים אחרי כיוון התנועה
+      var fl=Math.min(1,k*app+S.fly);
+      ghosts.forEach(function(g,i2){
+        g.position.set(-clampV(rvx*.018,-1.4,1.4)*(i2+1)*.45,-clampV(rvy*.018,-1.4,1.4)*(i2+1)*.45,-(i2+1)*st.gap*.6-.05);
+        g.scale.setScalar(1+(i2+1)*.03);g.children[0].material.opacity=.05*fl;g.children[1].material.opacity=.35*fl/(1+i2*.6);});
       var e=S.dive,ny=rig.position.y+(1.92-CY)*rig.scale.y;
       camera.position.set(0,ny*e,D-(D-2.7)*e);camera.lookAt(0,ny*e,0);
       renderer.render(scene,camera);
     });
 
     function showCanvas(){canvas.style.opacity='1';root.classList.add('gl-on');}
-    function finish(){
-      if(tl)tl.kill();
-      S.poseK=1;S.dive=0;S.dropOn=0;S.introY=0;S.rot=0;S.capLift=0;S.capSpin=0;S.glow=0;S.boost=1;st.appear=1;
-      showCanvas();endIntro();
-    }
+    function reset(){S.poseK=1;S.dive=0;S.dropOn=0;S.dropS=0;S.dropT=0;S.burstT=0;S.kick=0;S.introX=0;S.introY=0;S.rot=0;S.rotX=0;S.rotZ=0;S.sc=1;S.fly=0;S.capLift=0;S.capSpin=0;S.glow=0;S.boost=1;st.appear=1;}
+    function finish(){if(tl)tl.kill();reset();showCanvas();endIntro();}
     $('#skipIntro').addEventListener('click',finish);
 
     return {sub:subFlip,play:function(){
       if(!hasG){finish();return;}
-      S.poseK=0;S.introY=-7.5;S.rot=-Math.PI;st.appear=1;
+      reset();S.poseK=0;S.introX=4.8;S.introY=-6;S.rot=-Math.PI*3;S.rotX=1.2;S.rotZ=-1.6;S.sc=.5;S.fly=1;
       canvas.style.opacity='0';root.classList.add('gl-on');
       var cnt={v:0};
       tl=gsap.timeline({defaults:{ease:'power3.out'}});
-      tl.to(canvas,{opacity:1,duration:.9},0)
+      tl.to(canvas,{opacity:1,duration:.6},0)
         .to('.intro-line',{scaleY:1,duration:1.6,stagger:.2,ease:'power2.out'},0)
         .fromTo(wordEl,{opacity:0,letterSpacing:'.5em'},{opacity:1,letterSpacing:'.18em',duration:2.4,ease:'power2.out'},.2)
-        .to(S,{introY:0,rot:0,duration:1.6,ease:'power3.out'},0)
-                .to(cnt,{v:100,duration:4.4,ease:'power1.inOut',onUpdate:function(){countEl.textContent=('00'+Math.round(cnt.v)).slice(-3);}},0)
-        .to(S,{capLift:1.6,capSpin:Math.PI*4,duration:1.7,ease:'power2.inOut'},1.5)
-        .to(S,{glow:.55,duration:1.4,ease:'power1.inOut'},1.7)
-        .set(S,{dropOn:1},3.2)
-        .to(S,{dropT:1,duration:.8,ease:'power2.in'},3.2)
-        .to(S,{glow:1,boost:3,duration:.5},3.9)
-        .to(S,{dive:1,duration:1,ease:'power3.in'},3.7)
-        .to(flashEl,{opacity:1,duration:.5,ease:'power2.in'},4.3)
+        /* מתעופף פנימה בקשת, מסתובב ונוחת עם קפיצה קטנה */
+        .to(S,{introX:0,duration:1.9,ease:'power3.out'},.1)
+        .to(S,{introY:0,duration:1.9,ease:'back.out(1.3)'},.1)
+        .to(S,{rot:0,rotX:0,rotZ:0,sc:1,duration:2.1,ease:'power3.out'},.1)
+        .to(S,{fly:0,duration:1.1,ease:'power2.in'},1.1)
+        .to(S,{kick:1,duration:.05},1.7).to(S,{kick:0,duration:1.5,ease:'power2.out'},1.75)
+        .to(cnt,{v:100,duration:5.2,ease:'power1.inOut',onUpdate:function(){countEl.textContent=('00'+Math.round(cnt.v)).slice(-3);}},0)
+        /* הפקק נפתח */
+        .to(S,{capLift:1.6,capSpin:Math.PI*4,duration:1.6,ease:'power2.inOut'},2)
+        .to(S,{glow:.5,duration:1.4,ease:'power1.inOut'},2.2)
+        /* טיפת זהב נוצרת בקצה, מתארכת ונופלת פנימה */
+        .set(S,{dropOn:1,dropS:0,dropT:0},3.15)
+        .to(S,{dropS:1,duration:.6,ease:'power2.out'},3.15)
+        .to(S,{dropT:1,duration:.75,ease:'power2.in'},3.65)
+        .add(function(){S.dropOn=0;},4.4)
+        .to(S,{burstT:1,duration:1.3,ease:'power1.out'},4.4)
+        .to(S,{kick:1,duration:.05},4.4).to(S,{kick:0,duration:1.4,ease:'power2.out'},4.45)
+        .to(S,{glow:1,boost:3,duration:.5},4.4)
+        .to(S,{dive:1,duration:1,ease:'power3.in'},4.5)
+        .to(flashEl,{opacity:1,duration:.5,ease:'power2.in'},5)
         .add(function(){
-          S.poseK=1;S.dive=0;S.dropOn=0;S.introY=0;S.rot=0;S.capLift=1.3;S.capSpin=Math.PI*4;S.glow=.9;st.appear=0;
+          S.poseK=1;S.dive=0;S.dropOn=0;S.burstT=0;S.introX=0;S.introY=0;S.rot=0;S.rotX=0;S.rotZ=0;S.sc=1;S.fly=0;S.capLift=1.3;S.capSpin=Math.PI*4;S.glow=.9;st.appear=0;
           var c=$('#intro');if(c)c.remove();
           root.classList.remove('intro-lock');introDone=true;
           heroIn();
-        },4.85)
-        .to(flashEl,{opacity:0,duration:1.2,ease:'power2.out'},4.9)
-        .to(st,{appear:1,duration:1.8,ease:'expo.out'},4.9)
-        .to(S,{capLift:0,capSpin:Math.PI*2,duration:1.5,ease:'power3.inOut'},5.4)
-        .to(S,{glow:0,boost:1,duration:1.4},5.4)
-        .add(function(){ScrollTrigger.refresh();},7);
+        },5.5)
+        .to(flashEl,{opacity:0,duration:1.2,ease:'power2.out'},5.55)
+        .to(st,{appear:1,duration:1.8,ease:'expo.out'},5.55)
+        .to(S,{capLift:0,capSpin:Math.PI*2,duration:1.5,ease:'power3.inOut'},6.05)
+        .to(S,{glow:0,boost:1,duration:1.4},6.05)
+        .add(function(){ScrollTrigger.refresh();},7.6);
     }};
   }
 });
