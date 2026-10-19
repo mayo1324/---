@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>תיק עבודות | יהודה צברי</title>
+<meta name="description" content="תיק עבודות: אתרים, דפי נחיתה ואפליקציות שעיצבתי ובניתי.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1115;
+    --surface: #171a21;
+    --surface-2: #1e222b;
+    --line: #2a2f3a;
+    --text: #f1f3f7;
+    --dim: #9aa3b5;
+    --accent: #7c8cff;
+    --accent-2: #3dd6c6;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #f6f7fa; --surface: #ffffff; --surface-2: #eef0f5; --line: #e1e4ec;
+      --text: #14171f; --dim: #5d667a; --accent: #4f5ff0; --accent-2: #0fae9f;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Heebo', system-ui, sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+  header.top {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .logo { font-weight: 800; letter-spacing: .3px; }
+  .logo span { color: var(--accent); }
+  nav a { margin-inline-start: 22px; color: var(--dim); font-size: 15px; transition: color .2s; }
+  nav a:hover { color: var(--text); }
+
+  .hero { padding: 90px 0 60px; }
+  .eyebrow {
+    display: inline-block; padding: 4px 14px; border: 1px solid var(--line);
+    border-radius: 99px; color: var(--accent-2); font-size: 13px; margin-bottom: 22px;
+  }
+  .hero h1 { font-size: clamp(36px, 7vw, 72px); font-weight: 800; line-height: 1.1; max-width: 14ch; }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p { margin-top: 22px; color: var(--dim); font-size: 19px; max-width: 52ch; }
+  .stats { display: flex; gap: 36px; margin-top: 40px; flex-wrap: wrap; }
+  .stats b { display: block; font-size: 32px; font-weight: 800; }
+  .stats span { color: var(--dim); font-size: 14px; }
+
+  section { padding: 50px 0; }
+  section h2 { font-size: 30px; font-weight: 800; margin-bottom: 8px; }
+  .sub { color: var(--dim); margin-bottom: 34px; }
+
+  .project {
+    display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; align-items: center;
+    padding: 30px; margin-bottom: 28px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 22px;
+  }
+  .project:nth-child(even) { grid-template-columns: 1fr 1.15fr; }
+  .project:nth-child(even) .shots { order: 2; }
+  .shots { position: relative; padding-bottom: 36px; }
+  .desk {
+    border-radius: 12px; overflow: hidden; border: 1px solid var(--line);
+    box-shadow: 0 20px 50px rgba(0,0,0,.35); background: var(--surface-2);
+  }
+  .desk img { display: block; width: 100%; height: auto; }
+  .phone {
+    position: absolute; bottom: 0; inset-inline-start: -14px; width: 24%;
+    border: 5px solid #0b0c10; border-radius: 22px; overflow: hidden;
+    box-shadow: 0 14px 34px rgba(0,0,0,.45); background: #0b0c10;
+  }
+  .phone img { display: block; width: 100%; height: auto; }
+  .tag {
+    display: inline-block; font-size: 12px; padding: 3px 12px; border-radius: 99px;
+    background: var(--surface-2); border: 1px solid var(--line); color: var(--accent-2); margin-bottom: 14px;
+  }
+  .project h3 { font-size: 28px; font-weight: 800; margin-bottom: 10px; }
+  .project p { color: var(--dim); margin-bottom: 16px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+  .chips li {
+    list-style: none; font-size: 13px; padding: 3px 12px; border-radius: 8px;
+    background: var(--surface-2); color: var(--text);
+  }
+  .palette { display: flex; gap: 6px; margin-bottom: 20px; }
+  .palette i { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--line); display: block; }
+  .btn {
+    display: inline-block; padding: 10px 22px; border-radius: 99px; font-weight: 500;
+    background: var(--accent); color: #fff; transition: transform .2s, opacity .2s;
+  }
+  .btn:hover { transform: translateY(-2px); opacity: .92; }
+  .btn.ghost { background: transparent; border: 1px solid var(--line); color: var(--text); margin-inline-start: 8px; }
+
+  .extras { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .extra { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .extra img { display: block; width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: top; }
+  .extra div { padding: 16px 18px; }
+  .extra h4 { font-size: 17px; }
+  .extra p { color: var(--dim); font-size: 14px; }
+
+  .wip { border-style: dashed; }
+  .wip-visual {
+    aspect-ratio: 16/10; border-radius: 12px; display: grid; place-items: center; text-align: center;
+    background: repeating-linear-gradient(45deg, var(--surface-2), var(--surface-2) 12px, var(--surface) 12px, var(--surface) 24px);
+    border: 1px dashed var(--line); color: var(--dim);
+  }
+  .wip-visual b { display: block; font-size: 22px; color: var(--text); }
+
+  .contact { text-align: center; padding: 80px 0 100px; }
+  .contact h2 { font-size: clamp(28px, 5vw, 46px); }
+  .contact p { color: var(--dim); margin: 12px 0 28px; }
+  .contact a.mail { font-size: 22px; font-weight: 700; color: var(--accent); border-bottom: 2px solid var(--accent); }
+  footer { text-align: center; color: var(--dim); font-size: 13px; padding: 24px; border-top: 1px solid var(--line); }
+
+  @media (max-width: 820px) {
+    .project, .project:nth-child(even) { grid-template-columns: 1fr; padding: 20px; gap: 26px; }
+    .project:nth-child(even) .shots { order: 0; }
+    .phone { width: 28%; inset-inline-start: -4px; }
+    nav a { margin-inline-start: 14px; font-size: 14px; }
+    .hero { padding: 56px 0 30px; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a href="#" class="logo">יהודה<span>.</span>צברי</a>
+    <nav>
+      <a href="#work">עבודות</a>
+      <a href="#more">עוד</a>
+      <a href="#contact">צור קשר</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="hero">
+      <span class="eyebrow">מעצב ובונה אתרים ואפליקציות</span>
+      <h1>עיצוב שנראה טוב <em>ועובד באמת</em></h1>
+      <p>אתרי תדמית, דפי נחיתה ואפליקציות בעברית, מותאמים לטלפון, עם תשומת לב לכל פרט. כאן אוסף של העבודות האחרונות שלי.</p>
+      <div class="stats">
+        <div><b>4</b><span>פרויקטים</span></div>
+        <div><b>RTL</b><span>עברית מלאה</span></div>
+        <div><b>Mobile</b><span>טלפון קודם</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="work">
+    <div class="wrap">
+      <h2>עבודות נבחרות</h2>
+      <p class="sub">כל פרויקט כאן עוצב ונבנה מאפס.</p>
+
+      <article class="project">
+        <div class="shots">
+          <div class="desk"><img src="shots/finance-desktop.jpg" alt="דף הנחיתה של שדרן הפיננסים" loading="lazy"></div>
+          <div class="phone"><img src="shots/finance-mobile.jpg" alt="שדרן הפיננסים בטלפון" loading="lazy"></div>
+        </div>
+        <div>
+          <span class="tag">דף נחיתה · ניוזלטר</span>
+          <h3>שדרן הפיננסים</h3>
+          <p>מהדורה כלכלית יומית בעברית של בני אדם. דף נחיתה להרשמה, דמות מותג (מטבע קאובוי), מודעות קידום לפייסבוק, דף תודה וחדר בקרה לניהול הנרשמים. השליחה היומית מתבצעת אוטומטית.</p>
+          <ul class="chips"><li>דף נחיתה</li><li>מיתוג ודמות</li><li>מודעות קידום</li><li>לוח ניהול</li><li>שליחה אוטומטית</li></ul>
+          <div class="palette" aria-label="פלטת צבעים"><i style="background:#181511"></i><i style="background:#b08642"></i><i style="background:#f3ecdd"></i><i style="background:#ffffff"></i></div>
+          <a class="btn" href="https://github.com/mayo1324/shidur-finance">לקוד</a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="shots">
+          <div class="desk"><img src="shots/sofia-desktop.jpg" alt="אתר הצלמת צופיה קזיוף" loading="lazy"></div>
+          <div class="phone"><img src="shots/sofia-mobile.jpg" alt="אתר הצלמת בטלפון" loading="lazy"></div>
+        </div>
+        <div>
+          <span class="tag">אתר תדמית · צילום</span>
+          <h3>צופיה קזיוף | צלמת</h3>
+          <p>אתר תדמית ללקוחה בתחום הצילום בסגנון טבעי: זוגות, משפחות, בריתות ואירועים. אנימציות גלילה חלקות, סמן מותאם, גלריה, חבילות וכפתור וואטסאפ.</p>
+          <ul class="chips"><li>GSAP</li><li>גלילה חלקה</li><li>גלריה</li><li>חבילות מחיר</li><li>וואטסאפ</li></ul>
+          <div class="palette" aria-label="פלטת צבעים"><i style="background:#7A7D5E"></i><i style="background:#C4A87C"></i><i style="background:#F5F0E8"></i><i style="background:#2C2C2A"></i></div>
+          <a class="btn" href="https://github.com/mayo1324/---">לקוד</a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="shots">
+          <div class="desk"><img src="shots/wallet-desktop.jpg" alt="לוח הבקרה הכספי הארנק שלי" loading="lazy"></div>
+          <div class="phone"><img src="shots/wallet-mobile.jpg" alt="הארנק שלי בטלפון" loading="lazy"></div>
+        </div>
+        <div>
+          <span class="tag">אפליקציית ווב · דשבורד</span>
+          <h3>הארנק שלי</h3>
+          <p>דשבורד כספי אישי במצב כהה: יתרות, הכנסות והוצאות חודשיות, גרף סקירה, פילוח הוצאות, יעדי חיסכון עם פס התקדמות והוספת תנועה מהירה. הנתונים נשמרים בענן.</p>
+          <ul class="chips"><li>דשבורד</li><li>Chart.js</li><li>Dark UI</li><li>Netlify</li><li>שמירה בענן</li></ul>
+          <div class="palette" aria-label="פלטת צבעים"><i style="background:#141b30"></i><i style="background:#3b82f6"></i><i style="background:#8b5cf6"></i><i style="background:#34d399"></i></div>
+          <a class="btn" href="https://github.com/mayo1324/-bait-dashboard">לקוד</a>
+        </div>
+      </article>
+
+      <article class="project wip">
+        <div>
+          <div class="wip-visual"><div><b>בפיתוח</b>עיצוב האפליקציה בתהליך</div></div>
+        </div>
+        <div>
+          <span class="tag">אפליקציה · אב טיפוס</span>
+          <h3>אפליקציית שוק ההון</h3>
+          <p>אפליקציה בעברית שמלמדת שוק הון לבני 15 ומעלה: שיעור קצר, ואז תרגול על גרף נרות היסטורי. המשתמש מסמן כניסה, סטופ ויעד ומקבל משוב וכוכבים. בלי כסף אמיתי. מותאם לטלפון (390×844).</p>
+          <ul class="chips"><li>HTML / CSS / JS</li><li>גרף נרות</li><li>גיימיפיקציה</li><li>Mobile first</li></ul>
+          <a class="btn ghost" href="https://github.com/mayo1324/---/tree/main/capital-market-app" style="margin:0">לפרויקט</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="more">
+    <div class="wrap">
+      <h2>עוד מהעבודות</h2>
+      <p class="sub">חומרי עיצוב נוספים מתוך הפרויקטים.</p>
+      <div class="extras">
+        <div class="extra">
+          <img src="shots/finance-promo.jpg" alt="מודעת פרסום לשדרן הפיננסים" loading="lazy">
+          <div><h4>מודעת פרסום</h4><p>קריאייטיב לקידום הניוזלטר</p></div>
+        </div>
+        <div class="extra">
+          <img src="shots/finance-admin.jpg" alt="חדר הבקרה של שדרן הפיננסים" loading="lazy">
+          <div><h4>חדר בקרה</h4><p>לוח ניהול נרשמים ושליחות</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <h2>יש לך פרויקט בראש?</h2>
+      <p>אשמח לשמוע ולבנות אותו יחד.</p>
+      <a class="mail" href="mailto:yehudatzabari52@gmail.com">yehudatzabari52@gmail.com</a>
+    </div>
+  </section>
+</main>
+
+<footer>© 2026 יהודה צברי</footer>
+</body>
+</html>
