@@ -11,7 +11,7 @@ table{width:100%;border-collapse:collapse;background:var(--card);border-radius:1
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.err{color:var(--rd)}select{min-height:44px;border-radius:10px;background:var(--card);color:var(--tx);border:1px solid #2a323c;padding:0 12px;font:inherit}
 </style></head><body><div class="w">
 <h1>לוח מדדים</h1><p class="mu" id="ver"></p><p class="mu">משפך, שימור ושימוש. הנתונים אנונימיים. רק הבעלים יכול לקרוא אותם, אחרי התחברות עם Google.</p>
-<div class="row"><button id="in">התחברות עם Google</button><select id="days"><option value="7">7 ימים אחרונים</option><option value="14" selected>14 ימים אחרונים</option><option value="30">30 ימים אחרונים</option></select><button id="go" style="display:none">רענון</button><span id="msg" class="mu"></span></div>
+<div class="row"><button id="in">התחברות עם Google</button><select id="days"><option value="7">7 ימים אחרונים</option><option value="14" selected>14 ימים אחרונים</option><option value="30">30 ימים אחרונים</option></select><button id="go" style="display:none">רענון</button><button id="sw" style="display:none;background:#2a323c;color:var(--tx)">החלפת חשבון</button><span id="msg" class="mu"></span></div>
 <div id="out"></div></div>
 <script type="module">
 const CFG={apiKey:'AIzaSyDJablsF0GQ1xNTHiedOM6cFKCjTWVXsT8',authDomain:'learn-markets.firebaseapp.com',projectId:'learn-markets',appId:'1:228220691798:web:5c3d6002085c61ab0222f7'};
@@ -19,8 +19,10 @@ const v='10.12.2',base=`https://www.gstatic.com/firebasejs/${v}/`;
 const [{initializeApp},A,F]=await Promise.all([import(base+'firebase-app.js'),import(base+'firebase-auth.js'),import(base+'firebase-firestore.js')]);
 const app=initializeApp(CFG),auth=A.getAuth(app),db=F.getFirestore(app),$=s=>document.querySelector(s);
 const msg=t=>$('#msg').textContent=t||'';
-$('#in').onclick=async()=>{try{await A.signInWithPopup(auth,new A.GoogleAuthProvider())}catch(e){msg('ההתחברות נכשלה: '+(e.code||e.message))}};
-A.onAuthStateChanged(auth,u=>{ $('#go').style.display=u?'':'none'; if(u){ $('#in').style.display='none'; msg('מחובר: '+u.email); run(); } });
+const prov=()=>{const p=new A.GoogleAuthProvider();p.setCustomParameters({prompt:'select_account'});return p};
+$('#in').onclick=async()=>{try{await A.signInWithPopup(auth,prov())}catch(e){msg('ההתחברות נכשלה: '+(e.code||e.message))}};
+$('#sw').onclick=async()=>{ await A.signOut(auth); $('#sw').style.display='none'; $('#go').style.display='none'; $('#in').style.display=''; $('#out').innerHTML=''; msg('התנתקתם. התחברו עם חשבון Google הנכון.'); };
+A.onAuthStateChanged(auth,u=>{ $('#go').style.display=u?'':'none'; $('#sw').style.display=u?'':'none'; if(u){ $('#in').style.display='none'; window.__me=u.email||''; msg('מחובר כ: '+window.__me); run(); } });
 $('#go').onclick=run; $('#days').onchange=run;
 const dk=t=>{const d=new Date(t);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const addDays=(k,n)=>{const [y,m,d]=k.split('-').map(Number);return dk(new Date(y,m-1,d+n).getTime())};
@@ -30,7 +32,7 @@ async function run(){
   let ev=[], lastErr=null;
   const attempts=[()=>F.query(F.collection(db,'events'),F.where('t','>=',since),F.orderBy('t','asc'),F.limit(5000)),()=>F.query(F.collection(db,'events'),F.where('t','>=',since)),()=>F.query(F.collection(db,'events'),F.limit(5000))];
   for(const mk of attempts){ try{ const snap=await F.getDocs(mk()); ev=snap.docs.map(d=>d.data()).filter(x=>typeof x.t==='number'?x.t>=since:+x.t>=since); lastErr=null; break; }catch(e){ lastErr=e; if(e.code==='permission-denied') break; } }
-  if(lastErr){ msg(''); $('#out').innerHTML='<p class="err">אין הרשאה או שגיאה: '+(lastErr.code||'')+' '+(lastErr.message||'')+'<br>אם כתוב permission-denied: ודאו שהחלפתם את OWNER_EMAIL בכללים ושהתחברתם עם אותו אימייל.</p>'; return; }
+  if(lastErr){ msg(''); $('#out').innerHTML='<p class="err">אין הרשאה או שגיאה: '+(lastErr.code||'')+' '+(lastErr.message||'')+'</p>'+(lastErr.code==='permission-denied'?'<p>אתם מחוברים כ-<b class="mail" style="direction:ltr;display:inline-block">'+(window.__me||'?')+'</b>. החשבון הזה לא זה שכתבתם בכללים של Firestore. לחצו <b>"החלפת חשבון"</b> והתחברו עם החשבון הנכון, או בדקו שהאימייל בכללים תואם בדיוק.</p>':''); return; }
   msg(ev.length+' אירועים'+(ev.length>=5000?' (הגעתם למגבלה של 5000, חלק נחתך)':''));
   const byV=new Map(); ev.forEach(x=>{ if(!byV.has(x.vid)) byV.set(x.vid,[]); byV.get(x.vid).push(x); });
   const has=(arr,e,s)=>arr.some(x=>x.e===e&&(!s||x.s===s));
