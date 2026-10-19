@@ -3,327 +3,307 @@
 <meta name="description" content="תיק עבודות: אתרים, דפי נחיתה ואפליקציות בעברית, עם עיצוב, תנועה ותלת־מימד.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;500;700;900&family=Rubik:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Rubik:wght@300;400;500;600&family=Inter:wght@400;500&family=Manrope:wght@400;500;700&family=Galada&display=swap" rel="stylesheet">
 <script>
-  document.documentElement.classList.add('js');
   document.documentElement.lang = 'he';
   document.documentElement.dir = 'rtl';
 </script>
 <style>
-  /* Layout concept: a fixed WebGL orb anchors itself to whichever section is on screen,
-     takes that project's colors, and sits behind tilting 3D device rigs. */
-  @property --acc  { syntax: '<color>'; inherits: true; initial-value: #d9ad5f; }
-  @property --acc2 { syntax: '<color>'; inherits: true; initial-value: #6f7dff; }
-
+  /* Layout concept: a Soda-style hero (cursive headline, glass nav, tilting center object, floating
+     3D fruit that flees the pointer, rising bubbles) whose radial background morphs to each project's
+     theme; the case studies below keep that glass-and-gradient language. */
   :root {
     color-scheme: dark;
-    --ink: #07080c;
-    --ink-2: #0d0f15;
-    --panel: rgba(18, 20, 29, .66);
-    --line: rgba(255, 255, 255, .11);
-    --bone: #f3efe6;
-    --dim: #9da2b0;
-    --acc: #d9ad5f;
-    --acc2: #6f7dff;
-    --display: 'Frank Ruhl Libre', 'David Libre', Georgia, serif;
-    --body: 'Rubik', system-ui, 'Segoe UI', Arial, sans-serif;
-    --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+    --text: #ffffff;
+    --muted: rgba(255, 255, 255, .72);
+    --glass-bg: rgba(255, 255, 255, .06);
+    --glass-border: rgba(255, 255, 255, .14);
+    --pink: #fbcfe8;
+    --on-pink: #011d17;
+    --ink: #011411;
+    --font-body: 'Inter', 'Rubik', system-ui, sans-serif;
+    --font-heading: 'Galada', cursive;
+    --font-he: 'Frank Ruhl Libre', 'David Libre', Georgia, serif;
+    --font-nav: 'Manrope', 'Rubik', sans-serif;
     --ease: cubic-bezier(.2, .8, .2, 1);
-    transition: --acc 1.2s ease, --acc2 1.2s ease;
   }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html { scroll-behavior: smooth; }
   body {
-    background: var(--ink); color: var(--bone);
-    font-family: var(--body); font-weight: 300; line-height: 1.7;
+    --bg-inner: #0b8a78; --bg-mid: #044e3b; --bg-outer: #011411;
+    background: #011411;
+    background: radial-gradient(circle at center, var(--bg-inner) 0%, var(--bg-mid) 50%, var(--bg-outer) 100%) fixed;
+    color: var(--text); font-family: var(--font-body); font-weight: 400; line-height: 1.7;
     -webkit-font-smoothing: antialiased; overflow-x: clip;
   }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
   a { color: inherit; text-decoration: none; }
   button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
   img { display: block; max-width: 100%; height: auto; }
-  :focus-visible { outline: 2px solid var(--acc); outline-offset: 4px; border-radius: 6px; }
-  ::selection { background: var(--acc); color: var(--ink); }
-
+  :focus-visible { outline: 2px solid var(--pink); outline-offset: 4px; border-radius: 8px; }
+  ::selection { background: var(--pink); color: var(--on-pink); }
   .wrap {
     width: 100%; max-width: 1280px; margin-inline: auto;
-    padding-left: max(16px, env(safe-area-inset-left, 0px));
-    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
   }
-  .mono { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); }
+  .label { font-family: var(--font-nav); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+  .glass {
+    background: var(--glass-bg); border: 1px solid var(--glass-border);
+    backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  }
 
-  /* ---------- fixed layers ---------- */
-  #gl { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
-  .wash {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background:
-      radial-gradient(70vw 60vh at 15% 20%, color-mix(in srgb, var(--acc) 17%, transparent), transparent 62%),
-      radial-gradient(60vw 55vh at 90% 85%, color-mix(in srgb, var(--acc2) 15%, transparent), transparent 60%);
+  /* ---------- bubbles ---------- */
+  #bubbles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .bubble {
+    position: absolute; bottom: -50px; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(circle at 32% 30%, rgba(255,255,255,.9) 0, rgba(255,255,255,.16) 22%, rgba(255,255,255,.05) 58%, rgba(255,255,255,0) 70%);
+    border: 1px solid rgba(255,255,255,.38); box-shadow: inset -2px -3px 6px rgba(255,255,255,.18);
   }
-  .grain {
-    position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: .06; mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  @keyframes floatUp {
+    0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+    10% { opacity: var(--o, .4); } 90% { opacity: var(--o, .4); }
+    100% { transform: translateY(-110vh) translateX(30px) rotate(360deg); opacity: 0; }
   }
   .page { position: relative; z-index: 1; }
-  .progress {
-    position: fixed; top: 0; inset-inline: 0; height: 3px; z-index: 70; transform-origin: right center; transform: scaleX(0);
-    background: linear-gradient(270deg, var(--acc), var(--acc2));
-  }
-
-  /* ---------- preloader ---------- */
-  .pre { display: none; }
-  .js .pre {
-    display: grid; place-items: center; position: fixed; inset: 0; z-index: 100; background: var(--ink);
-    transition: transform 1s var(--ease), visibility 0s 1s;
-  }
-  .pre.done { transform: translateY(-101%); visibility: hidden; }
-  .pre-in { text-align: center; }
-  .pre-n { font-family: var(--mono); font-size: clamp(56px, 12vw, 120px); font-weight: 500; line-height: 1; color: var(--bone); font-variant-numeric: tabular-nums; direction: ltr; }
-  .pre-t { margin-top: 14px; font-family: var(--display); font-size: 20px; color: var(--dim); }
-  .pre-bar { margin: 22px auto 0; width: min(240px, 60vw); height: 2px; background: var(--line); overflow: hidden; }
-  .pre-bar i { display: block; height: 100%; width: 100%; transform-origin: right center; transform: scaleX(0); background: linear-gradient(270deg, var(--acc), var(--acc2)); }
-
-  /* ---------- cursor ---------- */
-  .cur { display: none; }
-  html.fine .cur {
-    display: grid; place-items: center; position: fixed; top: 0; left: 0; z-index: 90; pointer-events: none;
-    width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%;
-    border: 1px solid rgba(255,255,255,.85); mix-blend-mode: difference; color: #fff;
-    font-size: 11px; letter-spacing: .08em; transition: width .3s var(--ease), height .3s var(--ease), margin .3s var(--ease), background .3s;
-  }
-  html.fine .cur.big { width: 84px; height: 84px; margin: -42px 0 0 -42px; background: rgba(255,255,255,.14); }
-  html.fine .cur.hov { width: 70px; height: 70px; margin: -35px 0 0 -35px; background: #fff; }
-  html.fine body, html.fine a, html.fine button { cursor: none; }
+  .progress { position: fixed; top: 0; inset-inline: 0; height: 3px; z-index: 300; transform-origin: right center; transform: scaleX(0); background: linear-gradient(270deg, var(--pink), #fff); }
 
   /* ---------- header ---------- */
-  .top { position: fixed; top: 0; inset-inline: 0; z-index: 50; padding-top: env(safe-area-inset-top, 0px); }
-  .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
-  .top::before {
-    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-    background: linear-gradient(180deg, rgba(7,8,12,.9), rgba(7,8,12,0));
-    backdrop-filter: blur(12px); -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent); mask-image: linear-gradient(180deg, #000 55%, transparent);
-  }
-  .logo { font-family: var(--display); font-weight: 900; font-size: 22px; letter-spacing: -.01em; display: flex; align-items: center; gap: 10px; }
-  .logo i { width: 12px; height: 12px; border-radius: 50%; background: conic-gradient(var(--acc), var(--acc2), var(--acc)); box-shadow: 0 0 18px var(--acc); }
-  .top nav { display: flex; align-items: center; gap: 28px; font-size: 14px; }
-  .top nav a:not(.pill) { color: var(--dim); transition: color .25s; }
-  .top nav a:not(.pill):hover { color: var(--bone); }
-  .pill {
-    display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 22px; border-radius: 99px;
-    border: 1px solid var(--line); background: rgba(255,255,255,.04); backdrop-filter: blur(10px);
-    font-size: 14px; font-weight: 500; transition: background .3s, border-color .3s, color .3s;
-  }
-  .pill:hover { background: var(--bone); color: var(--ink); border-color: var(--bone); }
-  .pill.solid { background: var(--bone); color: var(--ink); border-color: var(--bone); }
-  .pill.solid:hover { background: var(--acc); border-color: var(--acc); }
-
-  /* ---------- rail ---------- */
-  .rail { position: fixed; inset-inline-end: 22px; top: 50%; transform: translateY(-50%); z-index: 40; display: none; flex-direction: column; gap: 14px; }
-  .rail a { display: flex; align-items: center; gap: 10px; justify-content: flex-end; font-family: var(--mono); font-size: 11px; color: var(--dim); }
-  .rail a i { width: 18px; height: 1px; background: currentColor; transition: width .4s var(--ease), background .4s; }
-  .rail a.on { color: var(--bone); }
-  .rail a.on i { width: 40px; background: var(--acc); }
-  @media (min-width: 1440px) { .rail { display: flex; } }
+  .header { position: fixed; top: 0; width: 100%; z-index: 200; padding: calc(1.6rem + env(safe-area-inset-top, 0px)) 4% 1.2rem; display: flex; justify-content: space-between; align-items: center; }
+  .logo { display: flex; align-items: center; gap: .5rem; font-weight: 700; font-size: 1.35rem; font-family: var(--font-heading); }
+  .nav { display: flex; gap: .5rem; padding: .4rem; border-radius: 100px; box-shadow: 0 8px 32px rgba(0,0,0,.12), inset 0 0 0 1px rgba(255,255,255,.08); background: rgba(255,255,255,.08); }
+  .nav-item { font-family: var(--font-nav); color: var(--muted); font-size: .88rem; font-weight: 500; padding: .5rem 1.2rem; border-radius: 100px; transition: all .3s ease; white-space: nowrap; }
+  .nav-item:hover, .nav-item.active { background: var(--pink); color: var(--on-pink); }
+  .contact-btn { background: rgba(0,0,0,.5); color: #fff; padding: .9rem 2rem; border-radius: 100px; font-weight: 600; font-size: .88rem; transition: all .3s ease; display: inline-block; }
+  .contact-btn:hover { background: rgba(0,0,0,.7); transform: translateY(-2px); }
 
   /* ---------- hero ---------- */
-  .hero { padding-block: 132px 56px; }
-  .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 24px; align-items: center; }
-  .hero-orb { min-height: 440px; }
-  .eyebrow { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 26px; }
-  .eyebrow::before { content: ""; width: 34px; height: 1px; background: var(--acc); }
-  h1 {
-    font-family: var(--display); font-weight: 900; font-size: clamp(44px, 6.6vw, 104px);
-    line-height: .98; letter-spacing: -.025em; text-wrap: balance;
-  }
-  h1 .ln { display: block; }
-  .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .12em; margin-bottom: -.12em; }
-  .w > span { display: inline-block; will-change: transform; }
-  .grad {
-    background: linear-gradient(100deg, #d9ad5f, #1fbf8f, #6f7dff, #f0627f, #d9ad5f); background-size: 260% 100%;
-    -webkit-background-clip: text; background-clip: text; color: transparent; animation: shift 9s linear infinite;
-  }
-  @keyframes shift { to { background-position: -260% 0; } }
-  .lead { margin-top: 28px; max-width: 46ch; font-size: clamp(17px, 1.6vw, 20px); color: color-mix(in srgb, var(--bone) 78%, transparent); }
-  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
-  .meta { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 46px; }
-  .meta span { display: inline-flex; align-items: center; gap: 8px; }
-  .meta span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--acc); }
+  .hero { overflow-x: clip; position: relative; z-index: 2; height: 100vh; min-height: 640px; display: flex; align-items: center; justify-content: center; padding: 5rem 4% 0; }
+  .hero-content { display: flex; justify-content: space-between; align-items: stretch; width: 100%; height: 100%; position: relative; }
+  .gl { position: absolute; left: -80px; top: -80px; width: calc(100% + 160px); height: calc(100% + 160px); pointer-events: none; }
+  #gl-bg { z-index: 0; } #gl-fg { z-index: 110; }
+  .main-title, .side-title { font-family: var(--font-heading); font-size: clamp(4.4rem, min(10vw, 17vh), 12rem); line-height: .8; font-weight: 400; white-space: nowrap; }
+  .main-title .pk { color: var(--pink); }
+  .hero-left { display: flex; flex-direction: column; height: 100%; padding: 6rem 0; gap: 2rem; z-index: 100; }
+  .description { color: var(--muted); font-size: 1.1rem; line-height: 1.7; max-width: 400px; font-family: 'Rubik', var(--font-body); font-weight: 300; }
+  .primary-btn { display: flex; align-items: center; gap: 1.5rem; background: rgba(0,0,0,.5); color: #fff; padding: .4rem 1.5rem .4rem .4rem; border-radius: 100px; font-weight: 700; width: fit-content; transition: all .3s ease; }
+  .primary-btn:hover { background: rgba(0,0,0,.7); transform: translateY(-3px); }
+  .plus-icon { background: var(--pink); color: var(--on-pink); width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1.4rem; font-weight: 900; line-height: 1; padding-bottom: 2px; }
+  .award-badge { display: flex; align-items: center; gap: 1rem; margin-top: auto; }
+  .award-icon { width: 48px; height: 48px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+  .award-text { display: flex; flex-direction: column; }
+  .award-title { font-size: .7rem; letter-spacing: .1em; color: var(--muted); font-family: var(--font-nav); }
+  .award-subtitle { font-size: .88rem; font-weight: 600; }
+  @keyframes fadeInEntry { to { opacity: 1; transform: none; } }
+  .enter { opacity: 0; transform: translateY(30px); animation: fadeInEntry 1s ease-out forwards; }
+  .enter.d1 { animation-delay: .15s; } .enter.d2 { animation-delay: .35s; } .enter.d3 { animation-delay: .55s; } .enter.d4 { animation-delay: .75s; }
+
+  .hero-center { display: flex; justify-content: center; align-items: center; position: absolute; inset: 0; z-index: 1; opacity: 0; perspective: 1700px; pointer-events: none;
+    animation: fadeIn 1.5s ease-out .3s forwards, float 6s ease-in-out infinite;
+    background: radial-gradient(circle at center, color-mix(in srgb, var(--c, #10b981) 22%, transparent) 0%, transparent 62%); }
+  @keyframes fadeIn { to { opacity: 1; } }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+  .hp-rot { transform: rotate(12deg); transform-style: preserve-3d; }
+  .hp-tilt { transform-style: preserve-3d; will-change: transform; }
+  .phone { border-radius: 34px; padding: 8px; background: linear-gradient(145deg, #2d3040, #0a0b10); border: 1px solid rgba(255,255,255,.22); box-shadow: 0 50px 80px -20px rgba(0,0,0,.7), 0 0 60px -10px color-mix(in srgb, var(--c, #10b981) 55%, transparent); }
+  .phone .screen { position: relative; overflow: hidden; aspect-ratio: 390 / 844; border-radius: 27px; background: #111; }
+  .phone .screen::before { content: ""; position: absolute; z-index: 5; top: 8px; left: 50%; width: 30%; height: 14px; margin-left: -15%; border-radius: 99px; background: #05060a; }
+  .phone.big { height: min(74vh, 720px); aspect-ratio: 390 / 844; display: block; }
+  .phone.big .screen { height: 100%; aspect-ratio: auto; }
+  #hp-screen > img, #hp-screen > canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; }
+  #hp-screen > .on { opacity: 1; }
+  .case .screen canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .glare { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: soft-light; z-index: 4; background: radial-gradient(520px circle at var(--gx, 30%) var(--gy, 0%), rgba(255,255,255,.34), transparent 48%); }
+  .hero-cap { position: absolute; z-index: 120; bottom: 1.6rem; left: 0; right: 0; margin-inline: auto; width: fit-content; max-width: calc(100% - 32px); display: flex; align-items: center; gap: 14px; padding: .55rem .6rem .55rem 1.3rem; border-radius: 100px; font-size: .92rem; font-family: 'Rubik', sans-serif; transition: background .3s; }
+  .hero-cap:hover { background: rgba(255,255,255,.14); }
+  .hero-cap b { font-weight: 600; } .hero-cap span { color: var(--muted); font-size: .8rem; }
+
+  .hero-right { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; text-align: end; height: 100%; padding: 6rem 0; z-index: 100; width: 450px; pointer-events: none; }
+  .product-carousel { display: flex; flex-direction: column; gap: 1.5rem; align-items: flex-end; pointer-events: auto; }
+  .carousel-cards { display: flex; gap: 1rem; }
+  .card { border: 1px solid var(--glass-border); background: var(--glass-bg); padding: 1rem; padding-top: 5rem; border-radius: 28px; display: flex; flex-direction: column; align-items: center; gap: 1.1rem; cursor: pointer; transition: all .4s cubic-bezier(.175, .885, .32, 1.275); width: 135px; position: relative; backdrop-filter: blur(10px); text-align: center; color: inherit; }
+  .card:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.4); }
+  .card.active { border-color: var(--pink); }
+  .card img { width: 118px; height: auto; margin-top: -7rem; border-radius: 16px; border: 1px solid rgba(255,255,255,.2); filter: drop-shadow(0 20px 30px rgba(0,0,0,.5)); transition: transform .5s cubic-bezier(.34, 1.56, .64, 1); will-change: transform; pointer-events: none; }
+  .card:hover img { transform: translateY(-30px) rotate(-12deg) scale(1.12); }
+  .card-info { display: flex; flex-direction: column; font-size: .76rem; line-height: 1.35; width: 100%; font-family: 'Rubik', sans-serif; }
+  .card-info span:first-child { font-weight: 600; } .card-info span:last-child { color: var(--muted); }
+  .carousel-nav { display: flex; gap: 1rem; }
+  .nav-arrow { background: var(--glass-bg); border: 1px solid var(--glass-border); color: #fff; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background .3s; }
+  .nav-arrow:hover { background: rgba(255,255,255,.16); }
+  .side-title { align-self: flex-end; text-align: end; }
+  .side-title .pk { color: var(--pink); }
 
   /* ---------- marquee ---------- */
-  .marq { border-block: 1px solid var(--line); overflow: hidden; background: rgba(7,8,12,.5); backdrop-filter: blur(8px); }
+  .marq { position: relative; z-index: 3; border-block: 1px solid var(--glass-border); overflow: hidden; background: rgba(0,0,0,.22); backdrop-filter: blur(8px); }
   .marq-t { display: flex; width: max-content; direction: ltr; animation: marq 42s linear infinite; }
-  .marq-t span {
-    font-family: var(--display); font-weight: 900; font-size: clamp(28px, 4.4vw, 56px); padding: 18px 28px; white-space: nowrap; direction: rtl;
-    color: transparent; -webkit-text-stroke: 1px rgba(243,239,230,.5);
-  }
-  .marq-t span:nth-child(even) { color: var(--bone); -webkit-text-stroke: 0; }
-  .marq-t b { color: var(--acc); font-weight: 400; margin-inline: 10px; -webkit-text-stroke: 0; }
+  .marq-t span { font-family: var(--font-he); font-weight: 900; font-size: clamp(28px, 4.4vw, 56px); padding: 18px 28px; white-space: nowrap; direction: rtl; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.5); }
+  .marq-t span:nth-child(even) { color: #fff; -webkit-text-stroke: 0; }
+  .marq-t b { color: var(--pink); font-weight: 400; margin-inline: 10px; -webkit-text-stroke: 0; }
   @keyframes marq { to { transform: translateX(-50%); } }
 
   /* ---------- work ---------- */
   .work-head { padding-block: 120px 24px; display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 18px 40px; }
-  .work-head h2 { font-family: var(--display); font-weight: 900; font-size: clamp(38px, 6vw, 84px); line-height: 1; letter-spacing: -.02em; }
-  .work-head p { max-width: 38ch; color: var(--dim); }
-
+  .work-head h2 { font-family: var(--font-he); font-weight: 900; font-size: clamp(38px, 6vw, 84px); line-height: 1; letter-spacing: -.02em; }
+  .work-head p { max-width: 38ch; color: var(--muted); }
   .case { padding-block: clamp(56px, 9vw, 130px); position: relative; }
   .case-grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(28px, 5vw, 80px); align-items: center; }
   .case.flip .case-grid { grid-template-columns: 7fr 5fr; }
   .case.flip .stage { order: -1; }
   .case-grid > * { min-width: 0; }
-  .idx { display: flex; align-items: baseline; gap: 14px; margin-bottom: 18px; }
-  .idx b { font-family: var(--display); font-weight: 900; font-size: clamp(60px, 8vw, 110px); line-height: .8; color: transparent; -webkit-text-stroke: 1px var(--acc); }
-  .tag { color: var(--acc); }
-  .case h3 { font-family: var(--display); font-weight: 900; font-size: clamp(38px, 5.2vw, 72px); line-height: 1; letter-spacing: -.02em; text-wrap: balance; }
-  .case p.d { margin-top: 20px; max-width: 46ch; color: color-mix(in srgb, var(--bone) 74%, transparent); }
-  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); gap: 0; margin-top: 30px; border-block: 1px solid var(--line); }
+  .idx { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .idx b { font-family: var(--font-heading); font-weight: 400; font-size: clamp(64px, 8vw, 112px); line-height: .9; color: var(--pink); }
+  .tag { color: var(--pink); }
+  .case h3 { font-family: var(--font-he); font-weight: 900; font-size: clamp(38px, 5.2vw, 72px); line-height: 1; letter-spacing: -.02em; text-wrap: balance; }
+  .case p.d { margin-top: 20px; max-width: 46ch; color: var(--muted); font-family: 'Rubik', sans-serif; font-weight: 300; }
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); margin-top: 30px; border-block: 1px solid var(--glass-border); }
   .facts div { padding: 16px 0; padding-inline-end: 14px; }
-  .facts div + div { padding-inline-start: 18px; border-inline-start: 1px solid var(--line); }
-  .facts b { display: block; font-family: var(--display); font-weight: 900; font-size: 32px; line-height: 1.1; color: var(--bone); direction: ltr; text-align: right; }
-  .facts span { display: block; margin-top: 4px; font-size: 13px; line-height: 1.4; color: var(--dim); }
+  .facts div + div { padding-inline-start: 18px; border-inline-start: 1px solid var(--glass-border); }
+  .facts b { display: block; font-family: var(--font-heading); font-weight: 400; font-size: 36px; line-height: 1.1; direction: ltr; text-align: right; }
+  .facts span { display: block; margin-top: 4px; font-size: 13px; line-height: 1.4; color: var(--muted); font-family: 'Rubik', sans-serif; }
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; list-style: none; }
-  .chips li { font-family: var(--mono); font-size: 11.5px; padding: 5px 13px; border-radius: 99px; border: 1px solid var(--line); background: rgba(255,255,255,.03); color: var(--bone); }
+  .chips li { font-family: var(--font-nav); font-size: 12px; padding: 5px 14px; border-radius: 99px; border: 1px solid var(--glass-border); background: var(--glass-bg); color: #fff; }
 
-  /* ---------- 3D stage ---------- */
   .stage { position: relative; aspect-ratio: 1.12 / 1; perspective: 1500px; }
   .rig { position: absolute; inset: 0; transform-style: preserve-3d; }
   .layer { position: absolute; transform-style: preserve-3d; }
-  .float { animation: bob 7s ease-in-out infinite; }
-  .float.b { animation-duration: 9s; animation-delay: -3s; }
+  .float { animation: bob 7s ease-in-out infinite; } .float.b { animation-duration: 9s; animation-delay: -3s; }
   @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-  .glow { position: absolute; inset: 8% 6%; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--c, var(--acc)) 46%, transparent), transparent); filter: blur(34px); transform: translateZ(-80px); }
-
-  .desk { inset-inline-start: 0; top: 7%; width: 90%; transform: translateZ(0); }
-  .frame {
-    border-radius: 14px; overflow: hidden; background: #0a0b10; border: 1px solid rgba(255,255,255,.16);
-    box-shadow: 0 50px 90px -20px rgba(0,0,0,.7), 0 0 0 1px rgba(0,0,0,.4);
-  }
-  .bar { display: flex; align-items: center; gap: 7px; height: 30px; padding-inline: 14px; background: #14161e; border-bottom: 1px solid var(--line); }
+  .glow { position: absolute; inset: 8% 6%; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--c, #fff) 55%, transparent), transparent); filter: blur(34px); transform: translateZ(-80px); }
+  .desk { inset-inline-start: 0; top: 7%; width: 90%; }
+  .frame { border-radius: 14px; overflow: hidden; background: #0a0b10; border: 1px solid rgba(255,255,255,.18); box-shadow: 0 50px 90px -20px rgba(0,0,0,.7); }
+  .bar { display: flex; align-items: center; gap: 7px; height: 30px; padding-inline: 14px; background: #14161e; border-bottom: 1px solid var(--glass-border); }
   .bar i { width: 9px; height: 9px; border-radius: 50%; background: #3a3e4c; }
   .bar i:nth-child(1) { background: #ff6159; } .bar i:nth-child(2) { background: #ffbd2e; } .bar i:nth-child(3) { background: #28c93f; }
-  .bar em { margin-inline-start: 12px; font-style: normal; font-family: var(--mono); font-size: 10.5px; color: var(--dim); direction: ltr; }
-  .screen { position: relative; overflow: hidden; aspect-ratio: 16 / 10; background: #111; }
-  .screen img { width: 100%; height: auto; will-change: transform; }
-  .glare { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: soft-light; background: radial-gradient(520px circle at var(--gx, 30%) var(--gy, 0%), rgba(255,255,255,.34), transparent 48%); }
-
-  .phone {
-    border-radius: 34px; padding: 8px; background: linear-gradient(145deg, #2a2d38, #0a0b10);
-    border: 1px solid rgba(255,255,255,.2); box-shadow: 0 40px 70px -16px rgba(0,0,0,.75);
-  }
-  .phone .screen { aspect-ratio: 390 / 844; border-radius: 27px; background: #111; }
-  .phone .screen::before { content: ""; position: absolute; z-index: 3; top: 8px; left: 50%; width: 30%; height: 14px; margin-left: -15%; border-radius: 99px; background: #05060a; }
+  .bar em { margin-inline-start: 12px; font-style: normal; font-family: var(--font-nav); font-size: 10.5px; color: var(--muted); direction: ltr; }
+  .frame .screen { position: relative; overflow: hidden; aspect-ratio: 16 / 10; background: #111; }
+  .frame .screen img { width: 100%; height: auto; will-change: transform; }
+  .case .phone .screen { aspect-ratio: 390 / 844; }
   .ph-a { inset-inline-end: -1%; bottom: -3%; width: 27%; transform: translateZ(90px); }
-  .tri .ph { width: 29%; top: 8%; }
+  .tri .ph { width: 29%; }
   .tri .ph-l { inset-inline-start: 2%; top: 16%; transform: translateZ(10px) rotateY(18deg); }
   .tri .ph-m { inset-inline-start: 35.5%; top: 0%; width: 31%; transform: translateZ(100px); }
   .tri .ph-r { inset-inline-end: 2%; top: 16%; transform: translateZ(10px) rotateY(-18deg); }
-  .tri .ph .screen { aspect-ratio: 390 / 844; }
-  .tri .stage-note { inset-inline: 0; bottom: -2%; text-align: center; transform: translateZ(40px); }
-
   .cap-phone { inset-inline-start: 50%; top: 0; width: 38%; margin-inline-start: -19%; transform: translateZ(70px); }
-  .cap-phone canvas { display: block; width: 100%; height: 100%; }
-  .cap-phone .screen { background: #0c1020; }
-  .note { position: absolute; z-index: 4; font-family: var(--mono); font-size: 11px; padding: 6px 12px; border-radius: 99px; background: rgba(12,14,22,.85); border: 1px solid var(--line); color: var(--bone); backdrop-filter: blur(8px); white-space: nowrap; }
-  .note.n1 { inset-inline-start: 4%; top: 28%; transform: translateZ(120px); border-color: #6f7dff; }
+  .note { position: absolute; z-index: 4; font-family: var(--font-nav); font-size: 11px; padding: 6px 12px; border-radius: 99px; background: rgba(12,14,22,.85); border: 1px solid var(--glass-border); color: #fff; backdrop-filter: blur(8px); white-space: nowrap; }
+  .note.n1 { inset-inline-start: 4%; top: 28%; transform: translateZ(120px); border-color: #8f9bff; }
   .note.n2 { inset-inline-start: 6%; top: 52%; transform: translateZ(140px); border-color: #f87171; }
   .note.n3 { inset-inline-end: 4%; top: 14%; transform: translateZ(130px); border-color: #34d399; }
 
   /* ---------- skills ---------- */
   .skills { padding-block: 110px 40px; }
-  .skills h2 { font-family: var(--display); font-weight: 900; font-size: clamp(34px, 5vw, 68px); line-height: 1.02; letter-spacing: -.02em; max-width: 16ch; }
+  .skills h2 { font-family: var(--font-he); font-weight: 900; font-size: clamp(34px, 5vw, 68px); line-height: 1.04; letter-spacing: -.02em; max-width: 16ch; margin-top: 14px; }
   .sk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 44px; perspective: 1200px; }
-  .sk {
-    position: relative; padding: 30px 26px 28px; border-radius: 22px; background: var(--panel); backdrop-filter: blur(14px);
-    border: 1px solid var(--line); transform-style: preserve-3d; transition: border-color .4s; overflow: hidden;
-  }
-  .sk:hover { border-color: color-mix(in srgb, var(--acc) 60%, transparent); }
-  .sk .glare { opacity: .5; }
-  .sk h4 { font-family: var(--display); font-weight: 900; font-size: 28px; line-height: 1.1; transform: translateZ(40px); }
-  .sk p { margin-top: 12px; color: var(--dim); font-size: 15px; transform: translateZ(24px); }
+  .sk { position: relative; padding: 30px 26px 28px; border-radius: 28px; transform-style: preserve-3d; transition: border-color .4s, background .4s; overflow: hidden; }
+  .sk:hover { border-color: var(--pink); background: rgba(255,255,255,.1); }
+  .sk h4 { font-family: var(--font-he); font-weight: 900; font-size: 28px; line-height: 1.1; transform: translateZ(40px); }
+  .sk p { margin-top: 12px; color: var(--muted); font-size: 15px; transform: translateZ(24px); font-family: 'Rubik', sans-serif; font-weight: 300; }
   .sk .chips { transform: translateZ(30px); }
-  .sk .ico { display: block; width: 44px; height: 44px; margin-bottom: 26px; color: var(--acc); transform: translateZ(56px); }
+  .sk .ico { display: block; width: 44px; height: 44px; margin-bottom: 26px; color: var(--pink); transform: translateZ(56px); }
 
   /* ---------- contact ---------- */
   .contact { padding-block: 120px 80px; }
-  .contact-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; align-items: center; }
-  .contact-orb { min-height: 360px; }
-  .contact h2 { font-family: var(--display); font-weight: 900; font-size: clamp(44px, 8vw, 118px); line-height: .96; letter-spacing: -.025em; text-wrap: balance; }
-  .contact p { margin-top: 22px; color: var(--dim); max-width: 40ch; }
+  .contact h2 { font-family: var(--font-heading); font-weight: 400; font-size: clamp(5rem, 13vw, 12rem); line-height: .85; }
+  .contact h2 .pk { color: var(--pink); }
+  .contact p { margin-top: 28px; font-family: var(--font-he); font-weight: 700; font-size: clamp(22px, 3vw, 34px); max-width: 24ch; line-height: 1.25; }
   .mail-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 32px; }
-  .mail { font-family: var(--mono); font-size: clamp(15px, 2.4vw, 22px); padding: 12px 20px; border-radius: 14px; border: 1px dashed var(--line); user-select: all; direction: ltr; overflow-wrap: anywhere; }
-  footer { padding-block: 30px 40px; border-top: 1px solid var(--line); }
+  .mail { font-family: var(--font-nav); font-size: clamp(15px, 2.4vw, 22px); padding: 12px 20px; border-radius: 99px; user-select: all; direction: ltr; overflow-wrap: anywhere; }
+  footer { position: relative; z-index: 2; padding-block: 30px 40px; border-top: 1px solid var(--glass-border); }
   footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
 
   /* ---------- responsive ---------- */
+  @media (max-width: 1200px) {
+    .hero-right { width: 330px; }
+  }
   @media (max-width: 900px) {
-    .hero { padding-block: 104px 36px; }
-    .hero-grid, .contact-grid { grid-template-columns: 1fr; }
-    .hero-orb { min-height: 300px; order: 2; }
-    .contact-orb { min-height: 240px; }
+    .header { padding-inline: 16px; } .nav { display: none; }
+    .hero { height: auto; min-height: 100svh; padding-top: 5.6rem; padding-bottom: 3rem; }
+    .hero-content { flex-direction: column; height: auto; gap: 2rem; }
+    .hero-left { height: auto; padding: 1rem 0 0; gap: 1.4rem; order: 1; }
+    .award-badge { margin-top: 0; }
+    .hero-center { position: relative; inset: auto; height: 560px; order: 2; }
+    .phone.big { height: 500px; }
+    .hero-cap { bottom: .4rem; }
+    .hero-right { width: 100%; height: auto; padding: 1.6rem 0 0; align-items: center; order: 3; text-align: center; }
+    .product-carousel { align-items: center; padding-top: 6rem; }
+    .side-title { display: none; }
+    .main-title { font-size: 4.6rem; }
     .case-grid, .case.flip .case-grid { grid-template-columns: 1fr; }
     .case.flip .stage { order: 0; }
-    .top nav a:not(.pill) { display: none; }
     .work-head { padding-top: 80px; }
-    .ph-a { width: 30%; }
-    .cap-phone { width: 48%; margin-inline-start: -24%; }
-    .tri .ph { width: 30%; }
+    .ph-a { width: 30%; } .cap-phone { width: 48%; margin-inline-start: -24%; } .tri .ph { width: 30%; }
     .note { font-size: 10px; padding: 4px 9px; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .marq-t, .grad, .float { animation: none; }
-    .js .pre { display: none; }
+    .marq-t, .float { animation: none; }
+    .hero-center { animation: fadeIn .01s forwards; }
+    .enter { animation: fadeInEntry .01s forwards; }
   }
 </style>
 
 <div class="page">
-  <div class="pre" id="pre" aria-hidden="true">
-    <div class="pre-in">
-      <div class="pre-n" id="pre-n">000</div>
-      <div class="pre-t">יהודה צברי · תיק עבודות</div>
-      <div class="pre-bar"><i id="pre-bar"></i></div>
-    </div>
-  </div>
   <div class="progress" id="progress"></div>
-  <div class="cur" id="cur"><span id="cur-t"></span></div>
-  <div class="grain"></div>
 
-  <header class="top">
-    <div class="wrap">
-      <a href="#top" class="logo"><i></i>יהודה צברי</a>
-      <nav>
-        <a href="#work">עבודות</a>
-        <a href="#skills">מה אני עושה</a>
-        <a href="#contact" class="pill solid" data-mag>בואו נדבר</a>
-      </nav>
-    </div>
+  <header class="header">
+    <a href="#top" class="logo">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span>Yehuda</span>
+    </a>
+    <nav class="nav glass">
+      <a href="#top" class="nav-item active" data-sec="top">בית</a>
+      <a href="#work" class="nav-item" data-sec="work">עבודות</a>
+      <a href="#skills" class="nav-item" data-sec="skills">מה אני עושה</a>
+      <a href="#contact" class="nav-item" data-sec="contact">צור קשר</a>
+    </nav>
+    <a href="#contact" class="contact-btn">בואו נדבר</a>
   </header>
-
-  <nav class="rail" aria-label="ניווט פרויקטים">
-    <a href="#p1" data-i="0">01<i></i></a>
-    <a href="#p2" data-i="1">02<i></i></a>
-    <a href="#p3" data-i="2">03<i></i></a>
-    <a href="#p4" data-i="3">04<i></i></a>
-    <a href="#p5" data-i="4">05<i></i></a>
-  </nav>
 
   <main id="top">
     <!-- ================= HERO ================= -->
-    <section class="hero" data-acc="#d9ad5f" data-acc2="#6f7dff">
-      <div class="wrap hero-grid">
-        <div>
-          <div class="eyebrow mono">תיק עבודות · 2026</div>
-          <h1 data-split>
-            <span class="ln">אתרים ואפליקציות</span>
-            <span class="ln">שנשארים <span class="grad">בראש.</span></span>
-          </h1>
-          <p class="lead">אני מעצב ובונה דפי נחיתה, אתרי תדמית ואפליקציות בעברית. מאפיון ועיצוב ועד קוד שרץ באמת, עם תנועה ועומק שמרגישים ביד.</p>
-          <div class="cta">
-            <a href="#work" class="pill solid" data-mag>לעבודות</a>
-            <a href="#contact" class="pill" data-mag>יש לי רעיון</a>
+    <section class="hero" data-theme="hero">
+      <div class="hero-content" id="hero-content">
+        <canvas id="gl-bg" class="gl" aria-hidden="true"></canvas>
+
+        <div class="hero-left">
+          <h1 class="main-title enter d1"><span class="pk">Pure</span><br>Craft</h1>
+          <p class="description enter d2">אני מעצב ובונה אתרים, דפי נחיתה ואפליקציות בעברית. מאפיון ועיצוב ועד קוד שרץ באמת, הכול בשפה חזותית אחת, נקייה ומלאת תנועה.</p>
+          <div class="enter d3">
+            <a href="#work" class="primary-btn">לעבודות <span class="plus-icon">+</span></a>
           </div>
-          <div class="meta mono"><span>5 פרויקטים</span><span>עברית ו-RTL</span><span>Mobile first</span><span>אנימציה ותלת־מימד</span></div>
+          <div class="award-badge enter d4">
+            <div class="award-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 15L15 18L19 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="award-text"><span class="award-title">PORTFOLIO 2026</span><span class="award-subtitle">5 פרויקטים נבחרים</span></div>
+          </div>
         </div>
-        <div class="hero-orb" data-orb data-acc="#d9ad5f" data-acc2="#6f7dff" aria-hidden="true"></div>
+
+        <div class="hero-center" id="hero-center" style="--c:#d9ad5f" aria-hidden="true">
+          <div class="hp-rot"><div class="hp-tilt" id="hp-tilt">
+            <div class="phone big"><div class="screen" id="hp-screen">
+              <img src="img/finance-phone.jpg" width="780" height="1688" alt="" class="on">
+              <img src="img/sofia-phone.jpg" width="780" height="1688" alt="">
+              <img src="img/jamsly-home.jpg" width="780" height="1688" alt="">
+              <img src="img/wallet-phone.jpg" width="780" height="1688" alt="">
+              <canvas class="candles-cv" id="hp-cv"></canvas>
+              <div class="glare"></div>
+            </div></div>
+          </div></div>
+        </div>
+
+        <a class="hero-cap glass" id="hero-cap" href="#p1"><span id="cap-tag">דף נחיתה · מותג · אוטומציה</span><b id="cap-name">שדרן הפיננסים</b><i class="plus-icon" style="font-style:normal">+</i></a>
+
+        <div class="hero-right">
+          <div class="product-carousel">
+            <div class="carousel-cards" id="cards"></div>
+            <div class="carousel-nav">
+              <button class="nav-arrow" id="prev" type="button" aria-label="הפרויקט הקודם">→</button>
+              <button class="nav-arrow" id="next" type="button" aria-label="הפרויקט הבא">←</button>
+            </div>
+          </div>
+          <h2 class="side-title enter d2"><span class="pk">Selected</span><br>Work</h2>
+        </div>
+
+        <canvas id="gl-fg" class="gl" aria-hidden="true"></canvas>
       </div>
     </section>
 
@@ -338,14 +318,13 @@
     <section id="work">
       <div class="wrap work-head">
         <h2>עבודות נבחרות</h2>
-        <p>חמישה פרויקטים שעיצבתי ובניתי מאפס. הזיזו את העכבר על המכשירים וגללו, הכול זז איתכם.</p>
+        <p>חמישה פרויקטים שעיצבתי ובניתי מאפס. הזיזו את העכבר על המכשירים וגללו, הרקע משנה צבע עם כל פרויקט.</p>
       </div>
 
-      <!-- 01 Shidur -->
-      <article class="case" id="p1" data-case="0" data-acc="#d9ad5f" data-acc2="#8f5b2a">
+      <article class="case" id="p1" data-theme="gold">
         <div class="wrap case-grid">
           <div class="copy">
-            <div class="idx"><b>01</b><span class="mono tag">דף נחיתה · מותג · אוטומציה</span></div>
+            <div class="idx"><b>01</b><span class="label tag">דף נחיתה · מותג · אוטומציה</span></div>
             <h3>שדרן הפיננסים</h3>
             <p class="d">ניוזלטר כלכלי יומי בעברית של בני אדם. עיצבתי את דף הנחיתה, דמות המותג, מודעת פרסום ופוסט לפייסבוק, דף תודה וחדר בקרה לניהול הנרשמים. המהדורה יוצאת אוטומטית בבוקר, ימים שני עד שישי, ובמוצאי שבת.</p>
             <div class="facts">
@@ -355,7 +334,7 @@
             </div>
             <ul class="chips"><li>Landing</li><li>Brand character</li><li>Ad creative</li><li>Admin</li><li>GitHub Actions</li></ul>
           </div>
-          <div class="stage" data-orb data-acc="#d9ad5f" data-acc2="#8f5b2a" data-cursor="סובב" style="--c:#d9ad5f">
+          <div class="stage" style="--c:#d9ad5f">
             <div class="rig">
               <div class="glow"></div>
               <div class="layer desk"><div class="float"><div class="frame">
@@ -368,11 +347,10 @@
         </div>
       </article>
 
-      <!-- 02 Sofia -->
-      <article class="case flip" id="p2" data-case="1" data-acc="#b9bd96" data-acc2="#c4a87c">
+      <article class="case flip" id="p2" data-theme="olive">
         <div class="wrap case-grid">
           <div class="copy">
-            <div class="idx"><b>02</b><span class="mono tag">אתר תדמית · צילום</span></div>
+            <div class="idx"><b>02</b><span class="label tag">אתר תדמית · צילום</span></div>
             <h3>צופיה קזיוף, צלמת</h3>
             <p class="d">אתר תדמית ללקוחה בסגנון צילום טבעי. גווני זית וקרם, טיפוגרפיה בעברית שמרגישה כמו מגזין, סמן מותאם ואנימציות גלילה שמובילות את העין מהתמונה הראשונה ועד הפנייה בוואטסאפ.</p>
             <div class="facts">
@@ -382,7 +360,7 @@
             </div>
             <ul class="chips"><li>Photography</li><li>Scroll motion</li><li>Custom cursor</li><li>WhatsApp CTA</li></ul>
           </div>
-          <div class="stage" data-orb data-acc="#b9bd96" data-acc2="#c4a87c" data-cursor="סובב" style="--c:#b9bd96">
+          <div class="stage" style="--c:#b9bd96">
             <div class="rig">
               <div class="glow"></div>
               <div class="layer desk"><div class="float"><div class="frame">
@@ -395,11 +373,10 @@
         </div>
       </article>
 
-      <!-- 03 Jamsly -->
-      <article class="case" id="p3" data-case="2" data-acc="#1fbf8f" data-acc2="#ff7a2f">
+      <article class="case" id="p3" data-theme="orange">
         <div class="wrap case-grid">
           <div class="copy">
-            <div class="idx"><b>03</b><span class="mono tag">אפליקציה · חיסכון</span></div>
+            <div class="idx"><b>03</b><span class="label tag">אפליקציה · חיסכון</span></div>
             <h3>ג׳מסלי</h3>
             <p class="d">מרכז חיסכון באלי אקספרס בעברית: קופונים, מדרגות הנחה, הכי נמכרים וגלגל מזל. שפה צבעונית של אפליקציה, מסך פתיחה מונפש וסרגל תחתון צף שמסדר את כל החיסכון במקום אחד.</p>
             <div class="facts">
@@ -408,7 +385,7 @@
             </div>
             <ul class="chips"><li>App UI</li><li>Splash motion</li><li>Cloudflare Workers</li><li>Auto-updating feed</li></ul>
           </div>
-          <div class="stage tri" data-orb data-acc="#1fbf8f" data-acc2="#ff7a2f" data-cursor="סובב" style="--c:#ff7a2f">
+          <div class="stage tri" style="--c:#ff7a2f">
             <div class="rig">
               <div class="glow"></div>
               <div class="layer ph ph-l"><div class="float b"><div class="phone"><div class="screen"><img src="img/jamsly-deals.jpg" width="780" height="1688" alt="מסך המבצעים בג׳מסלי" loading="lazy"><div class="glare"></div></div></div></div></div>
@@ -419,11 +396,10 @@
         </div>
       </article>
 
-      <!-- 04 Wallet -->
-      <article class="case flip" id="p4" data-case="3" data-acc="#6f7dff" data-acc2="#34d399">
+      <article class="case flip" id="p4" data-theme="blue">
         <div class="wrap case-grid">
           <div class="copy">
-            <div class="idx"><b>04</b><span class="mono tag">דשבורד · אפליקציית ווב</span></div>
+            <div class="idx"><b>04</b><span class="label tag">דשבורד · אפליקציית ווב</span></div>
             <h3>הארנק שלי</h3>
             <p class="d">תמונה כספית אישית במבט אחד: יתרות, הכנסות והוצאות, גרף חודשי, פילוח הוצאות ויעדי חיסכון עם פס התקדמות. מצב כהה, מספרים גדולים, וצבע שמסמן כסף נכנס וכסף יוצא.</p>
             <div class="facts">
@@ -432,7 +408,7 @@
             </div>
             <ul class="chips"><li>Dashboard</li><li>Chart.js</li><li>Dark UI</li><li>Netlify</li></ul>
           </div>
-          <div class="stage" data-orb data-acc="#6f7dff" data-acc2="#34d399" data-cursor="סובב" style="--c:#6f7dff">
+          <div class="stage" style="--c:#6f7dff">
             <div class="rig">
               <div class="glow"></div>
               <div class="layer desk"><div class="float"><div class="frame">
@@ -445,11 +421,10 @@
         </div>
       </article>
 
-      <!-- 05 Capital market -->
-      <article class="case" id="p5" data-case="4" data-acc="#f0627f" data-acc2="#ffb86b">
+      <article class="case" id="p5" data-theme="rose">
         <div class="wrap case-grid">
           <div class="copy">
-            <div class="idx"><b>05</b><span class="mono tag">אפליקציה · אב טיפוס</span></div>
+            <div class="idx"><b>05</b><span class="label tag">אפליקציה · אב טיפוס</span></div>
             <h3>אפליקציית שוק ההון</h3>
             <p class="d">אפליקציה בעברית שמלמדת שוק הון לבני נוער. שיעור קצר, ואז תרגול על מקרה היסטורי: מסמנים כניסה, סטופ ויעד, מריצים את הגרף ומקבלים משוב וכוכבים. בלי כסף אמיתי. כרגע בשלב אב טיפוס, ומה שמוצג כאן הוא הדגמה חיה של מסך התרגול.</p>
             <div class="facts">
@@ -459,10 +434,10 @@
             </div>
             <ul class="chips"><li>Prototype</li><li>Candlestick chart</li><li>Gamified learning</li><li>Vanilla JS</li></ul>
           </div>
-          <div class="stage" data-orb data-acc="#f0627f" data-acc2="#ffb86b" data-cursor="סובב" style="--c:#f0627f">
+          <div class="stage" style="--c:#f0627f">
             <div class="rig">
               <div class="glow"></div>
-              <div class="layer cap-phone"><div class="float"><div class="phone"><div class="screen" style="aspect-ratio:390/844"><canvas id="candles" aria-label="הדגמה חיה של מסך התרגול: גרף נרות עם כניסה, סטופ ויעד"></canvas><div class="glare"></div></div></div></div></div>
+              <div class="layer cap-phone"><div class="float"><div class="phone"><div class="screen"><canvas class="candles-cv on" id="candles" aria-label="הדגמה חיה של מסך התרגול: גרף נרות עם כניסה, סטופ ויעד"></canvas><div class="glare"></div></div></div></div></div>
               <div class="note n1">כניסה</div>
               <div class="note n2">סטופ</div>
               <div class="note n3">יעד ★★★</div>
@@ -473,27 +448,27 @@
     </section>
 
     <!-- ================= SKILLS ================= -->
-    <section class="skills" id="skills" data-acc="#6f7dff" data-acc2="#f0627f">
+    <section class="skills" id="skills" data-theme="violet">
       <div class="wrap">
-        <div class="mono">מה אני עושה</div>
-        <h2 style="margin-top:14px">מרעיון למסך, ומהמסך לאוויר.</h2>
+        <div class="label">מה אני עושה</div>
+        <h2>מרעיון למסך, ומהמסך לאוויר.</h2>
         <div class="sk-grid">
-          <div class="sk tilt">
-            <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="8" width="36" height="26" rx="3"/><path d="M16 40h16M24 34v6M12 26l7-8 6 6 5-5 6 7"/></svg>
+          <div class="sk glass tilt">
+            <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="8" width="36" height="26" rx="3"/><path d="M16 40h16M24 34v6M12 26l7-8 6 6 5-5 6 7"/></svg>
             <h4>עיצוב ומיתוג</h4>
             <p>זהות חזותית, דמויות, מסכי אפליקציה, דפי נחיתה וקריאייטיב לפרסום. פלטה וטיפוגרפיה שנבחרו לנושא, לא מתבנית.</p>
             <ul class="chips"><li>UI</li><li>Brand</li><li>Hebrew type</li></ul>
             <div class="glare"></div>
           </div>
-          <div class="sk tilt">
-            <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M24 5l16 9v20l-16 9-16-9V14z"/><path d="M8 14l16 9 16-9M24 23v20"/></svg>
+          <div class="sk glass tilt">
+            <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 5l16 9v20l-16 9-16-9V14z"/><path d="M8 14l16 9 16-9M24 23v20"/></svg>
             <h4>תנועה ותלת־מימד</h4>
             <p>אנימציות גלילה, מעברים, מכשירים שמסתובבים ועולמות WebGL. תנועה שמסבירה ומובילה, ושמכבדת מי שמעדיף בלי אנימציות.</p>
             <ul class="chips"><li>GSAP</li><li>Three.js</li><li>WebGL</li></ul>
             <div class="glare"></div>
           </div>
-          <div class="sk tilt">
-            <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 14L7 24l10 10M31 14l10 10-10 10M27 9l-6 30"/></svg>
+          <div class="sk glass tilt">
+            <svg class="ico" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 14L7 24l10 10M31 14l10 10-10 10M27 9l-6 30"/></svg>
             <h4>בנייה ועלייה לאוויר</h4>
             <p>קוד נקי, מותאם לטלפון, עם שרת ואוטומציה כשצריך: שליחה יומית, עדכון פיד, שמירה בענן. מה שנראה טוב גם עובד.</p>
             <ul class="chips"><li>Netlify</li><li>Cloudflare</li><li>GitHub Actions</li></ul>
@@ -504,418 +479,402 @@
     </section>
 
     <!-- ================= CONTACT ================= -->
-    <section class="contact" id="contact" data-acc="#d9ad5f" data-acc2="#6f7dff">
-      <div class="wrap contact-grid">
-        <div>
-          <div class="eyebrow mono">צור קשר</div>
-          <h2>יש לכם רעיון?<br><span class="grad">בואו נבנה אותו.</span></h2>
-          <p>ספרו לי מה אתם צריכים: דף נחיתה, אתר או אפליקציה. אחזור אליכם עם כיוון וזמנים.</p>
-          <div class="mail-row">
-            <span class="mail" id="mail">yehudatzabari52@gmail.com</span>
-            <button class="pill solid" id="copy" type="button" data-mag>העתק כתובת</button>
-          </div>
+    <section class="contact" id="contact" data-theme="hero">
+      <div class="wrap">
+        <h2><span class="pk">Let's</span><br>Create</h2>
+        <p>יש לכם רעיון? בואו נבנה אותו.</p>
+        <div class="mail-row">
+          <span class="mail glass" id="mail">yehudatzabari52@gmail.com</span>
+          <button class="primary-btn" id="copy" type="button"><span id="copy-t" style="padding-inline:.4rem">העתק כתובת</span><span class="plus-icon">+</span></button>
         </div>
-        <div class="contact-orb" data-orb data-acc="#d9ad5f" data-acc2="#6f7dff" aria-hidden="true"></div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="wrap mono"><span>© 2026 יהודה צברי</span><span>עוצב ונבנה ביד · Three.js + GSAP</span></div>
+    <div class="wrap label"><span>© 2026 יהודה צברי</span><span>עוצב ונבנה ביד · Three.js + GSAP</span></div>
   </footer>
 </div>
 
-<canvas id="gl" aria-hidden="true"></canvas>
-<div class="wash" aria-hidden="true"></div>
+<div id="bubbles" aria-hidden="true"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 (() => {
-  const root = document.documentElement;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const hasGsap = !!window.gsap;
   if (hasGsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
-  if (fine && !reduce) root.classList.add('fine');
+  const body = document.body;
 
-  /* ---------- section accent sync (UI colors follow the active section) ---------- */
-  const anchors = $$('[data-orb]');
-  let activeEl = null;
-  function setAccent(el) {
-    if (activeEl === el) return;
-    activeEl = el;
-    root.style.setProperty('--acc', el.dataset.acc);
-    root.style.setProperty('--acc2', el.dataset.acc2);
+  /* ---------- themes (radial background morph) ---------- */
+  const THEMES = {
+    hero:   ['#0b8a78', '#044e3b', '#011411'],
+    gold:   ['#9a7430', '#4d3913', '#140d03'],
+    olive:  ['#7b8159', '#363c27', '#0c0f08'],
+    orange: ['#c4590f', '#5c2a08', '#150803'],
+    blue:   ['#0b4f8a', '#04294e', '#010c14'],
+    rose:   ['#b02a52', '#531229', '#150409'],
+    violet: ['#5a45c7', '#2a2062', '#0a0821']
+  };
+  let themeKey = 'hero';
+  function applyTheme(key, dur = 1.5) {
+    const t = THEMES[key]; if (!t) return;
+    themeKey = key;
+    if (hasGsap && !reduce) gsap.to(body, { '--bg-inner': t[0], '--bg-mid': t[1], '--bg-outer': t[2], duration: dur, ease: 'power2.inOut', overwrite: 'auto' });
+    else { body.style.setProperty('--bg-inner', t[0]); body.style.setProperty('--bg-mid', t[1]); body.style.setProperty('--bg-outer', t[2]); }
   }
 
-  /* ---------- WebGL orb ---------- */
-  const gl = (() => {
-    if (!window.THREE) return null;
-    const canvas = $('#gl');
-    let renderer;
-    try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' }); }
-    catch (e) { canvas.style.display = 'none'; return null; }
-    renderer.setClearColor(0x000000, 0);
-    const scene = new THREE.Scene();
-    const cam = new THREE.PerspectiveCamera(38, 1, 0.1, 60);
-    cam.position.z = 10;
+  /* ---------- projects shown in the hero carousel ---------- */
+  const P = [
+    { name: 'שדרן הפיננסים', cat: 'דף נחיתה', tag: 'דף נחיתה · מותג · אוטומציה', theme: 'gold', c: '#d9ad5f', berry: 'cherry', img: 'img/finance-phone.jpg', screen: 0 },
+    { name: 'צופיה קזיוף', cat: 'אתר תדמית', tag: 'אתר תדמית · צילום', theme: 'olive', c: '#b9bd96', berry: 'cherry', img: 'img/sofia-phone.jpg', screen: 1 },
+    { name: 'ג׳מסלי', cat: 'אפליקציה', tag: 'אפליקציה · חיסכון', theme: 'orange', c: '#ff7a2f', berry: 'cherry', img: 'img/jamsly-home.jpg', screen: 2 },
+    { name: 'הארנק שלי', cat: 'דשבורד', tag: 'דשבורד · אפליקציית ווב', theme: 'blue', c: '#6f7dff', berry: 'blue', img: 'img/wallet-phone.jpg', screen: 3 },
+    { name: 'שוק ההון', cat: 'אב טיפוס', tag: 'אפליקציה · אב טיפוס', theme: 'rose', c: '#f0627f', berry: 'blue', img: null, screen: 4 }
+  ];
+  let cur = 0, isSwitching = false, switchSpin = 0;
 
-    const uni = {
-      uTime: { value: 0 }, uSpeed: { value: 0 },
-      uA: { value: new THREE.Color('#d9ad5f') }, uB: { value: new THREE.Color('#6f7dff') }
-    };
-    const vert = `
-      uniform float uTime; uniform float uSpeed;
-      varying vec3 vN; varying vec3 vV; varying float vD;
-      vec3 mod289(vec3 x){return x-floor(x*(1./289.))*289.;} vec4 mod289(vec4 x){return x-floor(x*(1./289.))*289.;}
-      vec4 permute(vec4 x){return mod289(((x*34.)+1.)*x);} vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-0.85373472095314*r;}
-      float snoise(vec3 v){
-        const vec2 C=vec2(1./6.,1./3.); const vec4 D=vec4(0.,.5,1.,2.);
-        vec3 i=floor(v+dot(v,C.yyy)); vec3 x0=v-i+dot(i,C.xxx);
-        vec3 g=step(x0.yzx,x0.xyz); vec3 l=1.-g; vec3 i1=min(g.xyz,l.zxy); vec3 i2=max(g.xyz,l.zxy);
-        vec3 x1=x0-i1+C.xxx; vec3 x2=x0-i2+C.yyy; vec3 x3=x0-D.yyy;
-        i=mod289(i);
-        vec4 p=permute(permute(permute(i.z+vec4(0.,i1.z,i2.z,1.))+i.y+vec4(0.,i1.y,i2.y,1.))+i.x+vec4(0.,i1.x,i2.x,1.));
-        float n_=.142857142857; vec3 ns=n_*D.wyz-D.xzx;
-        vec4 j=p-49.*floor(p*ns.z*ns.z); vec4 x_=floor(j*ns.z); vec4 y_=floor(j-7.*x_);
-        vec4 x=x_*ns.x+ns.yyyy; vec4 y=y_*ns.x+ns.yyyy; vec4 h=1.-abs(x)-abs(y);
-        vec4 b0=vec4(x.xy,y.xy); vec4 b1=vec4(x.zw,y.zw);
-        vec4 s0=floor(b0)*2.+1.; vec4 s1=floor(b1)*2.+1.; vec4 sh=-step(h,vec4(0.));
-        vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy; vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;
-        vec3 p0=vec3(a0.xy,h.x); vec3 p1=vec3(a0.zw,h.y); vec3 p2=vec3(a1.xy,h.z); vec3 p3=vec3(a1.zw,h.w);
-        vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));
-        p0*=norm.x; p1*=norm.y; p2*=norm.z; p3*=norm.w;
-        vec4 m=max(.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.); m=m*m;
-        return 42.*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
-      }
-      void main(){
-        float t = uTime*.22;
-        float d = snoise(position*1.15 + vec3(t,t*.8,-t)) * (.26 + uSpeed*.5) + snoise(position*2.6 - t) * .05;
-        vec3 p = position + normal * d;
-        vD = d; vN = normalize(normalMatrix * normal);
-        vec4 mv = modelViewMatrix * vec4(p,1.); vV = -mv.xyz;
-        gl_Position = projectionMatrix * mv;
-      }`;
-    const frag = `
-      uniform vec3 uA; uniform vec3 uB; uniform float uTime;
-      varying vec3 vN; varying vec3 vV; varying float vD;
-      void main(){
-        vec3 n = normalize(vN); vec3 v = normalize(vV);
-        float f = pow(1. - max(dot(n,v),0.), 2.1);
-        float k = .5 + .5*sin(vD*5. + uTime*.35 + n.y*2.);
-        vec3 base = mix(uA, uB, k);
-        vec3 irid = .5 + .5*cos(6.2831*(f*.9 + vec3(0.,.33,.67) + uTime*.03));
-        vec3 col = base*(.2 + .6*max(n.y*.5+.5,0.)) + base*f*1.1 + irid*f*.26;
-        col += pow(f,4.)*.22;
-        gl_FragColor = vec4(col, .22 + .5*f);
-      }`;
-    const orb = new THREE.Group(); scene.add(orb);
-    const blob = new THREE.Mesh(new THREE.IcosahedronGeometry(1.25, 48),
-      new THREE.ShaderMaterial({ uniforms: uni, vertexShader: vert, fragmentShader: frag, transparent: true, depthWrite: false }));
-    orb.add(blob);
-    const cageMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.2 });
-    const cage = new THREE.LineSegments(new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.7, 2)), cageMat);
-    orb.add(cage);
-    const ringMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
-    const ringA = new THREE.Mesh(new THREE.TorusGeometry(2.1, 0.006, 8, 220), ringMat);
-    const ringB = new THREE.Mesh(new THREE.TorusGeometry(2.45, 0.004, 8, 220), ringMat);
-    ringA.rotation.x = 1.15; ringB.rotation.set(0.4, 0.9, 0); orb.add(ringA, ringB);
-
-    const small = innerWidth < 700;
-    const N = small ? 700 : 1700;
-    const pos = new Float32Array(N * 3);
-    for (let i = 0; i < N; i++) {
-      const r = 4 + Math.random() * 9, th = Math.random() * 6.2832, ph = Math.acos(2 * Math.random() - 1);
-      pos[i * 3] = r * Math.sin(ph) * Math.cos(th); pos[i * 3 + 1] = r * Math.sin(ph) * Math.sin(th) * 0.7; pos[i * 3 + 2] = r * Math.cos(ph) - 4;
-    }
-    const pg = new THREE.BufferGeometry(); pg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    const pm = new THREE.PointsMaterial({ color: 0xffffff, size: 0.028, transparent: true, opacity: 0.7, depthWrite: false, blending: THREE.AdditiveBlending });
-    const stars = new THREE.Points(pg, pm); scene.add(stars);
-
-    let vw = 1, vh = 1, halfW = 1, halfH = 1;
-    function resize() {
-      vw = innerWidth; vh = innerHeight;
-      renderer.setPixelRatio(Math.min(devicePixelRatio || 1, small ? 1.5 : 1.75));
-      renderer.setSize(vw, vh, false);
-      cam.aspect = vw / vh; cam.updateProjectionMatrix();
-      halfH = Math.tan(THREE.MathUtils.degToRad(cam.fov / 2)) * cam.position.z; halfW = halfH * cam.aspect;
-    }
-    resize(); addEventListener('resize', resize);
-
-    const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
-    addEventListener('pointermove', e => { mouse.tx = (e.clientX / innerWidth) * 2 - 1; mouse.ty = (e.clientY / innerHeight) * 2 - 1; }, { passive: true });
-
-    const target = { x: 0, y: 0, s: 1 };
-    const cA = new THREE.Color(), cB = new THREE.Color();
-    let lastY = scrollY, vel = 0, t0 = performance.now(), running = true, lastNearest = null;
-
-    function nearest() {
-      let best = null, bd = 1e9;
-      for (const el of anchors) {
-        const r = el.getBoundingClientRect();
-        if (r.bottom < -200 || r.top > vh + 200) continue;
-        const d = Math.abs(r.top + r.height / 2 - vh / 2);
-        if (d < bd) { bd = d; best = el; }
-      }
-      return best;
-    }
-    function frame(now) {
-      if (!running) return;
-      const t = (now - t0) / 1000;
-      uni.uTime.value = t;
-      const sy = scrollY; vel += ((sy - lastY) * 0.0016 - vel) * 0.08; lastY = sy;
-      uni.uSpeed.value += (Math.min(Math.abs(vel), 1) - uni.uSpeed.value) * 0.1;
-
-      const el = nearest();
-      if (el) {
-        if (el !== lastNearest) { lastNearest = el; setAccent(el); }
-        const r = el.getBoundingClientRect();
-        const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-        target.x = ((cx / vw) * 2 - 1) * halfW;
-        target.y = -((cy / vh) * 2 - 1) * halfH;
-        const dia = Math.min(r.width, r.height) * (el.classList.contains('stage') ? 0.86 : 0.78);
-        target.s = (dia / vh) * (2 * halfH) / 2.6;
-        cA.set(el.dataset.acc); cB.set(el.dataset.acc2);
-        uni.uA.value.lerp(cA, 0.05); uni.uB.value.lerp(cB, 0.05);
-        cageMat.color.lerp(cA, 0.05); ringMat.color.lerp(cB, 0.05); pm.color.lerp(cA, 0.03);
-      }
-      orb.position.x += (target.x - orb.position.x) * 0.075;
-      orb.position.y += (target.y - orb.position.y) * 0.075;
-      const s = orb.scale.x + (target.s - orb.scale.x) * 0.075; orb.scale.setScalar(Math.max(s, 0.001));
-
-      mouse.x += (mouse.tx - mouse.x) * 0.05; mouse.y += (mouse.ty - mouse.y) * 0.05;
-      blob.rotation.y = t * 0.12 + mouse.x * 0.6 + sy * 0.0006;
-      blob.rotation.x = mouse.y * 0.4 + sy * 0.0003;
-      cage.rotation.y = -t * 0.08 + mouse.x * 0.3; cage.rotation.x = t * 0.05;
-      ringA.rotation.z = t * 0.2 + vel * 4; ringB.rotation.z = -t * 0.14;
-      stars.rotation.y = t * 0.01 + sy * 0.00022; stars.position.x = -mouse.x * 0.3; stars.position.y = mouse.y * 0.2;
-      renderer.render(scene, cam);
-      if (!reduce) requestAnimationFrame(frame);
-    }
-    document.addEventListener('visibilitychange', () => {
-      running = !document.hidden;
-      if (running && !reduce) requestAnimationFrame(frame);
-    });
-    // place the orb immediately on first frame so it does not fly in from the corner
-    const first = nearest();
-    if (first) {
-      const r = first.getBoundingClientRect();
-      orb.position.set(((r.left + r.width / 2) / vw * 2 - 1) * halfW, -((r.top + r.height / 2) / vh * 2 - 1) * halfH, 0);
-      orb.scale.setScalar(0.001);
-    }
-    requestAnimationFrame(frame);
-    if (reduce) addEventListener('scroll', () => requestAnimationFrame(frame), { passive: true });
-    return { resize };
-  })();
-  if (!gl) setAccent(anchors[0]);
-
-  /* ---------- hero word split + intro ---------- */
-  function splitWords(el) {
-    const walk = node => {
-      [...node.childNodes].forEach(n => {
-        if (n.nodeType === 3) {
-          const frag = document.createDocumentFragment();
-          n.textContent.split(/(\s+)/).forEach(part => {
-            if (!part) return;
-            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
-            const w = document.createElement('span'); w.className = 'w';
-            const s = document.createElement('span'); s.textContent = part; w.appendChild(s); frag.appendChild(w);
-          });
-          n.replaceWith(frag);
-        } else if (n.nodeType === 1 && !n.classList.contains('grad')) walk(n);
-        else if (n.classList && n.classList.contains('grad')) {
-          const w = document.createElement('span'); w.className = 'w';
-          const s = document.createElement('span'); s.className = 'grad'; s.textContent = n.textContent; w.appendChild(s); n.replaceWith(w);
-        }
-      });
-    };
-    walk(el);
+  /* ---------- rising bubbles ---------- */
+  const bubbles = $('#bubbles');
+  function makeBubble() {
+    if (document.hidden || !bubbles) return;
+    const b = document.createElement('div'); b.className = 'bubble';
+    const size = Math.random() * 20 + 10;
+    const dur = Math.random() * 6 + 4;
+    b.style.width = b.style.height = size + 'px';
+    b.style.left = Math.random() * 100 + '%';
+    b.style.setProperty('--o', (Math.random() * 0.4 + 0.2).toFixed(2));
+    b.style.animation = `floatUp ${dur}s linear forwards`;
+    bubbles.appendChild(b); setTimeout(() => b.remove(), dur * 1000);
   }
-  const h1 = $('h1[data-split]');
-  if (hasGsap && !reduce) splitWords(h1);
+  if (!reduce) setInterval(makeBubble, 400);
 
-  let introDone = false;
-  function intro() {
-    if (introDone) return; introDone = true;
-    $('#pre').classList.add('done');
-    if (!hasGsap || reduce) return;
-    const tl = gsap.timeline({ delay: 0.35, defaults: { ease: 'expo.out' } });
-    tl.from('h1 .w > span', { yPercent: 115, duration: 1.4, stagger: 0.09 })
-      .from('.eyebrow, .lead, .cta, .meta', { y: 26, opacity: 0, duration: 1, stagger: 0.1 }, '-=1')
-      .from('.top .wrap > *', { y: -20, opacity: 0, duration: 0.9, stagger: 0.1 }, '-=1.2');
-  }
-  (function preload() {
-    const nEl = $('#pre-n'), bar = $('#pre-bar');
-    if (!nEl || reduce) { intro(); return; }
-    const t0 = performance.now(), D = 1300;
-    (function tick(now) {
-      const p = Math.min((now - t0) / D, 1), e = 1 - Math.pow(1 - p, 3);
-      nEl.textContent = String(Math.round(e * 100)).padStart(3, '0');
-      bar.style.transform = 'scaleX(' + e + ')';
-      if (p < 1) requestAnimationFrame(tick); else setTimeout(intro, 120);
-    })(t0);
-    setTimeout(intro, 3200);
-  })();
-
-  /* ---------- scroll-driven bits ---------- */
-  if (hasGsap && window.ScrollTrigger) {
-    gsap.to('#progress', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.2 } });
-
-    // devices scroll their own page while the section passes
-    $$('img[data-scroll]').forEach(img => {
-      const screen = img.parentElement;
-      gsap.to(img, {
-        y: () => -Math.max(0, img.offsetHeight - screen.offsetHeight), ease: 'none',
-        scrollTrigger: { trigger: screen.closest('.stage'), start: 'top 85%', end: 'bottom 15%', scrub: 0.7, invalidateOnRefresh: true }
-      });
-    });
-
-    if (!reduce) {
-      // content settles into place (never hidden, only offset)
-      $$('.case .copy > *, .work-head > *, .skills .wrap > *, .contact .wrap > div:first-child > *').forEach(el => {
-        gsap.from(el, { y: 36, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 94%', once: true } });
-      });
-      $$('.stage').forEach(st => {
-        gsap.from($('.rig', st), { y: 60, scale: 0.94, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: st, start: 'top 95%', once: true } });
-      });
-      gsap.to('.marq-t', { skewX: -6, ease: 'none', scrollTrigger: { trigger: '.marq', start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
-      // touch devices: scroll tilts the rigs instead of the pointer
-      if (!fine) {
-        $$('.stage').forEach(st => gsap.fromTo($('.rig', st), { rotationY: -14, rotationX: 4 }, {
-          rotationY: 14, rotationX: -4, ease: 'none', scrollTrigger: { trigger: st, start: 'top bottom', end: 'bottom top', scrub: 0.8 }
-        }));
-      }
-    }
-
-    // rail + active case
-    const railLinks = $$('.rail a');
-    $$('.case').forEach((c, i) => ScrollTrigger.create({
-      trigger: c, start: 'top 55%', end: 'bottom 55%',
-      onToggle: s => { if (s.isActive) railLinks.forEach((a, k) => a.classList.toggle('on', k === i)); }
-    }));
-    addEventListener('load', () => ScrollTrigger.refresh());
-  }
-
-  /* ---------- pointer: tilt rigs, glare, magnetic buttons, cursor ---------- */
-  if (fine && !reduce && hasGsap) {
-    $$('.stage').forEach(st => {
-      const rig = $('.rig', st);
-      const rx = gsap.quickTo(rig, 'rotationX', { duration: 0.9, ease: 'power3.out' });
-      const ry = gsap.quickTo(rig, 'rotationY', { duration: 0.9, ease: 'power3.out' });
-      st.addEventListener('pointermove', e => {
-        const r = st.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-        ry((x - 0.5) * -26); rx((y - 0.5) * 18);
-        $$('.glare', st).forEach(g => { g.style.setProperty('--gx', (x * 100).toFixed(0) + '%'); g.style.setProperty('--gy', (y * 100).toFixed(0) + '%'); });
-      });
-      st.addEventListener('pointerleave', () => { ry(0); rx(0); });
-    });
-    $$('.tilt').forEach(c => {
-      const rx = gsap.quickTo(c, 'rotationX', { duration: 0.6, ease: 'power3.out' });
-      const ry = gsap.quickTo(c, 'rotationY', { duration: 0.6, ease: 'power3.out' });
-      const g = $('.glare', c);
-      c.addEventListener('pointermove', e => {
-        const r = c.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-        ry((x - 0.5) * -14); rx((y - 0.5) * 10); g.style.setProperty('--gx', x * 100 + '%'); g.style.setProperty('--gy', y * 100 + '%');
-      });
-      c.addEventListener('pointerleave', () => { ry(0); rx(0); });
-    });
-    $$('[data-mag]').forEach(b => {
-      const mx = gsap.quickTo(b, 'x', { duration: 0.5, ease: 'power3.out' }), my = gsap.quickTo(b, 'y', { duration: 0.5, ease: 'power3.out' });
-      b.addEventListener('pointermove', e => { const r = b.getBoundingClientRect(); mx((e.clientX - r.left - r.width / 2) * 0.28); my((e.clientY - r.top - r.height / 2) * 0.35); });
-      b.addEventListener('pointerleave', () => { mx(0); my(0); });
-    });
-    const cur = $('#cur'), label = $('#cur-t');
-    const cx = gsap.quickTo(cur, 'x', { duration: 0.35, ease: 'power3.out' }), cy = gsap.quickTo(cur, 'y', { duration: 0.35, ease: 'power3.out' });
-    addEventListener('pointermove', e => { cx(e.clientX); cy(e.clientY); }, { passive: true });
-    document.addEventListener('pointerover', e => {
-      const st = e.target.closest('[data-cursor]');
-      const hv = e.target.closest('a, button');
-      cur.classList.toggle('big', !!st && !hv); cur.classList.toggle('hov', !!hv);
-      label.textContent = st && !hv ? st.dataset.cursor : '';
-    });
-  }
-
-  /* ---------- copy email ---------- */
-  const copyBtn = $('#copy');
-  copyBtn.addEventListener('click', async () => {
-    const txt = $('#mail').textContent.trim();
-    const done = () => { copyBtn.textContent = 'הועתק'; setTimeout(() => copyBtn.textContent = 'העתק כתובת', 1800); };
-    try { await navigator.clipboard.writeText(txt); done(); }
-    catch (e) {
-      const r = document.createRange(); r.selectNodeContents($('#mail'));
-      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
-    }
-  });
-
-  /* ---------- live candlestick demo (prototype practice screen) ---------- */
-  (function candles() {
-    const cv = $('#candles'); if (!cv) return;
-    const ctx = cv.getContext('2d');
-    let W = 0, H = 0, D = 1;
-    function size() { const r = cv.getBoundingClientRect(); D = Math.min(devicePixelRatio || 1, 2); W = cv.width = Math.max(1, Math.round(r.width * D)); H = cv.height = Math.max(1, Math.round(r.height * D)); }
-    size(); addEventListener('resize', size);
+  /* ---------- candlestick demo (shared by hero phone, case 05 and the carousel card) ---------- */
+  const drawCandles = (() => {
     let seed = 11; const rnd = () => (seed = seed * 16807 % 2147483647) / 2147483647;
     const N = 30, data = []; let p = 100;
     for (let i = 0; i < N; i++) {
       const o = p, c = o + (rnd() - 0.47) * 5 + (i > 16 ? 2.1 : 0) - (i > 8 && i < 14 ? 1.4 : 0);
       data.push({ o, c, h: Math.max(o, c) + rnd() * 2.6, l: Math.min(o, c) - rnd() * 2.6 }); p = c;
     }
-    const entryI = 14, entry = data[entryI].c, stop = entry - 7, target = entry + 15;
+    const entry = data[14].c, stop = entry - 7, target = entry + 15;
     const lo = Math.min(stop, ...data.map(d => d.l)) - 3, hi = Math.max(target, ...data.map(d => d.h)) + 4;
     const up = '#34d399', dn = '#f87171', blue = '#8f9bff';
-    const y = v => H * 0.2 + (1 - (v - lo) / (hi - lo)) * H * 0.62;
-    function draw(prog) {
-      ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = '#0c1020'; ctx.fillRect(0, 0, W, H);
+    return function (ctx, W, H, D, prog) {
+      const y = v => H * 0.2 + (1 - (v - lo) / (hi - lo)) * H * 0.62;
+      ctx.clearRect(0, 0, W, H); ctx.fillStyle = '#0c1020'; ctx.fillRect(0, 0, W, H);
       ctx.fillStyle = 'rgba(255,255,255,.9)'; ctx.font = `600 ${15 * D}px Rubik, sans-serif`; ctx.textAlign = 'right';
       ctx.fillText('תרגול · מקרה היסטורי', W - 18 * D, 44 * D);
-      ctx.fillStyle = 'rgba(255,255,255,.45)'; ctx.font = `400 ${11 * D}px Rubik, sans-serif`;
-      ctx.fillText('סמנו כניסה, סטופ ויעד', W - 18 * D, 62 * D);
+      ctx.fillStyle = 'rgba(255,255,255,.45)'; ctx.font = `400 ${11 * D}px Rubik, sans-serif`; ctx.fillText('סמנו כניסה, סטופ ויעד', W - 18 * D, 62 * D);
       ctx.strokeStyle = 'rgba(255,255,255,.06)'; ctx.lineWidth = D;
       for (let i = 0; i < 6; i++) { const gy = H * 0.2 + i * H * 0.124; ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke(); }
-      const cw = (W - 28 * D) / N, shown = Math.floor(prog * N);
-      const lines = [[target, up, 'יעד'], [entry, blue, 'כניסה'], [stop, dn, 'סטופ']];
-      const lineP = Math.min(Math.max((prog - 0.4) / 0.2, 0), 1);
-      lines.forEach(([v, col, name]) => {
+      const cw = (W - 28 * D) / N, shown = Math.floor(prog * N), lineP = Math.min(Math.max((prog - 0.4) / 0.2, 0), 1);
+      [[target, up, 'יעד'], [entry, blue, 'כניסה'], [stop, dn, 'סטופ']].forEach(([v, col, name]) => {
         ctx.save(); ctx.globalAlpha = lineP; ctx.strokeStyle = col; ctx.lineWidth = 1.4 * D; ctx.setLineDash([6 * D, 5 * D]);
         ctx.beginPath(); ctx.moveTo(14 * D, y(v)); ctx.lineTo(14 * D + (W - 28 * D) * lineP, y(v)); ctx.stroke(); ctx.setLineDash([]);
         ctx.fillStyle = col; ctx.font = `500 ${10.5 * D}px Rubik, sans-serif`; ctx.textAlign = 'left'; ctx.fillText(name, 18 * D, y(v) - 5 * D); ctx.restore();
       });
       for (let i = 0; i <= shown && i < N; i++) {
-        const d = data[i];
-        const px = W - 14 * D - (i + 0.5) * cw, col = d.c >= d.o ? up : dn;
+        const d = data[i], px = W - 14 * D - (i + 0.5) * cw, col = d.c >= d.o ? up : dn;
         ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = Math.max(1, D);
         ctx.beginPath(); ctx.moveTo(px, y(d.h)); ctx.lineTo(px, y(d.l)); ctx.stroke();
-        const top = y(Math.max(d.o, d.c)), bh = Math.max(2 * D, Math.abs(y(d.o) - y(d.c)));
-        ctx.fillRect(px - cw * 0.3, top, cw * 0.6, bh);
+        ctx.fillRect(px - cw * 0.3, y(Math.max(d.o, d.c)), cw * 0.6, Math.max(2 * D, Math.abs(y(d.o) - y(d.c))));
       }
       if (prog > 0.9) {
-        const a = Math.min((prog - 0.9) / 0.08, 1);
-        ctx.save(); ctx.globalAlpha = a;
-        const bx = 24 * D, bw = W - 48 * D, by = H - 128 * D, bh = 78 * D, r = 18 * D;
-        ctx.fillStyle = 'rgba(52,211,153,.16)'; ctx.strokeStyle = up; ctx.lineWidth = 1.4 * D;
-        ctx.beginPath(); ctx.roundRect ? ctx.roundRect(bx, by - (1 - a) * 10 * D, bw, bh, r) : ctx.rect(bx, by, bw, bh); ctx.fill(); ctx.stroke();
-        ctx.fillStyle = up; ctx.textAlign = 'center'; ctx.font = `600 ${26 * D}px Rubik, sans-serif`; ctx.fillText('★ ★ ★', W / 2, by + 36 * D - (1 - a) * 10 * D);
-        ctx.fillStyle = '#fff'; ctx.font = `500 ${13 * D}px Rubik, sans-serif`; ctx.fillText('מעולה! פגעתם ביעד', W / 2, by + 60 * D - (1 - a) * 10 * D);
-        ctx.restore();
+        const a = Math.min((prog - 0.9) / 0.08, 1), bx = 24 * D, bw = W - 48 * D, by = H - 128 * D - (1 - a) * 10 * D, bh = 78 * D;
+        ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = 'rgba(52,211,153,.16)'; ctx.strokeStyle = up; ctx.lineWidth = 1.4 * D;
+        ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(bx, by, bw, bh, 18 * D); else ctx.rect(bx, by, bw, bh); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = up; ctx.textAlign = 'center'; ctx.font = `600 ${26 * D}px Rubik, sans-serif`; ctx.fillText('★ ★ ★', W / 2, by + 36 * D);
+        ctx.fillStyle = '#fff'; ctx.font = `500 ${13 * D}px Rubik, sans-serif`; ctx.fillText('מעולה! פגעתם ביעד', W / 2, by + 60 * D); ctx.restore();
       }
-      ctx.fillStyle = 'rgba(255,255,255,.08)'; const bx = 24 * D, bwd = W - 48 * D, byy = H - 36 * D;
-      ctx.beginPath(); ctx.rect(bx, byy - 14 * D, bwd, 30 * D); ctx.fill();
-      ctx.fillStyle = 'rgba(255,255,255,.7)'; ctx.font = `500 ${12 * D}px Rubik, sans-serif`; ctx.textAlign = 'center'; ctx.fillText('הרץ את הגרף', W / 2, byy + 6 * D);
-    }
-    if (reduce) { draw(1); return; }
-    let visible = false; new IntersectionObserver(es => { visible = es[0].isIntersecting; }, { threshold: 0.1 }).observe(cv);
-    const T = 11000; let st = performance.now();
+      ctx.fillStyle = 'rgba(255,255,255,.08)'; ctx.fillRect(24 * D, H - 50 * D, W - 48 * D, 30 * D);
+      ctx.fillStyle = 'rgba(255,255,255,.7)'; ctx.font = `500 ${12 * D}px Rubik, sans-serif`; ctx.textAlign = 'center'; ctx.fillText('הרץ את הגרף', W / 2, H - 30 * D);
+    };
+  })();
+  function runCandles(cv) {
+    const ctx = cv.getContext('2d'); let W = 0, H = 0, D = 1, visible = false;
+    function size() { D = Math.min(devicePixelRatio || 1, 2); W = cv.width = Math.max(2, Math.round((cv.offsetWidth || 240) * D)); H = cv.height = Math.max(2, Math.round((cv.offsetHeight || 520) * D)); }
+    size(); addEventListener('resize', size);
+    if (reduce) { drawCandles(ctx, W, H, D, 1); return; }
+    new IntersectionObserver(es => { visible = es[0].isIntersecting; }, { threshold: 0.05 }).observe(cv);
+    const T = 11000, st = performance.now();
     (function loop(now) {
-      if (visible) { const t = ((now - st) % T) / T; draw(Math.min(t / 0.82, 1)); }
+      if (visible && cv.classList.contains('on')) { if (cv.width < 10 || cv.width !== Math.round(cv.offsetWidth * D)) size(); drawCandles(ctx, W, H, D, Math.min((((now - st) % T) / T) / 0.82, 1)); }
       requestAnimationFrame(loop);
     })(st);
+  }
+  $$('.candles-cv').forEach(runCandles);
+  // static candle picture for the carousel card
+  function candleCardImage() {
+    const c = document.createElement('canvas'); c.width = 390; c.height = 844;
+    drawCandles(c.getContext('2d'), 390, 844, 1, 1); return c.toDataURL('image/jpeg', 0.85);
+  }
+  P[4].img = candleCardImage();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { P[4].img = candleCardImage(); renderCards(); });
+
+  /* ---------- carousel + hero phone ---------- */
+  const cardsEl = $('#cards');
+  function renderCards() {
+    const a = P[cur], bi = (cur + 1) % P.length, b = P[bi];
+    cardsEl.innerHTML = [[a, cur], [b, bi]].map(([p, i], k) =>
+      `<button class="card${k === 0 ? ' active' : ''}" data-i="${i}" type="button"><img src="${p.img}" alt="${p.name}"><span class="card-info"><span>${p.name}</span><span>${p.cat}</span></span></button>`).join('');
+  }
+  renderCards();
+  cardsEl.addEventListener('click', e => {
+    const c = e.target.closest('.card'); if (!c) return;
+    const i = +c.dataset.i;
+    if (i === cur) { const t = $('#p' + (i + 1)); if (t) t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); return; }
+    select(i);
+  });
+  $('#next').addEventListener('click', () => select((cur + 1) % P.length));
+  $('#prev').addEventListener('click', () => select((cur - 1 + P.length) % P.length));
+
+  const screens = $$('#hp-screen > img, #hp-screen > canvas');
+  function showScreen(i) { screens.forEach((s, k) => s.classList.toggle('on', k === i)); }
+  function setCaption(p, i) {
+    $('#cap-tag').textContent = p.tag; $('#cap-name').textContent = p.name; $('#hero-cap').setAttribute('href', '#p' + (i + 1));
+    $('#hero-center').style.setProperty('--c', p.c);
+  }
+
+  /* ---------- 3D fruit (procedural stand-ins for the cherry / blueberry / leaf models) ---------- */
+  const hero = $('#hero-content');
+  const GL = (() => {
+    if (!window.THREE) return null;
+    function setup(canvas) {
+      let renderer;
+      try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true }); } catch (e) { return null; }
+      renderer.setClearColor(0x000000, 0);
+      const scene = new THREE.Scene();
+      const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, -3000, 3000);
+      // soft studio reflections so the glossy skins catch light
+      const envScene = new THREE.Scene();
+      envScene.add(new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), new THREE.MeshBasicMaterial({ color: 0x1c2433, side: THREE.BackSide })));
+      const panel = (c, x, y, z, w, h) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: c, side: THREE.DoubleSide })); m.position.set(x, y, z); m.lookAt(0, 0, 0); envScene.add(m); };
+      panel(0xffffff, -6, 7, 6, 8, 5); panel(0xffd7b0, 8, 1, 4, 3, 7); panel(0xa9c9ff, -2, -7, 5, 9, 2);
+      const pm = new THREE.PMREMGenerator(renderer);
+      scene.environment = pm.fromScene(envScene, 0.03).texture;
+      scene.add(new THREE.HemisphereLight(0xffffff, 0x223344, 0.55));
+      const key = new THREE.DirectionalLight(0xfff1e0, 1.15); key.position.set(-300, 500, 800); scene.add(key);
+      const rim = new THREE.DirectionalLight(0x9fd2ff, 0.5); rim.position.set(500, -100, -300); scene.add(rim);
+      return { renderer, scene, cam, w: 1, h: 1 };
+    }
+    const bg = setup($('#gl-bg')), fg = setup($('#gl-fg'));
+    if (!bg || !fg) return null;
+
+    const mats = (g, base) => { const arr = []; g.traverse(o => { if (o.material) { o.material.transparent = true; arr.push([o.material, base]); } }); return arr; };
+    const tube = (a, b, c, r, mat) => new THREE.Mesh(new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(...a), new THREE.Vector3(...b), new THREE.Vector3(...c)), 20, r, 8), mat);
+    function cherry() {
+      const g = new THREE.Group();
+      const red = new THREE.MeshPhysicalMaterial({ color: 0xc8102e, roughness: 0.3, clearcoat: 1, clearcoatRoughness: 0.06, envMapIntensity: 1.2 });
+      const stem = new THREE.MeshStandardMaterial({ color: 0x5f7f2c, roughness: 0.6 });
+      const sph = new THREE.SphereGeometry(0.55, 40, 28);
+      const a = new THREE.Mesh(sph, red); a.position.set(-0.62, -0.5, 0); a.scale.y = 0.94;
+      const b = new THREE.Mesh(sph, red); b.position.set(0.58, -0.62, 0.1); b.scale.set(0.97, 0.9, 0.97);
+      g.add(a, b, tube([-0.62, 0.4, 0], [-0.55, 1.0, 0], [0.02, 1.45, 0], 0.035, stem), tube([0.58, 0.3, 0.1], [0.45, 1.0, 0.05], [0.02, 1.45, 0], 0.035, stem), tube([0.02, 1.45, 0], [0.1, 1.75, 0], [0.28, 1.98, 0], 0.04, stem));
+      g.position.y = -0.2; const w = new THREE.Group(); w.add(g); return w;
+    }
+    function blueberries() {
+      const g = new THREE.Group();
+      const m = new THREE.MeshPhysicalMaterial({ color: 0x2f45c9, roughness: 0.42, clearcoat: 0.7, clearcoatRoughness: 0.25 });
+      const dark = new THREE.MeshStandardMaterial({ color: 0x141a52, roughness: 0.7 });
+      [[-0.55, -0.3, 0, 0.62], [0.55, -0.4, 0.1, 0.7], [0, 0.55, -0.1, 0.5]].forEach(([x, y, z, r]) => {
+        const b = new THREE.Mesh(new THREE.SphereGeometry(r, 36, 26), m); b.position.set(x, y, z);
+        const crown = new THREE.Mesh(new THREE.TorusGeometry(r * 0.26, r * 0.07, 8, 5), dark); crown.position.set(x, y + r * 0.92, z); crown.rotation.x = Math.PI / 2;
+        g.add(b, crown);
+      });
+      const w = new THREE.Group(); w.add(g); return w;
+    }
+    function leaf() {
+      const s = new THREE.Shape(); s.moveTo(0, 0); s.bezierCurveTo(0.55, 0.3, 0.62, 1.15, 0, 2); s.bezierCurveTo(-0.62, 1.15, -0.55, 0.3, 0, 0);
+      const geo = new THREE.ExtrudeGeometry(s, { depth: 0.03, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.03, bevelSegments: 2, curveSegments: 24 });
+      const p = geo.attributes.position; for (let i = 0; i < p.count; i++) { const x = p.getX(i), y = p.getY(i); p.setZ(i, p.getZ(i) + x * x * 0.55 + y * 0.06 * y * 0.3); }
+      geo.computeVertexNormals(); geo.translate(0, -1, 0);
+      const mat = new THREE.MeshStandardMaterial({ color: 0x2fa35e, roughness: 0.5, side: THREE.DoubleSide });
+      const g = new THREE.Group(); g.add(new THREE.Mesh(geo, mat));
+      g.add(tube([0, -1, 0.05], [0.03, 0, 0.1], [0, 0.95, 0.05], 0.018, new THREE.MeshStandardMaterial({ color: 0x1d7a45, roughness: 0.6 })));
+      return g;
+    }
+
+    const SPEC = [ // [scene, kind, left%, top%, size, opacity]
+      ['fg', 'b', 30, 25, 220, 1], ['fg', 'b', 42, 60, 100, 1], ['fg', 'b', 62, 30, 250, 1], ['fg', 'b', 48, 15, 140, 1], ['fg', 'b', 20, 75, 120, 1], ['fg', 'b', 75, 45, 180, 1],
+      ['bg', 'b', 40, 15, 80, 0.7], ['bg', 'b', 55, 50, 70, 0.6], ['bg', 'b', 35, 80, 75, 0.7]
+    ];
+    const LEAF = [[15, 10, 60, 1], [80, 40, 140, 0.4], [75, 70, 80, 1], [20, 85, 120, 0.3]];
+    const berries = SPEC.map(([sc, , l, t, size, op], i) => {
+      const S = sc === 'fg' ? fg : bg, ch = cherry(), bl = blueberries(), root = new THREE.Group();
+      root.add(ch, bl); bl.visible = false; S.scene.add(root);
+      const m = [...mats(ch, op), ...mats(bl, op)];
+      return { S, root, ch, bl, m, l, t, size, op, base: { x: 0, y: 0 }, r: { x: 0, y: 0 }, angle: Math.random() * 360, g: { x: 0, y: 0, rot: 0, s: 1, o: 1 }, kind: 'cherry', i };
+    });
+    const leaves = LEAF.map(([l, t, size, op], i) => { const g = leaf(); bg.scene.add(g); return { g, m: mats(g, op), l, t, size, op, i }; });
+
+    function resize() {
+      const r = hero.getBoundingClientRect(); const W = r.width + 160, H = r.height + 160;
+      [bg, fg].forEach(S => {
+        S.w = W; S.h = H; S.renderer.setPixelRatio(Math.min(devicePixelRatio || 1, innerWidth < 800 ? 1.25 : 1.5));
+        S.renderer.setSize(W, H, false);
+        S.cam.left = -W / 2; S.cam.right = W / 2; S.cam.top = H / 2; S.cam.bottom = -H / 2; S.cam.updateProjectionMatrix();
+      });
+      const k = Math.min(1, Math.max(0.5, r.width / 1400));
+      [...berries, ...leaves].forEach(b => {
+        b.px = r.width - (b.l / 100) * r.width - b.size * k / 2 - r.width / 2; // mirrored for RTL: world x of the home centre
+        b.py = r.height / 2 - (b.t / 100) * r.height - b.size * k / 2;
+        b.sc = (b.size * k) / (b.root ? 2.3 : 2.1);
+      });
+    }
+    resize(); addEventListener('resize', resize);
+    new ResizeObserver(resize).observe(hero);
+    return { bg, fg, berries, leaves, resize };
   })();
+
+  /* ---------- pointer + main loop ---------- */
+  const mouse = { x: 0, y: 0, px: -9999, py: -9999 }, cm = { x: 0, y: 0 };
+  addEventListener('pointermove', e => { mouse.x = e.clientX / innerWidth - 0.5; mouse.y = e.clientY / innerHeight - 0.5; mouse.px = e.clientX; mouse.py = e.clientY; }, { passive: true });
+  let heroVisible = true;
+  new IntersectionObserver(es => { heroVisible = es[0].isIntersecting; }, { rootMargin: '120px' }).observe($('.hero'));
+  const tilt = $('#hp-tilt'), fgEl = $('#gl-fg'), bgEl = $('#gl-bg');
+  const DUR = [5, 7, 6, 8, 5.5, 6.5, 9, 11, 10];
+  const rad = Math.PI / 180;
+
+  function frame() {
+    const time = Date.now() * 0.001;
+    cm.x += (mouse.x - cm.x) * 0.05; cm.y += (mouse.y - cm.y) * 0.05;
+    if (heroVisible) {
+      if (!reduce) tilt.style.transform = `rotateY(${-cm.x * 34 + switchSpin}deg) rotateX(${-cm.y * 20}deg)`;
+      fgEl.style.transform = `translate(${cm.x * 60}px, ${cm.y * 60}px)`;
+      bgEl.style.transform = `translate(${cm.x * -30}px, ${cm.y * -30}px)`;
+      if (GL) {
+        const rf = fgEl.getBoundingClientRect(), rb = bgEl.getBoundingClientRect();
+        GL.berries.forEach((b, i) => {
+          const S = b.S, r = S === GL.fg ? rf : rb;
+          const phase = (time + i * 0.7) * (Math.PI * 2 / DUR[i % 9]);
+          const floatY = Math.sin(phase) * 15, floatA = Math.cos(phase) * 6;
+          let x, y, rot, sc = 1, op = b.op;
+          if (isSwitching) {
+            x = b.px + b.g.x; y = b.py - b.g.y; rot = b.g.rot; sc = b.g.s; op = b.op * b.g.o;
+          } else {
+            const wx = b.px + b.base.x + b.r.x, wy = b.py - b.base.y - b.r.y - floatY;
+            const dx = mouse.px - (r.left + S.w / 2 + wx), dy = mouse.py - (r.top + S.h / 2 - wy);
+            const dist = Math.hypot(dx, dy) || 1; let tx = 0, ty = 0, sm = 1;
+            if (dist < 400 && !reduce) { const f = (400 - dist) / 400; tx = (dx / dist) * f * -80; ty = (dy / dist) * f * -80; sm = 1 + f * 5; }
+            b.r.x += (tx - b.r.x) * 0.1; b.r.y += (ty - b.r.y) * 0.1; if (!reduce) b.angle += 0.2 * sm;
+            x = b.px + b.base.x + b.r.x; y = b.py - b.base.y - b.r.y - floatY; rot = b.angle;
+          }
+          b.root.position.set(x, y, 0); b.root.scale.setScalar(Math.max(b.sc * sc, 0.001));
+          b.root.rotation.set(0.28, rot * rad * 0.9, floatA * rad);
+          b.m.forEach(([m, base]) => { m.opacity = op; });
+        });
+        GL.leaves.forEach((l, i) => {
+          const dur = 10 + i * 2, phase = (time + i * 1.2) * (Math.PI * 2 / dur);
+          l.g.position.set(l.px + Math.cos(phase * 0.5) * 15, l.py - Math.sin(phase) * 20, -100);
+          l.g.scale.setScalar(l.sc); l.g.rotation.set(0.4, i * 1.3 + time * 0.2, (Math.sin(phase * 0.3) * 15 + i * 40) * rad);
+          l.m.forEach(([m, base]) => { m.opacity = base; });
+        });
+        GL.bg.renderer.render(GL.bg.scene, GL.bg.cam); GL.fg.renderer.render(GL.fg.scene, GL.fg.cam);
+      }
+    }
+    if (!reduce) requestAnimationFrame(frame);
+  }
+  frame();
+  if (reduce) addEventListener('scroll', () => requestAnimationFrame(frame), { passive: true });
+
+  /* ---------- choreographed project switch ---------- */
+  function select(i) {
+    if (isSwitching || i === cur) return;
+    isSwitching = true; cur = i; const p = P[i];
+    heroTheme = p.theme; applyTheme(p.theme, 1.5);
+    renderCards(); setCaption(p, i);
+    if (!hasGsap || reduce) { showScreen(p.screen); isSwitching = false; return; }
+
+    const spin = { val: 0, blur: 0 }, phone = $('.phone.big');
+    gsap.to(spin, {
+      val: 360, blur: 15, duration: 0.6, ease: 'power2.in',
+      onUpdate: () => { switchSpin = spin.val; phone.style.filter = `blur(${spin.blur}px)`; },
+      onComplete: () => {
+        showScreen(p.screen);
+        gsap.to(spin, {
+          val: 720, blur: 0, duration: 1.5, ease: 'back.out(0.7)',
+          onUpdate: () => { switchSpin = spin.val; phone.style.filter = `blur(${spin.blur}px)`; },
+          onComplete: () => { switchSpin = 0; phone.style.filter = 'none'; }
+        });
+      }
+    });
+
+    if (!GL) { isSwitching = false; return; }
+    let done = 0;
+    GL.berries.forEach(b => {
+      const startAngle = b.angle, nx = (Math.random() - 0.5) * 200, ny = (Math.random() - 0.5) * 200;
+      b.g.x = b.base.x; b.g.y = b.base.y; b.g.rot = startAngle; b.g.s = 1; b.g.o = 1;
+      gsap.timeline()
+        .to(b.g, { x: -b.px, y: b.py, rot: startAngle + 45, s: 0.1, o: 0, duration: 0.5, ease: 'power2.in',
+          onComplete: () => { b.ch.visible = p.berry !== 'blue'; b.bl.visible = p.berry === 'blue'; } })
+        .to(b.g, { duration: 0.3 })
+        .to(b.g, { x: nx, y: ny, rot: startAngle + 90, s: 1, o: 1, duration: 0.9, ease: 'back.out(1.5)',
+          onComplete: () => {
+            b.angle = startAngle + 90; b.base.x = nx; b.base.y = ny; b.r.x = 0; b.r.y = 0;
+            if (++done === GL.berries.length) isSwitching = false;
+          } });
+    });
+  }
+
+  /* ---------- scroll: themes, nav, devices, reveals ---------- */
+  let heroTheme = 'hero';
+  // the hero starts on the first project's theme once the visitor interacts; initial look is the teal default
+  if (hasGsap && window.ScrollTrigger) {
+    gsap.to('#progress', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.2 } });
+    ScrollTrigger.create({ trigger: '.hero', start: 'top 60%', end: 'bottom 60%', onToggle: s => { if (s.isActive) { applyTheme(heroTheme === 'hero' ? 'hero' : heroTheme); setNav('top'); } } });
+    $$('.case').forEach(c => ScrollTrigger.create({ trigger: c, start: 'top 58%', end: 'bottom 58%', onToggle: s => { if (s.isActive) { applyTheme(c.dataset.theme); setNav('work'); } } }));
+    ScrollTrigger.create({ trigger: '#skills', start: 'top 60%', end: 'bottom 60%', onToggle: s => { if (s.isActive) { applyTheme('violet'); setNav('skills'); } } });
+    ScrollTrigger.create({ trigger: '#contact', start: 'top 70%', end: 'bottom bottom', onToggle: s => { if (s.isActive) { applyTheme('hero'); setNav('contact'); } } });
+
+    $$('img[data-scroll]').forEach(img => {
+      const screen = img.parentElement;
+      gsap.to(img, { y: () => -Math.max(0, img.offsetHeight - screen.offsetHeight), ease: 'none',
+        scrollTrigger: { trigger: screen.closest('.stage'), start: 'top 85%', end: 'bottom 15%', scrub: 0.7, invalidateOnRefresh: true } });
+    });
+    if (!reduce) {
+      $$('.case .copy > *, .work-head > *, .skills .wrap > *, .contact .wrap > *').forEach(el => {
+        gsap.from(el, { y: 36, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 94%', once: true } });
+      });
+      $$('.stage').forEach(st => gsap.from($('.rig', st), { y: 60, scale: 0.94, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: st, start: 'top 95%', once: true } }));
+      gsap.to('.marq-t', { skewX: -6, ease: 'none', scrollTrigger: { trigger: '.marq', start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
+      if (!fine) $$('.stage').forEach(st => gsap.fromTo($('.rig', st), { rotationY: -14, rotationX: 4 }, { rotationY: 14, rotationX: -4, ease: 'none', scrollTrigger: { trigger: st, start: 'top bottom', end: 'bottom top', scrub: 0.8 } }));
+    }
+    addEventListener('load', () => ScrollTrigger.refresh());
+  }
+  function setNav(k) { $$('.nav-item').forEach(a => a.classList.toggle('active', a.dataset.sec === k)); }
+
+  /* ---------- pointer tilt on device rigs and skill cards ---------- */
+  if (fine && !reduce && hasGsap) {
+    $$('.stage').forEach(st => {
+      const rig = $('.rig', st);
+      const rx = gsap.quickTo(rig, 'rotationX', { duration: 0.9, ease: 'power3.out' }), ry = gsap.quickTo(rig, 'rotationY', { duration: 0.9, ease: 'power3.out' });
+      st.addEventListener('pointermove', e => {
+        const r = st.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        ry((x - 0.5) * -26); rx((y - 0.5) * 18);
+        $$('.glare', st).forEach(g => { g.style.setProperty('--gx', (x * 100).toFixed(0) + '%'); g.style.setProperty('--gy', (y * 100).toFixed(0) + '%'); });
+      });
+      st.addEventListener('pointerleave', () => { ry(0); rx(0); });
+    });
+    $$('.tilt').forEach(c => {
+      const rx = gsap.quickTo(c, 'rotationX', { duration: 0.6, ease: 'power3.out' }), ry = gsap.quickTo(c, 'rotationY', { duration: 0.6, ease: 'power3.out' }), g = $('.glare', c);
+      c.addEventListener('pointermove', e => { const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height; ry((x - 0.5) * -14); rx((y - 0.5) * 10); g.style.setProperty('--gx', x * 100 + '%'); g.style.setProperty('--gy', y * 100 + '%'); });
+      c.addEventListener('pointerleave', () => { ry(0); rx(0); });
+    });
+  }
+
+  /* ---------- copy email ---------- */
+  $('#copy').addEventListener('click', async () => {
+    const t = $('#copy-t'), txt = $('#mail').textContent.trim();
+    try { await navigator.clipboard.writeText(txt); t.textContent = 'הועתק'; setTimeout(() => t.textContent = 'העתק כתובת', 1800); }
+    catch (e) { const r = document.createRange(); r.selectNodeContents($('#mail')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+  });
+  setCaption(P[0], 0);
 })();
 </script>
 </body></html>
