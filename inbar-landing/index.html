@@ -14,130 +14,171 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;500;900&family=Heebo:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=Frank+Ruhl+Libre:wght@300;500;900&family=Heebo:wght@300;400;500&display=swap" rel="stylesheet">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Course","name":"קורס מעשי לקוסמטיקאיות","description":"3 מפגשים מעשיים: מיינדסט וחזון עסקי, מקצועיות מעשית, מכשור מכירות ושיווק.","provider":{"@type":"Person","name":"ענבר בן אדרת"},"inLanguage":"he"}</script>
 
 <style>
-/* Concept: ליל יער. ירוק עמוק כמעט שחור, זהב שמפניה כאור, בקבוק אחד חי שנפתח בכניסה ונשאר איתך לאורך הדף */
+/* Concept: ליל יער ובקבוק אחד חי. הבקבוק נוחת בכל פרק, מסתובב ומחליף תווית. הרקע משנה גוון בין הפרקים, ולסירוגין יש "דפי קרם" נקיים */
 :root{direction:rtl}
 :root{
-  --ink0:#06100A; --ink1:#0A1710; --ink2:#102017; --moss:#1D3A29; --moss2:#2B5238;
-  --leaf:#6BAA75; --gold:#C9A96E; --gold-hi:#E6D09C; --cream:#F2EBDC; --cream2:#BFC8BA;
-  --paper:#F2EBDC; --paper-ink:#16241C; --paper-ink2:#44554A;
-  --serif:'Frank Ruhl Libre',Georgia,serif; --sans:'Heebo',system-ui,sans-serif;
+  --ink0:#06100A; --ink1:#0A1710; --ink2:#102017;
+  --leaf:#6BAA75; --gold:#C9A96E; --gold-hi:#E6D09C; --cream:#F2EBDC; --cream2:#C5CEC0;
+  --paper:#F4EEE0; --paper-ink:#16241C; --paper-ink2:#44554A; --paper-gold:#765719;
+  --serif:'Frank Ruhl Libre',Georgia,serif; --sans:'Heebo',system-ui,sans-serif; --lat:'Cormorant Garamond',Georgia,serif;
   --r:10px; --rs:6px; --pad:22px; --max:1180px;
-  --glass:linear-gradient(160deg,rgba(242,235,220,.075),rgba(242,235,220,.02));
-  --line:rgba(201,169,110,.3);
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%;overflow-x:clip}
-html.intro-lock,html.intro-lock body{overflow:hidden;height:100%}
-body{font:300 17px/1.75 var(--sans);color:var(--cream);background:var(--ink0);overflow-x:hidden;padding-bottom:88px;position:relative}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;overflow-x:hidden;scroll-behavior:smooth;scroll-padding-top:76px}
+html.intro-lock{overflow:hidden;height:100%}
+html.intro-lock body{overflow:hidden;height:100%}
+body{--bg-inner:rgb(31,82,56);--bg-mid:rgb(14,38,25);--bg-outer:rgb(4,13,8);
+  /* צבעי טקסט ורכיבים לפי ערכת הפרק */
+  --fg:var(--cream);--fg2:var(--cream2);--acc:var(--gold-hi);--gl:var(--gold);--line:rgba(201,169,110,.3);--dotbg:var(--ink1);
+  --glassbg:linear-gradient(160deg,rgba(242,235,220,.08),rgba(242,235,220,.02));--glassfx:none;
+  font:300 17px/1.75 var(--sans);color:var(--fg);background:var(--ink0);overflow-x:clip;padding-bottom:88px;position:relative}
+.t-cream{--fg:var(--paper-ink);--fg2:var(--paper-ink2);--acc:var(--paper-gold);--gl:#a78542;--line:rgba(122,90,29,.32);--dotbg:var(--paper);
+  --glassbg:linear-gradient(160deg,rgba(255,255,255,.85),rgba(255,255,255,.5));--glassfx:0 18px 40px -26px rgba(22,36,28,.45);color:var(--fg)}
 img{max-width:100%;display:block}
 a{color:inherit}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px;border-radius:4px}
+.t-cream :focus-visible{outline-color:#7a5a1d}
 ::selection{background:var(--gold);color:var(--ink0)}
-.skip{position:absolute;inset-inline-start:12px;top:-70px;background:var(--gold);color:var(--ink0);padding:10px 16px;z-index:200;border-radius:var(--rs)}
-.skip:focus{top:10px}
-body::after{content:"";position:fixed;inset:0;z-index:150;pointer-events:none;opacity:.09;mix-blend-mode:overlay;
+.skip{position:absolute;inset-inline-start:12px;top:-70px;background:var(--gold);color:var(--ink0);padding:10px 16px;z-index:400;border-radius:var(--rs)}
+.skip:focus{top:calc(10px + env(safe-area-inset-top,0px))}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+body::after{content:"";position:fixed;inset:0;z-index:150;pointer-events:none;opacity:.08;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
 
-/* atmosphere */
-.atmos{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(120% 70% at 50% -10%,#14301f 0%,var(--ink0) 62%)}
+/* רקע חי: מחליף גוון בין הפרקים */
+.atmos{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:radial-gradient(circle at 50% 38%,var(--bg-inner) 0%,var(--bg-mid) 52%,var(--bg-outer) 100%)}
 .atmos i{position:absolute;border-radius:50%;filter:blur(60px);will-change:transform}
-.atmos .m1{width:110vmax;height:70vmax;left:-45vmax;top:12vh;background:radial-gradient(closest-side,rgba(43,82,56,.55),transparent);animation:drift 26s ease-in-out infinite alternate}
-.atmos .m2{width:90vmax;height:60vmax;right:-50vmax;top:55vh;background:radial-gradient(closest-side,rgba(201,169,110,.13),transparent);animation:drift 32s ease-in-out infinite alternate-reverse}
+.atmos .m1{width:110vmax;height:70vmax;left:-45vmax;top:12vh;background:radial-gradient(closest-side,rgba(60,110,76,.4),transparent);animation:drift 26s ease-in-out infinite alternate}
+.atmos .m2{width:90vmax;height:60vmax;right:-50vmax;top:55vh;background:radial-gradient(closest-side,rgba(201,169,110,.12),transparent);animation:drift 32s ease-in-out infinite alternate-reverse}
 @keyframes drift{to{transform:translate3d(14vmax,-8vmax,0) scale(1.15)}}
-.fern{position:absolute;pointer-events:none;color:#1d4029;z-index:0;transform-origin:50% 100%;animation:sway 9s ease-in-out infinite alternate}
+.deco{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.fern{position:absolute;color:#1d4029;transform-origin:50% 100%;animation:sway 9s ease-in-out infinite alternate}
 .fern svg{width:100%;height:auto;display:block;overflow:visible}
 @keyframes sway{from{transform:rotate(-2.5deg)}to{transform:rotate(3deg)}}
 
-.wrap{width:100%;max-width:var(--max);margin-inline:auto;padding-inline:var(--pad);position:relative;z-index:2}
-section{position:relative;padding-block:84px;z-index:1}
-h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.12;text-wrap:balance}
-h2{font-size:clamp(32px,8.6vw,58px);color:var(--cream)}
-h2 strong,h1 strong{font-weight:900;color:var(--gold-hi)}
-.eyebrow{display:flex;align-items:center;gap:10px;font-size:14px;letter-spacing:.08em;color:var(--gold-hi);font-weight:500;margin-bottom:18px}
-.eyebrow::before{content:"";width:26px;height:1px;background:var(--gold)}
-.sub{color:var(--cream2)}
-.lead{max-width:34em}
+.progress{position:fixed;top:0;inset-inline:0;height:3px;z-index:320;transform-origin:right center;transform:scaleX(0);background:linear-gradient(90deg,var(--gold),var(--gold-hi))}
 
-/* word split reveal */
+.wrap{width:100%;max-width:var(--max);margin-inline:auto;padding-left:max(var(--pad),env(safe-area-inset-left,0px));padding-right:max(var(--pad),env(safe-area-inset-right,0px));position:relative;z-index:2}
+section{position:relative;padding-block:84px;z-index:1}
+.sheet{margin:12px 10px;border-radius:16px;background:var(--paper);box-shadow:0 40px 90px -40px #000,0 0 0 1px rgba(201,169,110,.25)}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.12;text-wrap:balance}
+h2{font-size:clamp(32px,8.6vw,58px);color:var(--fg)}
+h2 strong,h1 strong{font-weight:900;color:var(--acc)}
+.eyebrow{display:flex;align-items:center;gap:10px;font-size:14px;letter-spacing:.08em;color:var(--acc);font-weight:500;margin-bottom:18px}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--gl)}
+.sub{color:var(--fg2)}
+.lead{max-width:34em}
 .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em;margin-bottom:-.14em}
 .w>i{display:inline-block;font-style:normal}
-
-/* diamond divider */
 .divider{display:flex;align-items:center;gap:14px;max-width:240px;margin:26px 0 38px}
-.divider::before,.divider::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gl))}
 .divider::after{transform:scaleX(-1)}
-.divider i{width:8px;height:8px;background:var(--gold);transform:rotate(45deg);flex:none}
+.divider i{width:8px;height:8px;background:var(--gl);transform:rotate(45deg);flex:none}
 .divider.c{margin-inline:auto}
-
-/* glass */
-.glass{position:relative;background:var(--glass);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
-.glass::before{content:"";position:absolute;inset:0;background:radial-gradient(260px circle at var(--mx,50%) var(--my,0%),rgba(230,208,156,.14),transparent 70%);opacity:0;transition:opacity .3s;pointer-events:none}
+.glass{position:relative;background:var(--glassbg);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--glassfx)}
+.glass::before{content:"";position:absolute;inset:0;background:radial-gradient(260px circle at var(--mx,50%) var(--my,0%),rgba(230,208,156,.16),transparent 70%);opacity:0;transition:opacity .3s;pointer-events:none}
 .glass:hover::before{opacity:1}
 
-/* buttons */
+/* כפתורים */
 .btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:15px 32px;border-radius:var(--r);
   background:linear-gradient(135deg,#EFDDAE,#C9A96E 58%,#B48F4C);color:var(--ink0);font-weight:500;font-size:17px;text-decoration:none;
-  box-shadow:0 10px 34px -10px rgba(201,169,110,.55),inset 0 1px 0 rgba(255,255,255,.45);transition:transform .3s,box-shadow .3s;will-change:transform}
+  box-shadow:0 10px 34px -10px rgba(201,169,110,.6),inset 0 1px 0 rgba(255,255,255,.45);transition:transform .3s,box-shadow .3s;will-change:transform}
 .btn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(120%);animation:shine 6s 2s infinite}
 @keyframes shine{0%,70%{transform:translateX(120%)}100%{transform:translateX(-120%)}}
-.btn:hover{box-shadow:0 16px 40px -10px rgba(201,169,110,.7),inset 0 1px 0 rgba(255,255,255,.5)}
+.btn:hover{box-shadow:0 16px 40px -10px rgba(201,169,110,.75),inset 0 1px 0 rgba(255,255,255,.5)}
 .btn.block{width:100%}
 .btn-wa{background:transparent;color:var(--cream);border:1px solid var(--gold);box-shadow:none}
 .btn-wa::after{display:none}
 .btn-wa:hover{background:rgba(201,169,110,.1);box-shadow:none}
 
-/* ===== intro ===== */
-.intro{position:fixed;inset:0;z-index:25;display:none;background:radial-gradient(90% 60% at 50% 40%,#10281a 0%,#050c08 75%)}
+/* כותרת עליונה ותפריט */
+.header{position:fixed;top:0;inset-inline:0;z-index:300;padding:calc(14px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-left,0px)) 12px max(16px,env(safe-area-inset-right,0px));display:flex;justify-content:space-between;align-items:center;gap:12px;transition:background .4s,padding .4s,box-shadow .4s,transform .5s}
+.header.scrolled{background:rgba(5,14,9,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding-top:calc(8px + env(safe-area-inset-top,0px));padding-bottom:8px;box-shadow:0 1px 0 rgba(201,169,110,.25)}
+.intro-lock .header{transform:translateY(-110%)}
+.logo{display:flex;align-items:center;gap:10px;font:300 17px var(--lat);letter-spacing:.5em;color:var(--gold-hi);text-decoration:none;padding-inline-start:.4em}
+.logo svg{width:22px;height:22px;stroke:var(--gold-hi);fill:none;stroke-width:1.5;stroke-linecap:round}
+.nav{display:none;gap:4px;padding:5px;border-radius:var(--r)}
+.nav a{color:var(--cream2);font-size:15px;padding:7px 16px;border-radius:7px;text-decoration:none;transition:all .3s}
+.nav a:hover,.nav a.active{background:var(--gold);color:var(--ink0)}
+.hbtn{display:none;font-size:15px;padding:10px 20px;min-height:0}
+.burger{width:46px;height:46px;border-radius:var(--r);display:grid;place-items:center;background:rgba(242,235,220,.08);border:1px solid var(--line)}
+.burger span,.burger span::before{display:block;width:20px;height:2px;background:var(--cream);border-radius:2px;position:relative;transition:transform .3s}
+.burger span::before{content:"";position:absolute;top:6px}
+.burger[aria-expanded="true"] span{transform:translateY(3px) rotate(45deg)}
+.burger[aria-expanded="true"] span::before{top:0;transform:rotate(-90deg)}
+.menu{position:fixed;inset:0;z-index:290;display:none;flex-direction:column;justify-content:center;gap:6px;padding:96px 28px 40px;background:rgba(4,12,8,.94);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+.menu.open{display:flex}
+.menu a{font-family:var(--serif);font-weight:500;font-size:clamp(34px,11vw,56px);line-height:1.25;color:var(--cream);text-decoration:none;border-bottom:1px solid rgba(201,169,110,.2);padding-block:8px}
+.menu a:hover{color:var(--gold-hi)}
+
+/* פתיחת הבקבוק */
+.intro{position:fixed;inset:0;z-index:25;display:none;background:radial-gradient(90% 60% at 50% 40%,#10281a 0%,#040a06 78%);overflow:hidden}
 .intro-lock .intro{display:block}
-.intro-title{position:absolute;inset-inline:0;bottom:10vh;text-align:center;opacity:0;transform:translateY(14px)}
+.intro-word{position:absolute;inset-inline:0;top:50%;transform:translateY(-62%);text-align:center;font:300 italic clamp(120px,40vw,420px)/1 var(--lat);color:transparent;-webkit-text-stroke:1px rgba(201,169,110,.28);letter-spacing:.18em;padding-inline-start:.18em;opacity:0;white-space:nowrap}
+.intro-line{position:absolute;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(201,169,110,.5),transparent);transform:scaleY(0);transform-origin:top}
+.intro-line.l1{inset-inline-start:14%}.intro-line.l2{inset-inline-end:14%}
+.intro-title{position:absolute;inset-inline:0;bottom:calc(11vh + env(safe-area-inset-bottom,0px));text-align:center;opacity:0;transform:translateY(14px)}
 .intro-title b{display:block;font:300 15px var(--sans);letter-spacing:.7em;color:var(--gold-hi);padding-inline-start:.7em}
-.intro-title span{display:block;margin-top:10px;font:300 14px var(--sans);color:var(--cream2);letter-spacing:.06em}
+.intro-title span{display:block;margin-top:8px;font:300 14px var(--sans);color:var(--cream2);letter-spacing:.06em}
+.intro-count{position:absolute;inset-inline-start:var(--pad);bottom:calc(20px + env(safe-area-inset-bottom,0px));font:300 italic 15px var(--lat);color:var(--gold);letter-spacing:.2em;direction:ltr}
 .skip-intro{position:absolute;top:calc(18px + env(safe-area-inset-top,0px));inset-inline-start:var(--pad);font-size:14px;color:var(--cream2);padding:8px 14px;border:1px solid var(--line);border-radius:var(--rs);z-index:2}
 .skip-intro:hover{color:var(--cream)}
 .flash{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 46%,#FFF3CF 0%,#E6C77A 28%,#6f8f55 62%,#0a1a10 100%)}
 .intro-lock .h-anim{opacity:0}
-#scene{position:fixed;inset:0;width:100%;height:100%;z-index:30;pointer-events:none;opacity:0}
+#scene{position:fixed;left:0;top:0;width:100%;height:100%;z-index:30;pointer-events:none;opacity:0}
 
-/* ===== hero ===== */
-.hero{padding-top:92px;padding-bottom:72px;overflow-x:clip}
-.topbar{position:absolute;top:0;inset-inline:0;padding:26px var(--pad) 0;display:flex;justify-content:center;z-index:3}
-.wordmark{font:300 15px var(--sans);letter-spacing:.7em;color:var(--gold-hi);padding-inline-start:.7em}
+/* בקבוק: משבצות עגינה ותמונת גיבוי */
+[data-bottle]{position:relative;pointer-events:none}
+.bf{position:absolute;inset:0;display:grid;place-items:center}
+.bf svg{height:94%;width:auto;filter:drop-shadow(0 24px 24px rgba(0,0,0,.55))}
+.gl-on .bf{visibility:hidden}
+
+/* ===== פתיח ===== */
+.hero{padding-top:84px;padding-bottom:64px;overflow:hidden}
+.hero .fern.f1{width:72vw;max-width:520px;top:-30px;inset-inline-end:-18vw;opacity:.85;transform:rotate(8deg)}
+.hero .fern.f2{width:46vw;max-width:340px;bottom:6%;inset-inline-start:-14vw;opacity:.55;animation-delay:-4s}
 .hero h1{font-size:clamp(35px,10.2vw,78px);font-weight:300;line-height:1.1}
-.hero .fern.f1{width:72vw;max-width:520px;top:-30px;inset-inline-end:-18vw;opacity:.9;transform:rotate(8deg)}
-.hero .fern.f2{width:46vw;max-width:340px;bottom:6%;inset-inline-start:-14vw;opacity:.6;animation-delay:-4s}
-.stage{position:relative;height:max(54vh,410px);margin-top:34px}
-.portrait{position:absolute;inset-inline-start:0;top:9%;width:57%;aspect-ratio:4/5;border-radius:12px;overflow:hidden;background:linear-gradient(160deg,#E4EBDA,#B7C8AE);border:1px solid rgba(201,169,110,.65);box-shadow:0 30px 60px -24px #000}
-.portrait img{width:100%;height:100%;object-fit:cover;object-position:50% 16%;mix-blend-mode:multiply}
-.portrait figcaption{position:absolute;bottom:10px;inset-inline-start:10px;font-size:12.5px;font-weight:500;background:rgba(6,16,10,.78);color:var(--gold-hi);padding:4px 11px;border-radius:var(--rs)}
-.bottle-slot{position:absolute;inset-inline-end:-3%;top:-3%;bottom:-7%;width:52%}
-.bottle-fallback{position:absolute;inset:0;display:grid;place-items:center}
-.bottle-fallback svg{height:96%;width:auto;filter:drop-shadow(0 24px 24px rgba(0,0,0,.6))}
-.halo{position:absolute;inset-inline-end:-10%;top:6%;width:70%;aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,rgba(201,169,110,.28),transparent);filter:blur(10px);pointer-events:none}
-.hero .sub{margin-top:30px;font-size:17px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:34px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.stat{padding:18px 6px;text-align:center}
-.stat+.stat{border-inline-start:1px solid var(--line)}
-.stat b{display:block;font-family:var(--serif);font-weight:900;font-size:clamp(30px,8.4vw,48px);color:var(--gold-hi);line-height:1.1}
-.stat>span{display:block;font-size:13.5px;color:var(--cream2);margin-top:4px;line-height:1.35}
-.hero .btn{margin-top:34px;width:100%}
+.stage{position:relative;height:max(46vh,360px);height:max(44svh,360px);margin-top:22px}
+.ring{position:absolute;left:50%;top:50%;width:min(112%,560px);aspect-ratio:1;transform:translate(-50%,-50%);color:rgba(201,169,110,.55);animation:spin 50s linear infinite;pointer-events:none}
+.ring svg{width:100%;height:100%;overflow:visible}
+.ring text{font:italic 300 16px var(--lat);letter-spacing:.3em;fill:currentColor}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(-360deg)}}
+.halo{position:absolute;left:50%;top:50%;width:84%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(230,208,156,.3),rgba(201,169,110,.08) 60%,transparent);filter:blur(8px);pointer-events:none}
+.hero-slot{position:absolute;left:50%;top:-2%;bottom:-4%;width:48%;transform:translateX(-50%)}
+.portrait-c{position:absolute;inset-inline-start:0;bottom:-4%;width:31%;aspect-ratio:1;border-radius:50%;padding:4px;background:conic-gradient(from 200deg,var(--gold),#6b5428,var(--gold-hi),var(--gold));box-shadow:0 24px 40px -16px #000;z-index:3}
+.portrait-c div{width:100%;height:100%;border-radius:50%;overflow:hidden;background:linear-gradient(160deg,#E4EBDA,#B7C8AE)}
+.portrait-c img{width:100%;height:100%;object-fit:cover;object-position:50% 14%;mix-blend-mode:multiply}
+.chip{position:absolute;z-index:4;padding:8px 14px;border-radius:var(--r);font-size:13.5px;color:var(--cream);background:rgba(6,16,10,.72);border:1px solid var(--line);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);line-height:1.3;white-space:nowrap;animation:bob 7s ease-in-out infinite}
+.chip b{font-family:var(--serif);font-weight:900;font-size:22px;color:var(--gold-hi);display:block;line-height:1.1}
+.chip.c1{top:0;inset-inline-end:-2%}
+.chip.c2{top:34%;inset-inline-start:-3%;animation-delay:-2s}
+.chip.c3{bottom:30%;inset-inline-end:-3%;animation-delay:-4s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.h-foot{margin-top:30px}
+.hero .btn{width:100%}
+.hero .sub{margin-top:26px;font-size:17px}
+.cue{display:none;align-items:center;gap:10px;margin-top:34px;font-size:13px;letter-spacing:.1em;color:var(--cream2)}
+.cue i{width:1px;height:34px;background:var(--gold);display:block;animation:cue 2.2s ease-in-out infinite;transform-origin:top}
+@keyframes cue{0%,100%{transform:scaleY(.3);opacity:.4}50%{transform:scaleY(1);opacity:1}}
 
-/* marquee */
-.ticker{overflow:hidden;direction:ltr;border-block:1px solid var(--line);background:rgba(6,16,10,.6);padding:16px 0;position:relative;z-index:2}
-.ticker-track{display:flex;gap:44px;width:max-content;animation:slide 40s linear infinite;align-items:center}
-.ticker span{direction:rtl;font:300 15px var(--sans);letter-spacing:.14em;color:var(--cream2);white-space:nowrap;display:flex;align-items:center;gap:44px}
-.ticker span::after{content:"";width:7px;height:7px;background:var(--gold);transform:rotate(45deg);flex:none}
+/* רצועת טקסט */
+.ticker{overflow:hidden;direction:ltr;border-block:1px solid var(--line);background:rgba(4,12,8,.55);position:relative;z-index:2;padding-block:2px}
+.ticker-track{display:flex;width:max-content;animation:slide 50s linear infinite}
+.ticker span{direction:rtl;font:500 clamp(30px,5vw,54px)/1.4 var(--serif);padding:8px 26px;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(230,208,156,.55);display:flex;align-items:center;gap:52px}
+.ticker span:nth-child(even){color:var(--cream);-webkit-text-stroke:0}
+.ticker span::after{content:"";width:9px;height:9px;background:var(--gold);transform:rotate(45deg);flex:none}
 @keyframes slide{to{transform:translateX(-50%)}}
 
-/* drop + ripple */
+/* טיפה וגל */
 .drop{position:fixed;top:0;left:0;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;z-index:35;pointer-events:none;opacity:0;will-change:transform;
   background:radial-gradient(circle at 35% 30%,#FFF1C4,#E6C77A 50%,#A9833F);box-shadow:0 0 18px 4px rgba(230,199,122,.6)}
-.s-problem{overflow-x:clip}
-.ripple-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(120% 70% at 50% 0%,#21472f 0%,#102017 55%,#0A1710 100%)}
+.s-problem{overflow:hidden}
+.ripple-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(120% 70% at 50% 0%,rgba(42,92,66,.9) 0%,rgba(14,38,30,.75) 55%,rgba(6,22,17,.6) 100%)}
 .ripple-rings{position:absolute;top:0;left:50%;width:0;height:0;z-index:2;pointer-events:none}
 .ripple-rings i{position:absolute;border:1px solid var(--gold);border-radius:50%;transform:translate(-50%,-50%);opacity:0;width:0;height:0}
 .cards3{display:grid;gap:14px;margin-top:40px}
@@ -145,53 +186,48 @@ h2 strong,h1 strong{font-weight:900;color:var(--gold-hi)}
 .pain svg{width:44px;height:44px;stroke:var(--gold);fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
 .pain p{font-family:var(--serif);font-weight:500;font-size:clamp(21px,5.6vw,26px);line-height:1.35}
 
-/* course */
-.s-course{background:linear-gradient(180deg,var(--ink1),var(--ink2) 60%,var(--ink1))}
-.intro-p{max-width:36em;margin:-8px 0 46px;font-size:17px}
+/* הקורס */
+.intro-p{max-width:36em;margin:-8px 0 38px;font-size:17px}
+.course-grid{display:grid;gap:10px}
+.course-slot{height:36svh;height:36vh;margin-block:4px 22px}
 .tl{position:relative;list-style:none;padding-inline-start:56px;max-width:780px}
 .tl-rail,.tl-fill{position:absolute;inset-inline-start:17px;top:12px;bottom:12px;width:2px;border-radius:2px}
-.tl-rail{background:rgba(201,169,110,.18)}
-.tl-fill{background:linear-gradient(180deg,#E6D09C,var(--gold));transform-origin:top;transform:scaleY(0);box-shadow:0 0 14px rgba(230,208,156,.8)}
+.tl-rail{background:rgba(122,90,29,.18)}
+.tl-fill{background:linear-gradient(180deg,#d9b866,#a78542);transform-origin:top;transform:scaleY(0);box-shadow:0 0 14px rgba(201,169,110,.7)}
 .station{position:relative;margin-bottom:20px}
-.dot{position:absolute;inset-inline-start:-49px;top:30px;width:18px;height:18px;border-radius:50%;background:var(--ink1);border:2px solid var(--gold);transition:all .5s;z-index:2}
-.station.on .dot{background:var(--gold-hi);box-shadow:0 0 0 7px rgba(201,169,110,.18),0 0 22px rgba(230,208,156,.9);transform:scale(1.12)}
+.dot{position:absolute;inset-inline-start:-49px;top:30px;width:18px;height:18px;border-radius:50%;background:var(--dotbg);border:2px solid var(--gl);transition:all .5s;z-index:2}
+.station.on .dot{background:var(--gl);box-shadow:0 0 0 7px rgba(167,133,66,.2),0 0 22px rgba(201,169,110,.9);transform:scale(1.12)}
 .st-card{border-radius:var(--r)}
-.st-head{width:100%;display:grid;grid-template-columns:1fr auto;gap:3px 14px;align-items:center;text-align:start;padding:22px 22px}
-.st-num{font-size:14px;color:var(--gold-hi);font-weight:500;letter-spacing:.06em}
-.st-title{font-family:var(--serif);font-weight:500;font-size:clamp(22px,5.8vw,28px);color:var(--cream);line-height:1.25}
-.st-dur{font-size:14.5px;color:var(--cream2)}
-.chev{grid-row:1/4;grid-column:2;width:34px;height:34px;border:1px solid var(--gold);border-radius:50%;position:relative;transition:transform .4s,background .3s}
-.chev::before,.chev::after{content:"";position:absolute;inset:0;margin:auto;width:12px;height:1.5px;background:var(--gold-hi);transition:transform .4s}
+.st-head{width:100%;display:grid;grid-template-columns:1fr auto;gap:3px 14px;align-items:center;text-align:start;padding:22px}
+.st-num{font-size:14px;color:var(--acc);font-weight:500;letter-spacing:.06em}
+.st-title{font-family:var(--serif);font-weight:500;font-size:clamp(22px,5.8vw,28px);color:var(--fg);line-height:1.25}
+.st-dur{font-size:14.5px;color:var(--fg2)}
+.chev{grid-row:1/4;grid-column:2;width:34px;height:34px;border:1px solid var(--gl);border-radius:50%;position:relative;transition:transform .4s,background .3s}
+.chev::before,.chev::after{content:"";position:absolute;inset:0;margin:auto;width:12px;height:1.5px;background:var(--acc);transition:transform .4s}
 .chev::after{transform:rotate(90deg)}
-[aria-expanded="true"]>.chev{transform:rotate(180deg);background:rgba(201,169,110,.12)}
+[aria-expanded="true"]>.chev{transform:rotate(180deg);background:rgba(167,133,66,.14)}
 [aria-expanded="true"]>.chev::after{transform:rotate(0)}
 .panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s ease}
 .panel>div{overflow:hidden}
 .panel.is-open{grid-template-rows:1fr}
 .st-card ul{list-style:none;padding:2px 22px 24px;display:grid;gap:12px}
-.st-card li{position:relative;padding-inline-start:22px;color:#E4DFD0;font-size:16.5px;line-height:1.6}
-.st-card li b{font-weight:500;color:#fff}
-.st-card li::before{content:"";position:absolute;inset-inline-start:0;top:.62em;width:7px;height:7px;background:var(--gold);transform:rotate(45deg)}
+.st-card li{position:relative;padding-inline-start:22px;color:var(--fg);font-size:16.5px;line-height:1.6}
+.st-card li b{font-weight:500}
+.st-card li::before{content:"";position:absolute;inset-inline-start:0;top:.62em;width:7px;height:7px;background:var(--gl);transform:rotate(45deg)}
 
-/* about */
-.s-about{background:var(--ink1);overflow:clip}
-.about{display:grid;gap:44px;align-items:center}
-.about-img{position:relative;aspect-ratio:4/5;border-radius:12px;overflow:hidden;background:linear-gradient(160deg,#E9E2D0,#CFC4A6)}
+/* מי זאת ענבר */
+.s-about{overflow:hidden}
+.about{display:grid;gap:56px;align-items:center}
 .about-frame{position:relative}
+.about-img{position:relative;aspect-ratio:4/5;border-radius:12px;overflow:hidden;background:linear-gradient(160deg,#E9E2D0,#CFC4A6)}
 .about-frame::before{content:"";position:absolute;inset:14px -14px -14px 14px;border:1px solid var(--gold);border-radius:12px}
 .about-img img{position:absolute;inset:-8% 0;width:100%;height:116%;object-fit:cover}
-.about blockquote{font-family:var(--serif);font-weight:300;font-size:clamp(25px,6.6vw,38px);line-height:1.5;color:var(--cream)}
-.about blockquote strong{font-weight:900;color:var(--gold-hi)}
-.who{display:block;margin-top:22px;font:500 15px var(--sans);color:var(--gold-hi);letter-spacing:.06em}
+.about-slot{position:absolute;inset-inline-end:-6%;bottom:-12%;width:42%;height:52%;z-index:3}
+.about blockquote{font-family:var(--serif);font-weight:300;font-size:clamp(25px,6.6vw,38px);line-height:1.5;color:var(--fg)}
+.about blockquote strong{font-weight:900;color:var(--acc)}
+.who{display:block;margin-top:22px;font:500 15px var(--sans);color:var(--acc);letter-spacing:.06em}
 
-/* results (light) */
-.s-results{background:var(--paper);color:var(--paper-ink)}
-.s-results h2{color:var(--paper-ink)}
-.s-results h2 strong{color:#7a5a1d}
-.s-results .eyebrow{color:#7a5a1d}
-.s-results .eyebrow::before{background:#7a5a1d}
-.s-results .divider::before,.s-results .divider::after{background:linear-gradient(90deg,transparent,#a78542)}
-.s-results .divider i{background:#a78542}
+/* תוצאות */
 .ba{position:relative;max-width:560px;margin:0 auto;aspect-ratio:4/5;border-radius:12px;overflow:hidden;touch-action:pan-y;user-select:none;background:linear-gradient(160deg,#DCD3BC,#B9AD8E);cursor:ew-resize;box-shadow:0 30px 60px -30px rgba(10,23,16,.55)}
 .ba .layer{position:absolute;inset:0}
 .ba img{width:100%;height:100%;object-fit:cover;pointer-events:none}
@@ -201,12 +237,12 @@ h2 strong,h1 strong{font-weight:900;color:var(--gold-hi)}
 .ba .handle{position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--gold);z-index:4;transform:translateX(-1px);box-shadow:0 0 12px rgba(201,169,110,.9)}
 .ba .knob{position:absolute;top:50%;left:50%;width:48px;height:48px;margin:-24px 0 0 -24px;border-radius:50%;border:2px solid var(--gold);box-shadow:0 6px 18px rgba(0,0,0,.35);
   background:var(--ink0) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='26' height='14' viewBox='0 0 26 14'><path d='M8 2L2 7l6 5M18 2l6 5-6 5' fill='none' stroke='%23E6D09C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/26px 14px no-repeat}
-h3.sec{font-family:var(--serif);font-weight:500;font-size:clamp(26px,6.6vw,36px);margin-top:76px;text-align:center}
-.chat-viewport{overflow:hidden;margin-top:28px;margin-inline:calc(var(--pad)*-1);direction:ltr;mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+h3.sec{font-family:var(--serif);font-weight:500;font-size:clamp(26px,6.6vw,36px);margin-top:76px;text-align:center;color:var(--fg)}
+.chat-viewport{overflow:hidden;margin-top:28px;margin-inline:calc(var(--pad)*-1);direction:ltr;mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
 .chat-track{display:flex;align-items:flex-start;gap:16px;width:max-content;animation:slide 70s linear infinite;padding:6px 0 12px}
 .chat-viewport.paused .chat-track{animation-play-state:paused}
 .bubble-wrap{direction:rtl;width:290px;flex:none;margin:0}
-.bubble{position:relative;margin:0;background:#FBF8F3;border:1px solid #b79a5c;border-radius:14px 14px 14px 3px;padding:16px 18px 28px;font-size:16px;line-height:1.6;color:var(--paper-ink);font-weight:400;box-shadow:0 14px 30px -20px rgba(10,23,16,.5)}
+.bubble{position:relative;margin:0;background:#FFFDF8;border:1px solid #b79a5c;border-radius:14px 14px 14px 3px;padding:16px 18px 28px;font-size:16px;line-height:1.6;color:var(--paper-ink);font-weight:400;box-shadow:0 14px 30px -20px rgba(10,23,16,.5)}
 .bubble svg{position:absolute;bottom:8px;inset-inline-end:12px;width:18px;height:11px}
 .bubble-wrap small{display:block;margin-top:8px;padding-inline-start:6px;font-size:13px;color:var(--paper-ink2)}
 .grads{display:grid;gap:16px;margin-top:30px}
@@ -217,12 +253,11 @@ h3.sec{font-family:var(--serif);font-weight:500;font-size:clamp(26px,6.6vw,36px)
 .grad .city{font-size:14.5px;color:var(--cream2);margin-bottom:12px;display:block}
 .grad p{font-size:16px;color:#E4DFD0}
 
-/* fit */
-.s-fit{background:var(--ink0);overflow:clip}
+/* התאמה */
 .fit{display:grid;gap:16px;margin-top:10px}
 .col{border-radius:var(--r);padding:32px 26px}
-.col.yes{background:linear-gradient(170deg,rgba(43,82,56,.5),rgba(16,32,23,.6));border:1px solid rgba(107,170,117,.5)}
-.col.no{background:rgba(242,235,220,.025);border:1px solid rgba(210,90,100,.35)}
+.col.yes{background:linear-gradient(170deg,rgba(43,82,56,.55),rgba(16,32,23,.55));border:1px solid rgba(107,170,117,.5)}
+.col.no{background:rgba(242,235,220,.03);border:1px solid rgba(210,90,100,.38)}
 .col h3{font-size:25px;margin-bottom:22px}
 .col ul{list-style:none;display:grid;gap:18px}
 .col li{display:flex;gap:14px;align-items:flex-start;font-size:16.5px;font-weight:400;line-height:1.6}
@@ -230,8 +265,8 @@ h3.sec{font-family:var(--serif);font-weight:500;font-size:clamp(26px,6.6vw,36px)
 .ic.v{background:var(--leaf)} .ic.x{background:rgba(210,90,100,.16)}
 .ic svg{width:12px;height:12px}
 
-/* details */
-.s-details{background:linear-gradient(180deg,var(--ink0),#12301f 55%,var(--ink1))}
+/* פרטי הקורס */
+.det-slot{height:38svh;height:38vh;max-width:360px;margin:0 auto 6px}
 .det{max-width:640px;margin:0 auto;border-radius:12px;padding:1px;background:linear-gradient(160deg,#EFDDAE,#7c6232 40%,#C9A96E 70%,#6b5428)}
 .det-in{border-radius:11px;background:linear-gradient(170deg,#12281b,#0a1710);padding:8px 28px}
 .det dl>div{display:flex;justify-content:space-between;gap:16px;padding:22px 0;align-items:baseline}
@@ -239,19 +274,19 @@ h3.sec{font-family:var(--serif);font-weight:500;font-size:clamp(26px,6.6vw,36px)
 .det dt{font-size:15px;color:var(--cream2);font-weight:400}
 .det dd{font-family:var(--serif);font-weight:500;font-size:23px;color:var(--gold-hi);text-align:end}
 .badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:34px}
-.badge{border:1px solid var(--line);background:rgba(242,235,220,.04);color:var(--cream);border-radius:var(--rs);padding:8px 18px;font-size:15px;font-weight:400}
+.badge{border:1px solid var(--line);background:rgba(242,235,220,.05);color:var(--cream);border-radius:var(--rs);padding:8px 18px;font-size:15px;font-weight:400}
 .det-cta{text-align:center;margin-top:38px}
 
-/* faq */
-.s-faq{background:var(--ink1)}
-.faq{max-width:780px;display:grid;gap:12px}
-.qa .st-head{padding:20px 20px}
-.qa .q{font-family:var(--serif);font-weight:500;font-size:19.5px;color:var(--cream);line-height:1.4}
+/* שאלות */
+.faq{max-width:780px;display:grid;gap:12px;margin-inline:auto}
+.qa .st-head{padding:20px}
+.qa .q{font-family:var(--serif);font-weight:500;font-size:19.5px;color:var(--fg);line-height:1.4}
 .qa .chev{grid-row:auto;width:30px;height:30px}
-.qa .panel p{padding:0 20px 22px;color:var(--cream2);font-size:16.5px}
+.qa .panel p{padding:0 20px 22px;color:var(--fg2);font-size:16.5px}
 
-/* register */
-.s-reg{background:radial-gradient(90% 60% at 50% 100%,#1c4029 0%,var(--ink0) 70%);overflow:clip;text-align:center}
+/* הרשמה */
+.s-reg{overflow:hidden;text-align:center;padding-top:40px}
+.reg-slot{height:36svh;height:36vh;max-width:340px;margin:0 auto 14px}
 .reg{max-width:520px;margin-inline:auto;text-align:center}
 .reg h2{margin-bottom:6px}
 .reg .intro-p{margin-inline:auto;margin-top:12px;margin-bottom:34px}
@@ -259,9 +294,9 @@ h3.sec{font-family:var(--serif);font-weight:500;font-size:clamp(26px,6.6vw,36px)
 .s-reg .fern.f4{width:40vw;max-width:300px;top:30px;inset-inline-start:-12vw;opacity:.45;animation-delay:-3s}
 form{display:grid;gap:14px;text-align:start;position:relative}
 label{font-size:14.5px;color:var(--cream2);font-weight:400;display:block;margin-bottom:7px}
-input{width:100%;min-height:56px;border-radius:8px;border:1px solid var(--line);background:rgba(242,235,220,.07);padding:0 16px;font:400 17px var(--sans);color:var(--cream);transition:border-color .3s,background .3s}
-input:focus{border-color:var(--gold-hi);background:rgba(242,235,220,.11);outline:none;box-shadow:0 0 0 3px rgba(201,169,110,.2)}
-input::placeholder{color:#8e9a8f}
+input{width:100%;min-height:56px;border-radius:8px;border:1px solid var(--line);background:rgba(242,235,220,.08);padding:0 16px;font:400 17px var(--sans);color:var(--cream);transition:border-color .3s,background .3s}
+input:focus{border-color:var(--gold-hi);background:rgba(242,235,220,.12);outline:none;box-shadow:0 0 0 3px rgba(201,169,110,.25)}
+input::placeholder{color:#93a094}
 .err{color:#FFB9C0;font-size:14.5px;min-height:1.2em;margin-top:4px}
 .or{display:flex;align-items:center;gap:12px;margin:24px 0;color:var(--cream2);font-size:14.5px}
 .or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
@@ -273,8 +308,12 @@ input::placeholder{color:#8e9a8f}
 .thanks h3{font-size:30px;margin-bottom:8px}
 footer{position:relative;z-index:2;background:var(--ink0);color:var(--cream2);text-align:center;padding:26px var(--pad) 30px;font-size:14px;border-top:1px solid var(--line)}
 
-/* sticky */
-.sticky{position:fixed;inset-inline:0;bottom:0;z-index:70;padding:10px var(--pad) calc(10px + env(safe-area-inset-bottom,0px));background:rgba(6,16,10,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .45s}
+/* סמן זוהר (עכבר בלבד) */
+.cursor{position:fixed;left:0;top:0;width:240px;height:240px;margin:-120px 0 0 -120px;border-radius:50%;pointer-events:none;z-index:120;opacity:0;background:radial-gradient(closest-side,rgba(230,208,156,.16),transparent);mix-blend-mode:screen;transition:opacity .4s}
+.cursor.on{opacity:1}
+
+/* כפתור צמוד */
+.sticky{position:fixed;inset-inline:0;bottom:0;z-index:70;padding:10px var(--pad) calc(10px + env(safe-area-inset-bottom,0px));background:rgba(6,16,10,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .45s}
 .sticky.show{transform:none}
 .sticky .btn{width:100%;min-height:52px}
 
@@ -282,29 +321,43 @@ footer{position:relative;z-index:2;background:var(--ink0);color:var(--cream2);te
   :root{--pad:48px}
   body{font-size:18px;padding-bottom:0}
   section{padding-block:128px}
+  .sheet{margin:14px 24px;border-radius:18px}
   .sticky{display:none}
-  .hero{padding-top:110px;padding-bottom:100px}
-  .hero-grid{display:grid;grid-template-columns:1.02fr 1fr;column-gap:72px;align-items:center}
+  .burger{display:none}
+  .nav,.hbtn{display:flex}
+  .header{padding-inline:48px}
+  .hero{padding-top:110px;padding-bottom:90px}
+  .hero-grid{display:grid;grid-template-columns:1fr 1.05fr;column-gap:56px;align-items:center}
   .h-head{grid-column:1;grid-row:1;align-self:end}
   .h-foot{grid-column:1;grid-row:2;align-self:start}
-  .stage{grid-column:2;grid-row:1/3;height:min(78vh,720px);margin-top:0}
+  .stage{grid-column:2;grid-row:1/3;height:min(74vh,700px);margin-top:0}
+  .hero-slot{width:46%}
+  .portrait-c{width:24%;inset-inline-start:2%}
   .hero .btn{width:auto}
+  .cue{display:flex}
   .cards3{grid-template-columns:repeat(3,1fr);gap:20px}
   .pain{padding:38px 30px}
+  .course-grid{grid-template-columns:.9fr 1.1fr;gap:80px;align-items:start}
+  .course-side{position:sticky;top:96px}
+  .course-slot{height:min(56vh,520px);margin:10px 0 0}
   .about{grid-template-columns:1fr 1.1fr;gap:96px}
+  .about-slot{width:34%;height:46%}
   .grads{grid-template-columns:repeat(3,1fr);gap:20px}
   .fit{grid-template-columns:1fr 1fr;gap:24px}
   .col{padding:42px 38px}
+  .det-slot{height:min(50vh,460px)}
+  .reg-slot{height:min(48vh,440px)}
   .chat-viewport{margin-inline:0}
   .bubble-wrap{width:330px}
 }
 @media (prefers-reduced-motion:reduce){
-  .atmos i,.fern,.btn::after,.ticker-track,.chat-track{animation:none}
-  .chat-viewport{overflow-x:auto;mask-image:none}
-  .panel,.dot,.chev,.chev::before,.chev::after,.btn,.sticky{transition:none}
+  html{scroll-behavior:auto}
+  .atmos i,.fern,.btn::after,.ticker-track,.chat-track,.ring,.chip,.cue i{animation:none}
+  .chat-viewport{overflow-x:auto;mask-image:none;-webkit-mask-image:none}
+  .panel,.dot,.chev,.chev::before,.chev::after,.btn,.sticky,.header{transition:none}
 }
 html.rm .tl-fill{transform:scaleY(1)}
-html.rm .station .dot{background:var(--gold-hi)}
+html.rm .station .dot{background:var(--gl)}
 html.rm .ripple-bg{clip-path:none!important}
 </style>
 </head>
@@ -315,22 +368,47 @@ if(rm)d.classList.add('rm');else d.classList.add('intro-lock');})();
 </script>
 <a class="skip" href="#register">דלגי לטופס ההרשמה</a>
 <div class="atmos" aria-hidden="true"><i class="m1"></i><i class="m2"></i></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"></div>
 <div class="drop" id="drop" aria-hidden="true"></div>
+<div class="sr" id="sr" aria-live="polite"></div>
+
+<header class="header" id="header">
+  <a href="#top" class="logo" aria-label="INBAR, לראש הדף"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22C6 18 3 14 3 10a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 4-3 8-9 12z"/></svg><span>INBAR</span></a>
+  <nav class="nav glass" aria-label="ראשי">
+    <a href="#top" data-sec="top">בית</a><a href="#course" data-sec="course">הקורס</a><a href="#about" data-sec="about">ענבר</a><a href="#results" data-sec="results">תוצאות</a><a href="#faq" data-sec="faq">שאלות</a>
+  </nav>
+  <a class="btn hbtn" href="#register">אני רוצה לשמוע על המחזור הקרוב</a>
+  <button class="burger" id="burger" type="button" aria-label="תפריט" aria-expanded="false" aria-controls="menu"><span></span></button>
+</header>
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="תפריט">
+  <a href="#top">בית</a><a href="#course">הקורס</a><a href="#about">מי זאת ענבר</a><a href="#results">תוצאות</a><a href="#faq">שאלות נפוצות</a><a href="#register">הרשמה</a>
+</div>
 
 <!-- פתיחת הבקבוק -->
 <div class="intro" id="intro" aria-hidden="true">
+  <i class="intro-line l1"></i><i class="intro-line l2"></i>
+  <div class="intro-word" id="introWord">INBAR</div>
   <button class="skip-intro" id="skipIntro" type="button">דלגי</button>
   <div class="intro-title" id="introTitle"><b>INBAR</b><span>ענבר בן אדרת</span></div>
+  <div class="intro-count" id="introCount">000</div>
 </div>
 <div class="flash" id="flash" aria-hidden="true"></div>
 <canvas id="scene" aria-hidden="true"></canvas>
 
-<main>
+<template id="bottleSvg"><div class="bf" aria-hidden="true"><svg viewBox="0 0 120 240">
+  <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#06180e"/><stop offset=".32" stop-color="#1b4a2f"/><stop offset=".6" stop-color="#08200f"/><stop offset="1" stop-color="#03100a"/></linearGradient></defs>
+  <rect x="46" y="12" width="28" height="46" rx="13" fill="#0c0c0c"/><rect x="48" y="50" width="24" height="26" rx="3" fill="#0c0c0c"/>
+  <rect x="44" y="72" width="32" height="12" rx="2" fill="#d9c28a"/>
+  <path d="M46 84h28v16c0 8 30 18 30 40v78c0 6-4 10-10 10H26c-6 0-10-4-10-10v-78c0-22 30-32 30-40z" fill="url(#g1)"/>
+  <text x="60" y="172" text-anchor="middle" font-family="Cormorant Garamond,serif" font-weight="300" font-size="12" letter-spacing="3" fill="#E6D09C">INBAR</text>
+  <path d="M34 182h52" stroke="#C9A96E" stroke-width=".8"/><path d="M40 112c-2 20-2 60-2 90" stroke="#fff" stroke-opacity=".2" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg></div></template>
+
+<main id="main">
 <!-- 1. פתיח -->
-<section class="hero" id="hero">
-  <div class="fern f1" data-fern="14" aria-hidden="true"></div>
-  <div class="fern f2" data-fern="10" aria-hidden="true"></div>
-  <div class="topbar h-anim"><span class="wordmark">INBAR</span></div>
+<section class="hero t-dark" id="top" data-theme="hero">
+  <div class="deco"><div class="fern f1" data-fern="14" aria-hidden="true"></div><div class="fern f2" data-fern="10" aria-hidden="true"></div></div>
   <div class="wrap hero-grid">
     <div class="h-head">
       <p class="eyebrow h-anim">קורס מעשי לקוסמטיקאיות</p>
@@ -338,32 +416,17 @@ if(rm)d.classList.add('rm');else d.classList.add('intro-lock');})();
     </div>
     <div class="stage h-anim" id="stage">
       <div class="halo" aria-hidden="true"></div>
-      <figure class="portrait">
-        <img src="inbar-hero.jpg" alt="ענבר בן אדרת, קוסמטיקאית ומנהלת קליניקה" width="570" height="605" fetchpriority="high" onerror="this.remove()">
-        <figcaption>ענבר בן אדרת</figcaption>
-      </figure>
-      <div class="bottle-slot" id="bottleSlot">
-        <div class="bottle-fallback" id="bottleFallback" role="img" aria-label="בקבוק סרום עם טפטפת מליין המוצרים של ענבר">
-          <svg viewBox="0 0 120 240" aria-hidden="true">
-            <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#06180e"/><stop offset=".32" stop-color="#1b4a2f"/><stop offset=".6" stop-color="#08200f"/><stop offset="1" stop-color="#03100a"/></linearGradient></defs>
-            <rect x="46" y="12" width="28" height="46" rx="13" fill="#0c0c0c"/><rect x="48" y="50" width="24" height="26" rx="3" fill="#0c0c0c"/>
-            <rect x="44" y="72" width="32" height="12" rx="2" fill="#d9c28a"/>
-            <path d="M46 84h28v16c0 8 30 18 30 40v78c0 6-4 10-10 10H26c-6 0-10-4-10-10v-78c0-22 30-32 30-40z" fill="url(#g1)"/>
-            <text x="60" y="172" text-anchor="middle" font-family="Heebo,sans-serif" font-weight="300" font-size="11" letter-spacing="3" fill="#E6D09C">INBAR</text>
-            <path d="M34 182h52" stroke="#C9A96E" stroke-width=".8"/>
-            <path d="M40 112c-2 20-2 60-2 90" stroke="#fff" stroke-opacity=".2" stroke-width="3" fill="none" stroke-linecap="round"/>
-          </svg>
-        </div>
-      </div>
+      <div class="ring" aria-hidden="true"><svg viewBox="0 0 400 400"><defs><path id="ringP" d="M200 200m-178 0a178 178 0 1 1 356 0a178 178 0 1 1-356 0"/></defs><text><textPath href="#ringP" textLength="1110" lengthAdjust="spacing">INBAR ✦ COSMETICS ACADEMY ✦ 3 SESSIONS ✦ 26 YEARS ✦ INBAR ✦ COSMETICS ACADEMY ✦</textPath></text></svg></div>
+      <div class="hero-slot" id="bottleSlot" data-bottle data-sub="SERUM" data-yaw="-12" data-roll="5" data-scale="1" data-c="#E6D09C" data-glow=".15" role="img" aria-label="בקבוק סרום עם טפטפת מליין המוצרים של ענבר"></div>
+      <figure class="portrait-c"><div><img src="inbar-hero.jpg" alt="ענבר בן אדרת, קוסמטיקאית ומנהלת קליניקה" width="570" height="605" fetchpriority="high" onerror="this.remove()"></div></figure>
+      <div class="chip c1"><b dir="ltr">+<span data-count="26">26</span></b>שנות ניסיון</div>
+      <div class="chip c2"><b dir="ltr">+<span data-count="3000">3,000</span></b>מטופלות</div>
+      <div class="chip c3"><b><span data-count="3">3</span></b>מפגשים מעשיים</div>
     </div>
     <div class="h-foot">
-      <p class="sub lead h-anim">קורס פרקטי בן 3 מפגשים בהדרכת ענבר בן אדרת שיעזור לך להרגיש בטוחה בכל סוגי הטיפולים, לדעת מה באמת להביא לקליניקה, ואיך לסגור סדרות טיפולים שמייצבים את ההכנסה שלך ולא לרדוף אחרי טיפולים יחידים.</p>
-      <div class="stats h-anim" aria-label="נתונים על ענבר">
-        <div class="stat"><b dir="ltr">+<span data-count="26">26</span></b><span>שנות ניסיון</span></div>
-        <div class="stat"><b dir="ltr">+<span data-count="3000">3,000</span></b><span>מטופלות</span></div>
-        <div class="stat"><b><span data-count="3">3</span></b><span>מפגשים מעשיים</span></div>
-      </div>
       <a class="btn h-anim" href="#register" data-magnet>אני רוצה לשמוע על המחזור הקרוב</a>
+      <p class="sub lead h-anim">קורס פרקטי בן 3 מפגשים בהדרכת ענבר בן אדרת שיעזור לך להרגיש בטוחה בכל סוגי הטיפולים, לדעת מה באמת להביא לקליניקה, ואיך לסגור סדרות טיפולים שמייצבים את ההכנסה שלך ולא לרדוף אחרי טיפולים יחידים.</p>
+      <div class="cue h-anim" aria-hidden="true"><i></i>גללי, הבקבוק ילווה אותך</div>
     </div>
   </div>
 </section>
@@ -371,7 +434,7 @@ if(rm)d.classList.add('rm');else d.classList.add('intro-lock');})();
 <div class="ticker" aria-hidden="true"><div class="ticker-track" id="tickerTrack"></div></div>
 
 <!-- 2. מכירה את זה -->
-<section class="s-problem" id="problem">
+<section class="s-problem t-dark" id="problem" data-theme="teal">
   <div class="ripple-bg" id="rippleBg"></div>
   <div class="ripple-rings" id="rings" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="wrap">
@@ -379,10 +442,10 @@ if(rm)d.classList.add('rm');else d.classList.add('intro-lock');})();
     <h2 data-split>מכירה את זה?</h2>
     <div class="cards3">
       <div class="glass pain" data-card>
-        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="17"/><path d="M24 14v20M29 18.500c-1-1.700-3-2.500-5-2.500-3 0-5 1.500-5 3.700 0 5 10 2.600 10 7.600 0 2.300-2.200 3.700-5 3.700-2.300 0-4.300-1-5.300-2.700"/></svg>
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="17"/><path d="M24 14v20M29 18.5c-1-1.7-3-2.5-5-2.5-3 0-5 1.5-5 3.7 0 5 10 2.6 10 7.6 0 2.3-2.2 3.7-5 3.7-2.3 0-4.3-1-5.3-2.7"/></svg>
         <p>הוצאת המון על ציוד וחומרים, וההכנסות עוד לא מכסות</p></div>
       <div class="glass pain" data-card>
-        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 40C14 34 9 27 9 20a9 9 0 0 1 15-6.500A9 9 0 0 1 39 20c0 7-5 14-15 20z"/><path d="M24 17v8M24 30v.5"/></svg>
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 40C14 34 9 27 9 20a9 9 0 0 1 15-6.5A9 9 0 0 1 39 20c0 7-5 14-15 20z"/><path d="M24 17v8M24 30v.5"/></svg>
         <p>לקוחה עם בעיה מורכבת נכנסת, ואת מרגישה שאת לא בטוחה</p></div>
       <div class="glass pain" data-card>
         <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 34l10-10 7 7 15-16"/><path d="M31 15h9v9"/><path d="M8 40h32"/></svg>
@@ -391,22 +454,25 @@ if(rm)d.classList.add('rm');else d.classList.add('intro-lock');})();
   </div>
 </section>
 
-<!-- 3. הקורס -->
-<section class="s-course" id="course">
-  <div class="wrap">
-    <p class="eyebrow">מסלול הקורס</p>
-    <h2 data-split>3 מפגשים. <strong>מסלול אחד</strong> ברור.</h2>
-    <div class="divider"><i></i></div>
-    <p class="sub intro-p" data-reveal>ב-26 השנים האחרונות למדתי דבר אחד חשוב: מה שמפריד בין קוסמטיקאית רגילה לבין קוסמטיקאית שמובילה בתחום הוא לא רק ידע מקצועי. זו הדרך שבה את מנהלת את הקליניקה שלך, הביטחון שאת משדרת והיכולת להבדיל בין העיקר לטפל. וזה מה שמחכה לך כאן.</p>
+<!-- 3. הקורס (דף קרם) -->
+<section class="s-course t-cream sheet" id="course" data-theme="hero">
+  <div class="wrap course-grid">
+    <div class="course-side">
+      <p class="eyebrow">מסלול הקורס</p>
+      <h2 data-split>3 מפגשים. <strong>מסלול אחד</strong> ברור.</h2>
+      <div class="divider"><i></i></div>
+      <p class="sub intro-p" data-reveal>ב-26 השנים האחרונות למדתי דבר אחד חשוב: מה שמפריד בין קוסמטיקאית רגילה לבין קוסמטיקאית שמובילה בתחום הוא לא רק ידע מקצועי. זו הדרך שבה את מנהלת את הקליניקה שלך, הביטחון שאת משדרת והיכולת להבדיל בין העיקר לטפל. וזה מה שמחכה לך כאן.</p>
+      <div class="course-slot" id="courseSlot" data-bottle data-sub="METHOD" data-yaw="14" data-roll="-4" data-scale="1" data-c="#a78542" data-glow="0"></div>
+    </div>
     <ol class="tl" id="tl">
       <span class="tl-rail" aria-hidden="true"></span><span class="tl-fill" id="tlFill" aria-hidden="true"></span>
-      <li class="station"><span class="dot" aria-hidden="true"></span>
+      <li class="station" data-sub="MINDSET"><span class="dot" aria-hidden="true"></span>
         <div class="st-card glass acc"><button class="st-head" aria-expanded="false" aria-controls="p1" id="h1"><span class="st-num">מפגש 1</span><span class="st-title">הנחת יסודות: מיינדסט וחזון עסקי</span><span class="st-dur">3 עד 4 שעות</span><span class="chev" aria-hidden="true"></span></button>
         <div class="panel" id="p1" role="region" aria-labelledby="h1"><div><ul><li><b>פתיחה חווייתית:</b> שיר העצמה 'זה מתחיל בצעד', דמיון מודרך לבניית חזון אישי וקליניקה מצליחה, סבב היכרות והצגה עצמית</li><li><b>עולם המיינדסט:</b> כיצד פועל המוח, למה המיינדסט קריטי להצלחה, שאלון ממוקד מטרה</li><li><b>כלי NLP ליצירת חיבור עם לקוחות:</b> מהו ראפור, טכניקת הובלה, זיהוי והמרת אמונות מגבילות</li><li><b>הבסיס למכירה רכה:</b> אבחון העור ככלי מכירה, שאלון לקוח שמעורר כאב ומוביל לתמונת ניצחון</li></ul></div></div></div></li>
-      <li class="station"><span class="dot" aria-hidden="true"></span>
+      <li class="station" data-sub="PRACTICE"><span class="dot" aria-hidden="true"></span>
         <div class="st-card glass acc"><button class="st-head" aria-expanded="false" aria-controls="p2" id="h2"><span class="st-num">מפגש 2</span><span class="st-title">מקצועיות מעשית</span><span class="st-dur">3 עד 4 שעות</span><span class="chev" aria-hidden="true"></span></button>
         <div class="panel" id="p2" role="region" aria-labelledby="h2"><div><ul><li>אקנה, פיגמנטציה ואנטי אייג'ינג</li><li>חומרים פעילים</li><li>בניית פרוטוקול טיפול</li></ul></div></div></div></li>
-      <li class="station"><span class="dot" aria-hidden="true"></span>
+      <li class="station" data-sub="SALES"><span class="dot" aria-hidden="true"></span>
         <div class="st-card glass acc"><button class="st-head" aria-expanded="false" aria-controls="p3" id="h3"><span class="st-num">מפגש 3</span><span class="st-title">מכשור, מכירות ושיווק</span><span class="st-dur">4 עד 5 שעות</span><span class="chev" aria-hidden="true"></span></button>
         <div class="panel" id="p3" role="region" aria-labelledby="h3"><div><ul><li>מה חובה ומה מיותר</li><li>סגירת סדרות</li><li>שיווק באינסטגרם ובממומן</li></ul></div></div></div></li>
     </ol>
@@ -414,13 +480,14 @@ if(rm)d.classList.add('rm');else d.classList.add('intro-lock');})();
 </section>
 
 <!-- 4. מי זאת ענבר -->
-<section class="s-about" id="about">
-  <div class="fern" data-fern="12" style="width:60vw;max-width:440px;bottom:-20px;inset-inline-start:-14vw;opacity:.7" aria-hidden="true"></div>
+<section class="s-about t-dark" id="about" data-theme="moss">
+  <div class="deco"><div class="fern" data-fern="12" style="width:60vw;max-width:440px;bottom:-20px;inset-inline-start:-14vw;opacity:.7" aria-hidden="true"></div></div>
   <div class="wrap about">
     <div class="about-frame" data-reveal>
       <div class="about-img">
         <img src="inbar-serum.jpg" alt="ענבר בן אדרת מחזיקה סרום מליין המוצרים שלה" width="1000" height="1101" loading="lazy" id="parallaxImg" onerror="this.remove()">
       </div>
+      <div class="about-slot" id="aboutSlot" data-bottle data-sub="SIGNATURE" data-yaw="-18" data-roll="8" data-scale="1" data-c="#E6D09C" data-glow=".2"></div>
     </div>
     <div>
       <p class="eyebrow">מי זאת ענבר</p>
@@ -430,8 +497,8 @@ if(rm)d.classList.add('rm');else d.classList.add('intro-lock');})();
   </div>
 </section>
 
-<!-- 5. תוצאות -->
-<section class="s-results" id="results">
+<!-- 5. תוצאות (דף קרם) -->
+<section class="s-results t-cream sheet" id="results" data-theme="hero">
   <div class="wrap">
     <p class="eyebrow">תוצאות</p>
     <h2 data-split>תוצאות <strong>שרואים</strong> בעין</h2>
@@ -458,32 +525,33 @@ if(rm)d.classList.add('rm');else d.classList.add('intro-lock');})();
 </section>
 
 <!-- 6. למי זה מתאים -->
-<section class="s-fit" id="fit">
+<section class="s-fit t-dark" id="fit" data-theme="forest">
   <div class="wrap">
     <p class="eyebrow">התאמה</p>
     <h2 data-split>האם הקורס <strong>מתאים</strong> לך?</h2>
     <div class="divider"><i></i></div>
     <div class="fit">
       <div class="col yes" data-reveal><h3>מתאים לך אם</h3><ul>
-        <li><span class="ic v"><svg viewBox="0 0 12 12"><path d="M2 6.500l2.600 2.600L10 3.400" fill="none" stroke="#06100A" stroke-width="1.800" stroke-linecap="round" stroke-linejoin="round"/></svg></span>סיימת קורס קוסמטיקה ואת מרגישה שחסרים לך כלים אמיתיים לעבודה בשטח</li>
-        <li><span class="ic v"><svg viewBox="0 0 12 12"><path d="M2 6.500l2.600 2.600L10 3.400" fill="none" stroke="#06100A" stroke-width="1.800" stroke-linecap="round" stroke-linejoin="round"/></svg></span>יש לך רצון להרוויח מהתחום הזה כמו שצריך ולא רק 'לטפל על הדרך'</li>
-        <li><span class="ic v"><svg viewBox="0 0 12 12"><path d="M2 6.500l2.600 2.600L10 3.400" fill="none" stroke="#06100A" stroke-width="1.800" stroke-linecap="round" stroke-linejoin="round"/></svg></span>את מתבלבלת מההמלצות ברשת ולא בטוחה איפה נכון להשקיע</li>
-        <li><span class="ic v"><svg viewBox="0 0 12 12"><path d="M2 6.500l2.600 2.600L10 3.400" fill="none" stroke="#06100A" stroke-width="1.800" stroke-linecap="round" stroke-linejoin="round"/></svg></span>את פתוחה ללמוד, לתרגל ולהתקדם, גם ברמה המקצועית וגם ברמה העסקית והאישית</li></ul></div>
+        <li><span class="ic v"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.6 2.6L10 3.4" fill="none" stroke="#06100A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>סיימת קורס קוסמטיקה ואת מרגישה שחסרים לך כלים אמיתיים לעבודה בשטח</li>
+        <li><span class="ic v"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.6 2.6L10 3.4" fill="none" stroke="#06100A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>יש לך רצון להרוויח מהתחום הזה כמו שצריך ולא רק 'לטפל על הדרך'</li>
+        <li><span class="ic v"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.6 2.6L10 3.4" fill="none" stroke="#06100A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>את מתבלבלת מההמלצות ברשת ולא בטוחה איפה נכון להשקיע</li>
+        <li><span class="ic v"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.6 2.6L10 3.4" fill="none" stroke="#06100A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>את פתוחה ללמוד, לתרגל ולהתקדם, גם ברמה המקצועית וגם ברמה העסקית והאישית</li></ul></div>
       <div class="col no" data-reveal><h3>פחות מתאים אם</h3><ul>
-        <li><span class="ic x"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="#FF9AA5" stroke-width="1.600" stroke-linecap="round"/></svg></span>את לא מתכוונת ליישם בפועל, רק לשמוע ולהמשיך כרגיל</li>
-        <li><span class="ic x"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="#FF9AA5" stroke-width="1.600" stroke-linecap="round"/></svg></span>את מחפשת פתרון קסם בלי תהליך של למידה ותרגול</li>
-        <li><span class="ic x"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="#FF9AA5" stroke-width="1.600" stroke-linecap="round"/></svg></span>את לא מוכנה להסתכל לעסק שלך בעיניים ולבחון מה באמת מעכב אותך</li>
-        <li><span class="ic x"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="#FF9AA5" stroke-width="1.600" stroke-linecap="round"/></svg></span>את לא פתוחה ללמוד, לקבל דרכים חדשות ושינויים חדשים להתקדמות בעסק</li></ul></div>
+        <li><span class="ic x"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="#FF9AA5" stroke-width="1.6" stroke-linecap="round"/></svg></span>את לא מתכוונת ליישם בפועל, רק לשמוע ולהמשיך כרגיל</li>
+        <li><span class="ic x"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="#FF9AA5" stroke-width="1.6" stroke-linecap="round"/></svg></span>את מחפשת פתרון קסם בלי תהליך של למידה ותרגול</li>
+        <li><span class="ic x"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="#FF9AA5" stroke-width="1.6" stroke-linecap="round"/></svg></span>את לא מוכנה להסתכל לעסק שלך בעיניים ולבחון מה באמת מעכב אותך</li>
+        <li><span class="ic x"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="#FF9AA5" stroke-width="1.6" stroke-linecap="round"/></svg></span>את לא פתוחה ללמוד, לקבל דרכים חדשות ושינויים חדשים להתקדמות בעסק</li></ul></div>
     </div>
   </div>
 </section>
 
 <!-- 7. פרטי הקורס -->
-<section class="s-details" id="details">
+<section class="s-details t-dark" id="details" data-theme="bronze">
   <div class="wrap" style="text-align:center">
     <p class="eyebrow" style="justify-content:center">המחזור הקרוב</p>
     <h2 data-split>פרטי <strong>הקורס</strong></h2>
     <div class="divider c"><i></i></div>
+    <div class="det-slot" id="detSlot" data-bottle data-sub="COHORT" data-yaw="16" data-roll="-6" data-scale="1" data-c="#E6D09C" data-glow=".25"></div>
     <div class="det" data-reveal><div class="det-in"><dl style="text-align:start">
       <div><dt>המחזור הקרוב</dt><dd>[תאריך המחזור]</dd></div>
       <div><dt>מיקום</dt><dd>[מיקום או זום]</dd></div>
@@ -494,8 +562,8 @@ if(rm)d.classList.add('rm');else d.classList.add('intro-lock');})();
   </div>
 </section>
 
-<!-- 8. שאלות נפוצות -->
-<section class="s-faq" id="faq">
+<!-- 8. שאלות נפוצות (דף קרם) -->
+<section class="s-faq t-cream sheet" id="faq" data-theme="hero">
   <div class="wrap">
     <p class="eyebrow">שאלות ותשובות</p>
     <h2 data-split>שאלות <strong>נפוצות</strong></h2>
@@ -512,10 +580,10 @@ if(rm)d.classList.add('rm');else d.classList.add('intro-lock');})();
 </section>
 
 <!-- 9. הרשמה -->
-<section class="s-reg" id="register">
-  <div class="fern f3" data-fern="13" aria-hidden="true"></div>
-  <div class="fern f4" data-fern="9" aria-hidden="true"></div>
+<section class="s-reg t-dark" id="register" data-theme="gold">
+  <div class="deco"><div class="fern f3" data-fern="13" aria-hidden="true"></div><div class="fern f4" data-fern="9" aria-hidden="true"></div></div>
   <div class="wrap reg">
+    <div class="reg-slot" id="regSlot" data-bottle data-sub="YOURS" data-yaw="-8" data-roll="3" data-scale="1" data-c="#E6D09C" data-glow=".7" data-open="1.15"></div>
     <p class="eyebrow" style="justify-content:center">ההזדמנות שלך</p>
     <h2 data-split>רוצה לשמוע על <strong>המחזור הקרוב?</strong></h2>
     <div class="divider c"><i></i></div>
@@ -532,7 +600,7 @@ if(rm)d.classList.add('rm');else d.classList.add('intro-lock');})();
       <h3>תודה, קיבלנו</h3><p class="sub">ענבר או מישהי מהצוות תחזור אלייך בקרוב.</p>
     </div>
     <div class="or"><span>או</span></div>
-    <a class="btn btn-wa block" id="waBtn" href="#" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.600 15.100L2 22l5-1.300A10 10 0 1 0 12 2zm0 18.200c-1.500 0-3-.4-4.200-1.200l-.3-.2-3 .8.8-2.900-.2-.3A8.200 8.200 0 1 1 12 20.200zm4.500-6.100c-.2-.1-1.500-.7-1.700-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.200-.3.200-.5.100-1.400-.7-2.300-1.200-3.200-2.800-.2-.4.200-.4.700-1.300.1-.2 0-.3 0-.5l-.8-1.800c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.100-.7.300-.7.700-1 1.500-1 2.400.1 1 .5 2 1.300 2.900 1.500 1.900 3.100 2.800 4.800 3.300 1.500.4 2.500.3 3.200-.2.500-.4.900-1 1.100-1.600.1-.3.100-.6 0-.7l-.6-.3z"/></svg>אני רוצה לשמוע על המחזור הקרוב</a>
+    <a class="btn btn-wa block" id="waBtn" href="#" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-1.4-.7-2.3-1.2-3.2-2.8-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.7.7-1 1.5-1 2.4.1 1 .5 2 1.3 2.9 1.5 1.9 3.1 2.8 4.8 3.3 1.5.4 2.5.3 3.2-.2.5-.4.9-1 1.1-1.6.1-.3.1-.6 0-.7l-.6-.3z"/></svg>אני רוצה לשמוע על המחזור הקרוב</a>
   </div>
 </section>
 </main>
@@ -548,29 +616,33 @@ var CONFIG={
 </script>
 
 <script>
-/* ===== בסיס: תוכן ואינטראקציות (בלי תלות בספריות) ===== */
+/* ===== בסיס: תוכן, ניווט ואינטראקציות (בלי תלות בספריות) ===== */
 (function(){
-  var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var rm=matchMedia('(prefers-reduced-motion: reduce)').matches,fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var $=function(s,c){return (c||document).querySelector(s);},$$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
 
   // שרכים פרוצדורליים
   function fern(n){
     var st=function(t){var u=1-t;return{x:u*u*u*100+3*u*u*t*100+3*u*t*t*112+t*t*t*158,y:u*u*u*400+3*u*u*t*290+3*u*t*t*170+t*t*t*30}};
     var out='<path d="M100 400C100 290 112 170 158 30" fill="none" stroke="currentColor" stroke-width="2.2" opacity=".7"/>';
     for(var i=1;i<=n;i++){
-      var t=i/(n+1),p=st(t),q=st(Math.min(1,t+.02)),a=Math.atan2(q.y-p.y,q.x-p.x)*180/Math.PI;
-      var L=78*(1-t*.78),w=L*.2;
+      var t=i/(n+1),p=st(t),q=st(Math.min(1,t+.02)),a=Math.atan2(q.y-p.y,q.x-p.x)*180/Math.PI,L=78*(1-t*.78),w=L*.2;
       [-1,1].forEach(function(s){
         out+='<path transform="translate('+p.x.toFixed(1)+' '+p.y.toFixed(1)+') rotate('+(a+s*(62-t*18)).toFixed(1)+')" d="M0 0Q'+(L*.5).toFixed(1)+' '+(-w).toFixed(1)+' '+L.toFixed(1)+' 0Q'+(L*.5).toFixed(1)+' '+w.toFixed(1)+' 0 0Z" fill="currentColor" opacity="'+(.55+.4*(1-t)).toFixed(2)+'"/>';
       });
     }
     return '<svg viewBox="-20 0 240 400" aria-hidden="true">'+out+'</svg>';
   }
-  document.querySelectorAll('[data-fern]').forEach(function(el){el.innerHTML=fern(+el.dataset.fern);});
+  $$('[data-fern]').forEach(function(el){el.innerHTML=fern(+el.dataset.fern);});
+
+  // תמונת גיבוי לבקבוק בכל משבצת
+  var tpl=$('#bottleSvg');
+  $$('[data-bottle]').forEach(function(s){s.appendChild(tpl.content.cloneNode(true));});
 
   // רצועת טקסט
-  var tk=['26 שנות ניסיון','3,000+ מטופלות','3 מפגשים מעשיים','קבוצות קטנות ויחס אישי','ליווי גם אחרי הקורס'],th='';
+  var tk=['קליניקה מלאה','סדרות טיפולים','ביטחון מקצועי','הכנסה יציבה','שיווק שעובד'],th='';
   for(var r=0;r<4;r++)tk.forEach(function(t){th+='<span>'+t+'</span>';});
-  document.getElementById('tickerTrack').innerHTML=th;
+  $('#tickerTrack').innerHTML=th;
 
   // בועות המלצה
   var tests=[
@@ -581,17 +653,17 @@ var CONFIG={
     'חייבת לומר לך שכל דקה אצלך בקליניקה היא עוצמתית, חוויתית, ברמות גבוהות.',
     'תודה שאיפשרת לי לרכוש את המוצרים. זה אומר הכל על איזה חומר את עשויה.'];
   var check='<svg viewBox="0 0 18 11" aria-hidden="true"><path d="M1 6l3 3 6-7M7.5 8.5l1 .8 7-8" fill="none" stroke="#a78542" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-  var track=document.getElementById('chatTrack'),html='';
+  var html='';
   for(var r2=0;r2<(rm?1:2);r2++)tests.forEach(function(t){
     html+='<figure class="bubble-wrap"'+(r2?' aria-hidden="true"':'')+'><blockquote class="bubble">'+t+check+'</blockquote><small>מטופלת</small></figure>';});
-  track.innerHTML=html;
-  var chat=document.getElementById('chat');
+  $('#chatTrack').innerHTML=html;
+  var chat=$('#chat');
   ['pointerdown','mouseenter','focusin'].forEach(function(e){chat.addEventListener(e,function(){chat.classList.add('paused')})});
   ['pointerup','pointercancel','mouseleave','focusout'].forEach(function(e){chat.addEventListener(e,function(){chat.classList.remove('paused')})});
 
   // אקורדיון
-  document.querySelectorAll('.acc').forEach(function(box){
-    var btn=box.querySelector('button'),panel=box.querySelector('.panel');
+  $$('.acc').forEach(function(box){
+    var btn=$('button',box),panel=$('.panel',box);
     btn.addEventListener('click',function(){
       var open=btn.getAttribute('aria-expanded')==='true';
       btn.setAttribute('aria-expanded',String(!open));panel.classList.toggle('is-open',!open);
@@ -599,7 +671,7 @@ var CONFIG={
   });
 
   // סליידר לפני ואחרי
-  var ba=document.getElementById('ba'),after=document.getElementById('baAfter'),handle=document.getElementById('baHandle'),pos=50,drag=false;
+  var ba=$('#ba'),after=$('#baAfter'),handle=$('#baHandle'),pos=50,drag=false;
   function setPos(p){pos=Math.max(0,Math.min(100,p));
     after.style.clipPath='inset(0 0 0 '+pos+'%)';handle.style.left=pos+'%';ba.setAttribute('aria-valuenow',Math.round(pos));ba.setAttribute('aria-valuetext',Math.round(pos)+' אחוז מהתמונה של אחרי');}
   function fromEvent(e){var rc=ba.getBoundingClientRect();setPos((e.clientX-rc.left)/rc.width*100);}
@@ -614,31 +686,64 @@ var CONFIG={
   });
   setPos(50);
 
-  // כפתור צמוד
-  var sticky=document.getElementById('sticky'),hero=document.getElementById('hero'),reg=document.getElementById('register');
+  // כפתור צמוד, התקדמות וכותרת
+  var sticky=$('#sticky'),hero=$('#top'),reg=$('#register'),header=$('#header'),prog=$('#progress');
   var heroGone=false,regSeen=false;
   function stickyUpdate(){sticky.classList.toggle('show',heroGone&&!regSeen);}
   new IntersectionObserver(function(en){heroGone=!en[0].isIntersecting&&en[0].boundingClientRect.bottom<0;stickyUpdate();}).observe(hero);
   new IntersectionObserver(function(en){regSeen=en[0].isIntersecting;stickyUpdate();}).observe(reg);
+  function onScroll(){
+    header.classList.toggle('scrolled',scrollY>24);
+    var max=document.documentElement.scrollHeight-innerHeight;prog.style.transform='scaleX('+(max>0?Math.min(1,scrollY/max):0)+')';
+  }
+  addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  // תפריט נייד
+  var burger=$('#burger'),menu=$('#menu'),main=$('#main'),foot=$('footer');
+  function setMenu(open){
+    menu.classList.toggle('open',open);burger.setAttribute('aria-expanded',String(open));document.documentElement.style.overflow=open?'hidden':'';
+    [main,foot].forEach(function(e){if(open)e.setAttribute('inert','');else e.removeAttribute('inert');});
+    if(open){var a=$('a',menu);if(a)a.focus();}else if(menu.contains(document.activeElement))burger.focus();
+  }
+  burger.addEventListener('click',function(){setMenu(!menu.classList.contains('open'));});
+  menu.addEventListener('click',function(e){if(e.target.closest('a'))setMenu(false);});
+  addEventListener('keydown',function(e){if(e.key==='Escape')setMenu(false);});
+  matchMedia('(min-width:900px)').addEventListener('change',function(e){if(e.matches)setMenu(false);});
+
+  // סימון פרק פעיל בתפריט
+  var navLinks=$$('.nav a');
+  ['top','course','about','results','faq'].forEach(function(id){
+    var s=document.getElementById(id);
+    new IntersectionObserver(function(en){if(en[0].isIntersecting)navLinks.forEach(function(a){a.classList.toggle('active',a.dataset.sec===id);});},{rootMargin:'-45% 0px -50% 0px'}).observe(s);
+  });
+
+  // זרקור עכבר
+  var cur=$('#cursor');
+  if(fine&&!rm){
+    var cx=0,cy=0,tx=0,ty=0;
+    addEventListener('pointermove',function(e){tx=e.clientX;ty=e.clientY;cur.classList.add('on');},{passive:true});
+    document.addEventListener('mouseleave',function(){cur.classList.remove('on');});
+    (function loop(){cx+=(tx-cx)*.14;cy+=(ty-cy)*.14;cur.style.transform='translate3d('+cx+'px,'+cy+'px,0)';requestAnimationFrame(loop);})();
+  }
 
   // וואטסאפ + טופס
-  document.getElementById('waBtn').href='https://wa.me/'+CONFIG.WA_NUMBER+'?text='+encodeURIComponent(CONFIG.WA_TEXT);
-  var form=document.getElementById('leadForm'),thanks=document.getElementById('thanks');
+  $('#waBtn').href='https://wa.me/'+CONFIG.WA_NUMBER+'?text='+encodeURIComponent(CONFIG.WA_TEXT);
+  var form=$('#leadForm'),thanks=$('#thanks');
   form.addEventListener('submit',function(e){
     e.preventDefault();
     var n=form.elements.name.value.trim(),p=form.elements.phone.value.replace(/[\s-]/g,''),okN=n.length>=2,okP=/^(\+972|0)\d{8,9}$/.test(p);
-    document.getElementById('errName').textContent=okN?'':'נא למלא שם';
-    document.getElementById('errPhone').textContent=okP?'':'נא למלא מספר טלפון תקין';
+    $('#errName').textContent=okN?'':'נא למלא שם';
+    $('#errPhone').textContent=okP?'':'נא למלא מספר טלפון תקין';
     form.elements.name.setAttribute('aria-invalid',!okN);form.elements.phone.setAttribute('aria-invalid',!okP);
     if(!okN||!okP){(okN?form.elements.phone:form.elements.name).focus();return;}
     if(form.elements.website.value)return;
-    form.querySelector('button').disabled=true;
+    $('button',form).disabled=true;
     var payload=JSON.stringify({name:n,phone:p,source:location.href,ts:new Date().toISOString()});
     if(CONFIG.WEBHOOK_URL){fetch(CONFIG.WEBHOOK_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:payload,keepalive:true}).catch(function(){});}
     else console.warn('WEBHOOK_URL לא הוגדר. הנתונים:',payload);
-    form.style.display='none';document.getElementById('limitNote').style.display='none';thanks.classList.add('show');thanks.focus();
+    form.style.display='none';$('#limitNote').style.display='none';thanks.classList.add('show');thanks.focus();
     if(window.gsap&&!rm){
-      var c=document.getElementById('tkC'),pa=document.getElementById('tkP');
+      var c=$('#tkC'),pa=$('#tkP');
       [c,pa].forEach(function(s){var l=s.getTotalLength();s.style.strokeDasharray=l;s.style.strokeDashoffset=l;});
       gsap.to(c,{strokeDashoffset:0,duration:.8,ease:'power2.out'});
       gsap.to(pa,{strokeDashoffset:0,duration:.6,delay:.6,ease:'power2.out'});
@@ -651,12 +756,20 @@ var CONFIG={
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script>
-/* ===== תנועה, גלילה ופתיחת הבקבוק התלת ממדי ===== */
+/* ===== תנועה, גלילה ובקבוק תלת ממדי שנודד בין הפרקים ===== */
 window.addEventListener('load',function(){
   var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var isMobile=matchMedia('(max-width:899px)').matches,fine=matchMedia('(pointer:fine)').matches;
-  var root=document.documentElement,introDone=false,hasG=!!(window.gsap&&window.ScrollTrigger);
-  var $=function(s){return document.querySelector(s);};
+  var isMobile=matchMedia('(max-width:899px)').matches,fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var root=document.documentElement,introDone=false,hasG=!!(window.gsap&&window.ScrollTrigger),api=null;
+  var $=function(s){return document.querySelector(s);},$$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s));};
+
+  var THEMES={hero:[31,82,56,14,38,25,4,13,8],teal:[26,77,68,11,40,35,3,14,12],moss:[68,84,31,29,39,17,7,10,4],forest:[23,80,58,10,34,24,3,12,9],bronze:[106,82,34,46,36,15,12,9,3],gold:[47,90,44,18,40,26,4,13,8]};
+  function applyTheme(key,dur){
+    var t=THEMES[key];if(!t)return;var b=document.body;
+    var v={'--bg-inner':'rgb('+t[0]+','+t[1]+','+t[2]+')','--bg-mid':'rgb('+t[3]+','+t[4]+','+t[5]+')','--bg-outer':'rgb('+t[6]+','+t[7]+','+t[8]+')'};
+    if(hasG&&!rm){v.duration=dur||1.4;v.ease='power2.inOut';v.overwrite='auto';gsap.to(b,v);}
+    else for(var k in v)b.style.setProperty(k,v[k]);
+  }
 
   function heroIn(){
     if(!hasG||rm)return;
@@ -672,11 +785,11 @@ window.addEventListener('load',function(){
     heroIn();
     if(hasG)setTimeout(function(){ScrollTrigger.refresh();},60);
   }
-  setTimeout(endIntro,14000);
+  setTimeout(endIntro,16000);
 
   if(hasG&&!rm)initPage();
   if(rm||!hasG){endIntro();if(rm)return;}
-  initScene().then(function(api){if(!api){endIntro();return;}api.play();}).catch(endIntro);
+  initScene().then(function(a){if(!a){endIntro();return;}api=a;a.play();}).catch(endIntro);
 
   /* ---------- גלילה ואפקטים ---------- */
   function initPage(){
@@ -694,7 +807,7 @@ window.addEventListener('load',function(){
         }else if(ch.nodeType===1)splitNode(ch);
       });
     }
-    document.querySelectorAll('[data-split]').forEach(function(el){
+    $$('[data-split]').forEach(function(el){
       splitNode(el);
       if(el.closest('.hero')){gsap.set(el.querySelectorAll('.w>i'),{yPercent:115});return;}
       gsap.fromTo(el.querySelectorAll('.w>i'),{yPercent:115},{yPercent:0,duration:1,ease:'power4.out',stagger:.07,scrollTrigger:{trigger:el,start:'top 88%',once:true}});
@@ -704,40 +817,48 @@ window.addEventListener('load',function(){
     });
     gsap.from('[data-card]',{y:50,opacity:0,duration:.9,ease:'power3.out',stagger:.16,scrollTrigger:{trigger:'.cards3',start:'top 85%',once:true}});
 
-    document.querySelectorAll('[data-count]').forEach(function(el){
+    $$('[data-count]').forEach(function(el){
       var end=+el.dataset.count,o={v:0};el.textContent='0';
-      ScrollTrigger.create({trigger:el,start:'top 94%',once:true,onEnter:function(){
-        gsap.to(o,{v:end,duration:2,ease:'power2.out',delay:introDone?0:.2,onUpdate:function(){el.textContent=Math.round(o.v).toLocaleString('en');}});}});
+      ScrollTrigger.create({trigger:el,start:'top 96%',once:true,onEnter:function(){
+        gsap.to(o,{v:end,duration:2.2,ease:'power2.out',delay:introDone?0:.3,onUpdate:function(){el.textContent=Math.round(o.v).toLocaleString('en');}});}});
     });
 
     gsap.fromTo('#tlFill',{scaleY:0},{scaleY:1,ease:'none',scrollTrigger:{trigger:'#tl',start:'top 60%',end:'bottom 60%',scrub:true}});
-    document.querySelectorAll('.station').forEach(function(st){
-      ScrollTrigger.create({trigger:st,start:'top+=36 60%',onEnter:function(){st.classList.add('on');},onLeaveBack:function(){st.classList.remove('on');}});
+    $$('.station').forEach(function(st){
+      ScrollTrigger.create({trigger:st,start:'top+=36 60%',onEnter:function(){st.classList.add('on');if(api)api.sub(st.dataset.sub);},onEnterBack:function(){if(api)api.sub(st.dataset.sub);},onLeaveBack:function(){st.classList.remove('on');}});
     });
 
     var pimg=$('#parallaxImg');
     if(pimg)gsap.fromTo(pimg,{yPercent:-6},{yPercent:6,ease:'none',scrollTrigger:{trigger:'.about-img',start:'top bottom',end:'bottom top',scrub:true}});
     gsap.utils.toArray('.fern').forEach(function(f,i){
-      gsap.to(f,{y:(i%2?-1:1)*60,ease:'none',scrollTrigger:{trigger:f.parentElement,start:'top bottom',end:'bottom top',scrub:true}});
+      gsap.to(f,{y:(i%2?-1:1)*60,ease:'none',scrollTrigger:{trigger:f.closest('section'),start:'top bottom',end:'bottom top',scrub:true}});
+    });
+    gsap.to('.ticker-track',{skewX:-6,ease:'none',scrollTrigger:{trigger:'.ticker',start:'top bottom',end:'bottom top',scrub:.6}});
+
+    // רקע שמשנה גוון לפי הפרק
+    ScrollTrigger.create({trigger:'#top',start:'top 60%',end:'bottom 60%',onToggle:function(s){if(s.isActive)applyTheme('hero');}});
+    $$('section[data-theme]').forEach(function(sec){
+      if(sec.id==='top')return;
+      ScrollTrigger.create({trigger:sec,start:'top 58%',end:'bottom 58%',onToggle:function(s){if(s.isActive)applyTheme(sec.dataset.theme);}});
     });
 
     if(fine){
-      document.querySelectorAll('.glass').forEach(function(g){
+      $$('.glass').forEach(function(g){
         g.addEventListener('pointermove',function(e){var r=g.getBoundingClientRect();g.style.setProperty('--mx',(e.clientX-r.left)+'px');g.style.setProperty('--my',(e.clientY-r.top)+'px');});
       });
-      document.querySelectorAll('[data-magnet]').forEach(function(b){
+      $$('[data-magnet]').forEach(function(b){
         b.addEventListener('pointermove',function(e){var r=b.getBoundingClientRect();gsap.to(b,{x:(e.clientX-r.left-r.width/2)*.18,y:(e.clientY-r.top-r.height/2)*.28,duration:.3});});
         b.addEventListener('pointerleave',function(){gsap.to(b,{x:0,y:0,duration:.6,ease:'elastic.out(1,.5)'});});
       });
     }
 
     // טיפה וגל
-    var drop=$('#drop'),sec=$('#problem'),bg=$('#rippleBg'),rings=document.querySelectorAll('#rings i'),slot=$('#bottleSlot');
+    var drop=$('#drop'),sec=$('#problem'),bg=$('#rippleBg'),rings=$$('#rings i'),slot=$('#bottleSlot');
     var endScroll=0,startX=0,startDocY=0,secH=0,vw=0,vh=function(){return innerHeight;};
     function measure(){
       var r=slot.getBoundingClientRect(),sy=scrollY;
       vw=innerWidth;secH=sec.offsetHeight;
-      startX=r.left+r.width/2;startDocY=r.top+sy+r.height*.1;
+      startX=r.left+r.width/2;startDocY=r.top+sy+r.height*.08;
       endScroll=Math.max(240,sec.getBoundingClientRect().top+sy-vh()*.5);
     }
     var ss=function(a,b,x){x=Math.min(1,Math.max(0,(x-a)/(b-a)));return x*x*(3-2*x);};
@@ -756,19 +877,21 @@ window.addEventListener('load',function(){
         ring.style.width=ring.style.height=(rr*2)+'px';ring.style.opacity=qi>0&&qi<1?(.7*(1-qi)):0;
       });
     }
-    var onScroll=function(){frame(scrollY);};
-    ScrollTrigger.create({start:0,end:'max',onUpdate:onScroll,onRefresh:function(){measure();onScroll();}});
-    measure();onScroll();addEventListener('resize',function(){measure();onScroll();});
+    var onS=function(){frame(scrollY);};
+    ScrollTrigger.create({start:0,end:'max',onUpdate:onS,onRefresh:function(){measure();onS();}});
+    measure();onS();addEventListener('resize',function(){measure();onS();});
   }
 
-  /* ---------- הבקבוק ---------- */
+  /* ---------- הבקבוק: אחד, נודד בין הפרקים ---------- */
   async function initScene(){
-    var canvas=$('#scene'),slot=$('#bottleSlot'),fb=$('#bottleFallback'),THREE;
+    var canvas=$('#scene'),THREE;
     try{THREE=await import('https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.module.min.js');}catch(e){return null;}
     var renderer;
     try{renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true,powerPreference:'high-performance'});}catch(e){return null;}
     renderer.setPixelRatio(Math.min(devicePixelRatio||1,isMobile?1.5:2));
     renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;renderer.setClearColor(0x000000,0);
+    canvas.addEventListener('webglcontextlost',function(e){e.preventDefault();root.classList.remove('gl-on');});
+    canvas.addEventListener('webglcontextrestored',function(){root.classList.add('gl-on');});
 
     var scene=new THREE.Scene(),FOV=28,D=10,camera=new THREE.PerspectiveCamera(FOV,1,.1,60);
     var visH=2*D*Math.tan(THREE.MathUtils.degToRad(FOV/2));
@@ -779,34 +902,34 @@ window.addEventListener('load',function(){
     function panel(w,h,p,k,col){var m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({color:new THREE.Color(col||0xffffff).multiplyScalar(k),side:THREE.DoubleSide}));m.position.set(p[0],p[1],p[2]);m.lookAt(0,0,0);env.add(m);}
     panel(7,4,[6,8,5],10);panel(1.4,9,[-9,0,3],7);panel(10,1.4,[0,11,-2],6);panel(2,8,[3,0,-10],6,0xC9A96E);panel(6,6,[-6,-3,6],1.1,0x6BAA75);
     var pm=new THREE.PMREMGenerator(renderer);scene.environment=pm.fromScene(env,.04).texture;
-
     var key=new THREE.DirectionalLight(0xffffff,2.4);key.position.set(3,5,5);scene.add(key);
     var rim=new THREE.DirectionalLight(0xC9A96E,3.4);rim.position.set(-3,3,-4);scene.add(rim);
     scene.add(new THREE.AmbientLight(0xdfeedd,.3));
-    var glowLight=new THREE.PointLight(0xffd38a,0,5,2);glowLight.position.set(0,2,.4);
+    var glowLight=new THREE.PointLight(0xffd38a,0,5,2);
 
-    // פרופיל הבקבוק
+    // פרופיל הבקבוק (מקור הגוף במרכז הבקבוק)
+    var BH=3.0,CY=BH/2;
     var ctrl=[[0,0],[.42,0],[.57,.03],[.62,.14],[.62,1.05],[.6,1.22],[.5,1.38],[.36,1.52],[.27,1.6],[.235,1.7],[.235,1.92]];
     var outer=new THREE.SplineCurve(ctrl.map(function(a){return new THREE.Vector2(a[0],a[1]);})).getPoints(90).map(function(v){return new THREE.Vector2(Math.max(0,v.x),v.y);});
     var glass=new THREE.Mesh(new THREE.LatheGeometry(outer,64),new THREE.MeshPhysicalMaterial({color:0x072015,roughness:.1,metalness:.22,clearcoat:1,clearcoatRoughness:.03,envMapIntensity:1.25,emissive:0x031109,emissiveIntensity:.5,side:THREE.DoubleSide}));
 
-    // תווית זהב
+    // תווית זהב (השורה התחתונה מתחלפת בין הפרקים)
     var cv=document.createElement('canvas');cv.width=680;cv.height=400;
     var cx=cv.getContext('2d'),tex=new THREE.CanvasTexture(cv);tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=4;
+    var subText='SERUM';
     function drawLabel(){
       cx.clearRect(0,0,680,400);cx.textAlign='center';cx.fillStyle='#E9D6A4';cx.strokeStyle='#E9D6A4';
       cx.save();cx.translate(340,92);cx.lineWidth=3;cx.beginPath();cx.moveTo(0,40);cx.bezierCurveTo(-34,22,-30,-24,0,-40);cx.bezierCurveTo(30,-24,34,22,0,40);cx.stroke();cx.beginPath();cx.moveTo(0,-34);cx.lineTo(0,46);cx.stroke();cx.restore();
-      cx.font='300 88px Heebo, sans-serif';if('letterSpacing' in cx)cx.letterSpacing='22px';
+      cx.font='300 92px Cormorant Garamond, Georgia, serif';if('letterSpacing' in cx)cx.letterSpacing='22px';
       cx.fillText('INBAR',340+11,245);
       cx.lineWidth=2.5;cx.beginPath();cx.moveTo(190,278);cx.lineTo(490,278);cx.stroke();
-      cx.font='300 28px Heebo, sans-serif';if('letterSpacing' in cx)cx.letterSpacing='12px';cx.fillText('SERUM',340+6,330);tex.needsUpdate=true;
+      cx.font='500 28px Heebo, sans-serif';if('letterSpacing' in cx)cx.letterSpacing='10px';cx.fillText(subText,340+5,330);tex.needsUpdate=true;
     }
     drawLabel();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(drawLabel);
     var len=1.9,label=new THREE.Mesh(new THREE.CylinderGeometry(.628,.628,.72,64,1,true,-len/2,len),
       new THREE.MeshStandardMaterial({map:tex,transparent:true,roughness:.35,metalness:.75,envMapIntensity:1.4,depthWrite:false}));
     label.position.y=.62;
 
-    // צווארון, פקק וטפטפת
     var ring=new THREE.Mesh(new THREE.CylinderGeometry(.3,.3,.2,48),new THREE.MeshStandardMaterial({color:0xdcc78f,metalness:1,roughness:.28,envMapIntensity:1.5}));ring.position.y=1.9;
     var rubber=new THREE.MeshPhysicalMaterial({color:0x0a0a0a,roughness:.55,clearcoat:.35,clearcoatRoughness:.4});
     var cap=new THREE.Group();
@@ -818,96 +941,161 @@ window.addEventListener('load',function(){
 
     var dropM=new THREE.Mesh(new THREE.SphereGeometry(.058,24,16),new THREE.MeshStandardMaterial({color:0xF2C96A,emissive:0xE0A33A,emissiveIntensity:1.4,roughness:.15}));dropM.visible=false;
 
-    // זוהר מהצוואר
-    var liqTop=new THREE.Mesh(new THREE.CircleGeometry(.2,32).rotateX(-Math.PI/2),new THREE.MeshBasicMaterial({color:0xf5cf7d,transparent:true,opacity:0,depthWrite:false}));liqTop.position.y=1.55;
+    var liqTop=new THREE.Mesh(new THREE.CircleGeometry(.2,32).rotateX(-Math.PI/2),new THREE.MeshBasicMaterial({color:0xf5cf7d,transparent:true,opacity:0,depthWrite:false}));
     var sc=document.createElement('canvas');sc.width=64;sc.height=256;var sx=sc.getContext('2d'),id=sx.createImageData(64,256);
     for(var yy=0;yy<256;yy++)for(var xx=0;xx<64;xx++){var gx=Math.exp(-Math.pow((xx-31.5)/13,2)),gy=Math.pow(1-yy/255,1.6),a=gx*gy,k=(yy*64+xx)*4;id.data[k]=255;id.data[k+1]=222;id.data[k+2]=150;id.data[k+3]=Math.round(a*255);}
     sx.putImageData(id,0,0);
-    var shaft=new THREE.Mesh(new THREE.PlaneGeometry(1.2,3.6),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(sc),transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthWrite:false}));shaft.position.set(0,3.7,.2);
+    var shaft=new THREE.Mesh(new THREE.PlaneGeometry(1.2,3.6),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(sc),transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthWrite:false}));
 
-    var bottle=new THREE.Group();bottle.add(glass,label,ring,cap,liqTop);
-    var spin=new THREE.Group();spin.add(bottle);
-    var tilt=new THREE.Group();tilt.add(spin);
-    var rig=new THREE.Group();rig.add(tilt,dropM,shaft,glowLight);scene.add(rig);
-    var BH=3.0;
+    var bottle=new THREE.Group();bottle.add(glass,label,ring,cap);
+    var rig=new THREE.Group();rig.add(bottle,dropM,shaft,liqTop,glowLight);scene.add(rig);
+
+    // צללית רפאים: שני הדהודים מאחורי הבקבוק, נפתחים עם מהירות הגלילה
+    var sil=[],capPts=[[.3,1.9],[.3,2.02],[.23,2.02],[.23,2.4],[.2,2.62],[.12,2.84],[0,2.93]];
+    outer.forEach(function(v){sil.push([v.x,v.y]);});
+    capPts.forEach(function(v){sil.push(v);});
+    var pts=[];
+    sil.forEach(function(v){pts.push(new THREE.Vector2(v[0]+.06,v[1]-CY));});
+    for(var i2=sil.length-1;i2>=0;i2--)pts.push(new THREE.Vector2(-(sil[i2][0]+.06),sil[i2][1]-CY));
+    var shp=new THREE.Shape(pts);
+    var ghosts=[0,1].map(function(){
+      var g=new THREE.Group();
+      g.add(new THREE.Mesh(new THREE.ShapeGeometry(shp),new THREE.MeshBasicMaterial({color:0xE6D09C,transparent:true,opacity:0,side:THREE.DoubleSide,depthWrite:false})));
+      g.add(new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0xE6D09C,transparent:true,opacity:0})));
+      rig.add(g);return g;
+    });
 
     // גחליליות
-    var N=isMobile?90:150,pos=new Float32Array(N*3),ph=new Float32Array(N),sz=new Float32Array(N),col=new Float32Array(N*3),spd=new Float32Array(N);
+    var N=isMobile?90:150,ppos=new Float32Array(N*3),ph=new Float32Array(N),sz=new Float32Array(N),col=new Float32Array(N*3),spd=new Float32Array(N);
     var c1=new THREE.Color(0xE6D09C),c2=new THREE.Color(0xB9DB82);
     var extX=3,extY=visH/2+.5;
-    for(var i=0;i<N;i++){pos[i*3]=(Math.random()*2-1)*extX;pos[i*3+1]=(Math.random()*2-1)*extY;pos[i*3+2]=-3+Math.random()*6;ph[i]=Math.random();sz[i]=.5+Math.random()*1.2;spd[i]=.03+Math.random()*.08;var c=c1.clone().lerp(c2,Math.random()*.6);col[i*3]=c.r;col[i*3+1]=c.g;col[i*3+2]=c.b;}
-    var pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(pos,3));pg.setAttribute('aPhase',new THREE.BufferAttribute(ph,1));pg.setAttribute('aSize',new THREE.BufferAttribute(sz,1));pg.setAttribute('aColor',new THREE.BufferAttribute(col,3));
+    for(var i=0;i<N;i++){ppos[i*3]=(Math.random()*2-1)*extX;ppos[i*3+1]=(Math.random()*2-1)*extY;ppos[i*3+2]=-3+Math.random()*6;ph[i]=Math.random();sz[i]=.5+Math.random()*1.2;spd[i]=.03+Math.random()*.08;var c=c1.clone().lerp(c2,Math.random()*.6);col[i*3]=c.r;col[i*3+1]=c.g;col[i*3+2]=c.b;}
+    var pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(ppos,3));pg.setAttribute('aPhase',new THREE.BufferAttribute(ph,1));pg.setAttribute('aSize',new THREE.BufferAttribute(sz,1));pg.setAttribute('aColor',new THREE.BufferAttribute(col,3));
     var pmat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,uniforms:{uTime:{value:0},uPx:{value:renderer.getPixelRatio()},uBoost:{value:1}},
       vertexShader:'attribute float aPhase;attribute float aSize;attribute vec3 aColor;uniform float uTime;uniform float uPx;uniform float uBoost;varying vec3 vC;varying float vA;void main(){vec4 mv=modelViewMatrix*vec4(position,1.0);gl_Position=projectionMatrix*mv;float tw=.5+.5*sin(uTime*1.3+aPhase*6.2831);vA=(.25+.75*tw)*uBoost;vC=aColor;gl_PointSize=aSize*uPx*(62.0/-mv.z)*(.7+.6*tw);}',
       fragmentShader:'varying vec3 vC;varying float vA;void main(){float d=length(gl_PointCoord-.5);float a=smoothstep(.5,.0,d);a*=a;gl_FragColor=vec4(vC,a*vA);}'});
     var points=new THREE.Points(pg,pmat);points.frustumCulled=false;scene.add(points);
 
-    // מצב
-    var S={introY:0,rot:0,capLift:0,capSpin:0,glow:0,dropOn:0,dropT:0,dive:0,poseK:1,boost:1},introPos=new THREE.Vector3(0,-.55,0),introScale=.93;
-    var tgt={x:0,y:0},cur={x:0,y:0},MAX=THREE.MathUtils.degToRad(8);
-    addEventListener('pointermove',function(e){if(e.pointerType==='mouse'){tgt.x=(e.clientX/innerWidth-.5)*2;tgt.y=(e.clientY/innerHeight-.5)*2;}});
-    function onOrient(e){if(e.gamma==null)return;tgt.x=THREE.MathUtils.clamp(e.gamma/30,-1,1);tgt.y=THREE.MathUtils.clamp((e.beta-50)/30,-1,1);}
+    // מצב: S לפתיחה, st לעגינה
+    var S={introY:0,rot:0,capLift:0,capSpin:0,glow:0,dropOn:0,dropT:0,dive:0,poseK:1,boost:1};
+    var st={x:0,y:0,s:.001,yaw:0,roll:0,flip:0,spin:0,appear:1,gap:.2,open:0,glowT:0};
+    var introPos=new THREE.Vector3(0,-.15,0),introScale=.93,rad=Math.PI/180;
+    var mouse={x:0,y:0,sx:0,sy:0},vel=0,lastY=scrollY;
+    addEventListener('pointermove',function(e){if(e.pointerType==='mouse'){mouse.x=e.clientX/innerWidth*2-1;mouse.y=e.clientY/innerHeight*2-1;}},{passive:true});
+    function onOrient(e){if(e.gamma==null)return;mouse.x=THREE.MathUtils.clamp(e.gamma/30,-1,1);mouse.y=THREE.MathUtils.clamp((e.beta-50)/30,-1,1);}
     if(window.DeviceOrientationEvent){
       if(typeof DeviceOrientationEvent.requestPermission==='function'){
         addEventListener('touchend',function ask(){removeEventListener('touchend',ask);DeviceOrientationEvent.requestPermission().then(function(s){if(s==='granted')addEventListener('deviceorientation',onOrient);}).catch(function(){});},{once:true});
       }else addEventListener('deviceorientation',onOrient);
     }
 
-    var cw=1,ch=1;
-    function resize(){cw=canvas.clientWidth||innerWidth;ch=canvas.clientHeight||innerHeight;renderer.setSize(cw,ch,false);camera.aspect=cw/ch;camera.updateProjectionMatrix();extX=visH*camera.aspect/2+.6;}
+    var vw=1,vh=1,lastW=0,lastH=0;
+    function resize(){
+      if(lastW&&!fine&&Math.abs(innerWidth-lastW)<2&&Math.abs(innerHeight-lastH)<140)return;
+      lastW=innerWidth;lastH=innerHeight;vw=innerWidth;vh=innerHeight;
+      renderer.setSize(vw,vh,false);camera.aspect=vw/vh;camera.updateProjectionMatrix();extX=visH*camera.aspect/2+.6;
+    }
     resize();addEventListener('resize',resize);
 
-    var heroPos=new THREE.Vector3(),heroScale=1;
-    function measureHero(){
-      var r=slot.getBoundingClientRect(),wpp=visH/ch;
-      heroScale=Math.min(r.height*wpp/BH*.98,r.width*wpp/1.35);
-      heroPos.set((r.left+r.width/2-cw/2)*wpp,-(r.top+r.height/2-ch/2)*wpp-BH*heroScale*.5,0);
+    // עגינה: המשבצת הקרובה למרכז המסך
+    var slots=$$('[data-bottle]'),active=null,flipTween=null,swapCall=null,cA=new THREE.Color();
+    function nearest(){
+      var best=null,bd=1e9,ad=1e9;
+      slots.forEach(function(el){
+        var r=el.getBoundingClientRect();if(!r.height)return;
+        var cy=r.top+r.height/2,off=(r.bottom<0||r.top>vh)?3000:0,d=Math.abs(cy-vh/2)+off;
+        if(el===active)ad=d;if(d<bd){bd=d;best=el;}
+      });
+      return active&&ad<=bd+vh*.15?active:best;
+    }
+    function setSub(text){subText=text;drawLabel();$('#sr').textContent='בקבוק INBAR '+text;}
+    function onChange(el,first){
+      active=el;cA.set(el.dataset.c||'#E6D09C');
+      if(first||rm||!hasG){setSub(el.dataset.sub||'SERUM');return;}
+      if(flipTween&&flipTween.isActive()){flipTween.kill();}
+      flipTween=gsap.to(st,{flip:st.flip+360,duration:1.15,ease:'power3.inOut'});
+      if(swapCall)swapCall.kill();
+      swapCall=gsap.delayedCall(.5,function(){setSub(active.dataset.sub||'SERUM');});
+    }
+    var subBusy=null;
+    function subFlip(text){
+      if(!active||!introDone||subText===text||rm||!hasG)return;
+      var r=active.getBoundingClientRect();if(r.bottom<0||r.top>vh)return;
+      if(subBusy)subBusy.kill();
+      gsap.to(st,{flip:st.flip+360,duration:1,ease:'power3.inOut'});
+      subBusy=gsap.delayedCall(.45,function(){setSub(text);});
     }
 
     var clock=new THREE.Clock(),t=0,tl=null,flashEl=$('#flash'),titleEl=$('#introTitle');
+    var wordEl=$('#introWord'),countEl=$('#introCount');
     renderer.setAnimationLoop(function(){
       var dt=Math.min(clock.getDelta(),.05);t+=dt;
-      pmat.uniforms.uTime.value=t;pmat.uniforms.uBoost.value=S.boost;
+      var sy=scrollY;vel+=((sy-lastY)*.002-vel)*.1;lastY=sy;
+      var vabs=Math.min(Math.abs(vel),1);
+      pmat.uniforms.uTime.value=t;pmat.uniforms.uBoost.value=S.boost*(1+vabs*1.6);
       var pa=pg.attributes.position.array;
-      for(var i=0;i<N;i++){var j=i*3;pa[j+1]+=spd[i]*dt*(1+S.glow*5);pa[j]+=Math.sin(t*.4+ph[i]*9)*.002;if(pa[j+1]>extY)pa[j+1]=-extY;}
+      for(var i=0;i<N;i++){var j=i*3;pa[j+1]+=spd[i]*dt*(1+S.glow*5+vabs*6);pa[j]+=Math.sin(t*.4+ph[i]*9)*.002;if(pa[j+1]>extY)pa[j+1]=-extY;}
       pg.attributes.position.needsUpdate=true;
-      points.position.y=-(scrollY*.0016%1);
+      points.position.y=-(sy*.0016%1);
 
-      measureHero();
-      var k=S.poseK,sp=Math.min(1,Math.max(0,scrollY/(ch*.9)));
-      rig.position.set(introPos.x*(1-k)+heroPos.x*k,(introPos.y+S.introY)*(1-k)+heroPos.y*k,0);
-      rig.scale.setScalar(introScale*(1-k)+heroScale*k);
-      bottle.visible=k<1?true:(rig.position.y>-visH&&rig.position.y<visH);
-      spin.rotation.y=S.rot+Math.sin(t*.35)*.5*k+sp*Math.PI*.9;
-      bottle.position.y=Math.sin(t*1.1)*.04;
-      cur.x+=(tgt.x-cur.x)*.06;cur.y+=(tgt.y-cur.y)*.06;
-      tilt.rotation.x=cur.y*MAX;tilt.rotation.z=-cur.x*MAX;
-      cap.position.y=S.capLift+sp*.12;cap.rotation.y=S.capSpin;
+      var el=nearest();
+      if(el&&el!==active)onChange(el,active===null);
+      var k=S.poseK;
+      if(el){
+        var r=el.getBoundingClientRect(),wpp=visH/vh;
+        var s=(r.height*wpp/BH)*(+el.dataset.scale||1);s=Math.min(s,r.width*wpp/1.3*1.6);
+        var tx=((r.left+r.width/2)-vw/2)*wpp,ty=-((r.top+r.height/2)-vh/2)*wpp;
+        var lerpK=(k<1||rm)?1:1-Math.exp(-dt*11);
+        st.x+=(tx-st.x)*lerpK;st.y+=(ty-st.y)*lerpK;st.s+=(s-st.s)*lerpK;
+        var by=(+el.dataset.yaw||0)*rad,br=(+el.dataset.roll||0)*rad,lk=rm?1:1-Math.exp(-dt*5);
+        st.yaw+=(by-st.yaw)*lk;st.roll+=(br-st.roll)*lk;
+        st.open+=((+el.dataset.open||0)-st.open)*.06;st.glowT+=((+el.dataset.glow||0)-st.glowT)*.06;
+        rim.color.lerp(cA,.06);
+        ghosts.forEach(function(g){g.children[0].material.color.lerp(cA,.06);g.children[1].material.color.lerp(cA,.06);});
+      }
+      mouse.sx+=(mouse.x-mouse.sx)*.06;mouse.sy+=(mouse.y-mouse.sy)*.06;
+      st.gap+=((.2+vabs*1.5)-st.gap)*.08;
+      var app=st.appear,bob=Math.sin(t*1.1)*.04;
+      var iy=introPos.y+S.introY;
+      rig.position.set(st.x*k,iy*(1-k)+st.y*k,0);
+      rig.scale.setScalar(Math.max(introScale*(1-k)+st.s*app*k,.0001));
+      var yawTot=S.rot+mouse.sx*.5+(st.yaw+(st.flip+st.spin)*rad+(1-app)*3+Math.sin(t*.35)*.35)*k;
+      rig.rotation.set(mouse.sy*.28+vel*.4,yawTot,st.roll*k);
+      bottle.position.y=-CY+bob;
+      bottle.visible=k<1?true:(Math.abs(rig.position.y)<visH*1.2);
+      cap.position.y=S.capLift+st.open*k;cap.rotation.y=S.capSpin;
       dropM.visible=S.dropOn>0;
-      if(S.dropOn>0){var tip=.6+S.capLift-.05,yv=tip+(1.98-tip)*S.dropT,st=1+1.3*S.dropT;dropM.position.set(0,yv+bottle.position.y,0);dropM.scale.set(1/Math.sqrt(st),st,1/Math.sqrt(st));}
-      glowLight.intensity=S.glow*7;liqTop.material.opacity=S.glow;shaft.material.opacity=S.glow*.85;shaft.position.y=3.5+bottle.position.y;
-      pipLiq.material.emissiveIntensity=.8+S.glow*1.5;
-      var e=S.dive,ny=rig.position.y+1.92*rig.scale.y;
+      if(S.dropOn>0){var tip=.6+S.capLift-.05,yv=tip+(1.98-tip)*S.dropT,sst=1+1.3*S.dropT;dropM.position.set(0,yv-CY+bob,0);dropM.scale.set(1/Math.sqrt(sst),sst,1/Math.sqrt(sst));}
+      var gl=Math.max(S.glow,st.glowT*k);
+      glowLight.intensity=gl*7;liqTop.material.opacity=gl;shaft.material.opacity=gl*.85;
+      glowLight.position.set(0,1.92-CY+.4,.4);liqTop.position.set(0,1.55-CY+bob,0);shaft.position.set(0,3.5-CY+bob,.2);
+      pipLiq.material.emissiveIntensity=.8+gl*1.5;
+      ghosts.forEach(function(g,i2){g.position.z=-(i2+1)*st.gap*.6-.05;g.scale.setScalar(1+(i2+1)*.03);var o=Math.min(1,k*app);g.children[0].material.opacity=.05*o;g.children[1].material.opacity=.35*o;});
+      var e=S.dive,ny=rig.position.y+(1.92-CY)*rig.scale.y;
       camera.position.set(0,ny*e,D-(D-2.7)*e);camera.lookAt(0,ny*e,0);
       renderer.render(scene,camera);
     });
 
-    function showCanvas(){canvas.style.opacity='1';if(fb)fb.style.visibility='hidden';}
+    function showCanvas(){canvas.style.opacity='1';root.classList.add('gl-on');}
     function finish(){
       if(tl)tl.kill();
-      S.poseK=1;S.dive=0;S.dropOn=0;S.introY=0;S.rot=0;S.capLift=0;S.capSpin=0;S.glow=0;S.boost=1;
+      S.poseK=1;S.dive=0;S.dropOn=0;S.introY=0;S.rot=0;S.capLift=0;S.capSpin=0;S.glow=0;S.boost=1;st.appear=1;
       showCanvas();endIntro();
     }
     $('#skipIntro').addEventListener('click',finish);
 
-    return {play:function(){
+    return {sub:subFlip,play:function(){
       if(!hasG){finish();return;}
-      S.poseK=0;S.introY=-3.4;S.rot=-Math.PI;
-      canvas.style.opacity='0';if(fb)fb.style.visibility='hidden';
+      S.poseK=0;S.introY=-3.4;S.rot=-Math.PI;st.appear=1;
+      canvas.style.opacity='0';root.classList.add('gl-on');
+      var cnt={v:0};
       tl=gsap.timeline({defaults:{ease:'power3.out'}});
       tl.to(canvas,{opacity:1,duration:.9},0)
+        .to('.intro-line',{scaleY:1,duration:1.6,stagger:.2,ease:'power2.out'},0)
+        .fromTo(wordEl,{opacity:0,letterSpacing:'.5em'},{opacity:1,letterSpacing:'.18em',duration:2.4,ease:'power2.out'},.2)
         .to(S,{introY:0,rot:0,duration:1.6,ease:'power3.out'},0)
         .to(titleEl,{opacity:1,y:0,duration:1},.7)
+        .to(cnt,{v:100,duration:4.4,ease:'power1.inOut',onUpdate:function(){countEl.textContent=('00'+Math.round(cnt.v)).slice(-3);}},0)
         .to(S,{capLift:2.4,capSpin:Math.PI*4,duration:1.7,ease:'power2.inOut'},1.5)
         .to(S,{glow:.55,duration:1.4,ease:'power1.inOut'},1.7)
         .to(titleEl,{opacity:0,duration:.6},2.6)
@@ -917,15 +1105,16 @@ window.addEventListener('load',function(){
         .to(S,{dive:1,duration:1,ease:'power3.in'},3.7)
         .to(flashEl,{opacity:1,duration:.5,ease:'power2.in'},4.3)
         .add(function(){
-          S.poseK=1;S.dive=0;S.dropOn=0;S.introY=0;S.rot=0;S.capLift=1.3;S.capSpin=Math.PI*4;S.glow=.9;
+          S.poseK=1;S.dive=0;S.dropOn=0;S.introY=0;S.rot=0;S.capLift=1.3;S.capSpin=Math.PI*4;S.glow=.9;st.appear=0;
           var c=$('#intro');if(c)c.remove();
           root.classList.remove('intro-lock');introDone=true;
           heroIn();
         },4.85)
         .to(flashEl,{opacity:0,duration:1.2,ease:'power2.out'},4.9)
-        .to(S,{capLift:0,capSpin:Math.PI*2,duration:1.5,ease:'power3.inOut'},5.2)
-        .to(S,{glow:0,boost:1,duration:1.4},5.2)
-        .add(function(){ScrollTrigger.refresh();},6.8);
+        .to(st,{appear:1,duration:1.8,ease:'expo.out'},4.9)
+        .to(S,{capLift:0,capSpin:Math.PI*2,duration:1.5,ease:'power3.inOut'},5.4)
+        .to(S,{glow:0,boost:1,duration:1.4},5.4)
+        .add(function(){ScrollTrigger.refresh();},7);
     }};
   }
 });
