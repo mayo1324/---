@@ -1,0 +1,771 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light}body{margin:0;font:14px system-ui}img{max-width:100%}</style></head><body><meta name="claude:viewport-fit-sides" content="cover">
+<title>תיק עבודות | יהודה צברי</title>
+<meta name="description" content="תיק עבודות: אתרים, דפי נחיתה ואפליקציות בעברית, עם עיצוב, תנועה ותלת־מימד.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Secular+One&family=Rubik:wght@300;400;500;600&family=Galada&display=swap" rel="stylesheet">
+<script>
+  document.documentElement.lang = 'he';
+  document.documentElement.dir = 'rtl';
+</script>
+<style>
+  /* Layout concept: one real 3D phone lives in a fixed WebGL layer and docks onto an empty "slot"
+     in each section (hero, five projects, contact), swapping its screen as it travels. The page
+     background is a radial gradient that morphs to each project's colour world. */
+  :root {
+    color-scheme: dark;
+    --text: #ffffff;
+    --muted: rgba(255, 255, 255, .86);
+    --glass-bg: rgba(255, 255, 255, .07);
+    --glass-border: rgba(255, 255, 255, .16);
+    --pink: #fbcfe8;
+    --on-pink: #011d17;
+    --font-he: 'Secular One', 'Rubik', system-ui, sans-serif;
+    --font-body: 'Rubik', system-ui, 'Segoe UI', Arial, sans-serif;
+    --font-script: 'Galada', cursive;
+    --ease: cubic-bezier(.2, .8, .2, 1);
+  }
+  body {
+    --bg-inner: #3f5f0a; --bg-mid: #17260a; --bg-outer: #050805;
+    background: #050805;
+    background: radial-gradient(circle at center, var(--bg-inner) 0%, var(--bg-mid) 50%, var(--bg-outer) 100%) fixed;
+    color: var(--text); font-family: var(--font-body); font-weight: 300; line-height: 1.7;
+    -webkit-font-smoothing: antialiased; overflow-x: clip;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { scroll-behavior: smooth; overflow-x: hidden; scroll-padding-top: 72px; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  img { display: block; max-width: 100%; height: auto; }
+  [hidden] { display: none !important; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  :focus-visible { outline: 2px solid var(--pink); outline-offset: 4px; border-radius: 8px; }
+  ::selection { background: var(--pink); color: var(--on-pink); }
+  .wrap { width: 100%; max-width: 1280px; margin-inline: auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .label { font-family: var(--font-body); font-size: 13px; font-weight: 500; letter-spacing: .1em; color: rgba(255,255,255,.9); }
+  .glass { background: var(--glass-bg); border: 1px solid var(--glass-border); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+
+  #gl { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 110; pointer-events: none; }
+  #bubbles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .bubble { position: absolute; bottom: -50px; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(circle at 32% 30%, rgba(255,255,255,.85) 0, rgba(255,255,255,.14) 22%, rgba(255,255,255,.04) 58%, rgba(255,255,255,0) 70%);
+    border: 1px solid rgba(255,255,255,.3); }
+  @keyframes floatUp { 0% { transform: translateY(0) translateX(0) rotate(0); opacity: 0; } 10% { opacity: var(--o, .3); } 90% { opacity: var(--o, .3); } 100% { transform: translateY(-110vh) translateX(30px) rotate(360deg); opacity: 0; } }
+  .page { position: relative; z-index: 1; }
+  .progress { position: fixed; top: 0; inset-inline: 0; height: 3px; z-index: 300; transform-origin: right center; transform: scaleX(0); background: var(--pink); }
+
+  /* ---------- header + menu ---------- */
+  .header { position: fixed; top: 0; width: 100%; z-index: 200; padding: calc(1.2rem + env(safe-area-inset-top, 0px)) 4% 1rem; display: flex; justify-content: space-between; align-items: center; gap: 12px; transition: background .4s, padding .4s, box-shadow .4s; }
+  .header.scrolled { background: rgba(1, 16, 14, .55); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); padding-top: calc(.7rem + env(safe-area-inset-top, 0px)); padding-bottom: .7rem; box-shadow: 0 1px 0 rgba(255,255,255,.08); }
+  .logo { display: flex; align-items: center; gap: .5rem; font-size: 1.5rem; font-family: var(--font-script); }
+  .nav { display: flex; gap: .4rem; padding: .35rem; border-radius: 100px; background: rgba(255,255,255,.08); }
+  .nav-item { color: var(--muted); font-size: .9rem; font-weight: 400; padding: .45rem 1.2rem; border-radius: 100px; transition: all .3s ease; white-space: nowrap; }
+  .nav-item:hover, .nav-item.active { background: var(--pink); color: var(--on-pink); }
+  .contact-btn { background: rgba(0,0,0,.5); color: #fff; padding: .8rem 1.8rem; border-radius: 100px; font-weight: 500; font-size: .9rem; transition: all .3s ease; display: inline-block; }
+  .contact-btn:hover { background: rgba(0,0,0,.72); transform: translateY(-2px); }
+  .burger { display: none; width: 44px; height: 44px; border-radius: 50%; align-items: center; justify-content: center; }
+  .burger span, .burger span::before { display: block; width: 20px; height: 2px; background: #fff; border-radius: 2px; position: relative; transition: transform .3s var(--ease); }
+  .burger span::before { content: ""; position: absolute; top: 6px; }
+  .menu { position: fixed; inset: 0; z-index: 190; display: none; flex-direction: column; justify-content: center; gap: 6px; padding: 96px 28px 40px; background: rgba(1, 14, 12, .86); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); }
+  .menu.open { display: flex; }
+  .menu a { font-family: var(--font-he); font-size: clamp(34px, 11vw, 56px); line-height: 1.25; }
+  .menu a small { font-family: var(--font-body); font-size: 13px; color: var(--muted); margin-inline-start: 10px; }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; z-index: 2; height: 100vh; min-height: 660px; display: flex; align-items: center; justify-content: center; padding: 5rem 4% 0; }
+  .hero-content { display: flex; justify-content: space-between; align-items: stretch; width: 100%; height: 100%; position: relative; }
+  h1.main { font-family: var(--font-he); font-weight: 400; font-size: clamp(2.8rem, min(4.5vw, 8.4vh), 5.4rem); line-height: 1.04; letter-spacing: -.01em; text-wrap: balance; }
+  h1.main .pk { color: var(--pink); }
+  .hero-left { display: flex; flex-direction: column; height: 100%; padding: 5.6rem 0 4rem; gap: 1.6rem; z-index: 100; max-width: 520px; }
+  .hero-left .lead { color: var(--muted); font-size: 1.08rem; max-width: 40ch; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .primary-btn { display: inline-flex; align-items: center; gap: 1.2rem; background: rgba(0,0,0,.5); color: #fff; padding: .4rem 1.5rem .4rem .4rem; border-radius: 100px; font-weight: 500; transition: all .3s ease; min-height: 46px; }
+  .primary-btn:hover { background: rgba(0,0,0,.72); transform: translateY(-3px); }
+  .primary-btn .ic { background: var(--pink); color: var(--on-pink); width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 1.1rem; font-weight: 600; line-height: 1; flex: none; }
+  .ghost-btn { display: inline-flex; align-items: center; min-height: 46px; padding: 0 1.5rem; border-radius: 100px; border: 1px solid var(--glass-border); font-weight: 400; transition: background .3s; }
+  .ghost-btn:hover { background: rgba(255,255,255,.12); }
+  .scroll-cue { margin-top: auto; display: flex; align-items: center; gap: 10px; }
+  .scroll-cue i { width: 1px; height: 34px; background: var(--pink); display: block; animation: cue 2.2s ease-in-out infinite; transform-origin: top; }
+  @keyframes cue { 0%, 100% { transform: scaleY(.3); opacity: .4; } 50% { transform: scaleY(1); opacity: 1; } }
+  @keyframes fadeInEntry { to { opacity: 1; transform: none; } }
+  .enter { opacity: 0; transform: translateY(30px); animation: fadeInEntry 1s ease-out forwards; }
+  .enter.d1 { animation-delay: .15s; } .enter.d2 { animation-delay: .35s; } .enter.d3 { animation-delay: .55s; } .enter.d4 { animation-delay: .75s; }
+
+  .hero-center { display: flex; justify-content: center; align-items: center; position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+  .slot { aspect-ratio: 390 / 844; pointer-events: none; position: relative; }
+  .slot .fb { display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 30px; border: 6px solid #15171f; box-shadow: 0 30px 60px -20px rgba(0,0,0,.7); }
+  html.no-gl .slot .fb { display: block; }
+  .hero-slot { height: min(72vh, 700px); animation: float 6s ease-in-out infinite; }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px); } }
+  .hero-cap { position: absolute; z-index: 120; bottom: 1.4rem; left: 0; right: 0; margin-inline: auto; width: fit-content; max-width: calc(100% - 32px); display: flex; align-items: center; gap: 14px; padding: .5rem .5rem .5rem 1.3rem; border-radius: 100px; font-size: .95rem; transition: background .3s; }
+  .hero-cap:hover { background: rgba(255,255,255,.16); }
+  .hero-cap b { font-weight: 500; white-space: nowrap; } .hero-cap span { color: var(--muted); font-size: .82rem; white-space: nowrap; }
+  .hero-cap .ic { background: var(--pink); color: var(--on-pink); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; flex: none; }
+
+  .hero-right { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; text-align: end; height: 100%; padding: 6.2rem 0 4rem; z-index: 100; width: 420px; pointer-events: none; }
+  .product-carousel { display: flex; flex-direction: column; gap: 1.3rem; align-items: flex-end; pointer-events: auto; }
+  .product-carousel > .label { margin-bottom: 1.8rem; }
+  .carousel-cards { display: flex; gap: 1rem; }
+  .card { border: 1px solid var(--glass-border); background: var(--glass-bg); padding: 1rem; padding-top: 5rem; border-radius: 28px; display: flex; flex-direction: column; align-items: center; gap: 1.1rem; cursor: pointer; transition: all .4s cubic-bezier(.175, .885, .32, 1.275); width: 135px; position: relative; backdrop-filter: blur(10px); text-align: center; color: inherit; }
+  .card:hover { background: rgba(255,255,255,.13); border-color: rgba(255,255,255,.4); }
+  .card.active { border-color: var(--pink); }
+  .card img { width: 118px; height: auto; margin-top: -7rem; border-radius: 16px; border: 1px solid rgba(255,255,255,.2); filter: drop-shadow(0 20px 30px rgba(0,0,0,.5)); transition: transform .5s cubic-bezier(.34, 1.56, .64, 1); pointer-events: none; }
+  .card:hover img { transform: translateY(-30px) rotate(-12deg) scale(1.12); }
+  .card-info { display: flex; flex-direction: column; font-size: .8rem; line-height: 1.35; width: 100%; }
+  .card-info span:first-child { font-weight: 500; } .card-info span:last-child { color: var(--muted); }
+  .carousel-nav { display: flex; align-items: center; gap: 12px; }
+  .nav-arrow { background: var(--glass-bg); border: 1px solid var(--glass-border); color: #fff; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background .3s; font-size: 1.1rem; }
+  .nav-arrow:hover { background: rgba(255,255,255,.18); }
+  .dots { display: flex; gap: 8px; align-items: center; }
+  .dots { gap: 0; }
+  .dots button { width: 26px; height: 32px; display: flex; align-items: center; justify-content: center; padding: 0; }
+  .dots button::before { content: ""; width: 10px; height: 10px; border-radius: 99px; background: rgba(255,255,255,.4); transition: width .4s var(--ease), background .3s; }
+  .dots button.on { width: 44px; }
+  .dots button.on::before { width: 28px; background: var(--pink); }
+  .now { align-self: flex-end; text-align: end; }
+  .now .num { font-family: var(--font-script); font-size: clamp(4.5rem, 9vh, 7rem); line-height: .9; color: var(--pink); }
+  .now .nm { font-family: var(--font-he); font-size: 1.7rem; line-height: 1.2; }
+  .now .tg { color: var(--muted); font-size: .9rem; }
+
+  /* ---------- marquee ---------- */
+  .marq { position: relative; z-index: 3; border-block: 1px solid var(--glass-border); overflow: hidden; background: rgba(0,0,0,.22); backdrop-filter: blur(8px); padding-block: 4px; }
+  .marq-t { display: flex; width: max-content; direction: ltr; animation: marq 46s linear infinite; }
+  .marq-t span { font-family: var(--font-he); font-size: clamp(28px, 4.4vw, 54px); padding: 14px 28px; white-space: nowrap; direction: rtl; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.5); }
+  .marq-t span:nth-child(even) { color: #fff; -webkit-text-stroke: 0; }
+  .marq-t b { color: var(--pink); font-weight: 400; margin-inline: 10px; -webkit-text-stroke: 0; }
+  @keyframes marq { to { transform: translateX(-50%); } }
+
+  /* ---------- work ---------- */
+  .work-head { padding-block: 120px 24px; display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 18px 40px; }
+  .work-head h2 { font-family: var(--font-he); font-weight: 400; font-size: clamp(38px, 6vw, 84px); line-height: 1.05; }
+  .work-head p { max-width: 38ch; color: var(--muted); }
+  .case { padding-block: clamp(72px, 9vw, 130px); position: relative; }
+  .case-grid { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(28px, 5vw, 80px); align-items: center; }
+  .case.flip .case-grid { grid-template-columns: 7fr 5fr; }
+  .case.flip .stage { order: -1; }
+  .case-grid > * { min-width: 0; }
+  .idx { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .idx b { font-family: var(--font-script); font-weight: 400; font-size: clamp(64px, 8vw, 110px); line-height: .9; color: var(--pink); }
+  .case h3 { font-family: var(--font-he); font-weight: 400; font-size: clamp(36px, 4.8vw, 66px); line-height: 1.05; text-wrap: balance; }
+  .brief { margin-top: 26px; display: grid; gap: 0; max-width: 54ch; border-top: 1px solid var(--glass-border); }
+  .brief div { display: grid; grid-template-columns: 7.5em 1fr; gap: 18px; padding: 15px 0; border-bottom: 1px solid var(--glass-border); }
+  .brief dt { font-size: 13px; font-weight: 500; color: var(--pink); letter-spacing: .04em; padding-top: 2px; }
+  .brief dd { color: var(--muted); font-size: 1rem; line-height: 1.6; }
+
+  .stage { position: relative; aspect-ratio: 1.12 / 1; perspective: 1500px; }
+  .rig { position: absolute; inset: 0; transform-style: preserve-3d; }
+  .layer { position: absolute; transform-style: preserve-3d; }
+  .float { animation: bob 7s ease-in-out infinite; } .float.b { animation-duration: 9s; animation-delay: -3s; }
+  @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  .glow { position: absolute; inset: 8% 6%; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--c, #fff) 50%, transparent), transparent); filter: blur(34px); transform: translateZ(-80px); }
+  .desk { inset-inline-start: 0; top: 7%; width: 90%; }
+  .frame { border-radius: 14px; overflow: hidden; background: #0a0b10; border: 1px solid rgba(255,255,255,.18); box-shadow: 0 50px 90px -20px rgba(0,0,0,.7); }
+  .bar { display: flex; align-items: center; gap: 7px; height: 32px; padding-inline: 14px; background: #14161e; border-bottom: 1px solid var(--glass-border); }
+  .bar i { width: 9px; height: 9px; border-radius: 50%; background: #3a3e4c; }
+  .bar i:nth-child(1) { background: #ff6159; } .bar i:nth-child(2) { background: #ffbd2e; } .bar i:nth-child(3) { background: #28c93f; }
+  .bar em { margin-inline-start: 12px; font-style: normal; font-size: 11.5px; color: var(--muted); direction: ltr; }
+  .frame .screen { position: relative; overflow: hidden; aspect-ratio: 16 / 10; background: #111; }
+  .frame .screen img { width: 100%; height: auto; }
+  .glare { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: soft-light; z-index: 4; background: radial-gradient(520px circle at var(--gx, 30%) var(--gy, 0%), rgba(255,255,255,.34), transparent 48%); }
+  .stage .slot { position: absolute; }
+  .slot.r { inset-inline-end: -3%; bottom: -12%; height: 70%; }
+  .slot.c { left: 0; right: 0; margin-inline: auto; top: 0; height: 100%; }
+  .mini { position: absolute; width: 28%; top: 20%; border-radius: 30px; padding: 7px; background: linear-gradient(145deg, #2d3040, #0a0b10); border: 1px solid rgba(255,255,255,.2); box-shadow: 0 40px 60px -16px rgba(0,0,0,.7); }
+  .mini img { border-radius: 24px; width: 100%; }
+  .mini.l { inset-inline-start: 2%; transform: rotateY(18deg); } .mini.r2 { inset-inline-end: 2%; transform: rotateY(-18deg); }
+  .note { position: absolute; z-index: 4; font-size: 12px; padding: 6px 13px; border-radius: 99px; background: rgba(12,14,22,.85); border: 1px solid var(--glass-border); color: #fff; backdrop-filter: blur(8px); white-space: nowrap; }
+  .case.app { --pink: #c8ff3d; --on-pink: #07090c; }
+  .appstage .mini { top: 18%; width: 27%; }
+  .note.n1 { inset-inline-start: 5%; top: 28%; border-color: #8f9bff; } .note.n2 { inset-inline-start: 7%; top: 54%; border-color: #f87171; } .note.n3 { inset-inline-end: 5%; top: 14%; border-color: #34d399; }
+
+  /* ---------- method ---------- */
+  .method { padding-block: 110px 40px; }
+  .method h2 { font-family: var(--font-he); font-weight: 400; font-size: clamp(34px, 5vw, 68px); line-height: 1.08; max-width: 16ch; margin-top: 14px; }
+  .method-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px; align-items: center; margin-top: 48px; }
+  .method-slot { height: min(62vh, 560px); margin-inline: auto; }
+  .pillars { border-top: 1px solid var(--glass-border); }
+  .pillars div { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px 48px; padding: 28px 0; border-bottom: 1px solid var(--glass-border); align-items: baseline; }
+  .pillars dt { font-family: var(--font-he); font-size: clamp(24px, 3vw, 38px); line-height: 1.2; }
+  .pillars dd { color: var(--muted); font-size: 1.08rem; max-width: 52ch; }
+
+  /* ---------- contact ---------- */
+  .contact { padding-block: 120px 80px; }
+  .contact-grid { display: grid; grid-template-columns: 1.3fr .7fr; gap: 30px; align-items: center; }
+  .contact h2 { font-family: var(--font-he); font-weight: 400; font-size: clamp(44px, 7.4vw, 112px); line-height: 1; text-wrap: balance; }
+  .contact h2 .pk { color: var(--pink); }
+  .contact p.sub { margin-top: 22px; color: var(--muted); font-size: 1.15rem; max-width: 38ch; }
+  .contact-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 32px; }
+  .mail { font-size: clamp(15px, 2.2vw, 20px); padding: 11px 20px; border-radius: 99px; user-select: all; direction: ltr; overflow-wrap: anywhere; }
+  .contact .slot { height: min(64vh, 560px); margin-inline: auto; }
+  footer { position: relative; z-index: 2; padding-block: 30px 40px; border-top: 1px solid var(--glass-border); }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1200px) { .hero-right { width: 330px; } }
+  @media (max-width: 900px) {
+    .header { padding-inline: 16px; } .nav, .contact-btn { display: none; } .burger { display: flex; }
+    .hero { height: auto; min-height: 100svh; padding-top: 4.6rem; padding-bottom: 2.4rem; }
+    .hero-content { flex-direction: column; height: auto; gap: 1.4rem; align-items: stretch; }
+    .hero-center { position: relative; inset: auto; order: 1; height: 54svh; min-height: 330px; }
+    .hero-slot { height: 100%; }
+    .hero-cap { position: relative; bottom: auto; order: 3; margin-top: 0; }
+    .hero-cap span { display: none; }
+    .hero-left { order: 4; height: auto; padding: 0; gap: 1.2rem; max-width: none; }
+    .scroll-cue { display: none; }
+    .hero-right { order: 2; width: 100%; height: auto; padding: 0; align-items: center; }
+    .product-carousel { align-items: center; padding-top: 0; }
+    .carousel-cards, .now { display: none; }
+    h1.main { font-size: clamp(2.5rem, 11.5vw, 3.8rem); }
+    .case-grid, .case.flip .case-grid { grid-template-columns: 1fr; }
+    .case .stage, .case.flip .stage { order: -1; }
+    .case { padding-top: 96px; }
+    .work-head { padding-top: 80px; }
+    .brief div { grid-template-columns: 1fr; gap: 4px; }
+    .slot.r { height: 74%; bottom: -10%; }
+    .mini { width: 25%; } .mini.l { inset-inline-start: 6%; } .mini.r2 { inset-inline-end: 6%; }
+    .hero-right .label { display: none; }
+    .note { font-size: 11px; padding: 4px 10px; }
+    .pillars div { grid-template-columns: 1fr; gap: 8px; }
+    .method-grid { grid-template-columns: 1fr; } .method-slot { height: 46svh; order: -1; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .contact .slot { height: 52svh; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .marq-t, .float, .hero-slot, .scroll-cue i { animation: none; }
+    .enter { animation: fadeInEntry .01s forwards; }
+  }
+</style>
+
+<div class="page">
+  <div class="progress" id="progress"></div>
+  <canvas id="gl" aria-hidden="true"></canvas>
+
+  <header class="header" id="header">
+    <a href="#top" class="logo">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <span>Yehuda</span>
+    </a>
+    <nav class="nav glass" aria-label="ראשי">
+      <a href="#top" class="nav-item active" data-sec="top">בית</a>
+      <a href="#work" class="nav-item" data-sec="work">עבודות</a>
+      <a href="#method" class="nav-item" data-sec="method">איך אני עובד</a>
+      <a href="#contact" class="nav-item" data-sec="contact">צור קשר</a>
+    </nav>
+    <a href="#contact" class="contact-btn">בואו נדבר</a>
+    <button class="burger glass" id="burger" type="button" aria-label="תפריט" aria-expanded="false" aria-controls="menu"><span></span></button>
+  </header>
+  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="תפריט">
+    <a href="#top">בית</a>
+    <a href="#work">עבודות<small>5 פרויקטים</small></a>
+    <a href="#method">איך אני עובד</a>
+    <a href="#contact">צור קשר</a>
+  </div>
+
+  <main id="top">
+    <!-- ================= HERO ================= -->
+    <section class="hero" data-theme="hero">
+      <div class="hero-content">
+        <div class="hero-left">
+          <div class="label enter d1">יהודה צברי · מעצב ובונה</div>
+          <h1 class="main enter d1">אתרים שנראים<br>כמו מותג, <span class="pk">ונבנים<br>כמו מוצר.</span></h1>
+          <p class="lead enter d2">דפי נחיתה, אתרי תדמית ואפליקציות בעברית. מהמסך הראשון ועד הקוד שרץ באוויר, אצל אדם אחד.</p>
+          <div class="cta enter d3">
+            <a href="#work" class="primary-btn"><span class="ic" aria-hidden="true">↓</span>לעבודות</a>
+            <a href="#contact" class="ghost-btn">בואו נדבר</a>
+          </div>
+          <div class="scroll-cue label enter d4"><i></i>גללו, הטלפון ילווה אתכם</div>
+        </div>
+
+        <div class="hero-center" aria-hidden="true">
+          <div class="slot hero-slot" id="hero-slot" data-phone data-screen="hero" data-yaw="-14" data-roll="9" data-scale="1" data-c="#c8ff3d"><img class="fb" loading="lazy" id="hero-fb" src="img/capital-home.jpg" alt=""></div>
+        </div>
+
+        <a class="hero-cap glass" id="hero-cap" href="#p1"><span id="cap-tag">אפליקציה · גרסת ניסוי</span><b id="cap-name">לומדים שוק הון</b><i class="ic" aria-hidden="true">←</i></a>
+
+        <div class="hero-right">
+          <div class="product-carousel">
+            <div class="label">בחרו פרויקט</div>
+            <div class="carousel-cards" id="cards"></div>
+            <div class="carousel-nav">
+              <button class="nav-arrow" id="prev" type="button" aria-label="הפרויקט הקודם">→</button>
+              <div class="dots" id="dots" role="group" aria-label="פרויקטים"></div>
+              <button class="nav-arrow" id="next" type="button" aria-label="הפרויקט הבא">←</button>
+            </div>
+          </div>
+          <div class="now enter d3"><div class="num" id="now-num">01</div><div class="nm" id="now-name">לומדים שוק הון</div><div class="tg" id="now-tag">אפליקציה</div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="marq" aria-hidden="true">
+      <div class="marq-t">
+        <span>דפי נחיתה<b>✦</b></span><span>אפליקציות<b>✦</b></span><span>מיתוג ודמויות<b>✦</b></span><span>דשבורדים<b>✦</b></span><span>אנימציה<b>✦</b></span><span>תלת־מימד<b>✦</b></span>
+        <span>דפי נחיתה<b>✦</b></span><span>אפליקציות<b>✦</b></span><span>מיתוג ודמויות<b>✦</b></span><span>דשבורדים<b>✦</b></span><span>אנימציה<b>✦</b></span><span>תלת־מימד<b>✦</b></span>
+      </div>
+    </div>
+
+    <!-- ================= WORK ================= -->
+    <section id="work">
+      <div class="wrap work-head">
+        <h2>חמישה פרויקטים,<br>אותו טלפון.</h2>
+        <p>הטלפון הזה עובר איתכם בין העבודות ומראה את המסך של כל אחת. הזיזו את העכבר כדי להטות אותו.</p>
+      </div>
+
+      <article class="case app" id="p1" data-theme="lime">
+        <div class="wrap case-grid">
+          <div class="copy">
+            <div class="idx"><b>01</b><span class="label">אפליקציה · גרסת ניסוי</span></div>
+            <h3>לומדים שוק הון</h3>
+            <dl class="brief">
+              <div><dt>האתגר</dt><dd>ללמד בני נוער שוק הון בעברית, בלי להפחיד אותם ובלי לסכן שקל אמיתי.</dd></div>
+              <div><dt>מה בניתי</dt><dd>אפליקציית ווב שמתקינים על מסך הבית: 27 שיעורים קצרים בחמישה נושאים, 20 תרגולי גרף על נתוני שוק אמיתיים מהעבר, מילון, תיק וירטואלי, כוכבים ורצף ימים. וגם דף נחיתה משלה.</dd></div>
+              <div><dt>מאחורי הקלעים</dt><dd>כניסה עם Google או אימייל, מדידה אנונימית עם לוח ניהול, וקצב יומי של שיעור ותרגול חדשים.</dd></div>
+            </dl>
+          </div>
+          <div class="stage appstage" style="--c:#c8ff3d">
+            <div class="rig">
+              <div class="glow"></div>
+              <div class="mini l"><img src="img/capital-lessons.jpg" width="780" height="1688" alt="מסך השיעורים באפליקציה" loading="lazy"></div>
+              <div class="mini r2"><img src="img/capital-lesson.jpg" width="780" height="1688" alt="שיעור באפליקציה" loading="lazy"></div>
+            </div>
+            <div class="slot c" data-phone data-screen="4" data-cycle="4,8" data-yaw="-10" data-roll="0" data-scale="1.06" data-c="#c8ff3d"><img class="fb" loading="lazy" src="img/capital-home.jpg" alt=""></div>
+          </div>
+        </div>
+      </article>
+      <article class="case flip" id="p2" data-theme="gold">
+        <div class="wrap case-grid">
+          <div class="copy">
+            <div class="idx"><b>02</b><span class="label">דף נחיתה · מותג · אוטומציה</span></div>
+            <h3>שדרן הפיננסים</h3>
+            <dl class="brief">
+              <div><dt>האתגר</dt><dd>להפוך כלכלה למשהו שאנשים רוצים לקרוא בבוקר, ולגרום להם להשאיר מייל.</dd></div>
+              <div><dt>מה בניתי</dt><dd>דף נחיתה, דמות מותג עם 24 תנוחות, מודעת פרסום, פוסט לפייסבוק, דף תודה וחדר בקרה לניהול הנרשמים.</dd></div>
+              <div><dt>מאחורי הקלעים</dt><dd>המהדורה יוצאת לבד: בבוקר בימים שני עד שישי, ובמוצאי שבת.</dd></div>
+            </dl>
+          </div>
+          <div class="stage" style="--c:#d9ad5f">
+            <div class="rig">
+              <div class="glow"></div>
+              <div class="layer desk"><div class="float"><div class="frame">
+                <div class="bar"><i></i><i></i><i></i><em>shidur-finance</em></div>
+                <div class="screen"><img src="img/finance-full.jpg" width="1100" height="3303" alt="דף הנחיתה של שדרן הפיננסים" data-scroll><div class="glare"></div></div>
+              </div></div></div>
+            </div>
+            <div class="slot r" data-phone data-screen="0" data-yaw="16" data-roll="0" data-scale="1" data-c="#d9ad5f"><img class="fb" loading="lazy" src="img/finance-phone.jpg" alt=""></div>
+          </div>
+        </div>
+      </article>
+      <article class="case" id="p3" data-theme="olive">
+        <div class="wrap case-grid">
+          <div class="copy">
+            <div class="idx"><b>03</b><span class="label">אתר תדמית · צילום</span></div>
+            <h3>צופיה קזיוף, צלמת</h3>
+            <dl class="brief">
+              <div><dt>האתגר</dt><dd>לתת לצלמת אתר שמרגיש כמו הצילום שלה: רך, טבעי ובלי רעש.</dd></div>
+              <div><dt>מה בניתי</dt><dd>אתר תדמית עם ארבעה תחומי צילום (זוגות, משפחות, בריתות ואירועים), שלוש חבילות מחיר, גלריה ופנייה ישירה בוואטסאפ.</dd></div>
+              <div><dt>התחושה</dt><dd>גווני זית וקרם, סמן מותאם ואנימציות גלילה שמובילות את העין מתמונה לתמונה.</dd></div>
+            </dl>
+          </div>
+          <div class="stage" style="--c:#b9bd96">
+            <div class="rig">
+              <div class="glow"></div>
+              <div class="layer desk"><div class="float"><div class="frame">
+                <div class="bar"><i></i><i></i><i></i><em>sofia-photography</em></div>
+                <div class="screen"><img src="img/sofia-full.jpg" width="1100" height="4924" alt="אתר הצלמת צופיה קזיוף" data-scroll loading="lazy"><div class="glare"></div></div>
+              </div></div></div>
+            </div>
+            <div class="slot r" data-phone data-screen="1" data-yaw="-16" data-roll="0" data-scale="1" data-c="#b9bd96"><img class="fb" loading="lazy" src="img/sofia-phone.jpg" alt=""></div>
+          </div>
+        </div>
+      </article>
+      <article class="case flip" id="p4" data-theme="orange">
+        <div class="wrap case-grid">
+          <div class="copy">
+            <div class="idx"><b>04</b><span class="label">אפליקציה · חיסכון</span></div>
+            <h3>ג׳מסלי</h3>
+            <dl class="brief">
+              <div><dt>האתגר</dt><dd>לאסוף קופונים, מבצעים והנחות של אלי אקספרס במקום אחד, בעברית ובלי בלגן.</dd></div>
+              <div><dt>מה בניתי</dt><dd>אפליקציה עם חמישה מסכים: בית, מבצעים, גלגל מזל, מעקב חיסכון ו"איך זה עובד". מסך פתיחה מונפש וסרגל תחתון צף.</dd></div>
+              <div><dt>מאחורי הקלעים</dt><dd>פיד המבצעים מתרענן אוטומטית, בלי שאעדכן אותו ידנית.</dd></div>
+            </dl>
+          </div>
+          <div class="stage" style="--c:#ff7a2f">
+            <div class="rig">
+              <div class="glow"></div>
+              <div class="mini l"><img src="img/jamsly-deals.jpg" width="780" height="1688" alt="מסך המבצעים בג׳מסלי" loading="lazy"></div>
+              <div class="mini r2"><img src="img/jamsly-wheel.jpg" width="780" height="1688" alt="גלגל המזל בג׳מסלי" loading="lazy"></div>
+            </div>
+            <div class="slot c" data-phone data-screen="2" data-yaw="0" data-roll="0" data-scale="1" data-c="#ff7a2f"><img class="fb" loading="lazy" src="img/jamsly-home.jpg" alt=""></div>
+          </div>
+        </div>
+      </article>
+      <article class="case" id="p5" data-theme="blue">
+        <div class="wrap case-grid">
+          <div class="copy">
+            <div class="idx"><b>05</b><span class="label">דשבורד · אפליקציית ווב</span></div>
+            <h3>הארנק שלי</h3>
+            <dl class="brief">
+              <div><dt>האתגר</dt><dd>לראות את כל הכסף במבט אחד, בלי להיכנס לגיליון.</dd></div>
+              <div><dt>מה בניתי</dt><dd>דשבורד עם יתרות, הכנסות והוצאות, גרף חודשי, פילוח הוצאות ויעדי חיסכון עם פס התקדמות. מצב כהה ומספרים גדולים.</dd></div>
+              <div><dt>מאחורי הקלעים</dt><dd>הנתונים נשמרים בענן. במצב הדגמה הם נשארים רק בדפדפן.</dd></div>
+            </dl>
+          </div>
+          <div class="stage" style="--c:#6f7dff">
+            <div class="rig">
+              <div class="glow"></div>
+              <div class="layer desk"><div class="float"><div class="frame">
+                <div class="bar"><i></i><i></i><i></i><em>my-wallet</em></div>
+                <div class="screen"><img src="img/wallet-full.jpg" width="1100" height="1158" alt="לוח הבקרה הכספי הארנק שלי" data-scroll loading="lazy"><div class="glare"></div></div>
+              </div></div></div>
+            </div>
+            <div class="slot r" data-phone data-screen="3" data-yaw="-16" data-roll="0" data-scale="1" data-c="#6f7dff"><img class="fb" loading="lazy" src="img/wallet-phone.jpg" alt=""></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ================= METHOD ================= -->
+    <section class="method" id="method" data-theme="violet">
+      <div class="wrap">
+        <div class="label">איך אני עובד</div>
+        <h2>מי שמעצב הוא גם מי שבונה.</h2>
+        <div class="method-grid"><dl class="pillars">
+          <div><dt>מהסקיצה עד הקוד</dt><dd>אותו אדם מעצב, מזיז ובונה, אז מה שרואים בעיצוב הוא מה שעולה לאוויר.</dd></div>
+          <div><dt>תנועה עם סיבה</dt><dd>אנימציה שמסבירה ומובילה את העין, ושקטה למי שמעדיף בלי אנימציות.</dd></div>
+          <div><dt>עברית וטלפון קודם</dt><dd>RTL מהיסוד, מותאם למסך קטן, עם שרת ואוטומציה כשצריך: שליחה יומית, עדכון פיד, שמירה בענן.</dd></div>
+        </dl>
+        <div class="slot method-slot" data-phone data-screen="hero" data-yaw="-12" data-roll="6" data-scale="1" data-c="#8f7dff"><img class="fb" loading="lazy" src="img/capital-home.jpg" alt=""></div></div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section class="contact" id="contact" data-theme="hero">
+      <div class="wrap contact-grid">
+        <div>
+          <h2>יש לכם פרויקט?<br><span class="pk">בואו נדבר.</span></h2>
+          <p class="sub">ספרו לי מה אתם צריכים: דף נחיתה, אתר או אפליקציה. אחזור אליכם עם כיוון וזמנים.</p>
+          <div class="contact-actions">
+            <a class="primary-btn" id="wa" href="#" target="_blank" rel="noopener" hidden><span class="ic" aria-hidden="true">✆</span>שלחו הודעה בוואטסאפ</a>
+            <span class="mail glass" id="mail">yehudatzabari52@gmail.com</span>
+            <button class="primary-btn" id="copy" type="button"><span class="ic" aria-hidden="true">⧉</span><span id="copy-t">העתק כתובת</span></button>
+          </div>
+        </div>
+        <div class="slot" data-phone data-screen="5" data-yaw="12" data-roll="-4" data-scale="1" data-c="#d9ad5f"><img class="fb" loading="lazy" src="img/jamsly-home.jpg" alt=""></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap label"><span>© 2026 יהודה צברי</span><span>עוצב ונבנה ביד</span></div>
+  </footer>
+</div>
+
+<div id="bubbles" aria-hidden="true"></div>
+<div class="sr" id="sr" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(() => {
+  /* Add a WhatsApp number here (country code, digits only, e.g. '972501234567') to show the WhatsApp button. */
+  const WHATSAPP_NUMBER = '';
+
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const hasGsap = !!window.gsap;
+  if (hasGsap && window.ScrollTrigger) gsap.registerPlugin(ScrollTrigger);
+  const body = document.body, root = document.documentElement;
+
+  /* ---------- colour worlds ---------- */
+  const THEMES = {
+    hero: ['#0b8a78', '#044e3b', '#011411'], lime: ['#3f5f0a', '#17260a', '#050805'], gold: ['#8a6827', '#47330f', '#120b03'], olive: ['#656b45', '#2d3220', '#0b0d07'],
+    orange: ['#c4590f', '#5c2a08', '#150803'], blue: ['#0b4f8a', '#04294e', '#010c14'], rose: ['#b02a52', '#531229', '#150409'], violet: ['#5a45c7', '#2a2062', '#0a0821']
+  };
+  function applyTheme(key, dur = 1.5) {
+    const t = THEMES[key]; if (!t) return;
+    if (hasGsap && !reduce) gsap.to(body, { '--bg-inner': t[0], '--bg-mid': t[1], '--bg-outer': t[2], duration: dur, ease: 'power2.inOut', overwrite: 'auto' });
+    else { body.style.setProperty('--bg-inner', t[0]); body.style.setProperty('--bg-mid', t[1]); body.style.setProperty('--bg-outer', t[2]); }
+  }
+
+  const P = [
+    { name: 'לומדים שוק הון', cat: 'אפליקציה', tag: 'אפליקציה · גרסת ניסוי', theme: 'lime', c: '#c8ff3d', img: 'img/capital-home.jpg', screen: 4 },
+    { name: 'שדרן הפיננסים', cat: 'דף נחיתה', tag: 'דף נחיתה · מותג · אוטומציה', theme: 'gold', c: '#d9ad5f', img: 'img/finance-phone.jpg', screen: 0 },
+    { name: 'צופיה קזיוף', cat: 'אתר תדמית', tag: 'אתר תדמית · צילום', theme: 'olive', c: '#b9bd96', img: 'img/sofia-phone.jpg', screen: 1 },
+    { name: 'ג׳מסלי', cat: 'אפליקציה', tag: 'אפליקציה · חיסכון', theme: 'orange', c: '#ff7a2f', img: 'img/jamsly-home.jpg', screen: 2 },
+    { name: 'הארנק שלי', cat: 'דשבורד', tag: 'דשבורד · אפליקציית ווב', theme: 'blue', c: '#6f7dff', img: 'img/wallet-phone.jpg', screen: 3 }
+  ];
+  let cur = 0, heroTheme = 'lime', isSwitching = false, pending = null;
+
+  /* ---------- bubbles ---------- */
+  const bubbles = $('#bubbles');
+  if (!reduce) setInterval(() => {
+    if (document.hidden) return;
+    const b = document.createElement('div'); b.className = 'bubble';
+    const size = Math.random() * 18 + 8, dur = Math.random() * 6 + 5;
+    b.style.width = b.style.height = size + 'px'; b.style.left = Math.random() * 100 + '%';
+    b.style.setProperty('--o', (Math.random() * 0.3 + 0.15).toFixed(2)); b.style.animation = `floatUp ${dur}s linear forwards`;
+    bubbles.appendChild(b); setTimeout(() => b.remove(), dur * 1000);
+  }, 750);
+
+  /* ---------- canvas screen: contact chat ---------- */
+
+  const chatCv = document.createElement('canvas'); chatCv.width = 780; chatCv.height = 1688;
+  let chatN = 4;
+  function paintChat() {
+    const c = chatCv.getContext('2d'), W = 780, H = 1688; c.direction = 'rtl';
+    const g = c.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#0f3d36'); g.addColorStop(1, '#06201c'); c.fillStyle = g; c.fillRect(0, 0, W, H);
+    c.fillStyle = 'rgba(255,255,255,.08)'; c.fillRect(0, 0, W, 210);
+    c.fillStyle = '#fbcfe8'; c.beginPath(); c.arc(W - 90, 130, 38, 0, 7); c.fill();
+    c.fillStyle = '#011d17'; c.font = '600 40px Galada, Rubik, sans-serif'; c.textAlign = 'center'; c.fillText('Y', W - 90, 144);
+    c.fillStyle = '#fff'; c.textAlign = 'right'; c.font = '500 36px Rubik, sans-serif'; c.fillText('יהודה', W - 150, 122); c.fillStyle = 'rgba(255,255,255,.55)'; c.font = '400 26px Rubik, sans-serif'; c.fillText('עונה בדרך כלל באותו יום', W - 150, 160);
+    const bubble = (txt, y, mine) => {
+      c.font = '400 38px Rubik, sans-serif'; const w = Math.min(c.measureText(txt).width + 64, 560), h = 104, x = mine ? W - 40 - w : 40;
+      c.fillStyle = mine ? '#fbcfe8' : 'rgba(255,255,255,.14)'; c.beginPath(); if (c.roundRect) c.roundRect(x, y, w, h, 40); else c.rect(x, y, w, h); c.fill();
+      c.fillStyle = mine ? '#011d17' : '#fff'; c.textAlign = mine ? 'right' : 'left'; c.fillText(txt, mine ? x + w - 32 : x + 32, y + 66);
+    };
+    const msgs = [['היי, יש לי רעיון לאתר', 330, true], ['ספרו לי עוד', 470, false], ['דף נחיתה לעסק חדש', 610, true], ['מעולה. אחזור עם כיוון וזמנים', 750, false]];
+    msgs.slice(0, chatN).forEach(m => bubble(...m));
+    c.fillStyle = 'rgba(255,255,255,.1)'; c.beginPath(); if (c.roundRect) c.roundRect(40, H - 210, W - 80, 96, 48); else c.rect(40, H - 210, W - 80, 96); c.fill();
+    c.fillStyle = 'rgba(255,255,255,.45)'; c.font = '400 32px Rubik, sans-serif'; c.textAlign = 'right'; c.fillText('כתבו הודעה...', W - 90, H - 148);
+  }
+  paintChat();
+
+  /* ---------- the one 3D phone ---------- */
+  const heroSlot = $('#hero-slot');
+  let heroScreen = 4;
+  const PH = (() => { try { return (() => {
+    if (!window.THREE) return null;
+    const canvas = $('#gl'); let renderer;
+    try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' }); } catch (e) { return null; }
+    renderer.setClearColor(0x000000, 0);
+    canvas.addEventListener('webglcontextlost', e => { e.preventDefault(); root.classList.add('no-gl'); });
+    canvas.addEventListener('webglcontextrestored', () => root.classList.remove('no-gl'));
+    const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(30, 1, 0.1, 100); cam.position.z = 10;
+    const envScene = new THREE.Scene();
+    envScene.add(new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), new THREE.MeshBasicMaterial({ color: 0x1b2230, side: THREE.BackSide })));
+    const panel = (c, x, y, z, w, h) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: c, side: THREE.DoubleSide })); m.position.set(x, y, z); m.lookAt(0, 0, 0); envScene.add(m); };
+    panel(0xffffff, -6, 7, 6, 9, 5); panel(0xffd7b0, 8, 1, 4, 3, 8); panel(0xa9c9ff, -2, -7, 5, 10, 2); panel(0xffffff, 0, 3, -8, 8, 3);
+    scene.environment = new THREE.PMREMGenerator(renderer).fromScene(envScene, 0.03).texture;
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x223344, 0.4));
+    const key = new THREE.DirectionalLight(0xfff1e0, 0.9); key.position.set(-3, 5, 8); scene.add(key);
+    const rim = new THREE.PointLight(0xffffff, 1.6, 30); rim.position.set(4, -1, 3); scene.add(rim);
+
+    const W = 1, H = 2.14, R = 0.17, D = 0.1;
+    const rr = (w, h, r) => { const s = new THREE.Shape(), x = -w / 2, y = -h / 2; s.moveTo(x + r, y); s.lineTo(x + w - r, y); s.quadraticCurveTo(x + w, y, x + w, y + r); s.lineTo(x + w, y + h - r); s.quadraticCurveTo(x + w, y + h, x + w - r, y + h); s.lineTo(x + r, y + h); s.quadraticCurveTo(x, y + h, x, y + h - r); s.lineTo(x, y + r); s.quadraticCurveTo(x, y, x + r, y); return s; };
+    const rig = new THREE.Group(); scene.add(rig);
+    const phone = new THREE.Group(); rig.add(phone);
+    const bodyGeo = new THREE.ExtrudeGeometry(rr(W, H, R), { depth: D, bevelEnabled: true, bevelThickness: 0.025, bevelSize: 0.025, bevelSegments: 5, curveSegments: 28 }); bodyGeo.translate(0, 0, -D / 2);
+    const metal = new THREE.MeshPhysicalMaterial({ color: 0x1a1d26, metalness: 0.9, roughness: 0.26, clearcoat: 0.6, clearcoatRoughness: 0.2, envMapIntensity: 1.3 });
+    phone.add(new THREE.Mesh(bodyGeo, metal));
+    [[-1, 0.55, 0.2], [-1, 0.25, 0.14], [1, 0.45, 0.28]].forEach(([s, y, h]) => { const b = new THREE.Mesh(new THREE.BoxGeometry(0.02, h, 0.05), metal); b.position.set(s * (W / 2 + 0.03), y, 0); phone.add(b); });
+
+    const sw = W - 0.1, sh = H - 0.1, scrGeo = new THREE.ShapeGeometry(rr(sw, sh, R - 0.05), 28);
+    const pos = scrGeo.attributes.position, uv = new Float32Array(pos.count * 2);
+    for (let i = 0; i < pos.count; i++) { uv[i * 2] = (pos.getX(i) + sw / 2) / sw; uv[i * 2 + 1] = (pos.getY(i) + sh / 2) / sh; }
+    scrGeo.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+    const blank = new THREE.DataTexture(new Uint8Array([12, 14, 20, 255]), 1, 1); blank.needsUpdate = true;
+    const U = { tA: { value: blank }, tB: { value: blank }, uMix: { value: 0 }, uM: { value: new THREE.Vector2() }, uTint: { value: new THREE.Color('#d9ad5f') } };
+    const screen = new THREE.Mesh(scrGeo, new THREE.ShaderMaterial({ uniforms: U,
+      vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.); }',
+      fragmentShader: `uniform sampler2D tA; uniform sampler2D tB; uniform float uMix; uniform vec2 uM; uniform vec3 uTint; varying vec2 vUv;
+        void main(){ vec2 uv = vec2(.5 + (vUv.x - .5) * .955, vUv.y);
+          vec3 c = mix(texture2D(tA, uv).rgb, texture2D(tB, uv).rgb, uMix);
+          float d = dot(vUv - .5, normalize(vec2(.6, 1.))) + uM.x * .45 - uM.y * .25;
+          float sheen = smoothstep(-.05, .45, d) * smoothstep(.95, .35, d) * .1;
+          c += sheen * (uTint * .8 + .4);
+          gl_FragColor = vec4(c, 1.); }` }));
+    screen.position.z = D / 2 + 0.0265; phone.add(screen);
+    const notch = new THREE.Mesh(new THREE.ShapeGeometry(rr(0.26, 0.07, 0.035), 12), new THREE.MeshBasicMaterial({ color: 0x05060a }));
+    notch.position.set(0, sh / 2 - 0.085, D / 2 + 0.0275); phone.add(notch);
+
+    const layers = [0, 1].map(i => {
+      const g = new THREE.Group(), sh2 = rr(W + 0.2, H + 0.2, R + 0.08);
+      g.add(new THREE.Mesh(new THREE.ShapeGeometry(sh2, 24), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.05, side: THREE.DoubleSide, depthWrite: false })));
+      const line = new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(sh2.getPoints(40)), new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.35 })); g.add(line);
+      rig.add(g); return g;
+    });
+
+    const loader = new THREE.TextureLoader(), maxA = renderer.capabilities.getMaxAnisotropy();
+    const prep = t => { t.generateMipmaps = false; t.minFilter = THREE.LinearFilter; t.magFilter = THREE.LinearFilter; t.anisotropy = maxA; return t; };
+    const tex = ['img/finance-phone.jpg', 'img/sofia-phone.jpg', 'img/jamsly-home.jpg', 'img/wallet-phone.jpg', 'img/capital-home.jpg'].map(u => prep(loader.load(u, t => { if (renderer.initTexture) renderer.initTexture(t); schedule(); })));
+    const chatTex = prep(new THREE.CanvasTexture(chatCv));
+    tex.push(chatTex);
+    ['img/capital-lessons.jpg', 'img/capital-lesson.jpg', 'img/capital-practice.jpg'].forEach(u => tex.push(prep(loader.load(u, t => { if (renderer.initTexture) renderer.initTexture(t); schedule(); }))));
+
+    const slots = $$('[data-phone]');
+    const st = { x: 0, y: 0, s: 0.001, yaw: 0, pitch: 0, roll: 0, flip: 0, spin: 0, appear: 0, gap: 0.2, scr: -1, cand: 0 };
+    let vw = 1, vh = 1, halfH = 1, halfW = 1, active = null, flipTween = null, swapCall = null, vel = 0, lastY = scrollY, mix = null;
+    const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
+    addEventListener('pointermove', e => { mouse.x = e.clientX / innerWidth * 2 - 1; mouse.y = e.clientY / innerHeight * 2 - 1; }, { passive: true });
+    let lastW = 0, lastH = 0;
+    function resize() {
+      if (lastW && !fine && Math.abs(innerWidth - lastW) < 2 && Math.abs(innerHeight - lastH) < 140) return;
+      lastW = innerWidth; lastH = innerHeight;
+      vw = innerWidth; vh = innerHeight; renderer.setPixelRatio(Math.min(devicePixelRatio || 1, vw < 800 ? 1.25 : 1.75)); renderer.setSize(vw, vh, false);
+      cam.aspect = vw / vh; cam.updateProjectionMatrix(); halfH = Math.tan(THREE.MathUtils.degToRad(cam.fov / 2)) * cam.position.z; halfW = halfH * cam.aspect;
+    }
+    let rafId = 0;
+    const schedule = () => { if (!rafId) rafId = requestAnimationFrame(frame); };
+    resize(); addEventListener('resize', () => { resize(); schedule(); });
+
+    function screenFor(el) { return el.dataset.screen === 'hero' ? heroScreen : +el.dataset.screen; }
+    function setScreen(i, animate) {
+      if (i === st.scr) return; st.scr = i; const t = tex[i];
+      if (mix) { mix.kill(); mix = null; if (U.uMix.value > 0.5) U.tA.value = U.tB.value; U.uMix.value = 0; }
+      if (!animate || reduce || !hasGsap) { U.tA.value = t; U.tB.value = t; U.uMix.value = 0; return; }
+      U.tB.value = t; const o = { v: 0 };
+      mix = gsap.to(o, { v: 1, duration: 0.4, ease: 'power2.inOut', onUpdate: () => { U.uMix.value = o.v; }, onComplete: () => { U.tA.value = t; U.uMix.value = 0; } });
+    }
+    function nearest() {
+      let best = null, bd = 1e9, ad = 1e9;
+      for (const el of slots) {
+        const r = el.getBoundingClientRect(); if (!r.height) continue;
+        const cy = r.top + r.height / 2, off = (r.bottom < 0 || r.top > vh) ? 3000 : 0, d = Math.abs(cy - vh / 2) + off;
+        if (el === active) ad = d;
+        if (d < bd) { bd = d; best = el; }
+      }
+      return active && ad <= bd + vh * 0.15 ? active : best;
+    }
+    function onChange(el, first) {
+      active = el; const i = screenFor(el); cycleI = 0; lastCycle = performance.now();
+      U.uTint.value.set(el.dataset.c);
+      if (i === 5 && !reduce) { chatN = 0; paintChat(); chatTex.needsUpdate = true; const iv = setInterval(() => { chatN++; paintChat(); chatTex.needsUpdate = true; if (chatN >= 4) clearInterval(iv); }, 1100); } else if (i === 5) { chatN = 4; paintChat(); chatTex.needsUpdate = true; }
+      if (first || reduce || !hasGsap) { setScreen(i, false); return; }
+      if (flipTween && flipTween.isActive()) { setScreen(i, true); return; }
+      flipTween = gsap.to(st, { flip: st.flip + 360, duration: 1.15, ease: 'power3.inOut' });
+      if (swapCall) swapCall.kill();
+      swapCall = gsap.delayedCall(0.5, () => setScreen(screenFor(active), true));
+    }
+    const cA = new THREE.Color(), t0 = performance.now(); let lastCycle = 0, cycleI = 0, lastTintEl = null;
+    function frame(now) {
+      rafId = 0; now = now || performance.now();
+      const sy = scrollY; vel += ((sy - lastY) * 0.002 - vel) * 0.1; lastY = sy;
+      const el = nearest();
+      if (el && el !== active) onChange(el, active === null);
+      if (el) {
+        const r = el.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        const tx = ((cx / vw) * 2 - 1) * halfW, ty = -((cy / vh) * 2 - 1) * halfH, ts = (r.height / vh) * 2 * halfH / H * (+el.dataset.scale || 1);
+        const k = reduce ? 1 : 0.1;
+        st.x += (tx - st.x) * k; st.y += (ty - st.y) * k; st.s += (ts - st.s) * k;
+        const by = (+el.dataset.yaw || 0) * Math.PI / 180, br = (+el.dataset.roll || 0) * Math.PI / 180;
+        const lk = reduce ? 1 : 0.08; st.yaw += (by - st.yaw) * lk; st.roll += (br - st.roll) * lk;
+        if (el !== lastTintEl) { cA.set(el.dataset.c); lastTintEl = el; }
+        const tk = reduce ? 1 : 0.06; U.uTint.value.lerp(cA, tk); rim.color.lerp(cA, tk);
+        layers.forEach(l => { l.children[1].material.color.lerp(cA, tk); l.children[0].material.color.lerp(cA, tk); });
+      }
+      mouse.sx += (mouse.x - mouse.sx) * 0.06; mouse.sy += (mouse.y - mouse.sy) * 0.06;
+      st.gap += ((0.2 + Math.min(Math.abs(vel), 1) * 1.5) - st.gap) * 0.08;
+      const app = reduce ? 1 : st.appear, rad = Math.PI / 180;
+      rig.position.set(st.x, st.y + (active && active !== heroSlot && !reduce ? Math.sin((now - t0) / 1400) * 0.05 : 0), 0);
+      rig.scale.setScalar(Math.max(st.s * app, 0.0001));
+      rig.rotation.set(mouse.sy * 0.28 + vel * 0.4, st.yaw + mouse.sx * 0.5 + (st.flip + st.spin) * rad + (1 - app) * 3, st.roll);
+      U.uM.value.set(mouse.sx, mouse.sy);
+      layers.forEach((l, i) => { l.position.z = -(i + 1) * st.gap * 0.6 - 0.05; l.scale.setScalar(1 + (i + 1) * 0.03); });
+      if (active && active.dataset.cycle && !reduce && now - lastCycle > 2800 && !(flipTween && flipTween.isActive())) { const arr = active.dataset.cycle.split(',').map(Number); cycleI = (cycleI + 1) % arr.length; lastCycle = now; setScreen(arr[cycleI], true); }
+      renderer.render(scene, cam);
+      if (!reduce && !document.hidden) schedule();
+    }
+    document.addEventListener('visibilitychange', () => { if (!document.hidden && !reduce) schedule(); });
+    schedule();
+    if (reduce) { addEventListener('scroll', schedule, { passive: true }); }
+    else if (hasGsap) gsap.to(st, { appear: 1, duration: 1.8, ease: 'expo.out', delay: 0.4 });
+    return { st, setHero(i) { heroScreen = i; if (active === heroSlot) setScreen(i, true); }, refreshChat() { chatTex.needsUpdate = true; } };
+  })(); } catch (e) { console.warn('3D phone disabled', e); return null; } })();
+  if (!PH) root.classList.add('no-gl');
+  if (document.fonts && document.fonts.load) Promise.all([document.fonts.load('500 20px Rubik'), document.fonts.load('400 20px Rubik')]).catch(() => {}).then(() => { paintChat(); if (PH) PH.refreshChat(); });
+
+  /* ---------- hero carousel ---------- */
+  const cardsEl = $('#cards'), dotsEl = $('#dots');
+  function renderCards() {
+    const hadFocus = !!(document.activeElement && document.activeElement.closest && document.activeElement.closest('#dots'));
+    const a = P[cur], bi = (cur + 1) % P.length, b = P[bi];
+    cardsEl.innerHTML = [[a, cur], [b, bi]].map(([p, i], k) => `<button class="card${k === 0 ? ' active' : ''}" data-i="${i}" type="button" aria-label="${p.name}, ${p.cat}"><img src="${p.img}" alt=""><span class="card-info"><span>${p.name}</span><span>${p.cat}</span></span></button>`).join('');
+    dotsEl.innerHTML = P.map((p, i) => `<button type="button" class="${i === cur ? 'on' : ''}" data-i="${i}" ${i === cur ? 'aria-current="true"' : ''} aria-label="${p.name}"></button>`).join('');
+    if (hadFocus) { const b = dotsEl.children[cur]; if (b) b.focus({ preventScroll: true }); }
+  }
+  renderCards();
+  cardsEl.addEventListener('click', e => { const c = e.target.closest('.card'); if (!c) return; const i = +c.dataset.i; if (i === cur) { const t = $('#p' + (i + 1)); if (t) t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); } else select(i); });
+  dotsEl.addEventListener('click', e => { const b = e.target.closest('button'); if (b) select(+b.dataset.i); });
+  $('#next').addEventListener('click', () => select((cur + 1) % P.length));
+  $('#prev').addEventListener('click', () => select((cur - 1 + P.length) % P.length));
+  function setNow(p, i) {
+    $('#cap-tag').textContent = p.tag; $('#cap-name').textContent = p.name; $('#hero-cap').setAttribute('href', '#p' + (i + 1));
+    $('#now-num').textContent = '0' + (i + 1); $('#now-name').textContent = p.name; $('#now-tag').textContent = p.cat;
+    $('#sr').textContent = 'פרויקט ' + (i + 1) + ' מתוך 5: ' + p.name + ', ' + p.cat;
+    heroSlot.dataset.c = p.c; $('#hero-fb').src = p.img || 'img/wallet-phone.jpg';
+  }
+  setNow(P[0], 0);
+  function select(i) {
+    if (isSwitching) { pending = i; return; }
+    if (i === cur) return;
+    isSwitching = true; cur = i; const p = P[i]; heroTheme = p.theme; applyTheme(p.theme, 1.5); renderCards(); setNow(p, i);
+    const finish = () => { isSwitching = false; if (pending !== null) { const n = pending; pending = null; select(n); } };
+    if (!PH || reduce || !hasGsap) { if (PH) PH.setHero(p.screen); finish(); return; }
+    const o = { v: 0 };
+    gsap.to(o, { v: 360, duration: 0.6, ease: 'power2.in', onUpdate: () => { PH.st.spin = o.v; },
+      onComplete: () => {
+        PH.setHero(p.screen);
+        gsap.to(o, { v: 720, duration: 1.5, ease: 'back.out(0.7)', onUpdate: () => { PH.st.spin = o.v; }, onComplete: () => { PH.st.spin = 0; finish(); } });
+      } });
+  }
+
+  /* ---------- header, menu, nav ---------- */
+  const header = $('#header'), burger = $('#burger'), menu = $('#menu');
+  const onScroll = () => header.classList.toggle('scrolled', scrollY > 24);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const mainEl = $('main'), footEl = $('footer');
+  function setMenu(open) {
+    menu.classList.toggle('open', open); burger.setAttribute('aria-expanded', String(open)); root.style.overflow = open ? 'hidden' : '';
+    [mainEl, footEl].forEach(e => { if (open) e.setAttribute('inert', ''); else e.removeAttribute('inert'); });
+    if (open) { const a = $('a', menu); if (a) a.focus(); } else if (document.activeElement && menu.contains(document.activeElement)) burger.focus();
+  }
+  matchMedia('(max-width: 900px)').addEventListener('change', e => { if (!e.matches) setMenu(false); });
+  burger.addEventListener('click', () => setMenu(!menu.classList.contains('open')));
+  menu.addEventListener('click', e => { if (e.target.closest('a')) setMenu(false); });
+  addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+  function setNav(k) { $$('.nav-item').forEach(a => a.classList.toggle('active', a.dataset.sec === k)); }
+
+  /* ---------- scroll choreography ---------- */
+  if (hasGsap && window.ScrollTrigger) {
+    gsap.to('#progress', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.2 } });
+    ScrollTrigger.create({ trigger: '.hero', start: 'top 60%', end: 'bottom 60%', onToggle: s => { if (s.isActive) { applyTheme(heroTheme); setNav('top'); } } });
+    $$('.case').forEach(c => ScrollTrigger.create({ trigger: c, start: 'top 58%', end: 'bottom 58%', onToggle: s => { if (s.isActive) { applyTheme(c.dataset.theme); setNav('work'); } } }));
+    ScrollTrigger.create({ trigger: '#method', start: 'top 60%', end: 'bottom 60%', onToggle: s => { if (s.isActive) { applyTheme('violet'); setNav('method'); } } });
+    ScrollTrigger.create({ trigger: '#contact', start: 'top 70%', end: 'bottom bottom', onToggle: s => { if (s.isActive) { applyTheme('hero'); setNav('contact'); } } });
+    $$('img[data-scroll]').forEach(img => {
+      const screen = img.parentElement;
+      gsap.to(img, { y: () => -Math.max(0, img.offsetHeight - screen.offsetHeight), ease: 'none', scrollTrigger: { trigger: screen.closest('.stage'), start: 'top 85%', end: 'bottom 15%', scrub: 0.7, invalidateOnRefresh: true } });
+    });
+    if (!reduce) {
+      $$('.case .copy > *, .work-head > *, .method .wrap > *, .contact .wrap > div:first-child > *').forEach(el => gsap.from(el, { y: 36, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 94%', once: true } }));
+      $$('.stage .rig').forEach(r => gsap.from(r, { y: 60, scale: 0.95, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: r, start: 'top 95%', once: true } }));
+      gsap.to('.marq-t', { skewX: -6, ease: 'none', scrollTrigger: { trigger: '.marq', start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
+      if (!fine) $$('.stage .rig').forEach(r => gsap.fromTo(r, { rotationY: -12, rotationX: 4 }, { rotationY: 12, rotationX: -4, ease: 'none', scrollTrigger: { trigger: r, start: 'top bottom', end: 'bottom top', scrub: 0.8 } }));
+    }
+    addEventListener('load', () => ScrollTrigger.refresh());
+  }
+  if (fine && !reduce && hasGsap) $$('.stage').forEach(st => {
+    const rig = $('.rig', st); if (!rig) return;
+    const rx = gsap.quickTo(rig, 'rotationX', { duration: 0.9, ease: 'power3.out' }), ry = gsap.quickTo(rig, 'rotationY', { duration: 0.9, ease: 'power3.out' });
+    st.addEventListener('pointermove', e => {
+      const r = st.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height; ry((x - 0.5) * -22); rx((y - 0.5) * 16);
+      $$('.glare', st).forEach(g => { g.style.setProperty('--gx', (x * 100).toFixed(0) + '%'); g.style.setProperty('--gy', (y * 100).toFixed(0) + '%'); });
+    });
+    st.addEventListener('pointerleave', () => { ry(0); rx(0); });
+  });
+
+  /* ---------- contact ---------- */
+  const wa = $('#wa');
+  if (WHATSAPP_NUMBER) { wa.href = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent('היי יהודה, ראיתי את התיק עבודות ויש לי פרויקט'); wa.hidden = false; }
+  $('#copy').addEventListener('click', async () => {
+    const t = $('#copy-t'), txt = $('#mail').textContent.trim();
+    try { await navigator.clipboard.writeText(txt); t.textContent = 'הועתק'; setTimeout(() => t.textContent = 'העתק כתובת', 1800); }
+    catch (e) { const r = document.createRange(); r.selectNodeContents($('#mail')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); t.textContent = 'סומן, העתיקו ידנית'; }
+  });
+})();
+</script>
+</body></html>
