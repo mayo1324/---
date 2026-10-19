@@ -69,7 +69,7 @@ h2{font-size:clamp(28px,7vw,42px);text-align:center}
 .eyebrow{display:inline-block;font-size:14px;letter-spacing:.04em;color:var(--green);font-weight:500;margin-bottom:14px;padding-bottom:6px;border-bottom:1px solid var(--gold)}
 .visual{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:30px;height:max(46vh,330px);height:max(46svh,330px)}
 .photo{position:relative;border-radius:200px 200px 14px 14px;overflow:hidden;border:1px solid var(--gold);background:linear-gradient(160deg,#E8DFCC,#D8CBB0)}
-.photo img{width:100%;height:100%;object-fit:cover}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:50% 20%;mix-blend-mode:multiply}
 .ph{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--serif);font-size:56px;color:rgba(31,61,43,.35);z-index:0}
 .photo img,.ba img,.about-img img{position:relative;z-index:1}
 .bottle-slot{position:relative}
@@ -252,7 +252,7 @@ html.rm .ripple-bg{clip-path:none!important}
     </div>
     <div class="visual">
       <div class="photo"><span class="ph" aria-hidden="true">I</span>
-        <img src="inbar-hero.jpg" alt="ענבר בן אדרת, קוסמטיקאית ומנהלת קליניקה" width="600" height="800" fetchpriority="high" onerror="this.remove()"></div>
+        <img src="inbar-hero.jpg" alt="ענבר בן אדרת, קוסמטיקאית ומנהלת קליניקה" width="570" height="605" fetchpriority="high" onload="this.previousElementSibling.remove()" onerror="this.remove()"></div>
       <div class="bottle-slot" id="bottleSlot">
         <div class="bottle-fallback" id="bottleFallback" role="img" aria-label="בקבוק סרום עם טפטפת מליין המוצרים של ענבר">
           <svg viewBox="0 0 120 240" aria-hidden="true">
@@ -321,7 +321,7 @@ html.rm .ripple-bg{clip-path:none!important}
 <section class="bg-cream" id="about">
   <div class="wrap about">
     <div class="about-img" data-reveal><span class="ph" aria-hidden="true">I</span>
-      <img src="inbar-serum.jpg" alt="ענבר בן אדרת מחזיקה סרום מליין המוצרים שלה" width="800" height="1000" loading="lazy" id="parallaxImg" onerror="this.remove()"></div>
+      <img src="inbar-serum.jpg" alt="ענבר בן אדרת מחזיקה סרום מליין המוצרים שלה" width="1000" height="1101" loading="lazy" id="parallaxImg" onload="this.previousElementSibling.remove()" onerror="this.remove()"></div>
     <div data-reveal>
       <h2 style="text-align:start">מי זאת ענבר</h2>
       <div class="divider" style="margin:18px 0 26px;max-width:200px;margin-inline-start:0"><i></i></div>
