@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ענבר בן אדרת | קורס מעשי לקוסמטיקאיות</title>
-<meta name="description" content="קורס מעשי של 3 מפגשים עם ענבר בן אדרת: איך לסגור סדרות טיפולים, לבחור ציוד בחוכמה ולבנות הכנסה יציבה בקליניקה.">
+<meta name="description" content="קורס פרקטי בן 3 מפגשים בהדרכת ענבר בן אדרת: להרגיש בטוחה בכל סוגי הטיפולים, לדעת מה להביא לקליניקה ואיך לסגור סדרות טיפולים שמייצבים את ההכנסה.">
 <meta name="theme-color" content="#F7F2EA">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="he_IL">
@@ -95,6 +95,7 @@ h2{font-size:clamp(28px,7vw,42px);text-align:center}
 .card .n{font-family:var(--serif);font-size:28px;color:var(--green);line-height:1;flex:none;padding-top:3px;min-width:32px}
 
 /* timeline */
+.intro{max-width:36em;margin:-14px auto 40px;text-align:center}
 .tl{position:relative;list-style:none;padding-inline-start:54px;max-width:760px;margin-inline:auto}
 .tl-rail,.tl-fill{position:absolute;inset-inline-start:16px;top:10px;bottom:10px;width:2px;border-radius:2px}
 .tl-rail{background:rgba(201,169,110,.25)}
@@ -115,6 +116,7 @@ h2{font-size:clamp(28px,7vw,42px);text-align:center}
 .panel>div{overflow:hidden}
 .open>.panel,.panel.is-open{grid-template-rows:1fr}
 .st-card ul{list-style:none;padding:0 22px 22px;display:grid;gap:10px}
+.st-card li b{font-weight:500;color:#fff}
 .st-card li{position:relative;padding-inline-start:20px;color:#F1EBDD;font-size:16.5px}
 .st-card li::before{content:"";position:absolute;inset-inline-start:0;top:.7em;width:6px;height:6px;background:var(--gold);transform:rotate(45deg)}
 
@@ -247,8 +249,8 @@ html.rm .ripple-bg{clip-path:none!important}
   <div class="wrap hero-grid">
     <div class="h-head">
       <span class="eyebrow">ענבר בן אדרת</span>
-      <h1>מקוסמטיקאית עם חלום, לאשת עסקים עם קליניקה מלאה</h1>
-      <p class="sub lead">קורס מעשי של 3 מפגשים עם ענבר בן אדרת. איך לסגור סדרות טיפולים, לבחור ציוד בחוכמה ולבנות הכנסה יציבה.</p>
+      <h1>מקוסמטיקאית עם חלום, לאשת עסקים עם קליניקה מלאה בלקוחות</h1>
+      <p class="sub lead">קורס פרקטי בן 3 מפגשים בהדרכת ענבר בן אדרת שיעזור לך להרגיש בטוחה בכל סוגי הטיפולים, לדעת מה באמת להביא לקליניקה, ואיך לסגור סדרות טיפולים שמייצבים את ההכנסה שלך ולא לרדוף אחרי טיפולים יחידים.</p>
     </div>
     <div class="visual">
       <div class="photo"><span class="ph" aria-hidden="true">I</span>
@@ -302,11 +304,12 @@ html.rm .ripple-bg{clip-path:none!important}
   <div class="wrap">
     <h2 data-reveal>3 מפגשים. מסלול אחד ברור.</h2>
     <div class="divider"><i></i></div>
+    <p class="sub intro" data-reveal>ב-26 השנים האחרונות למדתי דבר אחד חשוב: מה שמפריד בין קוסמטיקאית רגילה לבין קוסמטיקאית שמובילה בתחום הוא לא רק ידע מקצועי. זו הדרך שבה את מנהלת את הקליניקה שלך, הביטחון שאת משדרת והיכולת להבדיל בין העיקר לטפל. וזה מה שמחכה לך כאן.</p>
     <ol class="tl" id="tl">
       <span class="tl-rail" aria-hidden="true"></span><span class="tl-fill" id="tlFill" aria-hidden="true"></span>
       <li class="station"><span class="dot" aria-hidden="true"></span>
-        <div class="st-card acc"><button class="st-head" aria-expanded="false" aria-controls="p1" id="h1"><span class="st-num">מפגש 1</span><span class="st-title">מיינדסט וחזון עסקי</span><span class="st-dur">3 עד 4 שעות</span><span class="chev" aria-hidden="true"></span></button>
-        <div class="panel" id="p1" role="region" aria-labelledby="h1"><div><ul><li>חזון אישי</li><li>כלי NLP ליצירת חיבור עם לקוחות</li><li>אבחון העור ככלי מכירה</li></ul></div></div></div></li>
+        <div class="st-card acc"><button class="st-head" aria-expanded="false" aria-controls="p1" id="h1"><span class="st-num">מפגש 1</span><span class="st-title">הנחת יסודות: מיינדסט וחזון עסקי</span><span class="st-dur">3 עד 4 שעות</span><span class="chev" aria-hidden="true"></span></button>
+        <div class="panel" id="p1" role="region" aria-labelledby="h1"><div><ul><li><b>פתיחה חווייתית:</b> שיר העצמה 'זה מתחיל בצעד', דמיון מודרך לבניית חזון אישי וקליניקה מצליחה, סבב היכרות והצגה עצמית</li><li><b>עולם המיינדסט:</b> כיצד פועל המוח, למה המיינדסט קריטי להצלחה, שאלון ממוקד מטרה</li><li><b>כלי NLP ליצירת חיבור עם לקוחות:</b> מהו ראפור, טכניקת הובלה, זיהוי והמרת אמונות מגבילות</li><li><b>הבסיס למכירה רכה:</b> אבחון העור ככלי מכירה, שאלון לקוח שמעורר כאב ומוביל לתמונת ניצחון</li></ul></div></div></div></li>
       <li class="station"><span class="dot" aria-hidden="true"></span>
         <div class="st-card acc"><button class="st-head" aria-expanded="false" aria-controls="p2" id="h2"><span class="st-num">מפגש 2</span><span class="st-title">מקצועיות מעשית</span><span class="st-dur">3 עד 4 שעות</span><span class="chev" aria-hidden="true"></span></button>
         <div class="panel" id="p2" role="region" aria-labelledby="h2"><div><ul><li>אקנה, פיגמנטציה ואנטי אייג'ינג</li><li>חומרים פעילים</li><li>בניית פרוטוקול טיפול</li></ul></div></div></div></li>
@@ -364,14 +367,14 @@ html.rm .ripple-bg{clip-path:none!important}
     <div class="divider"><i></i></div>
     <div class="fit">
       <div class="col yes" data-reveal><h3>מתאים לך אם</h3><ul>
-        <li><span class="ic v"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.6 2.6L10 3.4" fill="none" stroke="#1F3D2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>סיימת קורס קוסמטיקה ומרגישה שחסרים לך כלים לעבודה בשטח</li>
-        <li><span class="ic v"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.6 2.6L10 3.4" fill="none" stroke="#1F3D2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>את רוצה להרוויח מהתחום ולא רק לטפל על הדרך</li>
-        <li><span class="ic v"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.6 2.6L10 3.4" fill="none" stroke="#1F3D2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>את מתבלבלת מההמלצות ברשת ולא בטוחה איפה להשקיע</li>
-        <li><span class="ic v"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.6 2.6L10 3.4" fill="none" stroke="#1F3D2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>את רוצה לסגור סדרות ולא להסתמך על טיפולים חד פעמיים</li></ul></div>
+        <li><span class="ic v"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.6 2.6L10 3.4" fill="none" stroke="#1F3D2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>סיימת קורס קוסמטיקה ואת מרגישה שחסרים לך כלים אמיתיים לעבודה בשטח</li>
+        <li><span class="ic v"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.6 2.6L10 3.4" fill="none" stroke="#1F3D2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>יש לך רצון להרוויח מהתחום הזה כמו שצריך ולא רק 'לטפל על הדרך'</li>
+        <li><span class="ic v"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.6 2.6L10 3.4" fill="none" stroke="#1F3D2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>את מתבלבלת מההמלצות ברשת ולא בטוחה איפה נכון להשקיע</li>
+        <li><span class="ic v"><svg viewBox="0 0 12 12"><path d="M2 6.5l2.6 2.6L10 3.4" fill="none" stroke="#1F3D2B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>את פתוחה ללמוד, לתרגל ולהתקדם, גם ברמה המקצועית וגם ברמה העסקית והאישית</li></ul></div>
       <div class="col no" data-reveal><h3>פחות מתאים אם</h3><ul>
-        <li><span class="ic x"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="#B5162B" stroke-width="1.6" stroke-linecap="round"/></svg></span>את לא מתכוונת ליישם, רק לשמוע ולהמשיך כרגיל</li>
+        <li><span class="ic x"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="#B5162B" stroke-width="1.6" stroke-linecap="round"/></svg></span>את לא מתכוונת ליישם בפועל, רק לשמוע ולהמשיך כרגיל</li>
         <li><span class="ic x"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="#B5162B" stroke-width="1.6" stroke-linecap="round"/></svg></span>את מחפשת פתרון קסם בלי תהליך של למידה ותרגול</li>
-        <li><span class="ic x"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="#B5162B" stroke-width="1.6" stroke-linecap="round"/></svg></span>את לא מוכנה להסתכל לעסק שלך בעיניים</li></ul></div>
+        <li><span class="ic x"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="#B5162B" stroke-width="1.6" stroke-linecap="round"/></svg></span>את לא מוכנה להסתכל לעסק שלך בעיניים ולבחון מה באמת מעכב אותך</li><li><span class="ic x"><svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="#B5162B" stroke-width="1.6" stroke-linecap="round"/></svg></span>את לא פתוחה ללמוד, לקבל דרכים חדשות ושינויים חדשים להתקדמות בעסק</li></ul></div>
     </div>
   </div>
 </section>
@@ -396,6 +399,7 @@ html.rm .ripple-bg{clip-path:none!important}
   <div class="wrap">
     <h2 data-reveal>שאלות נפוצות</h2>
     <div class="divider"><i></i></div>
+    <p class="sub intro" data-reveal>ריכזתי את כל השאלות שקיבלתי מכן בזמן האחרון ועניתי עליהן במסודר. לחצי על כל שאלה והתשובה תיפתח.</p>
     <div class="faq">
       <div class="qa acc"><button class="st-head" aria-expanded="false" aria-controls="f1" id="fq1"><span class="q">סיימתי ממש עכשיו קורס קוסמטיקה, למה שאעשה עוד קורס?</span><span class="chev" aria-hidden="true"></span></button><div class="panel" id="f1" role="region" aria-labelledby="fq1"><div><p>[placeholder: תשובות ענבר]</p></div></div></div>
       <div class="qa acc"><button class="st-head" aria-expanded="false" aria-controls="f2" id="fq2"><span class="q">מה עושים כשהקליניקה מוכנה אבל אין לי לקוחות?</span><span class="chev" aria-hidden="true"></span></button><div class="panel" id="f2" role="region" aria-labelledby="fq2"><div><p>[placeholder: תשובות ענבר]</p></div></div></div>
@@ -411,12 +415,14 @@ html.rm .ripple-bg{clip-path:none!important}
   <div class="wrap reg">
     <h2 data-reveal>רוצה לשמוע על המחזור הקרוב?</h2>
     <div class="divider"><i></i></div>
+    <p class="sub intro" data-reveal>הזמן הכי נכון לעשות שינוי היה אתמול. הזמן הבא הכי נכון הוא עכשיו.</p>
     <form id="leadForm" novalidate data-reveal>
-      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;top:0;inset-inline-start:0;width:1px;height:1px;opacity:0;pointer-events:none">
       <div><label for="fname">שם</label><input id="fname" name="name" type="text" autocomplete="name" placeholder="השם שלך" required aria-describedby="errName"><div class="err" id="errName" role="alert"></div></div>
       <div><label for="fphone">טלפון</label><input id="fphone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="050-0000000" dir="rtl" required aria-describedby="errPhone"><div class="err" id="errPhone" role="alert"></div></div>
       <button class="btn block" type="submit">אני רוצה לשמוע על המחזור הקרוב</button>
     </form>
+    <p class="sub" style="font-size:14.5px;margin-top:12px;text-align:center" id="limitNote">מספר המקומות למחזור הקרוב מוגבל</p>
     <div class="thanks" id="thanks" role="status" tabindex="-1">
       <svg viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="38" id="tkC"/><path d="M26 43l11 11 21-23" id="tkP"/></svg>
       <h3>תודה, קיבלנו</h3><p class="sub">ענבר או מישהי מהצוות תחזור אלייך בקרוב.</p>
