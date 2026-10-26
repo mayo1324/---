@@ -2491,7 +2491,7 @@ const TAU=Math.PI*2;
 const IS_TOUCH=!!(window.matchMedia&&window.matchMedia('(hover:none)').matches);
 
 /* ---------- מצב ---------- */
-const S={biz:[],sentToday:0,order:0,sel:null,view:'graph',filter:'',nid:0,tc:0,ready:false};
+const S={pool:{},biz:[],sentToday:0,order:0,sel:null,view:'graph',filter:'',nid:0,tc:0,ready:false};
 const $=id=>document.getElementById(id);
 const rnd=a=>a[Math.floor(Math.random()*a.length)];
 const slug=b=>'biz'+b.id;
@@ -2751,7 +2751,7 @@ function updateSite(b){
     if(body.dataset.state!=='empty'){body.dataset.state='empty';body.dataset.sig='';body.innerHTML='<div class="empty">עדיין אין אתר. אחרי "ענו כן" אפשר ללחוץ "צור אתר".</div>'}
     return;
   }
-  const sig=[b.arch,b.pal,b.v,b.ver,b.pay>=2?1:0].join('-');
+  const sig=[b.arch,b.pal,b.v,b.ver,b.pay>=2?1:0,(b.imgs||[]).length,(S.pool[b.field]||[]).length,b._imgStamp||0].join('-');
   if(body.dataset.state==='site'&&body.dataset.sig===sig){const m=$('siteMeta');if(m)m.innerHTML=siteMeta(b);return}
   body.dataset.state='site';body.dataset.sig=sig;
   body.innerHTML=`<div class="thumb" id="thumb"><iframe id="thumbFr" title="תצוגה מקדימה" sandbox="allow-scripts"></iframe></div><div class="mini" id="siteMeta">${siteMeta(b)}</div><button class="btn pri full" id="openSite">פתח תצוגה מלאה</button>`;
@@ -2767,7 +2767,7 @@ function openCard(id){
   c.innerHTML=`<button class="close" id="cx" aria-label="סגור">✕</button>
    <div class="chead" style="--sc:${sc}"><div class="cav">${b.name.replace(/["'׳״]/g,'')[0]}</div><div><div class="cname">${b.name}</div><div class="mini">${b.field} · ${b.city}</div></div></div>
    <div id="cTop"></div>
-   <div class="card-sec"><h4>האתר שנבנה</h4><div id="siteBody" style="display:flex;flex-direction:column;gap:10px"></div></div>
+   <div class="card-sec"><h4>האתר שנבנה</h4><div id="siteBody" style="display:flex;flex-direction:column;gap:10px"></div><div class="row" style="align-items:center;flex-wrap:wrap"><label class="btn" style="cursor:pointer">העלה תמונות מוצר<input id="imgIn" type="file" accept="image/*" multiple hidden></label><button class="btn bad" id="imgClr">נקה תמונות</button><span class="mini" id="imgInfo"></span></div><div class="mini">התמונות נשארות בדפדפן שלך בלבד והאתר משתמש בהן: תמונת הרקע הופכת לסצנת תלת מימד עם עומק ותנועת מצלמה, והגלריה מציגה אותן. אפשר להעלות רק תמונות שיש לך זכות להשתמש בהן.</div></div>
    <div id="cBot"></div>
    <div class="card-sec"><h4>עוזר סגירה · מה בעל העסק ענה</h4>
     <textarea id="ans" rows="2" placeholder="הדבק או הקלד את תשובתו, למשל: יקר לי"></textarea>
@@ -2780,7 +2780,17 @@ function openCard(id){
   $('suggBtn').onclick=()=>suggest(b);
   $('ans').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();suggest(b)}});
   c.querySelectorAll('[data-q]').forEach(x=>x.onclick=()=>{$('ans').value=x.dataset.q;suggest(b)});
-  refreshCard();c.scrollTop=0;
+  $('imgIn').onchange=e=>uploadImgs(b,e.target.files);
+  $('imgClr').onclick=()=>{b.imgs=[];delete S.pool[b.field];b._imgStamp=(b._imgStamp||0)+1;updateSite(b);imgInfo(b)};
+  refreshCard();imgInfo(b);c.scrollTop=0;
+}
+function imgInfo(b){const n=(b.imgs&&b.imgs.length)||(S.pool[b.field]||[]).length;const e=$('imgInfo');if(e)e.textContent=n?`${n} תמונות פעילות`:'עדיין לא הועלו תמונות, האתר משתמש בסצנה תלת מימדית כללית'}
+function uploadImgs(b,files){
+  const list=[...files].slice(0,8);if(!list.length)return;
+  toast('מעבד תמונות…');
+  Promise.all(list.map(f=>new Promise(res=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,1400/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',.86))};im.onerror=()=>res(null);im.src=r.result};r.onerror=()=>res(null);r.readAsDataURL(f)}))).then(a=>{
+    b.imgs=a.filter(Boolean);S.pool[b.field]=b.imgs;b._imgStamp=(b._imgStamp||0)+1;updateSite(b);imgInfo(b);toast(`נטענו ${b.imgs.length} תמונות לאתר`);
+  });
 }
 function refreshCard(){
   const b=getB(S.sel);if(!b||!$('cTop'))return;
@@ -2859,6 +2869,79 @@ $('vGraph').onclick=()=>setView('graph');$('vTable').onclick=()=>setView('table'
 $('vclose').onclick=closeViewer;
 $('vdesk').onclick=()=>$('vstage').classList.remove('m');
 $('vmob').onclick=()=>$('vstage').classList.add('m');
+
+/* ===== תמונות אמיתיות באנימציית תלת מימד: שכבות עומק, מצלמה זזה, ברק וחלקיקים ===== */
+function photoStage(cv,cfg){
+  var T=window.THREE,imgs=cfg.imgs,P=cfg.pal,lite=!!cfg.lite,TAU=Math.PI*2;
+  function hexA(h,a){var n=parseInt(h.slice(1),16);return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')'}
+  var fx=document.createElement('canvas');fx.style.cssText='position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:var(--bgo,1)';
+  cv.parentNode.insertBefore(fx,cv.nextSibling);var fc=fx.getContext('2d');
+  var W=0,H=0,dpr=Math.min(cfg.dpr||1.5,window.devicePixelRatio||1),mx=0,my=0,sx=0,sy=0,t=0,alive=true,vis=true;
+  window.addEventListener('pointermove',function(e){mx=(e.clientX/window.innerWidth-.5)*2;my=(e.clientY/window.innerHeight-.5)*2});
+  if(window.IntersectionObserver)new IntersectionObserver(function(en){vis=en[0].isIntersecting}).observe(cv);
+  var parts=[],i;for(i=0;i<(lite?14:34);i++)parts.push({x:Math.random(),y:Math.random(),r:.5+Math.random()*1.6,v:.01+Math.random()*.04,ph:Math.random()*TAU});
+  function drawFx(){
+    fc.clearRect(0,0,W,H);fc.globalCompositeOperation=P.light?'source-over':'lighter';
+    parts.forEach(function(p){
+      p.y-=p.v*.016;if(p.y<-.05){p.y=1.05;p.x=Math.random()}
+      var x=(p.x+Math.sin(t*.4+p.ph)*.02)*W-sx*p.r*14,y=p.y*H,a=(.25+.5*Math.pow(Math.sin(t*1.6+p.ph),2))*(P.light?.7:1),r=p.r*5;
+      var g=fc.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,hexA(P.c2,a));g.addColorStop(1,hexA(P.c2,0));fc.fillStyle=g;fc.beginPath();fc.arc(x,y,r,0,TAU);fc.fill();
+    });
+  }
+  function size(){W=cv.clientWidth;H=cv.clientHeight;fx.width=Math.max(1,W*dpr);fx.height=Math.max(1,H*dpr);fc.setTransform(dpr,0,0,dpr,0,0);if(R){R.setPixelRatio(dpr);R.setSize(W,H,false);cam.aspect=W/H;cam.updateProjectionMatrix();fit()}}
+  var R=null,cam=null,scene=null,mid=null,back=null,U=null,asp=1;
+  var im=new Image();
+  function fit(){
+    if(!mid)return;
+    var vh=2*Math.tan(cam.fov*Math.PI/360)*cam.position.z,vw=vh*cam.aspect,s=Math.max(vw/asp,vh)*1.18;
+    mid.scale.set(s*asp,s,1);back.scale.set(s*asp*1.2,s*1.2,1);
+  }
+  function build(im){
+    asp=im.width/im.height;
+    var k=Math.min(1,1280/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+    var tex=new T.CanvasTexture(c);tex.minFilter=T.LinearFilter;tex.generateMipmaps=false;
+    var dc=document.createElement('canvas');dc.width=96;dc.height=Math.max(16,Math.round(96/asp));var dx=dc.getContext('2d');dx.drawImage(im,0,0,dc.width,dc.height);
+    var id=dx.getImageData(0,0,dc.width,dc.height),d=id.data,y,x;
+    for(y=0;y<dc.height;y++)for(x=0;x<dc.width;x++){
+      var o=(y*dc.width+x)*4,l=(.3*d[o]+.59*d[o+1]+.11*d[o+2])/255,cx=(x/dc.width-.5)*2,cy=(y/dc.height-.5)*2,ce=Math.max(0,1-(cx*cx*.9+cy*cy*.7)),v=Math.round(255*Math.min(1,.55*ce+.45*l));
+      d[o]=d[o+1]=d[o+2]=v;d[o+3]=255;
+    }
+    dx.putImageData(id,0,0);
+    var dtex=new T.CanvasTexture(dc);dtex.minFilter=dtex.magFilter=T.LinearFilter;
+    var bc=document.createElement('canvas');bc.width=40;bc.height=Math.max(8,Math.round(40/asp));var bx=bc.getContext('2d');bx.drawImage(im,0,0,bc.width,bc.height);
+    var btex=new T.CanvasTexture(bc);btex.minFilter=btex.magFilter=T.LinearFilter;
+    U={map:{value:tex},depth:{value:dtex},time:{value:0},mouse:{value:new T.Vector2()},disp:{value:lite?.0:.55}};
+    var mat=new T.ShaderMaterial({uniforms:U,vertexShader:'uniform sampler2D depth;uniform float disp;varying vec2 vUv;void main(){vUv=uv;vec3 p=position;float d=texture2D(depth,uv).r;p.z+=(d-.45)*disp;gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.);}',
+      fragmentShader:'uniform sampler2D map;uniform float time;uniform vec2 mouse;varying vec2 vUv;void main(){vec3 c=texture2D(map,vUv).rgb;float b=vUv.x*.8+vUv.y*.55-fract(time*.09)*2.6+.6;float sh=exp(-b*b*18.)*.2;c+=vec3(1.,.96,.88)*sh;vec2 q=vUv-.5;c*=1.-dot(q,q)*.55;gl_FragColor=vec4(c,1.);}'});
+    mid=new T.Mesh(new T.PlaneGeometry(1,1,lite?1:80,lite?1:80),mat);
+    back=new T.Mesh(new T.PlaneGeometry(1,1),new T.MeshBasicMaterial({map:btex,color:new T.Color(.55,.55,.55)}));back.position.z=-2.4;
+    scene.add(back,mid);fit();
+  }
+  try{
+    R=new T.WebGLRenderer({canvas:cv,antialias:!lite,alpha:true});R.outputEncoding=T.LinearEncoding;R.setClearColor(0x000000,1);
+    scene=new T.Scene();cam=new T.PerspectiveCamera(30,1,.1,60);cam.position.set(0,0,9);
+  }catch(e){R=null}
+  size();window.addEventListener('resize',size);
+  im.onload=function(){if(R)build(im);else fb=im};
+  var fb=null;im.src=imgs[0];
+  var last=performance.now(),minDt=cfg.fps?1000/cfg.fps-3:0;
+  function loop(now){
+    if(!alive)return;
+    if(document.hidden||!vis||(minDt&&now-last<minDt)){requestAnimationFrame(loop);return}
+    var dt=Math.min(.05,(now-last)/1000);last=now;t+=dt;sx+=(mx-sx)*.05;sy+=(my-sy)*.05;
+    var sc=cfg.scroll?cfg.scroll():0;
+    if(R&&mid){
+      U.time.value=t;
+      cam.position.x=Math.sin(t*.25)*.6+sx*1.1;cam.position.y=sy*.55+Math.sin(t*.3)*.15;cam.position.z=9-sc*2.8-Math.sin(t*.18)*.35;
+      cam.lookAt(0,0,0);R.render(scene,cam);
+    }else if(fb){
+      var c2=cv.getContext('2d');if(c2){cv.width=W;cv.height=H;var s=Math.max(W/fb.width,H/fb.height)*1.12,w=fb.width*s,h=fb.height*s;c2.drawImage(fb,(W-w)/2-sx*18,(H-h)/2-sy*12,w,h)}
+    }
+    drawFx();requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+  return {stop:function(){alive=false}};
+}
 
 /* ===== מחולל האתרים: 4 ארכיטיפים שונים לגמרי, לא רק צבעים ===== */
 const ARCH=['orbit','shards','ribbons','tunnel'];
@@ -3065,6 +3148,7 @@ body.ready .ln>span{animation:lnin 1.4s cubic-bezier(.2,.8,.2,1) calc(.9s + var(
 .lite .glass{background:color-mix(in srgb,var(--bg) 70%,var(--c3))}
 .lite .nav{background:color-mix(in srgb,var(--bg) 92%,transparent)}
 
+body.photo::after{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 55%,transparent),transparent 35%,color-mix(in srgb,var(--bg) 62%,transparent))}
 html[data-light="1"] .leak{mix-blend-mode:multiply;opacity:.14}
 html[data-light="1"] .bloom{display:none}
 html[data-light="1"] .noise{opacity:.05}
@@ -3130,9 +3214,18 @@ function siteRuntime(cfg){
     var a=cv.getAttribute('data-art').split(':');
     setTimeout(function(){siteArt(cv,a[0],+a[1],PA)},60+i*50);
   });
+  var IMGS=(cfg.imgs&&cfg.imgs.length)?cfg.imgs:null,loaded=[];
+  function coverDraw(cv,im,i){
+    var W=cv.width=600,H=cv.height=750,x=cv.getContext('2d'),z=1+(i%3)*.22,ox=[.5,.3,.7,.45,.62,.38][i%6],oy=[.5,.4,.6,.35,.55,.45][i%6];
+    var s=Math.max(W/im.width,H/im.height)*z,w=im.width*s,h=im.height*s;
+    x.drawImage(im,(W-w)*ox,(H-h)*oy,w,h);
+    var g=x.createRadialGradient(W/2,H/2,H*.3,W/2,H/2,H*.85);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.35)');x.fillStyle=g;x.fillRect(0,0,W,H);
+  }
+  function loadImgs(cb){var n=0;IMGS.forEach(function(s,k){var im=new Image();im.onload=function(){loaded[k]=im;if(++n===IMGS.length)cb()};im.onerror=function(){if(++n===IMGS.length)cb()};im.src=s})}
   $$('canvas[data-shot]').forEach(function(cv,i){
     var a=cv.getAttribute('data-shot').split(':');
-    setTimeout(function(){siteArt(cv,'bokeh',+a[1],PA);T3.shot(cv,cfg.kind,cfg.variant,PA,+a[0])},120+i*90);
+    if(IMGS){loadImgs._p=loadImgs._p||new Promise(function(r){loadImgs(r)});loadImgs._p.then(function(){var im=loaded[(+a[0]+ +a[1])%loaded.length]||loaded[0];if(im)coverDraw(cv,im,i)})}
+    else setTimeout(function(){siteArt(cv,'bokeh',+a[1],PA);T3.shot(cv,cfg.kind,cfg.variant,PA,+a[0])},120+i*90);
   });
   $$('.chars').forEach(function(el){
     var t=el.textContent.trim(),n=0;
@@ -3232,7 +3325,9 @@ function siteRuntime(cfg){
   $$('.fq .q').forEach(function(q){q.addEventListener('click',function(){q.parentNode.classList.toggle('open')})});
   $$('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=$(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'})})});
   $$('form').forEach(function(f){f.addEventListener('submit',function(e){e.preventDefault()})});
-  T3.start($('#bg'),{kind:cfg.kind,variant:cfg.variant,pal:P,layout:cfg.layout,lite:lite,bloom:(lite||L||GLOK)?null:'bloom',dpr:lite?1:1.5,fps:cfg.lite?30:0,
+  if(IMGS&&GLOK)photoStage($('#bg'),{imgs:IMGS,pal:P,lite:lite,dpr:lite?1:1.5,fps:cfg.lite?30:0,scroll:function(){return cfg.layout==='tunnel'?tp:hp}});
+  else if(IMGS)photoStage($('#bg'),{imgs:IMGS,pal:P,lite:true,dpr:1,scroll:function(){return hp}});
+  else T3.start($('#bg'),{kind:cfg.kind,variant:cfg.variant,pal:P,layout:cfg.layout,lite:lite,bloom:(lite||L||GLOK)?null:'bloom',dpr:lite?1:1.5,fps:cfg.lite?30:0,
     scroll:function(){return cfg.layout==='tunnel'?tp:hp},progress:function(){return tp}});
   var pre=$('.pre'),pn=$('.pre-n'),pb=$('.pre-bar i'),t0=performance.now();
   (function s(n){
@@ -3295,13 +3390,14 @@ function siteDoc(b,lite){
   else if(type==='shards')body=[pNav(d),heroShards(d,v),pMarq(d),pSteps(d),pWork(d),pTiers(d),pQuotes(d),pFaq(d),pCta(d),pMega(d)];
   else if(type==='ribbons')body=[pNav(d),heroRibbons(d,v),pWords(d),pHs(d),pWork(d),`<section class="sec"><div class="in-w reveal">${pCnt(d)}</div></section>`,pForm(d),pQuotes(d),pMega(d)];
   else body=[pNav(d),heroTunnel(d,v),pMarq(d),pBento(d),pWork(d),pTimeline(d),pQuotes(d),pFaq(d),pCta(d),pMega(d)];
-  const cfg={layout:type,kind:c.scene,variant:b.v%2,pal:pal,lite:!!lite};
+  const imgs=(b.imgs&&b.imgs.length?b.imgs:(S.pool[b.field]||[]));
+  const cfg={layout:type,kind:c.scene,variant:b.v%2,pal:pal,lite:!!lite,imgs:imgs};
   const wm=b.pay<2?'<div class="wm"><span>טיוטה · תצוגה מקדימה</span><b>טיוטה לאישור</b></div>':'';
   return '<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+d.name+'</title>'
    +'<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;500;700;800;900&family=Frank+Ruhl+Libre:wght@700;900&display=swap">'
-   +'<style>'+SITE_CSS+'</style></head><body class="t-'+type+'"><div class="pre"><b class="pre-name">'+d.name+'</b><span class="pre-n">0</span><div class="pre-bar"><i></i></div></div><canvas id="bg"></canvas><div class="vig"></div><div class="leak"></div><div class="noise"></div><div class="prog"></div><div class="cur"></div><div class="crs"></div>'+wm
+   +'<style>'+SITE_CSS+'</style></head><body class="t-'+type+(imgs.length?' photo':'')+'"><div class="pre"><b class="pre-name">'+d.name+'</b><span class="pre-n">0</span><div class="pre-bar"><i></i></div></div><canvas id="bg"></canvas><div class="vig"></div><div class="leak"></div><div class="noise"></div><div class="prog"></div><div class="cur"></div><div class="crs"></div>'+wm
    +'<a class="wa" href="#cta"><i></i>'+d.cta+'</a><main class="wrap">'+body.join('')+'</main>'
-   +'<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script><script>var make3D=('+make3D.toString()+');var make3DGL=('+make3DGL.toString()+');var siteArt='+siteArt.toString()+';var siteRuntime='+siteRuntime.toString()+';siteRuntime('+JSON.stringify(cfg)+');<\/script></body></html>';
+   +'<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script><script>var make3D=('+make3D.toString()+');var make3DGL=('+make3DGL.toString()+');var photoStage='+photoStage.toString()+';var siteArt='+siteArt.toString()+';var siteRuntime='+siteRuntime.toString()+';siteRuntime('+JSON.stringify(cfg)+');<\/script></body></html>';
 }
 
 const SIT=[
