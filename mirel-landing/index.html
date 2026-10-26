@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>מירל אברג'ל, גבות וריסים</title>
+<meta name="description" content="מירל אברג'ל, מומחית לעיצוב ושיקום גבות טבעיות, הרמת ריסים, פיגמנט שפתיים ואיפור קבוע בירוחם. קביעת תור בוואטסאפ.">
+<meta name="theme-color" content="#F5EDE3">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="מירל אברג'ל | להתאהב במבט שלך">
+<meta property="og:description" content="עיצוב ושיקום גבות טבעיות, הרמת ריסים, פיגמנט שפתיים ואיפור קבוע. ירוחם.">
+<meta property="og:image" content="img-eye.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600&family=Bellefair&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BeautySalon","name":"Mirel Abergel Beauty","address":{"@type":"PostalAddress","addressLocality":"ירוחם","addressCountry":"IL"},"sameAs":["https://www.instagram.com/mirelabergelbeauty/"]}</script>
+
+<style>
+/* Concept: "המבט". דף שנפתח כמו עין: קו קרם, דיו שחור, ורוד נוד מהשפתיים, וגבה שמשורטטת שערה אחר שערה */
+:root{direction:rtl}
+:root{
+  --cream:#F5EDE3; --ivory:#FBF7F2; --blush:#EFDCD4; --ink:#171312; --ink2:#2A2321;
+  --taupe:#6B5650; --rose:#C99088; --rose-d:#8E4A43; --line:rgba(23,19,18,.14);
+  --head:'Bellefair','Frank Ruhl Libre',Georgia,serif; --body:'Assistant','Heebo',system-ui,sans-serif;
+  --sig:'Pinyon Script','Cormorant Garamond',cursive; --lat:'Cormorant Garamond',Georgia,serif;
+  --r:24px; --rs:14px; --pad:22px; --max:1160px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;overflow-x:hidden;scroll-behavior:smooth;scroll-padding-top:74px}
+html.lock,html.lock body{overflow:hidden;height:100%}
+body{font:300 17.5px/1.8 var(--body);letter-spacing:.01em;color:var(--ink);background:var(--cream);overflow-x:clip;padding-bottom:86px}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--rose-d);outline-offset:3px;border-radius:6px}
+::selection{background:var(--rose);color:#fff}
+.skip{position:absolute;inset-inline-start:12px;top:-70px;background:var(--ink);color:var(--cream);padding:10px 16px;z-index:400;border-radius:12px}
+.skip:focus{top:calc(10px + env(safe-area-inset-top,0px))}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+.wrap{width:100%;max-width:var(--max);margin-inline:auto;padding-left:max(var(--pad),env(safe-area-inset-left,0px));padding-right:max(var(--pad),env(safe-area-inset-right,0px));position:relative;z-index:2}
+section{position:relative;padding-block:84px}
+h1,h2,h3{font-family:var(--head);font-weight:400;line-height:1.08;text-wrap:balance}
+h2{font-size:clamp(38px,10.6vw,72px)}
+h2 em,h1 em{font-style:normal;color:var(--rose-d)}
+.dark h2 em{color:var(--rose)}
+.kicker{display:flex;align-items:center;gap:12px;font:400 14px var(--body);letter-spacing:.24em;color:var(--rose-d);margin-bottom:18px}
+.kicker::before{content:"";width:30px;height:1px;background:currentColor}
+.dark .kicker{color:var(--rose)}
+.sub{color:var(--taupe)}
+.dark .sub{color:#D8CCC4}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em;margin-bottom:-.14em}
+.w>i{display:inline-block;font-style:normal}
+
+/* מפריד: גבה קטנה שמשורטטת */
+.brow-div{display:block;width:120px;height:34px;margin:22px 0 34px;overflow:visible}
+.brow-div path{fill:none;stroke:var(--ink);stroke-width:1.3;stroke-linecap:round;opacity:.8}
+.dark .brow-div path{stroke:var(--rose)}
+.c .brow-div{margin-inline:auto}
+
+/* כפתורים */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:58px;padding:14px 32px;border-radius:999px;
+  background:var(--ink);color:var(--cream);font:600 17px var(--body);letter-spacing:.02em;text-decoration:none;overflow:hidden;
+  box-shadow:0 14px 32px -16px rgba(23,19,18,.7);transition:transform .3s,box-shadow .3s,background .3s;will-change:transform}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.28) 50%,transparent 65%);transform:translateX(120%);animation:shine 6s 2s infinite}
+@keyframes shine{0%,72%{transform:translateX(120%)}100%{transform:translateX(-120%)}}
+.btn:hover{background:#000;box-shadow:0 18px 38px -16px rgba(23,19,18,.8)}
+.btn svg{width:22px;height:22px;flex:none}
+.btn.light{background:var(--cream);color:var(--ink);box-shadow:0 14px 32px -16px rgba(0,0,0,.6)}
+.btn.light:hover{background:#fff}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink);box-shadow:none}
+.btn.ghost::after{display:none}
+.btn.ghost:hover{background:rgba(23,19,18,.05)}
+.btn.block{width:100%}
+
+/* כותרת עליונה */
+.header{position:fixed;top:0;inset-inline:0;z-index:300;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:calc(12px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-left,0px)) 12px max(16px,env(safe-area-inset-right,0px));transition:background .4s,box-shadow .4s,transform .5s}
+.header.scrolled{background:rgba(245,237,227,.96);box-shadow:0 1px 0 var(--line)}
+.lock .header{transform:translateY(-110%)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.logo .mono{font:400 30px/1 var(--lat);letter-spacing:-.04em;position:relative;padding-top:6px}
+.logo .mono::before{content:"";position:absolute;top:0;left:2px;right:2px;height:7px;border-top:2px solid var(--ink);border-radius:50% 50% 0 0}
+.logo small{display:block;font:600 10px var(--body);letter-spacing:.28em;line-height:1.4}
+.logo small span{display:block;font-weight:400;letter-spacing:.16em;color:var(--taupe)}
+.hwa{display:inline-flex;align-items:center;gap:8px;font:600 14px var(--body);padding:10px 16px;border-radius:999px;background:var(--ink);color:var(--cream);text-decoration:none}
+.hwa svg{width:18px;height:18px}
+
+/* פתיחה: העין נפתחת */
+.intro{position:fixed;inset:0;z-index:250;display:none;background:var(--cream);place-items:center;overflow:hidden}
+.lock .intro{display:grid}
+.intro-eye{width:min(88vw,560px);overflow:visible;transform-origin:50% 56%}
+.intro-sig{position:absolute;inset-inline:0;bottom:calc(14vh + env(safe-area-inset-bottom,0px));text-align:center;opacity:0}
+.intro-sig b{display:block;font:400 clamp(40px,12vw,64px)/1 var(--sig);color:var(--ink)}
+.intro-sig span{display:block;margin-top:10px;font:600 11px var(--body);letter-spacing:.34em;color:var(--taupe)}
+.skip-intro{position:absolute;top:calc(18px + env(safe-area-inset-top,0px));inset-inline-start:var(--pad);font:400 14px var(--body);color:var(--taupe);padding:8px 16px;border:1px solid var(--line);border-radius:999px;z-index:2}
+.lock .h-anim{opacity:0}
+
+/* ===== פתיח ===== */
+.hero{padding-top:92px;padding-bottom:40px;overflow:hidden;min-height:100vh;min-height:100svh;display:flex;flex-direction:column}
+.hero::before{content:"";position:absolute;width:120vmax;height:120vmax;left:50%;top:-30vmax;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(201,144,136,.28),rgba(239,220,212,.18) 45%,transparent 70%);pointer-events:none}
+.hero-grid{display:flex;flex-direction:column;flex:1}
+.hero .kicker{margin-bottom:14px}
+.hero h1{font-size:clamp(56px,17vw,128px);line-height:.98}
+.hero h1 .sig{display:block;font:400 .62em/1.1 var(--sig);color:var(--rose-d);margin-top:.06em;direction:ltr;text-align:right}
+.hero .lead{margin-top:18px;font-size:18.5px;color:var(--taupe);max-width:30em}
+.stage{position:relative;flex:1 1 auto;min-height:300px;margin-top:22px}
+.arch{position:absolute;inset-inline-start:0;top:0;bottom:0;width:58%;border-radius:999px 999px 26px 26px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(23,19,18,.6)}
+.arch img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.arch::after{content:"";position:absolute;inset:8px;border:1px solid rgba(255,255,255,.7);border-radius:999px 999px 20px 20px;pointer-events:none}
+.live-eye{position:absolute;inset-inline-end:-3%;top:4%;width:54%;overflow:visible;z-index:3;filter:drop-shadow(0 12px 18px rgba(23,19,18,.12))}
+.tag{position:absolute;z-index:4;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;background:var(--ivory);border:1px solid var(--line);font:400 14px var(--body);color:var(--ink);box-shadow:0 12px 26px -16px rgba(23,19,18,.45);animation:bob 7s ease-in-out infinite;white-space:nowrap}
+.tag i{width:7px;height:7px;border-radius:50%;background:var(--rose)}
+.tag.t1{inset-inline-end:2%;bottom:30%}
+.tag.t2{inset-inline-end:10%;bottom:14%;animation-delay:-2.3s}
+.tag.t3{inset-inline-start:46%;bottom:-2%;animation-delay:-4.6s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.h-cta{margin-top:26px;display:grid;gap:10px}
+.h-cta .btn{width:100%}
+
+/* רצועת טקסט */
+.ticker{background:var(--ink);color:var(--cream);overflow:hidden;direction:ltr;position:relative;z-index:2}
+.ticker-track{display:flex;width:max-content;animation:slide 44s linear infinite}
+.ticker span{direction:rtl;font:400 clamp(30px,5.4vw,56px)/1.5 var(--head);padding:6px 24px;white-space:nowrap;display:flex;align-items:center;gap:48px}
+.ticker span:nth-child(even){color:transparent;-webkit-text-stroke:1px rgba(245,237,227,.6)}
+.ticker span::after{content:"✦";font-size:.45em;color:var(--rose);-webkit-text-stroke:0}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* שירותים */
+.s-services{background:var(--ivory)}
+.svc{display:grid;gap:18px;margin-top:10px}
+.card{position:relative;background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:0 24px 50px -34px rgba(23,19,18,.55);border:1px solid rgba(23,19,18,.06)}
+.card .ph{position:relative;aspect-ratio:5/4;overflow:hidden}
+.card .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.card:hover .ph img{transform:scale(1.05)}
+.card .num{position:absolute;top:14px;inset-inline-start:14px;font:400 italic 20px var(--lat);color:var(--ink);background:rgba(251,247,242,.92);padding:2px 14px;border-radius:999px}
+.card .bd{padding:24px 24px 26px}
+.card h3{font-size:clamp(30px,8vw,38px);margin-bottom:8px}
+.card p{color:var(--taupe);font-size:17px}
+.card ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.card li{font:400 14px var(--body);padding:6px 14px;border-radius:999px;background:var(--cream);color:var(--ink)}
+
+/* תוצאות */
+.dark{background:var(--ink);color:var(--cream)}
+.res{display:grid;gap:16px;margin-top:6px}
+.res .big{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:4/5}
+.res .big img{width:100%;height:100%;object-fit:cover}
+.res .big figcaption,.res .sm figcaption{position:absolute;bottom:14px;inset-inline-start:14px;font:400 14px var(--body);background:rgba(23,19,18,.78);color:var(--cream);padding:6px 14px;border-radius:999px}
+.res .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.res .sm{position:relative;border-radius:var(--r);overflow:hidden;aspect-ratio:4/5}
+.res .sm img{width:100%;height:100%;object-fit:cover}
+.quote{margin-top:40px;font:400 clamp(30px,8.4vw,54px)/1.25 var(--head);text-align:center}
+.quote em{font-style:normal;color:var(--rose)}
+
+/* תהליך */
+.s-process{background:var(--blush)}
+.steps{list-style:none;display:grid;gap:14px;margin-top:6px;counter-reset:s}
+.step{position:relative;background:rgba(251,247,242,.75);border-radius:var(--r);padding:26px 24px 26px 24px;border:1px solid rgba(23,19,18,.07);display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:start}
+.step b{grid-row:1/3;font:400 italic 44px/1 var(--lat);color:var(--rose-d)}
+.step h3{font-size:28px}
+.step p{color:var(--taupe);font-size:16.5px}
+
+/* גלריה */
+.s-gallery{background:var(--cream);overflow:hidden}
+.strip{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px max(var(--pad),env(safe-area-inset-right,0px)) 18px;margin-top:8px;scrollbar-width:none;cursor:grab}
+.strip::-webkit-scrollbar{display:none}
+.strip figure{flex:none;width:min(72vw,320px);aspect-ratio:4/5;border-radius:var(--r);overflow:hidden;scroll-snap-align:center;box-shadow:0 24px 44px -32px rgba(23,19,18,.6)}
+.strip img{width:100%;height:100%;object-fit:cover;pointer-events:none;user-select:none}
+.hint{margin-top:6px;font:400 14px var(--body);color:var(--taupe);text-align:center}
+
+/* שאלות */
+.s-faq{background:var(--ivory)}
+.faq{display:grid;gap:12px;max-width:780px}
+.qa{background:#fff;border-radius:var(--r);border:1px solid rgba(23,19,18,.07);box-shadow:0 14px 34px -28px rgba(23,19,18,.5)}
+.qa button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:14px;text-align:start;padding:20px 22px;font:400 22px/1.35 var(--head)}
+.qa .pm{flex:none;width:32px;height:32px;border-radius:50%;border:1px solid var(--ink);position:relative;transition:transform .4s,background .3s}
+.qa .pm::before,.qa .pm::after{content:"";position:absolute;inset:0;margin:auto;width:12px;height:1.5px;background:var(--ink);transition:transform .4s}
+.qa .pm::after{transform:rotate(90deg)}
+.qa [aria-expanded="true"] .pm{transform:rotate(180deg);background:var(--cream)}
+.qa [aria-expanded="true"] .pm::after{transform:rotate(0)}
+.panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s ease}
+.panel>div{overflow:hidden}
+.panel.open{grid-template-rows:1fr}
+.panel p{padding:0 22px 22px;color:var(--taupe);font-size:17px}
+
+/* קביעת תור */
+.s-book{text-align:center;overflow:hidden}
+.s-book .eye-mini{width:min(64vw,300px);margin:0 auto 8px;overflow:visible}
+.s-book h2{margin-bottom:10px}
+.s-book .sub{max-width:26em;margin:0 auto 32px}
+.book-cta{display:grid;gap:12px;max-width:440px;margin:0 auto}
+.meta{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin-top:30px;font:400 15px var(--body);color:#D8CCC4}
+.meta a{color:var(--cream)}
+footer{background:var(--ink);color:#BFB2AA;text-align:center;padding:24px var(--pad) 28px;font-size:14px;border-top:1px solid rgba(245,237,227,.12)}
+footer .s{font:400 30px/1 var(--sig);color:var(--cream);display:block;margin-bottom:6px;direction:ltr}
+
+/* כפתור צמוד */
+.sticky{position:fixed;inset-inline:0;bottom:0;z-index:200;padding:10px var(--pad) calc(10px + env(safe-area-inset-bottom,0px));background:rgba(245,237,227,.97);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .45s}
+.sticky.show{transform:none}
+.sticky .btn{width:100%;min-height:52px}
+
+@media (min-width:900px){
+  :root{--pad:48px}
+  body{padding-bottom:0}
+  section{padding-block:124px}
+  .sticky{display:none}
+  .header{padding-inline:48px}
+  .hero{padding-top:110px;min-height:0;display:block}
+  .hero-grid{display:grid;grid-template-columns:1fr 1.05fr;column-gap:64px;align-items:center}
+  .h-head{grid-column:1;grid-row:1;align-self:end}
+  .h-foot{grid-column:1;grid-row:2;align-self:start}
+  .stage{grid-column:2;grid-row:1/3;height:min(76vh,700px);margin-top:0;flex:none}
+  .h-cta{grid-template-columns:auto auto;justify-content:start}
+  .h-cta .btn{width:auto}
+  .svc{grid-template-columns:repeat(3,1fr);gap:22px}
+  .res{grid-template-columns:1.1fr 1fr;align-items:stretch}
+  .res .row{grid-template-columns:1fr;grid-template-rows:1fr 1fr}
+  .res .sm{aspect-ratio:auto}
+  .steps{grid-template-columns:repeat(3,1fr);gap:20px}
+  .strip{padding-inline:48px}
+  .strip figure{width:300px}
+}
+@media (max-height:720px) and (max-width:899px){
+  .hero{padding-top:80px}
+  .hero h1{font-size:clamp(46px,14vw,70px)}
+  .hero .lead{display:none}
+  .stage{min-height:230px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .btn::after,.ticker-track,.tag{animation:none}
+  .panel,.card .ph img,.sticky,.header,.qa .pm,.qa .pm::after{transition:none}
+}
+</style>
+</head>
+<body>
+<script>
+(function(){var d=document.documentElement;if(matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('rm');else d.classList.add('lock');})();
+</script>
+<a class="skip" href="#book">דלגי לקביעת תור</a>
+<div class="sr" id="sr" aria-live="polite"></div>
+
+<header class="header" id="header">
+  <a class="logo" href="#top" aria-label="Mirel Abergel, לראש הדף"><span class="mono">MA</span><small>MIREL ABERGEL<span>EYELASHES &amp; EYEBROWS</span></small></a>
+  <a class="hwa" href="https://wa.link/yd7yaq" target="_blank" rel="noopener" data-wa><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-1.4-.7-2.3-1.2-3.2-2.8-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.7.7-1 1.5-1 2.4.1 1 .5 2 1.3 2.9 1.5 1.9 3.1 2.8 4.8 3.3 1.5.4 2.5.3 3.2-.2.5-.4.9-1 1.1-1.6.1-.3.1-.6 0-.7l-.6-.3z"/></svg>לקביעת תור</a>
+</header>
+
+<!-- פתיחה -->
+<div class="intro" id="intro" aria-hidden="true">
+  <button class="skip-intro" id="skipIntro" type="button">דלגי</button>
+  <svg class="intro-eye" id="introEye" viewBox="0 0 400 300"></svg>
+  <div class="intro-sig" id="introSig"><b>Mirel Abergel</b><span>EYELASHES &amp; EYEBROWS ARTIST</span></div>
+</div>
+
+<main id="main">
+<!-- 1. פתיח -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="h-head">
+      <p class="kicker h-anim">גבות · ריסים · שפתיים · ירוחם</p>
+      <h1 data-split class="h-anim">להתאהב <em>במבט</em> שלך</h1>
+      <p class="lead h-anim">מירל אברג'ל, מומחית לעיצוב ושיקום גבות טבעיות, הרמת ריסים ואיפור קבוע. תוצאה שמרגישה כמו את, רק בטוחה יותר.</p>
+    </div>
+    <div class="stage h-anim" id="stage">
+      <div class="arch"><img src="img-eye.jpg" alt="הרמת ריסים שבוצעה אצל מירל אברג'ל: ריסים מורמים ומלאים מעל עין ירוקה" width="772" height="845" fetchpriority="high"></div>
+      <svg class="live-eye" id="liveEye" viewBox="0 0 400 300" role="img" aria-label="איור של עין עם גבה וריסים"></svg>
+      <span class="tag t1"><i></i>גבות טבעיות</span>
+      <span class="tag t2"><i></i>הרמת ריסים</span>
+      <span class="tag t3"><i></i>פיגמנט שפתיים</span>
+    </div>
+    <div class="h-foot">
+      <div class="h-cta h-anim">
+        <a class="btn" href="https://wa.link/yd7yaq" target="_blank" rel="noopener" data-magnet><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-1.4-.7-2.3-1.2-3.2-2.8-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.7.7-1 1.5-1 2.4.1 1 .5 2 1.3 2.9 1.5 1.9 3.1 2.8 4.8 3.3 1.5.4 2.5.3 3.2-.2.5-.4.9-1 1.1-1.6.1-.3.1-.6 0-.7l-.6-.3z"/></svg>לקביעת תור בוואטסאפ</a>
+        <a class="btn ghost" href="#services">לטיפולים</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+
+<!-- 2. טיפולים -->
+<section class="s-services" id="services">
+  <div class="wrap">
+    <p class="kicker">הטיפולים</p>
+    <h2 data-split>מה <em>נעשה</em> יחד</h2>
+    <svg class="brow-div" viewBox="0 0 120 34" data-brow aria-hidden="true"></svg>
+    <div class="svc">
+      <article class="card" data-reveal>
+        <div class="ph"><img src="img-brows.jpg" alt="גבות מלאות וטבעיות אחרי עיצוב אצל מירל" width="772" height="844" loading="lazy"><span class="num">01</span></div>
+        <div class="bd"><h3>גבות</h3><p>עיצוב ושיקום גבות טבעיות לפי מבנה הפנים שלך. גם גבות דלילות או לא סימטריות חוזרות להיות מלאות.</p>
+          <ul><li>עיצוב גבות</li><li>שיקום גבות</li><li>מיקרובליידינג</li></ul></div>
+      </article>
+      <article class="card" data-reveal>
+        <div class="ph"><img src="img-lashes.jpg" alt="ריסים מורמים ומלאים אחרי הרמת ריסים" width="770" height="843" loading="lazy"><span class="num">02</span></div>
+        <div class="bd"><h3>ריסים</h3><p>ריסים מורמים, מלאים ומודגשים בלי מסקרה ובלי מלקחיים. מתעוררת מוכנה.</p>
+          <ul><li>הרמת ריסים</li><li>הדבקת ריסים</li><li>בשיטה החדשה</li></ul></div>
+      </article>
+      <article class="card" data-reveal>
+        <div class="ph"><img src="img-lips.jpg" alt="שפתיים בצבע עדין ואחיד אחרי פיגמנט שפתיים" width="770" height="845" loading="lazy"><span class="num">03</span></div>
+        <div class="bd"><h3>שפתיים ואיפור קבוע</h3><p>צבע עדין ואחיד שמחמיא לשפתיים, ואייליינר קבוע שחוסך לך זמן כל בוקר.</p>
+          <ul><li>פיגמנט שפתיים</li><li>איפור קבוע</li></ul></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 3. תוצאות -->
+<section class="s-results dark" id="results">
+  <div class="wrap">
+    <p class="kicker">תוצאות אמיתיות</p>
+    <h2 data-split>לא פילטר. <em>לא איפור.</em></h2>
+    <svg class="brow-div" viewBox="0 0 120 34" data-brow aria-hidden="true"></svg>
+    <div class="res">
+      <figure class="big" data-reveal><img src="img-ba.jpg" alt="לפני ואחרי עיצוב גבות: צד אחד של הפנים לפני הטיפול והצד השני אחריו" width="772" height="855" loading="lazy"><figcaption>לפני ואחרי · גבות</figcaption></figure>
+      <div class="row">
+        <figure class="sm" data-reveal><img src="img-lips2.jpg" alt="פיגמנט שפתיים במהלך הטיפול" width="772" height="690" loading="lazy"><figcaption>פיגמנט שפתיים</figcaption></figure>
+        <figure class="sm" data-reveal><img src="img-brows.jpg" alt="גבות טבעיות אחרי טיפול" width="772" height="844" loading="lazy"><figcaption>גבות טבעיות</figcaption></figure>
+      </div>
+    </div>
+    <p class="quote" data-reveal>המטרה שלי היא שתסתכלי במראה <em>ותאהבי</em> את מה שאת רואה.</p>
+  </div>
+</section>
+
+<!-- 4. התהליך -->
+<section class="s-process" id="process">
+  <div class="wrap">
+    <p class="kicker">איך זה עובד</p>
+    <h2 data-split>שלושה <em>צעדים</em> קטנים</h2>
+    <svg class="brow-div" viewBox="0 0 120 34" data-brow aria-hidden="true"></svg>
+    <ol class="steps">
+      <li class="step" data-reveal><b>1</b><h3>שולחת הודעה</h3><p>כותבת לי בוואטסאפ מה מעניין אותך, ואפשר לצרף תמונה.</p></li>
+      <li class="step" data-reveal><b>2</b><h3>התאמה אישית</h3><p>בוחרות יחד את הצורה והגוון שמתאימים לפנים שלך.</p></li>
+      <li class="step" data-reveal><b>3</b><h3>יוצאת מאוהבת</h3><p>הטיפול עצמו, והסבר מסודר איך לשמור על התוצאה.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 5. גלריה -->
+<section class="s-gallery" id="gallery">
+  <div class="wrap">
+    <p class="kicker">מהקליניקה</p>
+    <h2 data-split>העבודות <em>שלי</em></h2>
+    <svg class="brow-div" viewBox="0 0 120 34" data-brow aria-hidden="true"></svg>
+  </div>
+  <div class="strip" id="strip" tabindex="0" role="region" aria-label="גלריית עבודות, אפשר לגלול לצדדים">
+    <figure><img src="img-eye.jpg" alt="הרמת ריסים, עין ירוקה" loading="lazy"></figure>
+    <figure><img src="img-lips.jpg" alt="פיגמנט שפתיים" loading="lazy"></figure>
+    <figure><img src="img-brows.jpg" alt="עיצוב גבות" loading="lazy"></figure>
+    <figure><img src="img-lashes.jpg" alt="הרמת ריסים, עין חומה" loading="lazy"></figure>
+    <figure><img src="img-ba.jpg" alt="לפני ואחרי עיצוב גבות" loading="lazy"></figure>
+    <figure><img src="img-brand.jpg" alt="כרטיסי המותג של מירל אברג'ל" loading="lazy"></figure>
+  </div>
+  <p class="hint">החליקי לצדדים לעוד עבודות</p>
+</section>
+
+<!-- 6. שאלות -->
+<section class="s-faq" id="faq">
+  <div class="wrap">
+    <p class="kicker">שאלות נפוצות</p>
+    <h2 data-split>מה <em>כדאי</em> לדעת</h2>
+    <svg class="brow-div" viewBox="0 0 120 34" data-brow aria-hidden="true"></svg>
+    <!-- התשובות כלליות. לאשר עם מירל לפני העלאה -->
+    <div class="faq">
+      <div class="qa"><button aria-expanded="false" aria-controls="q1" id="b1">כמה זמן מחזיקה הרמת ריסים?<span class="pm" aria-hidden="true"></span></button><div class="panel" id="q1" role="region" aria-labelledby="b1"><div><p>בדרך כלל כ-6 עד 8 שבועות, לפי קצב הצמיחה הטבעי של הריסים שלך.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false" aria-controls="q2" id="b2">מיקרובליידינג כואב?<span class="pm" aria-hidden="true"></span></button><div class="panel" id="q2" role="region" aria-labelledby="b2"><div><p>משתמשים במשחת אלחוש לפני הטיפול, ורוב הלקוחות מתארות תחושה קלה בלבד.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false" aria-controls="q3" id="b3">כמה זמן מחזיק פיגמנט שפתיים?<span class="pm" aria-hidden="true"></span></button><div class="panel" id="q3" role="region" aria-labelledby="b3"><div><p>בדרך כלל בין שנה לשלוש, ולרוב ממליצים על טיפול חיזוק אחרי כמה שבועות.</p></div></div></div>
+      <div class="qa"><button aria-expanded="false" aria-controls="q4" id="b4">איך קובעים תור?<span class="pm" aria-hidden="true"></span></button><div class="panel" id="q4" role="region" aria-labelledby="b4"><div><p>שולחים לי הודעה בוואטסאפ, ונתאים יחד את הטיפול והמועד שנוחים לך.</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. קביעת תור -->
+<section class="s-book dark c" id="book">
+  <div class="wrap">
+    <svg class="eye-mini" id="bookEye" viewBox="0 0 400 300" aria-hidden="true"></svg>
+    <p class="kicker" style="justify-content:center">קביעת תור</p>
+    <h2 data-split>מוכנה להתאהב <em>במבט שלך?</em></h2>
+    <svg class="brow-div" viewBox="0 0 120 34" data-brow aria-hidden="true"></svg>
+    <p class="sub">שלחי לי הודעה ונמצא יחד את הטיפול שמתאים לך.</p>
+    <div class="book-cta">
+      <a class="btn light block" href="https://wa.link/yd7yaq" target="_blank" rel="noopener" data-magnet><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-1.4-.7-2.3-1.2-3.2-2.8-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.7.7-1 1.5-1 2.4.1 1 .5 2 1.3 2.9 1.5 1.9 3.1 2.8 4.8 3.3 1.5.4 2.5.3 3.2-.2.5-.4.9-1 1.1-1.6.1-.3.1-.6 0-.7l-.6-.3z"/></svg>לקביעת תור בוואטסאפ</a>
+    </div>
+    <div class="meta"><span>📍 ירוחם</span><a href="https://www.instagram.com/mirelabergelbeauty/" target="_blank" rel="noopener">@mirelabergelbeauty</a></div>
+  </div>
+</section>
+</main>
+<footer><span class="s">Mirel Abergel</span>© מירל אברג'ל · Eyelashes &amp; Eyebrows Artist</footer>
+<div class="sticky" id="sticky"><a class="btn" href="https://wa.link/yd7yaq" target="_blank" rel="noopener">לקביעת תור בוואטסאפ</a></div>
+
+<script>
+/* ===== העין: איור SVG חי (עפעף, ריסים, אישון וגבה שמשורטטת שערה אחר שערה) ===== */
+function Eye(svg,opt){
+  opt=opt||{};var NS='http://www.w3.org/2000/svg',ink=opt.ink||'#171312',uid='e'+Math.random().toString(36).slice(2,7);
+  function mk(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);(p||svg).appendChild(e);return e;}
+  var defs=mk('defs',{});
+  var rg=mk('radialGradient',{id:uid+'g',cx:'45%',cy:'40%',r:'60%'},defs);
+  mk('stop',{offset:'0','stop-color':opt.iris1||'#7a5a43'},rg);mk('stop',{offset:'.55','stop-color':opt.iris2||'#3b2a20'},rg);mk('stop',{offset:'1','stop-color':'#120d0b'},rg);
+  var cp=mk('clipPath',{id:uid+'c'},defs),clipP=mk('path',{},cp);
+  var white=mk('path',{fill:opt.white||'#FFFDF9',opacity:0});
+  var irisG=mk('g',{'clip-path':'url(#'+uid+'c)'});
+  var iris=mk('circle',{r:44,fill:'url(#'+uid+'g)'},irisG),ring=mk('circle',{r:44,fill:'none',stroke:ink,'stroke-width':2,opacity:.6},irisG);
+  var pupil=mk('circle',{r:17,fill:ink},irisG),hl=mk('circle',{r:6,fill:'#fff',opacity:.9},irisG),hl2=mk('circle',{r:2.6,fill:'#fff',opacity:.7},irisG);
+  var lower=mk('path',{fill:'none',stroke:ink,'stroke-width':1.6,'stroke-linecap':'round',opacity:0});
+  var upper=mk('path',{fill:'none',stroke:ink,'stroke-width':3.4,'stroke-linecap':'round',pathLength:1,'stroke-dasharray':'1 1'});
+  var NL=opt.lashes||20,lashes=[];for(var i=0;i<NL;i++)lashes.push(mk('path',{fill:'none',stroke:ink,'stroke-width':2.2,'stroke-linecap':'round'}));
+  // גבה: שערות קצרות לאורך קשת
+  var hairs=[];
+  if(opt.brow!==false){
+    var NH=opt.hairs||90,bg=mk('g',{});
+    for(var h=0;h<NH;h++){
+      var r1=Math.sin(h*12.9898)*43758.5453;r1-=Math.floor(r1);var r2=Math.sin(h*78.233)*12345.678;r2-=Math.floor(r2);
+      var u=Math.min(1,Math.max(0,h/(NH-1)+(r1-.5)*.02)),peak=.68;
+      var yb=u<peak?100-40*Math.sin(u/peak*Math.PI/2):60+Math.pow((u-peak)/(1-peak),1.3)*24;
+      var thick=u<.14?.45+u*4:u<peak?1:1-(u-peak)/(1-peak)*.8;
+      var x=92+226*u,y=yb+(r2-.5)*2*thick*9;
+      var a=(u<.16?-1.35:u<peak?-0.62+(u-.16)*.25:0.05+(u-peak)*1.1)+(r1-.5)*.22;
+      var L=(u<.16?11:u<peak?17:15-(u-peak)*14)*(0.82+r2*.36),dx=Math.cos(a)*L,dy=Math.sin(a)*L;
+      var p=mk('path',{d:'M'+x.toFixed(1)+' '+y.toFixed(1)+'q'+(dx*.5).toFixed(1)+' '+(dy*.5-1.6).toFixed(1)+' '+dx.toFixed(1)+' '+dy.toFixed(1),fill:'none',stroke:ink,'stroke-width':(1.2+r2*.8).toFixed(2),'stroke-linecap':'round',opacity:(.7+r1*.3).toFixed(2),pathLength:1,'stroke-dasharray':'1 1','stroke-dashoffset':1},bg);
+      hairs.push(p);
+    }
+  }
+  var S={open:1,lid:1,lash:1,lift:0,lower:1,brow:1,lx:0,ly:0,flutter:0};
+  var A={x:84,y:172},B={x:316,y:172};
+  function q(t,c){var u=1-t;return{x:u*u*A.x+2*u*t*c.x+t*t*B.x,y:u*u*A.y+2*u*t*c.y+t*t*B.y,dx:2*u*(c.x-A.x)+2*t*(B.x-c.x),dy:2*u*(c.y-A.y)+2*t*(B.y-c.y)};}
+  function render(){
+    var o=S.open,C={x:200,y:204-122*o},Lc={x:200,y:200+34*o};
+    var up='M'+A.x+' '+A.y+'Q'+C.x+' '+C.y.toFixed(1)+' '+B.x+' '+B.y;
+    upper.setAttribute('d',up);upper.setAttribute('stroke-dashoffset',(1-S.lid).toFixed(3));
+    var lo='M'+A.x+' '+A.y+'Q'+Lc.x+' '+Lc.y.toFixed(1)+' '+B.x+' '+B.y;
+    lower.setAttribute('d',lo);lower.setAttribute('opacity',(S.lower*Math.min(1,o*1.6)*.75).toFixed(2));
+    var al=up+'Q'+Lc.x+' '+Lc.y.toFixed(1)+' '+A.x+' '+A.y+'Z';
+    var al2='M'+A.x+' '+A.y+'Q'+C.x+' '+C.y.toFixed(1)+' '+B.x+' '+B.y+'Q'+Lc.x+' '+Lc.y.toFixed(1)+' '+A.x+' '+A.y+'Z';
+    clipP.setAttribute('d',al2);white.setAttribute('d',al2);white.setAttribute('opacity',Math.min(1,o*1.4).toFixed(2));
+    var ix=200+S.lx*30,iy=176+S.ly*10;
+    [iris,ring].forEach(function(e){e.setAttribute('cx',ix);e.setAttribute('cy',iy);});
+    pupil.setAttribute('cx',ix);pupil.setAttribute('cy',iy);pupil.setAttribute('r',(16+S.lift*1.5).toFixed(1));
+    hl.setAttribute('cx',ix-14);hl.setAttribute('cy',iy-15);hl2.setAttribute('cx',ix+12);hl2.setAttribute('cy',iy+10);
+    var dirS=2*o-1;
+    for(var i=0;i<NL;i++){
+      var t=.1+.8*i/(NL-1),P=q(t,C),th=Math.atan2(P.dy,P.dx)-Math.PI/2;
+      var fan=(t-.5)*(1.15-.4*S.lift)*dirS,ang=th+(1-o)*Math.PI+fan+Math.sin(i*1.7+S.flutter)*.05*S.flutter;
+      var len=(9+20*Math.pow(t,1.25)+4*Math.sin(Math.PI*t))*S.lash*(1+.22*S.lift),curl=(.28+.42*S.lift)*(t<.5?-1:1)*dirS;
+      var ex=P.x+Math.cos(ang)*len,ey=P.y+Math.sin(ang)*len,cx=P.x+Math.cos(ang+curl)*len*.55,cy=P.y+Math.sin(ang+curl)*len*.55;
+      lashes[i].setAttribute('d','M'+P.x.toFixed(1)+' '+P.y.toFixed(1)+'Q'+cx.toFixed(1)+' '+cy.toFixed(1)+' '+ex.toFixed(1)+' '+ey.toFixed(1));
+      lashes[i].setAttribute('opacity',S.lash>0.01?1:0);
+    }
+    var n=hairs.length;
+    for(var h=0;h<n;h++){var lp=Math.min(1,Math.max(0,(S.brow*1.25-h/n*.25*4/(4))*1)),loc=Math.min(1,Math.max(0,(S.brow-h/n*.8)/.2));hairs[h].setAttribute('stroke-dashoffset',(1-loc).toFixed(3));}
+  }
+  render();
+  return {S:S,render:render};
+}
+</script>
+
+<script>
+/* ===== בסיס: תוכן ואינטראקציות ===== */
+(function(){
+  var rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $=function(s,c){return (c||document).querySelector(s);},$$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s));};
+  // גבות קטנות כמפרידים
+  $$('[data-brow]').forEach(function(svg){
+    var NS='http://www.w3.org/2000/svg',n=22;
+    for(var h=0;h<n;h++){var u=h/(n-1),x=6+108*u,y=u<.7?28-18*Math.sin(u/.7*Math.PI/2):10+(u-.7)/.3*10,a=u<.15?-1.2:u<.7?-.55:-.05,L=u<.15?7:9;
+      var p=document.createElementNS(NS,'path');p.setAttribute('d','M'+x.toFixed(1)+' '+y.toFixed(1)+'q'+(Math.cos(a)*L*.5).toFixed(1)+' '+(Math.sin(a)*L*.5-1).toFixed(1)+' '+(Math.cos(a)*L).toFixed(1)+' '+(Math.sin(a)*L).toFixed(1));
+      p.setAttribute('pathLength',1);p.setAttribute('stroke-dasharray','1 1');p.setAttribute('stroke-dashoffset',rm?0:1);svg.appendChild(p);}
+  });
+  // רצועת טקסט
+  var words=['עיצוב גבות','הרמת ריסים','מיקרובליידינג','פיגמנט שפתיים','הדבקת ריסים','איפור קבוע'],th='';
+  for(var r=0;r<3;r++)words.forEach(function(w){th+='<span>'+w+'</span>';});$('#ticker').innerHTML=th;
+  // שאלות
+  $$('.qa button').forEach(function(b){b.addEventListener('click',function(){var o=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!o));b.nextElementSibling.classList.toggle('open',!o);});});
+  // גלריה: גרירה בעכבר
+  var strip=$('#strip'),down=false,sx=0,sl=0;
+  strip.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse')return;down=true;sx=e.clientX;sl=strip.scrollLeft;strip.style.scrollSnapType='none';});
+  addEventListener('pointerup',function(){if(down){down=false;strip.style.scrollSnapType='';}});
+  strip.addEventListener('pointermove',function(e){if(down)strip.scrollLeft=sl-(e.clientX-sx);});
+  // כותרת וכפתור צמוד
+  var header=$('#header'),sticky=$('#sticky'),heroGone=false,bookSeen=false;
+  function upd(){sticky.classList.toggle('show',heroGone&&!bookSeen);}
+  new IntersectionObserver(function(en){heroGone=!en[0].isIntersecting&&en[0].boundingClientRect.bottom<0;upd();}).observe($('#top'));
+  new IntersectionObserver(function(en){bookSeen=en[0].isIntersecting;upd();}).observe($('#book'));
+  addEventListener('scroll',function(){header.classList.toggle('scrolled',scrollY>20);},{passive:true});
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script>
+/* ===== תנועה: פתיחת העין, העין החיה בפתיח ואנימציות גלילה ===== */
+window.addEventListener('load',function(){
+  var rm=matchMedia('(prefers-reduced-motion: reduce)').matches,fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var root=document.documentElement,hasG=!!(window.gsap&&window.ScrollTrigger),done=false;
+  var $=function(s){return document.querySelector(s);},$$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s));};
+
+  var live=Eye($('#liveEye'),{}),book=Eye($('#bookEye'),{ink:'#F5EDE3',white:'#2A2321',iris1:'#a07a60',iris2:'#4a3428'});
+  if(!hasG||rm){finishIntro();liveLoop();return;}
+  gsap.registerPlugin(ScrollTrigger);
+
+  // פיצול מילים
+  function splitNode(node){Array.prototype.slice.call(node.childNodes).forEach(function(ch){
+    if(ch.nodeType===3){var parts=ch.textContent.split(/(\s+)/),fr=document.createDocumentFragment();
+      parts.forEach(function(p){if(!p)return;if(/^\s+$/.test(p)){fr.appendChild(document.createTextNode(' '));return;}var w=document.createElement('span');w.className='w';var i=document.createElement('i');i.textContent=p;w.appendChild(i);fr.appendChild(w);});
+      ch.parentNode.replaceChild(fr,ch);}else if(ch.nodeType===1)splitNode(ch);});}
+  $$('[data-split]').forEach(function(el){splitNode(el);
+    if(el.closest('.hero')){gsap.set(el.querySelectorAll('.w>i'),{yPercent:115});return;}
+    gsap.fromTo(el.querySelectorAll('.w>i'),{yPercent:115},{yPercent:0,duration:1,ease:'power4.out',stagger:.07,scrollTrigger:{trigger:el,start:'top 88%',once:true}});});
+  $$('[data-reveal]').forEach(function(el){
+    var img=el.querySelector('img');
+    gsap.from(el,{y:34,opacity:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}});
+    if(img)gsap.fromTo(img,{scale:1.14},{scale:1,duration:1.6,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}});
+  });
+  $$('[data-brow]').forEach(function(svg){
+    gsap.to(svg.querySelectorAll('path'),{attr:{'stroke-dashoffset':0},duration:.5,ease:'power1.out',stagger:.035,scrollTrigger:{trigger:svg,start:'top 92%',once:true}});
+  });
+  gsap.to('.ticker-track',{skewX:-7,ease:'none',scrollTrigger:{trigger:'.ticker',start:'top bottom',end:'bottom top',scrub:.6}});
+  gsap.fromTo('.arch img',{yPercent:-4},{yPercent:4,ease:'none',scrollTrigger:{trigger:'#stage',start:'top top',end:'bottom top',scrub:true}});
+  if(fine)$$('[data-magnet]').forEach(function(b){
+    b.addEventListener('pointermove',function(e){var r=b.getBoundingClientRect();gsap.to(b,{x:(e.clientX-r.left-r.width/2)*.16,y:(e.clientY-r.top-r.height/2)*.26,duration:.3});});
+    b.addEventListener('pointerleave',function(){gsap.to(b,{x:0,y:0,duration:.6,ease:'elastic.out(1,.5)'});});
+  });
+  // עין קטנה בקביעת תור: נפתחת כשמגיעים
+  book.S.open=0;book.S.lid=0;book.S.lash=0;book.S.brow=0;book.S.lower=0;book.render();
+  ScrollTrigger.create({trigger:'#bookEye',start:'top 85%',once:true,onEnter:function(){
+    gsap.timeline({onUpdate:book.render})
+      .to(book.S,{lid:1,lash:1,duration:.9,ease:'power2.out'})
+      .to(book.S,{brow:1,duration:1.2,ease:'none'},.2)
+      .to(book.S,{open:1,lower:1,duration:.8,ease:'power3.out'},1.1)
+      .to(book.S,{lift:1,duration:.7,ease:'power2.out'},1.6);
+  }});
+
+  // ===== פתיחה =====
+  var intro=Eye($('#introEye'),{}),I=intro.S,tl=null;
+  I.open=0;I.lid=0;I.lash=0;I.brow=0;I.lower=0;I.lift=0;intro.render();
+  live.S.open=0;live.S.lid=0;live.S.lash=0;live.S.brow=0;live.S.lower=0;live.render();
+  var eyeEl=$('#introEye'),introEl=$('#intro'),sig=$('#introSig');
+  tl=gsap.timeline({onUpdate:intro.render,delay:.2});
+  tl.to(I,{lid:1,duration:1,ease:'power2.inOut'},0)
+    .to(I,{lash:1,duration:.8,ease:'power2.out'},.5)
+    .to(sig,{opacity:1,duration:1},.4)
+    .to(I,{brow:1,duration:1.5,ease:'none'},1)                       /* מיקרובליידינג: שערה אחר שערה */
+    .to(I,{open:1,lower:1,duration:.9,ease:'power3.out'},2.5)          /* העין נפתחת */
+    .to(I,{lift:1,duration:.8,ease:'back.out(2)'},3.1)                 /* הרמת ריסים */
+    .to(I,{lx:-.7,duration:.35,ease:'power2.inOut'},3.3).to(I,{lx:.6,duration:.45,ease:'power2.inOut'},3.7).to(I,{lx:0,ly:.1,duration:.3},4.15)
+    .to(I,{open:.05,duration:.12,ease:'power2.in'},4.5).to(I,{open:1,duration:.22,ease:'power2.out'},4.62)  /* מצמוץ */
+    .to(sig,{opacity:0,duration:.4},4.7)
+    .to(eyeEl,{scale:34,duration:1.05,ease:'power3.in',transformOrigin:'50% 58.6%'},4.9)  /* צלילה אל האישון */
+    .to(introEl,{backgroundColor:'#171312',duration:.6},5.2)
+    .add(finishIntro,5.95);
+  $('#skipIntro').addEventListener('click',function(){tl.kill();finishIntro();});
+  setTimeout(function(){if(!done){tl.kill();finishIntro();}},12000);
+
+  function finishIntro(){
+    if(done)return;done=true;
+    root.classList.remove('lock');
+    var hasGsap=!!window.gsap&&!rm;
+    if(hasGsap){
+      gsap.to(introEl,{opacity:0,duration:.8,ease:'power2.out',onComplete:function(){introEl.remove();}});
+      gsap.fromTo('#main',{scale:1.06},{scale:1,duration:1.4,ease:'power3.out',clearProps:'transform'});
+      gsap.from('.h-anim',{y:30,opacity:0,duration:1,ease:'power3.out',stagger:.12,delay:.15,clearProps:'transform,opacity'});
+      var ws=gsap.utils.toArray('.hero h1 .w>i');if(ws.length)gsap.to(ws,{yPercent:0,duration:1.1,ease:'power4.out',stagger:.08,delay:.25});
+      gsap.timeline({onUpdate:live.render,delay:.5})
+        .to(live.S,{lid:1,lash:1,duration:.8,ease:'power2.out'})
+        .to(live.S,{brow:1,duration:1.1,ease:'none'},.2)
+        .to(live.S,{open:1,lower:1,duration:.8,ease:'power3.out'},.9)
+        .to(live.S,{lift:1,duration:.7,ease:'back.out(2)'},1.4);
+      setTimeout(function(){ScrollTrigger.refresh();},80);
+    }else{
+      var ie=document.getElementById('intro');if(ie)ie.remove();
+      ['open','lid','lash','brow','lower','lift'].forEach(function(k){live.S[k]=1;book.S[k]=1;});live.render();book.render();
+    }
+  }
+
+  // ===== העין החיה בפתיח: מסתכלת על האצבע/העכבר, ממצמצת, הריסים זזים עם הגלילה =====
+  function liveLoop(){
+    if(rm){live.render();return;}
+    var tx=0,ty=0,vis=true,lastY=scrollY,vel=0,nextBlink=performance.now()+3500,idleT=0;
+    addEventListener('pointermove',function(e){var r=$('#liveEye').getBoundingClientRect();tx=Math.max(-1,Math.min(1,(e.clientX-(r.left+r.width/2))/(innerWidth*.4)));ty=Math.max(-1,Math.min(1,(e.clientY-(r.top+r.height*.58))/(innerHeight*.4)));idleT=performance.now();},{passive:true});
+    addEventListener('deviceorientation',function(e){if(e.gamma==null)return;tx=Math.max(-1,Math.min(1,-e.gamma/25));ty=Math.max(-1,Math.min(1,(e.beta-55)/25));idleT=performance.now();});
+    new IntersectionObserver(function(en){vis=en[0].isIntersecting;}).observe($('#stage'));
+    (function tick(now){
+      requestAnimationFrame(tick);
+      if(!vis||!done)return;
+      var sy=scrollY;vel+=((sy-lastY)-vel)*.15;lastY=sy;
+      if(now-idleT>3000){var k=Math.floor(now/2400);tx=Math.sin(k*2.3)*.6;ty=Math.cos(k*1.7)*.25;}
+      var S=live.S;S.lx+=(tx-S.lx)*.08;S.ly+=(ty-S.ly)*.08;
+      S.flutter+=((Math.min(Math.abs(vel),40)/40)*3-S.flutter)*.1;
+      if(now>nextBlink&&S.lift>.9&&window.gsap){nextBlink=now+3800+Math.random()*3500;gsap.timeline().to(S,{open:.04,duration:.1,ease:'power2.in'}).to(S,{open:1,duration:.2,ease:'power2.out'});}
+      live.render();
+    })(performance.now());
+  }
+  liveLoop();
+});
+</script>
+</body>
+</html>
