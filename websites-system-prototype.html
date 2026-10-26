@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מערכת אתרים לעסקים - אב טיפוס</title>
+<style>
+:root{
+  --bg:#080b14; --panel:#0e1322; --panel2:#131a2e; --line:#222b45; --txt:#e6eaf5; --mut:#8a94b2;
+  --c0:#22d3ee; --c1:#60a5fa; --c2:#4ade80; --c3:#fbbf24; --c4:#a78bfa; --c5:#f472b6; --irr:#6b7280;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--txt);font-family:"Segoe UI",Heebo,Arial,sans-serif;font-size:14px;overflow:hidden;
+  background-image:radial-gradient(circle at 1px 1px,#1a2240 1px,transparent 0);background-size:26px 26px}
+button,input,select,textarea{font:inherit;color:inherit}
+.app{display:grid;grid-template-columns:290px 1fr;height:100vh}
+aside{background:linear-gradient(180deg,#0d1220,#0a0e1a);border-left:1px solid var(--line);padding:18px 16px;overflow:auto;display:flex;flex-direction:column;gap:16px;z-index:5}
+.brand{display:flex;gap:10px;align-items:center}
+.brand .logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#22d3ee,#a78bfa);display:grid;place-items:center;font-size:20px;box-shadow:0 0 22px #22d3ee55}
+.brand h1{font-size:16px;margin:0}.brand small{color:var(--mut);font-size:11px}
+.sec{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:9px}
+.sec h3{margin:0;font-size:12px;color:var(--mut);font-weight:600;letter-spacing:.3px}
+input,select,textarea{background:#0a0f1d;border:1px solid var(--line);border-radius:10px;padding:8px 10px;width:100%;outline:none}
+input:focus,select:focus,textarea:focus{border-color:#22d3ee88;box-shadow:0 0 0 3px #22d3ee18}
+.btn{border:1px solid var(--line);background:var(--panel2);border-radius:11px;padding:9px 12px;cursor:pointer;transition:.18s;display:inline-flex;align-items:center;justify-content:center;gap:7px;font-weight:600}
+.btn:hover:not(:disabled){border-color:#22d3ee99;box-shadow:0 0 16px #22d3ee33;transform:translateY(-1px)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn.pri{background:linear-gradient(135deg,#0e7490,#6d28d9);border-color:transparent}
+.btn.ok{background:#14532d55;border-color:#4ade8077;color:#bbf7d0}
+.btn.warn{background:#78350f44;border-color:#fbbf2477;color:#fde68a}
+.btn.bad{background:#7f1d1d33;border-color:#f8717177;color:#fecaca}
+.btn.full{width:100%}
+.row{display:flex;gap:8px}
+.mini{font-size:11px;color:var(--mut)}
+.cnt{display:flex;flex-direction:column;gap:5px}
+.cnt div{display:flex;align-items:center;gap:8px;font-size:12px}
+.cnt i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.cnt b{margin-right:auto}
+.demo{font-size:11px;color:#fbbf24;background:#fbbf2412;border:1px dashed #fbbf2455;border-radius:10px;padding:8px}
+main{position:relative;display:flex;flex-direction:column;min-width:0}
+.top{display:flex;align-items:center;gap:12px;padding:14px 20px}
+.top h2{margin:0;font-size:18px}
+.seg{display:flex;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:3px}
+.seg button{border:0;background:none;padding:7px 16px;border-radius:9px;cursor:pointer;color:var(--mut);font-weight:600}
+.seg button.on{background:linear-gradient(135deg,#0e7490,#6d28d9);color:#fff}
+.view{flex:1;min-height:0;position:relative}
+#graph{width:100%;height:100%;display:block}
+#tableView{display:none;padding:0 20px 20px;overflow:auto;height:100%}
+table{width:100%;border-collapse:separate;border-spacing:0;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+th{background:#0b1020;color:var(--mut);font-size:12px;text-align:right;padding:11px 12px;font-weight:600;position:sticky;top:0}
+td{padding:10px 12px;border-top:1px solid var(--line);font-size:13px}
+tbody tr{cursor:pointer;transition:.15s}tbody tr:hover{background:#18213a}
+.chip{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;border:1px solid;white-space:nowrap}
+.dash{stroke-dasharray:5 6;animation:flow 1.4s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-11}}
+.stage{cursor:default;transition:filter .3s}
+.stage.pulse{animation:pulse .7s}
+@keyframes pulse{40%{filter:drop-shadow(0 0 16px currentColor)}}
+.biz{cursor:pointer}
+.biz:hover circle.n{filter:drop-shadow(0 0 8px currentColor)}
+.biz text.lbl{paint-order:stroke;stroke:#080b14;stroke-width:3px;font-size:11px;fill:#cbd5e1;text-anchor:middle}
+.biz.dim{opacity:.15}
+.biz.sel circle.n{stroke-width:3.5}
+.ring{fill:none;stroke-width:2;opacity:0}
+.biz.flash .ring{animation:ring 1s ease-out}
+@keyframes ring{0%{opacity:.9;r:18}100%{opacity:0;r:42}}
+#toast{position:fixed;bottom:22px;right:50%;transform:translateX(50%) translateY(30px);background:#101a30;border:1px solid #22d3ee88;border-radius:12px;padding:10px 18px;opacity:0;transition:.3s;z-index:50;box-shadow:0 0 24px #22d3ee33;pointer-events:none}
+#toast.on{opacity:1;transform:translateX(50%) translateY(0)}
+/* card */
+#card{position:fixed;top:0;bottom:0;left:0;width:440px;max-width:100vw;background:#0b1020;border-right:1px solid var(--line);box-shadow:20px 0 60px #000a;transform:translateX(-105%);transition:transform .35s cubic-bezier(.2,.8,.2,1);z-index:20;overflow:auto;padding:18px;display:flex;flex-direction:column;gap:14px}
+#card.open{transform:none}
+.close{position:absolute;top:12px;left:12px;border:0;background:#1a2340;border-radius:50%;width:30px;height:30px;cursor:pointer}
+.kv{display:grid;grid-template-columns:90px 1fr;gap:6px 10px;font-size:13px}
+.kv span:nth-child(odd){color:var(--mut)}
+.card-sec{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:9px}
+.card-sec h4{margin:0;font-size:12px;color:var(--mut);font-weight:600}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.chat{display:flex;flex-direction:column;gap:6px;max-height:220px;overflow:auto;padding:4px;background:#070a13;border-radius:10px;background-image:radial-gradient(circle at 1px 1px,#141b30 1px,transparent 0);background-size:14px 14px}
+.msg{max-width:84%;padding:7px 10px;border-radius:12px;font-size:12.5px;line-height:1.5;position:relative}
+.msg small{display:block;font-size:10px;color:#ffffff66;margin-top:2px}
+.msg.me{align-self:flex-start;background:#0f4c3a;border-top-right-radius:3px}
+.msg.them{align-self:flex-end;background:#1c2540;border-top-left-radius:3px}
+.msg.sys{align-self:center;background:#fbbf2418;color:#fde68a;font-size:11.5px;border:1px dashed #fbbf2455}
+.steps{display:flex;gap:6px}
+.steps div{flex:1;text-align:center;padding:8px 4px;border-radius:10px;border:1px solid var(--line);font-size:12px;color:var(--mut)}
+.steps div.done{background:#14532d44;border-color:#4ade8088;color:#bbf7d0}
+.steps div.cur{border-color:#fbbf24aa;color:#fde68a}
+.bar{height:6px;background:#1a2340;border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#22d3ee,#a78bfa);animation:load 2.2s linear forwards}
+@keyframes load{to{width:100%}}
+.mock{border-radius:12px;overflow:hidden;border:1px solid #2a3558;position:relative;background:var(--mb);color:var(--mt);font-size:11px}
+.mbar{background:#1a2036;display:flex;align-items:center;gap:5px;padding:6px 9px}
+.mbar i{width:8px;height:8px;border-radius:50%;background:#475072}
+.mbar span{margin-right:8px;background:#0c1122;border-radius:6px;padding:2px 9px;color:#9aa6c9;font-size:10px;direction:ltr;flex:1;text-align:left}
+.mhero{padding:20px 16px;background:linear-gradient(135deg,var(--ma),var(--ma2));color:#fff;text-align:center}
+.mhero h5{margin:0 0 5px;font-size:20px}.mhero p{margin:0 0 10px;opacity:.9}
+.mhero b{display:inline-block;background:#fff;color:var(--ma);border-radius:99px;padding:5px 14px}
+.mcards{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:12px}
+.mcards div{background:#fff;border-radius:9px;padding:9px 5px;text-align:center;box-shadow:0 2px 8px #0002;color:#333}
+.mcards div em{display:block;font-size:19px;font-style:normal;margin-bottom:3px}
+.mfoot{padding:9px;text-align:center;background:var(--ma);color:#fff;opacity:.92}
+.wm{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;font-size:30px;font-weight:800;color:#0000002e;transform:rotate(-14deg);letter-spacing:3px;text-shadow:0 0 2px #fff6}
+.empty{padding:26px;text-align:center;color:var(--mut);border:1px dashed var(--line);border-radius:12px}
+.sugg{background:#0a1a1a;border:1px solid #22d3ee55;border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px}
+.sugg .t{color:#67e8f9;font-weight:700;font-size:13px}
+.sugg p{margin:0;line-height:1.7;white-space:pre-wrap}
+.stopw{background:#7f1d1d33;border:1px solid #f8717177;color:#fecaca;border-radius:9px;padding:7px 9px;font-size:12px}
+.chips{display:flex;flex-wrap:wrap;gap:5px}.chips button{border:1px solid var(--line);background:#0a0f1d;border-radius:99px;padding:3px 10px;font-size:11.5px;cursor:pointer;color:var(--mut)}.chips button:hover{color:#fff;border-color:#22d3ee88}
+@media(max-width:900px){.app{grid-template-columns:1fr}aside{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+  <div class="brand"><div class="logo">🧠</div><div><h1>מערכת אתרים לעסקים</h1><small>אב טיפוס ויזואלי</small></div></div>
+  <div class="demo">הדגמה בלבד: נתונים מומצאים, בלי סריקה אמיתית, בלי שליחת הודעות ובלי API.</div>
+
+  <div class="sec">
+    <h3>סריקת עסקים</h3>
+    <input id="scanField" placeholder="תחום, למשל: קוסמטיקאיות" value="קוסמטיקה">
+    <input id="scanCity" placeholder="עיר, למשל: בית שמש" value="בית שמש">
+    <button class="btn pri full" id="scanBtn">🔍 סרוק עסקים</button>
+  </div>
+
+  <div class="sec">
+    <h3>הודעות של היום</h3>
+    <button class="btn pri full" id="sendBtn">📤 שלח 10 הודעות של היום</button>
+    <div class="mini">נשלחו היום: <b id="sentCnt">0</b> / 10 · <a href="#" id="newDay" style="color:#67e8f9">יום חדש</a></div>
+  </div>
+
+  <div class="sec">
+    <h3>סינון לפי תחום</h3>
+    <select id="filter"><option value="">כל התחומים</option></select>
+  </div>
+
+  <div class="sec">
+    <h3>סיכום שלבים</h3>
+    <div class="cnt" id="counts"></div>
+  </div>
+  <a href="" class="mini" style="color:var(--mut)">↻ איפוס הדמו</a>
+</aside>
+
+<main>
+  <div class="top">
+    <h2>מסך ראשי</h2>
+    <div class="seg"><button id="vGraph" class="on">🕸️ גרף</button><button id="vTable">📋 טבלה</button></div>
+  </div>
+  <div class="view">
+    <svg id="graph" viewBox="0 0 1300 800" preserveAspectRatio="xMidYMid meet"></svg>
+    <div id="tableView"></div>
+  </div>
+</main>
+</div>
+
+<div id="card"></div>
+<div id="toast"></div>
+
+<script>
+/* ---------- הגדרות ---------- */
+const STAGES=[
+ {k:'found',n:'נמצאו',i:'🔍',c:'#22d3ee'},
+ {k:'sent',n:'נשלחה הודעה',i:'📤',c:'#60a5fa'},
+ {k:'yes',n:'ענו כן',i:'✅',c:'#4ade80'},
+ {k:'building',n:'אתר בבנייה',i:'🛠️',c:'#fbbf24'},
+ {k:'review',n:'ממתין לאישור',i:'⏳',c:'#a78bfa'},
+ {k:'closed',n:'נסגר',i:'🎉',c:'#f472b6'}];
+const IRR={k:'irr',n:'לא רלוונטי',i:'🚫',c:'#6b7280'};
+const ALL=[...STAGES,IRR];
+const SMAP=Object.fromEntries(ALL.map(s=>[s.k,s]));
+const PALETTES=[
+ {a:'#be185d',a2:'#f472b6',b:'#fff1f6',t:'#3b0a24'},
+ {a:'#0f766e',a2:'#2dd4bf',b:'#f0fdfa',t:'#052e2b'},
+ {a:'#1d4ed8',a2:'#60a5fa',b:'#eff6ff',t:'#0b1d4d'},
+ {a:'#b45309',a2:'#fbbf24',b:'#fffbeb',t:'#3a1d03'},
+ {a:'#6d28d9',a2:'#c084fc',b:'#faf5ff',t:'#2a0f55'},
+ {a:'#15803d',a2:'#86efac',b:'#f0fdf4',t:'#052e16'},
+ {a:'#b91c1c',a2:'#fb923c',b:'#fef2f2',t:'#450a0a'},
+ {a:'#334155',a2:'#94a3b8',b:'#f8fafc',t:'#0f172a'}];
+const FIELDS={
+ 'קוסמטיקה':{e:'💅',noun:'קוסמטיקה',tag:'טיפולי פנים וריסים בגישה אישית',s:[['✨','טיפולי פנים'],['👁️','הרמת ריסים'],['💆','עיסוי']]},
+ 'מספרה':{e:'💇',noun:'מספרה',tag:'תספורות וצבע בסגנון שלך',s:[['✂️','תספורת'],['🎨','צבע'],['💫','החלקה']]},
+ 'מאפייה':{e:'🥐',noun:'מאפייה',tag:'טרי מהתנור, כל בוקר',s:[['🥖','לחמים'],['🍰','עוגות'],['🥐','מאפים']]},
+ 'אינסטלציה':{e:'🔧',noun:'אינסטלציה',tag:'שירות מהיר ואמין לבית שלך',s:[['🚿','תיקוני נזילות'],['🚽','התקנות'],['🛠️','חירום 24/7']]},
+ 'צילום':{e:'📸',noun:'צילום',tag:'רגעים שנשארים לתמיד',s:[['💍','חתונות'],['👶','ברית ומשפחה'],['🧑','פורטרט']]},
+ 'מאמן כושר':{e:'🏋️',noun:'כושר',tag:'אימונים אישיים שעובדים',s:[['💪','אימון אישי'],['🥗','תזונה'],['👥','קבוצות']]},
+ 'פרחים':{e:'💐',noun:'פרחים',tag:'זרים ועיצובים לכל אירוע',s:[['💐','זרים'],['🎁','מתנות'],['💒','אירועים']]},
+ 'חשמלאי':{e:'⚡',noun:'חשמל',tag:'חשמלאי מוסמך, עבודה נקייה',s:[['💡','תאורה'],['🔌','לוחות חשמל'],['🚨','תקלות']]},
+ 'מורה פרטי':{e:'📚',noun:'שיעורים',tag:'הצלחה בלימודים, צעד אחר צעד',s:[['➗','מתמטיקה'],['🔤','אנגלית'],['🎓','בגרויות']]},
+ 'קייטרינג':{e:'🍽️',noun:'קייטרינג',tag:'אוכל ביתי לאירועים',s:[['🥘','תפריטים'],['🎉','אירועים'],['📦','משלוחים']]},
+ 'וטרינר':{e:'🐾',noun:'וטרינר',tag:'כי הם חלק מהמשפחה',s:[['💉','חיסונים'],['🩺','בדיקות'],['🏠','ביקורי בית']]},
+ 'נגרות':{e:'🪚',noun:'נגרות',tag:'ריהוט בהתאמה אישית',s:[['🪑','ריהוט'],['🚪','דלתות'],['🍳','מטבחים']]},
+ 'עיצוב פנים':{e:'🛋️',noun:'עיצוב',tag:'בית שמרגישים בו בבית',s:[['📐','תכנון'],['🎨','צבעים'],['🛋️','ריהוט']]},
+ 'מוסך':{e:'🚗',noun:'מוסך',tag:'טיפול מקצועי לרכב שלך',s:[['🔧','טיפולים'],['🛞','צמיגים'],['🔍','בדיקה לפני טסט']]},
+ 'ניקיון':{e:'🧼',noun:'ניקיון',tag:'בית נקי, ראש שקט',s:[['🏠','דירות'],['🏢','משרדים'],['🪟','חלונות']]},
+ 'הפקת אירועים':{e:'🎉',noun:'הפקות',tag:'האירוע שחלמת עליו',s:[['💍','חתונות'],['🎂','ימי הולדת'],['🏢','אירועי חברה']]}};
+const FDEF={e:'🏪',noun:'שירות',tag:'שירות מקצועי ואישי',s:[['⭐','שירות מקצועי'],['💬','ייעוץ אישי'],['📅','קביעת תור']]};
+const finfo=f=>FIELDS[f]||FDEF;
+const PRICE=1800,DEP=720;
+const fmt=n=>n.toLocaleString('he-IL')+' ₪';
+
+/* ---------- נתוני דמו ---------- */
+// [שם, בעלים, תחום, עיר, סטטוס אתר, שלב, פרט אישי, אפשרויות]
+const SEED=[
+ ['שירן ביוטי','שירן','קוסמטיקה','בית שמש','אין אתר','found','עבודות הריסים באינסטגרם מדהימות'],
+ ['המספרה של אורי','אורי','מספרה','פתח תקווה','רק Linktree','found','הצבעים בגלריה שלכם מרשימים'],
+ ['פרחי נועה','נועה','פרחים','חיפה','אין אתר','found','הזרים לחתונות פשוט יפים'],
+ ['חשמל דוד ובניו','דוד','חשמלאי','באר שבע','רק וואטסאפ','found','הביקורות בגוגל מפות מעולות'],
+ ['מאפיית הכפר','רחל','מאפייה','ירושלים','אין אתר','found','הלחם בשמרים בתמונה נראה מושלם'],
+ ['וטרינר ד"ר מאיה','מאיה','וטרינר','רעננה','אתר שבור','found','האתר הישן שלכם לא נפתח'],
+ ['צילום יובל','יובל','צילום','תל אביב','רק Linktree','sent','תמונות הברית שלכם מרגשות'],
+ ['ליאור כושר','ליאור','מאמן כושר','נתניה','אין אתר','sent','סרטוני האימון שלכם מקצועיים'],
+ ['אינסטלציה מהירה','משה','אינסטלציה','אשדוד','רק וואטסאפ','sent','יש לכם דירוג 4.9 בגוגל'],
+ ['קייטרינג טעמים','סיגל','קייטרינג','ראשון לציון','אין אתר','sent','מנות האירוע בתמונות נראות מדהים'],
+ ['מוסך הדרום','עמי','מוסך','אשקלון','אתר שבור','sent','לקוחות ממליצים עליכם בהרבה מקומות'],
+ ['ניקיון ברק','ברק','ניקיון','חולון','רק וואטסאפ','yes','שירות הניקיון לדירות שלכם נראה יסודי'],
+ ['נגרות אבי','אבי','נגרות','כפר סבא','אין אתר','yes','המטבחים שבניתם יצאו מדהימים'],
+ ['סטודיו נוי','נוי','עיצוב פנים','הרצליה','רק Linktree','yes','הפרויקטים שלכם באינסטגרם מעוצבים להפליא'],
+ ['קוסמטיקה של תמר','תמר','קוסמטיקה','מודיעין','אין אתר','building','טיפולי הפנים שלכם נראים מקצועיים'],
+ ['פרחי הגן','גנית','פרחים','רחובות','רק וואטסאפ','building','העיצובים העונתיים שלכם יפים'],
+ ['הפקות רוני','רוני','הפקת אירועים','בית שמש','אין אתר','review','האירועים שהפקתם נראים מושלמים'],
+ ['המספרה של דנה','דנה','מספרה','חיפה','רק Linktree','review','עבודות הצבע שלכם מדהימות',{approved:1}],
+ ['אינסטלציה אלון','אלון','אינסטלציה','ירושלים','אתר שבור','review','תגובות הלקוחות עליכם חמות',{approved:1,pay:1}],
+ ['מורה פרטי יעל','יעל','מורה פרטי','תל אביב','אין אתר','review','ההמלצות מהורים מרשימות'],
+ ['מאפיית שמש','שמעון','מאפייה','נתניה','אין אתר','closed','העוגות שלכם נראות יוצא מן הכלל',{approved:1,pay:2}],
+ ['צילום טל','טל','צילום','ראשון לציון','רק Linktree','closed','תמונות הזוגות שלכם מרגשות',{approved:1,pay:2}],
+ ['ספא אורן','אורן','קוסמטיקה','פתח תקווה','אתר תקין','irr','הטיפולים שלכם נראים נהדר',{ans:'יש לי כבר אתר'}],
+ ['מוסך ציון','ציון','מוסך','באר שבע','רק וואטסאפ','irr','הניסיון שלכם בולט בעמוד',{ans:'לא מעוניין'}],
+ ['חשמל שחר','שחר','חשמלאי','אשדוד','אין אתר','irr','העבודות שלכם נראות נקיות',{ans:'תסיר אותי'}]];
+const OWNERS=['שירן','מיכל','אורית','דני','עמית','נועם','רונית','יוסי','הילה','אלון','תמר','גיל','קרן','אסף'];
+const SITES=['אין אתר','רק Linktree','רק וואטסאפ','אתר שבור'];
+const SITECOL={'אין אתר':'#f87171','רק Linktree':'#fbbf24','רק וואטסאפ':'#fbbf24','אתר שבור':'#fb923c','אתר תקין':'#4ade80'};
+
+/* ---------- מצב ---------- */
+const S={biz:[],sentToday:0,order:0,sel:null,view:'graph',filter:'',nid:0,tc:0};
+const $=id=>document.getElementById(id);
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+const slug=b=>'biz'+b.id;
+
+function tm(){S.tc++;const h=9+Math.floor(S.tc/6)%10,m=(S.tc*11)%60;return `${h}:${String(m).padStart(2,'0')}`}
+function say(b,from,text){b.msgs.push({from,text,t:tm()})}
+function mkBiz(r){
+  const [name,owner,field,city,site,stage,detail,o={}]=r;
+  const b={id:++S.nid,name,owner,field,city,site,stage,detail,msgs:[],approved:!!o.approved,pay:o.pay||0,
+    palette:(S.nid*3)%PALETTES.length,order:++S.order,building:false,objection:'',remind:0,ans:o.ans||'',
+    service:finfo(field).s[0][1]};
+  S.biz.push(b);return b;
+}
+/* סימולציות הודעות (בלי שליחה אמיתית) */
+const FIRST=b=>`היי ${b.owner}, אני יהודה. ראיתי את העמוד של ${b.name} ו${b.detail}. אשמח לבקש רשות להכין לכם טיוטת אתר בחינם, בלי התחייבות. מתאים? 🙏`;
+function mSend(b){say(b,'me',FIRST(b))}
+function mYes(b){say(b,'them',rnd(['כן, למה לא, תכין 👍','אוקיי, תשלח','כן סבבה']));say(b,'me',`מעולה! כדי שיצא מדויק: מה השירות שהכי חשוב לך שלקוחות יראו?`);say(b,'them',b.service)}
+function mBuilt(b,re){say(b,'me',re?`הכנתי גרסה חדשה בצבעים אחרים 🎨 הנה הקישור: ${slug(b)}.preview.example. מה דעתך?`:`הטיוטה מוכנה 🎉 הנה הקישור: ${slug(b)}.preview.example. מה הדבר הראשון שהיית משנה?`)}
+function mApprove(b){say(b,'them','וואו, אהבתי! מאשר');say(b,'me',`מעולה! מקדמה של ${fmt(DEP)} בביט, פייבוקס או העברה, מה נוח לך? ברגע שהיא עוברת אני מסיים את האתר, ואת היתרה משלמים אחרי שאישרת אותו.`)}
+function mDeposit(b){say(b,'sys',`✔ התקבלה מקדמה: ${fmt(DEP)}`);say(b,'me',`התקבל, תודה! האתר עלה לכתובת זמנית עם סימן מים: ${slug(b)}.preview.example. כשתאשר סופית ותעביר את היתרה (${fmt(PRICE-DEP)}), אוריד את הסימן ואחבר דומיין.`)}
+function mFinal(b){say(b,'sys',`✔ התקבלה יתרה: ${fmt(PRICE-DEP)}`);say(b,'me',`האתר באוויר! 🎉 הורדתי את סימן המים, חיברתי דומיין והעברתי הכל לחשבון האחסון על שמך. חודש תיקונים קטנים כלול.`)}
+function mIrr(b){say(b,'them',b.ans||'לא מעוניין');say(b,'me','בסדר גמור, תודה על התשובה ובהצלחה עם העסק 🙏')}
+function seedMsgs(b){
+  const i=['found','sent','yes','building','review','closed','irr'].indexOf(b.stage);
+  if(b.stage==='irr'){mSend(b);mIrr(b);return}
+  if(i>=1)mSend(b); if(i>=2)mYes(b); if(i>=4)mBuilt(b);
+  if(b.stage==='sent'&&b.id%2)b.remind=1;
+  if(b.approved)mApprove(b); if(b.pay>=1)mDeposit(b); if(b.pay>=2)mFinal(b);
+}
+
+/* ---------- גרף ---------- */
+const NS='http://www.w3.org/2000/svg';
+const gr=$('graph');
+function el(tag,attrs={},parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
+const C={x:610,y:385};
+const SP={};STAGES.forEach((s,i)=>{const a=(-90+60*i)*Math.PI/180;SP[s.k]={x:C.x+330*Math.cos(a),y:C.y+225*Math.sin(a),a:Math.atan2(225*Math.sin(a),330*Math.cos(a))}});
+const gLines=el('g',{},gr),gStages=el('g',{},gr),gBiz=el('g',{},gr);
+const stageEls={};
+function buildStatic(){
+  // תיבת לא רלוונטי
+  el('rect',{x:1040,y:560,width:240,height:225,rx:22,fill:'#6b728010',stroke:'#6b7280','stroke-dasharray':'6 6','stroke-width':1.5},gStages);
+  const ir=el('g',{class:'stage',transform:'translate(1160,590)',style:'color:#6b7280'},gStages);
+  el('text',{x:0,y:5,'text-anchor':'middle',fill:'#9ca3af','font-size':15,'font-weight':700},ir).textContent='🚫 לא רלוונטי';
+  const ib=el('g',{},ir);el('circle',{cx:-100,cy:-2,r:13,fill:'#6b7280'},ib);
+  stageEls.irr={g:ir,badge:el('text',{x:-100,y:3,'text-anchor':'middle','font-size':13,'font-weight':800,fill:'#0b0f1a'},ib)};
+  // מרכז
+  const defs=el('defs',{},gr);
+  const lg=el('radialGradient',{id:'cg'},defs);
+  el('stop',{offset:'0','stop-color':'#7c3aed'},lg);el('stop',{offset:'1','stop-color':'#0e7490'},lg);
+  STAGES.forEach(s=>{
+    const p=SP[s.k];
+    el('line',{x1:C.x,y1:C.y,x2:p.x,y2:p.y,stroke:s.c,'stroke-width':2,opacity:.55,class:'dash'},gLines);
+    const g=el('g',{class:'stage',transform:`translate(${p.x},${p.y})`,style:`color:${s.c}`},gStages);
+    el('rect',{x:-84,y:-32,width:168,height:64,rx:22,fill:'#10162a',stroke:s.c,'stroke-width':2},g);
+    el('rect',{x:-84,y:-32,width:168,height:64,rx:22,fill:s.c,opacity:.07},g);
+    el('text',{x:52,y:9,'text-anchor':'middle','font-size':26},g).textContent=s.i;
+    el('text',{x:-14,y:6,'text-anchor':'middle',fill:'#fff','font-size':15,'font-weight':700},g).textContent=s.n;
+    el('circle',{cx:-78,cy:-27,r:15,fill:s.c},g);
+    stageEls[s.k]={g,badge:el('text',{x:-78,y:-21,'text-anchor':'middle','font-size':15,'font-weight':800,fill:'#0b0f1a'},g)};
+  });
+  const cg=el('g',{transform:`translate(${C.x},${C.y})`},gStages);
+  el('circle',{r:66,fill:'#7c3aed',opacity:.15},cg);
+  el('circle',{r:54,fill:'url(#cg)',stroke:'#c4b5fd','stroke-width':2},cg);
+  el('text',{y:-6,'text-anchor':'middle','font-size':26},cg).textContent='🧠';
+  el('text',{y:20,'text-anchor':'middle',fill:'#fff','font-size':16,'font-weight':800},cg).textContent='המערכת';
+}
+function target(b,idx,list){
+  if(b.stage==='irr'){return {x:1090+(idx%3)*75,y:655+Math.floor(idx/3)*68}}
+  const st=SP[b.stage],ring=Math.floor(idx/7),j=idx%7,m=Math.min(7,list.length-ring*7);
+  const off=m===1?0:(j-(m-1)/2)*(27)*Math.PI/180;
+  const d=140+ring*58,a=st.a+off;
+  return {x:Math.max(40,Math.min(1260,st.x+d*Math.cos(a))),y:Math.max(30,Math.min(765,st.y+d*Math.sin(a)))};
+}
+function layout(){
+  const groups={};ALL.forEach(s=>groups[s.k]=[]);
+  S.biz.forEach(b=>groups[b.stage].push(b));
+  ALL.forEach(s=>{
+    groups[s.k].sort((a,b)=>a.order-b.order).forEach((b,i,l)=>{const t=target(b,i,l);b._tx=t.x;b._ty=t.y});
+    const e=stageEls[s.k];e.badge.textContent=groups[s.k].length;
+  });
+  S.biz.forEach(b=>{if(!b._g)createNode(b)});
+  updateNodeStyle();renderCounts();kick();
+}
+function createNode(b){
+  const st=SMAP[b.stage];
+  const p=b._from||SP.found;
+  b._x=b._fx??p.x;b._y=b._fy??p.y;b._s=0;
+  b._line=el('line',{stroke:st.c,'stroke-width':1.4,opacity:.5,class:'dash'},gLines);
+  const g=el('g',{class:'biz'},gBiz);
+  b._ring=el('circle',{class:'ring',cx:0,cy:0,r:18,stroke:'#fff'},g);
+  b._circ=el('circle',{class:'n',r:18,fill:'#101626','stroke-width':2.5},g);
+  el('text',{y:6,'text-anchor':'middle','font-size':17,'pointer-events':'none'},g).textContent=finfo(b.field).e;
+  const l=el('text',{class:'lbl',y:35},g);l.textContent=b.name.length>15?b.name.slice(0,14)+'…':b.name;
+  el('title',{},g).textContent=`${b.name} · ${b.field} · ${b.city}`;
+  g.addEventListener('click',()=>openCard(b.id));
+  b._g=g;
+}
+function updateNodeStyle(){
+  S.biz.forEach(b=>{
+    const c=SMAP[b.stage].c;
+    b._circ.setAttribute('stroke',c);b._g.style.color=c;b._line.setAttribute('stroke',c);
+    b._ring.setAttribute('stroke',c);
+    b._g.classList.toggle('dim',!!S.filter&&b.field!==S.filter);
+    b._g.classList.toggle('sel',S.sel===b.id);
+    b._line.style.opacity=(S.filter&&b.field!==S.filter)?.08:'';
+  });
+}
+let raf=0;
+function kick(){if(!raf)raf=requestAnimationFrame(tick)}
+function tick(){
+  raf=0;let mov=false;
+  S.biz.forEach(b=>{
+    const dx=b._tx-b._x,dy=b._ty-b._y,ds=1-b._s;
+    if(Math.abs(dx)>.3||Math.abs(dy)>.3||Math.abs(ds)>.01){b._x+=dx*.11;b._y+=dy*.11;b._s+=ds*.14;mov=true}
+    else{b._x=b._tx;b._y=b._ty;b._s=1}
+    b._g.setAttribute('transform',`translate(${b._x},${b._y}) scale(${b._s})`);
+    const home=b.stage==='irr'?{x:1160,y:590}:SP[b.stage];
+    b._line.setAttribute('x1',home.x);b._line.setAttribute('y1',home.y);b._line.setAttribute('x2',b._x);b._line.setAttribute('y2',b._y);
+  });
+  if(mov)raf=requestAnimationFrame(tick);
+}
+function flash(b){
+  b._g.classList.remove('flash');void b._g.getBoundingClientRect();b._g.classList.add('flash');
+  const st=stageEls[b.stage].g;st.classList.remove('pulse');void st.getBoundingClientRect();st.classList.add('pulse');
+}
+function moveTo(b,stage,msg){
+  const prev=b.stage;b.stage=stage;b.order=++S.order;
+  layout();flash(b);
+  if(msg!==false)toast(msg||`${b.name} עברה לשלב: ${SMAP[stage].n}`);
+  if(S.view==='table')renderTable();
+  if(S.sel===b.id)refreshCard();
+  return prev;
+}
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(toast._t);toast._t=setTimeout(()=>e.classList.remove('on'),2400)}
+function renderCounts(){
+  $('counts').innerHTML=ALL.map(s=>`<div><i style="background:${s.c}"></i>${s.n}<b>${S.biz.filter(b=>b.stage===s.k).length}</b></div>`).join('');
+}
+
+/* ---------- טבלה ---------- */
+function nextStep(b){
+  switch(b.stage){
+    case 'found':return 'לשלוח הודעת בקשת רשות';
+    case 'sent':return b.remind?`ממתין לתשובה · תזכורת ${b.remind} מתוך 2 בעוד 3 ימים`:'ממתין לתשובה · תזכורת ראשונה בעוד 3 ימים';
+    case 'yes':return 'לבנות טיוטת אתר';
+    case 'building':return 'האתר בבנייה, יהיה מוכן עוד רגע';
+    case 'review':return !b.approved?'לשלוח טיוטה ולחכות לאישור (צור מחדש / אשר)':b.pay===0?'לבקש מקדמה (30% עד 50%)':'להעלות לכתובת זמנית ולבקש יתרה';
+    case 'closed':return 'לחבר דומיין, להעביר אחסון, לבקש ביקורת והמלצה';
+    case 'irr':return 'לא פונים שוב';
+  }
+}
+function renderTable(){
+  const rows=S.biz.filter(b=>!S.filter||b.field===S.filter).sort((a,b)=>ALL.findIndex(s=>s.k===a.stage)-ALL.findIndex(s=>s.k===b.stage)||a.order-b.order);
+  $('tableView').innerHTML=`<table><thead><tr><th>שם עסק</th><th>תחום</th><th>עיר</th><th>סטטוס אתר</th><th>שלב</th><th>צעד הבא</th></tr></thead><tbody>${
+   rows.map(b=>{const s=SMAP[b.stage];return `<tr data-id="${b.id}"><td><b>${finfo(b.field).e} ${b.name}</b></td><td>${b.field}</td><td>${b.city}</td>
+   <td><span class="chip" style="color:${SITECOL[b.site]};border-color:${SITECOL[b.site]}66">${b.site}</span></td>
+   <td><span class="chip" style="color:${s.c};border-color:${s.c}77;background:${s.c}15">${s.i} ${s.n}</span></td><td style="color:var(--mut)">${nextStep(b)}</td></tr>`}).join('')}</tbody></table>`;
+  $('tableView').querySelectorAll('tr[data-id]').forEach(r=>r.onclick=()=>openCard(+r.dataset.id));
+}
+function setView(v){
+  S.view=v;$('vGraph').classList.toggle('on',v==='graph');$('vTable').classList.toggle('on',v==='table');
+  gr.style.display=v==='graph'?'block':'none';$('tableView').style.display=v==='table'?'block':'none';
+  if(v==='table')renderTable();
+}
+
+/* ---------- כרטיס עסק ---------- */
+const getB=id=>S.biz.find(b=>b.id===id);
+function mockHTML(b){
+  const p=PALETTES[b.palette],f=finfo(b.field);
+  const url=b.pay>=2?`www.${slug(b)}.co.il`:`${slug(b)}.preview.example`;
+  return `<div class="mock" style="--ma:${p.a};--ma2:${p.a2};--mb:${p.b};--mt:${p.t}">
+   <div class="mbar"><i></i><i></i><i></i><span>${url}</span></div>
+   <div class="mhero"><h5>${f.e} ${b.name}</h5><p>${f.tag}</p><b>💬 דברו איתנו בוואטסאפ</b></div>
+   <div class="mcards">${f.s.map(x=>`<div><em>${x[0]}</em>${x[1]}</div>`).join('')}</div>
+   <div class="mfoot">📍 ${b.city} · 📞 קביעת תור</div>
+   ${b.pay<2?'<div class="wm">טיוטה · סימן מים</div>':''}</div>`;
+}
+function phone(b){return `05${[0,2,4,8][b.id%4]}-${String(1000000+b.id*7919%9000000).slice(0,7)}`}
+function dynHTML(b){
+  const s=SMAP[b.stage],f=finfo(b.field);
+  const hasSite=['review','closed'].includes(b.stage);
+  const cur=b.pay;
+  const stepsCls=i=>!hasSite&&!b.building?'':(i<cur?'done':i===cur?'cur':'');
+  const dis=(c)=>c?'':'disabled';
+  const tags=[];
+  return `
+  <div class="card-sec"><h4>פרטים</h4>
+   <div class="kv"><span>שם</span><b>${b.name}</b><span>תחום</span><span>${f.e} ${b.field}</span><span>עיר</span><span>${b.city}</span>
+   <span>טלפון</span><span style="direction:ltr;text-align:right">${phone(b)}</span>
+   <span>אינסטגרם</span><span style="direction:ltr;text-align:right;color:#f9a8d4">instagram.com/${slug(b)}_official</span>
+   <span>סטטוס אתר</span><span><span class="chip" style="color:${SITECOL[b.site]};border-color:${SITECOL[b.site]}66">${b.site}</span></span>
+   <span>שלב</span><span><span class="chip" style="color:${s.c};border-color:${s.c}77;background:${s.c}15">${s.i} ${s.n}</span></span>
+   ${b.objection?`<span>התנגדות</span><span style="color:#fde68a">${b.objection}</span>`:''}</div>
+  </div>
+  <div class="card-sec"><h4>הצעד הבא</h4><div style="color:#67e8f9;font-weight:600">${nextStep(b)}</div></div>
+  <div class="card-sec"><h4>פעולות</h4><div class="acts">
+   <button class="btn" data-a="send" ${dis(b.stage==='found')}>📤 שלח הודעה</button>
+   <button class="btn ok" data-a="yes" ${dis(b.stage==='sent')}>✅ סמן שענה כן</button>
+   <button class="btn pri" data-a="build" ${dis(b.stage==='yes')}>🛠️ צור אתר</button>
+   <button class="btn warn" data-a="regen" ${dis(b.stage==='review'&&!b.approved)}>🔄 צור מחדש</button>
+   <button class="btn ok" data-a="approve" ${dis(b.stage==='review'&&!b.approved)}>👍 אשר</button>
+   <button class="btn ok" data-a="deposit" ${dis(b.stage==='review'&&b.approved&&b.pay===0)}>💵 מקדמה שולמה</button>
+   <button class="btn pri" style="grid-column:1/-1" data-a="final" ${dis(b.stage==='review'&&b.pay===1)}>🚀 יתרה שולמה, העלה לאוויר</button>
+   <button class="btn bad" style="grid-column:1/-1" data-a="irr" ${dis(['found','sent','yes'].includes(b.stage))}>🚫 סמן לא רלוונטי</button>
+  </div></div>
+  <div class="card-sec"><h4>תצוגה מקדימה של האתר</h4>
+   ${b.building?`<div class="empty">🛠️ בונה את האתר בסגנון של ${b.name}…<div class="bar" style="margin-top:12px"><i></i></div></div>`
+    :hasSite?mockHTML(b):`<div class="empty">עדיין אין אתר. אחרי "ענו כן" אפשר ללחוץ "צור אתר".</div>`}
+  </div>
+  <div class="card-sec"><h4>סטטוס תשלום · חבילה ${fmt(PRICE)}</h4>
+   <div class="steps"><div class="${stepsCls(0)}">טיוטה</div><div class="${stepsCls(1)}">מקדמה שולמה</div><div class="${stepsCls(2)}">יתרה שולמה</div></div>
+   <div class="mini">מקדמה ${fmt(DEP)} · יתרה ${fmt(PRICE-DEP)}${b.pay>=2?' · האתר באוויר, חודש תיקונים כלול':''}</div>
+  </div>
+  <div class="card-sec"><h4>היסטוריית וואטסאפ (מדומה)</h4>
+   <div class="chat" id="chat">${b.msgs.length?b.msgs.map(m=>`<div class="msg ${m.from}">${m.text.replace(/</g,'&lt;')}${m.from==='sys'?'':`<small>${m.t}</small>`}</div>`).join(''):'<div class="mini" style="padding:10px;text-align:center">עדיין לא נשלחו הודעות</div>'}</div>
+  </div>`;
+}
+function openCard(id){
+  const b=getB(id);S.sel=id;updateNodeStyle();
+  const c=$('card');
+  c.innerHTML=`<button class="close" id="cx">✕</button><div style="padding-left:34px"><div style="font-size:19px;font-weight:800">${finfo(b.field).e} ${b.name}</div><div class="mini">${b.field} · ${b.city}</div></div>
+   <div id="cDyn"></div>
+   <div class="card-sec"><h4>🤝 עוזר סגירה · מה בעל העסק ענה</h4>
+    <textarea id="ans" rows="2" placeholder="הדבק או הקלד את תשובתו, למשל: יקר לי"></textarea>
+    <div class="chips">${['יקר לי','אני צריך לחשוב','יש לי אינסטגרם','תעשה בחינם','אפשר בתשלומים','מי זה?'].map(x=>`<button data-q="${x}">${x}</button>`).join('')}</div>
+    <button class="btn pri full" id="suggBtn">💡 הצע תשובה</button>
+    <div id="suggOut"></div>
+   </div>`;
+  c.classList.add('open');
+  $('cx').onclick=closeCard;
+  $('suggBtn').onclick=()=>suggest(b);
+  $('ans').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();suggest(b)}});
+  c.querySelectorAll('[data-q]').forEach(x=>x.onclick=()=>{$('ans').value=x.dataset.q;suggest(b)});
+  refreshCard();
+  c.scrollTop=0;
+}
+function refreshCard(){
+  const b=getB(S.sel);if(!b)return;
+  $('cDyn').innerHTML=dynHTML(b);
+  $('cDyn').querySelectorAll('[data-a]').forEach(x=>x.onclick=()=>act(b,x.dataset.a));
+  const ch=$('chat');if(ch)ch.scrollTop=ch.scrollHeight;
+}
+function closeCard(){$('card').classList.remove('open');S.sel=null;updateNodeStyle()}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCard()});
+
+/* ---------- פעולות ---------- */
+function act(b,a){
+  if(a==='send')return doSend(b);
+  if(a==='yes'){mYes(b);moveTo(b,'yes')}
+  if(a==='build')runBuild(b,false);
+  if(a==='regen')runBuild(b,true);
+  if(a==='approve'){b.approved=true;mApprove(b);flash(b);toast('הטיוטה אושרה, ממתינים למקדמה');refreshCard();if(S.view==='table')renderTable()}
+  if(a==='deposit'){b.pay=1;mDeposit(b);flash(b);toast('התקבלה מקדמה, האתר עלה לכתובת זמנית עם סימן מים');refreshCard();if(S.view==='table')renderTable()}
+  if(a==='final'){b.pay=2;mFinal(b);moveTo(b,'closed',`🎉 ${b.name}: העסקה נסגרה והאתר באוויר`)}
+  if(a==='irr'){say(b,'them',b.ans||'לא רלוונטי כרגע');moveTo(b,'irr')}
+}
+function doSend(b){
+  if(S.sentToday>=10){toast('הגעת למכסה היומית: 10 הודעות');return false}
+  mSend(b);S.sentToday++;$('sentCnt').textContent=S.sentToday;moveTo(b,'sent');return true;
+}
+function runBuild(b,re){
+  b.building=true;
+  b._from=null;moveTo(b,'building',re?`בונה מחדש את האתר של ${b.name} בצבעים חדשים…`:`בונה אתר ל${b.name}…`);
+  setTimeout(()=>{
+    b.building=false;
+    if(re)b.palette=(b.palette+1+Math.floor(Math.random()*(PALETTES.length-1)))%PALETTES.length;
+    mBuilt(b,re);moveTo(b,'review',`האתר של ${b.name} מוכן וממתין לאישור`);
+  },2200);
+}
+$('sendBtn').onclick=()=>{
+  const left=10-S.sentToday;
+  if(left<=0){toast('המכסה היומית מלאה (10/10)');return}
+  const list=S.biz.filter(b=>b.stage==='found').sort((a,b)=>a.order-b.order).slice(0,left);
+  if(!list.length){toast('אין עסקים בשלב "נמצאו"');return}
+  $('sendBtn').disabled=true;
+  list.forEach((b,i)=>setTimeout(()=>{doSend(b);if(i===list.length-1){$('sendBtn').disabled=false;toast(`נשלחו ${list.length} הודעות`)}},i*380));
+};
+$('newDay').onclick=e=>{e.preventDefault();S.sentToday=0;$('sentCnt').textContent=0;toast('יום חדש: המכסה אופסה')};
+$('scanBtn').onclick=()=>{
+  const field=$('scanField').value.trim()||'קוסמטיקה',city=$('scanCity').value.trim()||'בית שמש';
+  const key=Object.keys(FIELDS).find(k=>field.includes(k)||k.includes(field))||field;
+  const f=finfo(key);
+  $('scanBtn').disabled=true;toast(`🔍 סורק "${field}" ב${city}…`);
+  let made=0;
+  const tpl=[o=>`${f.noun} של ${o}`,o=>`סטודיו ${o}`,o=>`${o} ${f.noun}`,o=>`בית ה${f.noun} של ${o}`,o=>`${f.noun} ${o}`];
+  const owners=[...OWNERS].sort(()=>Math.random()-.5);
+  for(let i=0;i<5;i++)setTimeout(()=>{
+    let name,o=owners[i];name=tpl[i](o);
+    const b=mkBiz([name,o,key,city,rnd(SITES),'found',rnd(['העמוד שלכם באינסטגרם נראה מקצועי','הביקורות עליכם בגוגל מעולות','התמונות שלכם מרשימות']),{}]);
+    b._fx=SP.found.x;b._fy=SP.found.y;
+    refreshFilter();layout();flash(b);
+    if(S.view==='table')renderTable();
+    if(++made===5){$('scanBtn').disabled=false;toast(`נמצאו 5 עסקים חדשים ב${city}`)}
+  },i*450+300);
+};
+function refreshFilter(){
+  const cur=$('filter').value,fs=[...new Set(S.biz.map(b=>b.field))].sort();
+  $('filter').innerHTML='<option value="">כל התחומים</option>'+fs.map(f=>`<option ${f===cur?'selected':''}>${f}</option>`).join('');
+}
+$('filter').onchange=e=>{S.filter=e.target.value;updateNodeStyle();if(S.view==='table')renderTable()};
+$('vGraph').onclick=()=>setView('graph');$('vTable').onclick=()=>setView('table');
+
+/* ---------- עוזר סגירה: מאגר סיטואציות ---------- */
+// [כותרת, מילות מפתח, תשובה מוצעת, דגל: stop = כלל ברזל, לא פונים שוב]
+const SIT=[
+['"מי זה?"',['מי זה','מי אתה','מי זאת','מי מדבר'],`היי, אני יהודה, אני בונה אתרים לעסקים. ראיתי את העמוד שלכם ויש לי רעיון לאתר שיתאים לכם בול. אכין לכם טיוטה בחינם?`],
+['"איך השגת את המספר?"',['איך השגת','מאיפה המספר','מאיפה השגת','מאיפה יש לך','איך קיבלת את המספר'],`הוא מופיע בפרופיל העסק שלכם בגוגל. אם לא מתאים, אני לא אפנה שוב 🙏 ואם כן, אשמח להכין לכם טיוטה.`],
+['"כמה זה עולה?"',['כמה עולה','כמה זה עולה','מה המחיר','מה העלות'],`הטיוטה עליי. רק אם תתאהב בה נדבר על מחיר, ואני מבטיח שתופתע לטובה. להכין לך?`],
+['"מה זה טיוטה?"',['מה זה טיוטה','איזו טיוטה','איזה טיוטה'],`אתר אמיתי, עם העבודות והצבעים שלך, שתוכל לפתוח בטלפון ולהראות לחברים. אם זה לא נראה כמו העסק שלך, לא עשינו כלום. אכין?`],
+['"זה עוקץ?"',['עוקץ','הונאה','נוכל','תרמית','רמאות','סקאם','scam'],`טוב שאתה בודק, ככה צריך 😊 אני לא מבקש שקל ולא פרטים. רק תסתכל על טיוטה. הנה עבודה שעשיתי: [קישור]. להכין?`],
+['"יש לי כבר אתר"',['יש לי כבר אתר','כבר יש לי אתר','יש לי אתר'],`אה, פספסתי, סליחה. אם פעם תרצה לרענן אותו, אני פה. בהצלחה! 🙏`,'irr'],
+['"שלח" / "אוקיי" / 👍',['שלח','אוקיי','אוקי','👍','כן תכין','תכין','בסדר'],`מעולה! כדי שיצא מדויק: מה השירות שהכי חשוב לך שלקוחות יראו?`],
+['"אני לא הבעלים"',['לא הבעלים','אני לא בעל','לא הבעלת','לא אני הבעל'],`תודה! תוכל להעביר לו? תגיד לו שיש טיוטה בחינם שמחכה לו. אם ירצה, שיחזור אליי.`],
+['"תתקשר אליי"',['תתקשר','תתקשרו','תתקשרי','תטלפן','שיחה טלפונית'],`בשמחה. היום בערב או מחר בבוקר?`],
+['"לא עכשיו"',['לא עכשיו','לא כרגע'],`לגמרי מבין. הטיוטה לא מחייבת לכלום ולוקחת דקה להסתכל. להכין ולשלוח לך כשיתאים?`],
+['"לא מעוניין"',['לא מעוניין','לא מעוניינת','לא תודה','לא מתאים לי'],`בסדר גמור, תודה על התשובה ובהצלחה עם העסק 🙏`,'stop'],
+['"תסיר אותי"',['תסיר','תסירו','הסר אותי','תפסיק לשלוח','תפסיקו','אל תפנה'],`הוסרת, סליחה על ההפרעה 🙏`,'stop'],
+['"יקר לי"',['יקר','יקרה','מחיר גבוה','הרבה כסף','לא זול'],`אני שומע אותך. תגיד, לקוח חדש אחד שווה לך כמה? אם האתר מביא לקוח אחד בחודש, הוא החזיר את עצמו. חוץ מהמחיר, יש עוד משהו שמפריע?`],
+['"ב-Wix זה בחינם"',['wix','וויקס','ויקס','וורדפרס','wordpress','אעשה לבד','אבנה לבד'],`נכון, וזה כלי מעולה. השאלה כמה ערבים אתה רוצה להשקיע בללמוד אותו במקום בלקוחות שלך. פה זה כבר מוכן. נעלה השבוע?`],
+['"מצאתי זול יותר"',['זול יותר','מצאתי זול','זולה יותר','הצעה זולה'],`יופי שבדקת. ראית אצלו את האתר שלך מוכן לפני שילמת? אצלי ראית. מה ההפרש בדיוק? בוא נראה אם אפשר לסגור את זה.`],
+['"אפשר הנחה?"',['הנחה','להוריד מחיר','תוריד','הורדה במחיר'],`את המחיר אני לא מוריד, כי אז אני מוריד באיכות. מה שאני כן יכול: נתחיל מעמוד אחד ב-X ₪ ותרחיב כשהוא יביא כסף. נלך על זה?`],
+['"אין לי תקציב"',['אין תקציב','אין כסף','אין לי כסף','קשה כלכלית','מצב כלכלי'],`מבין. בגלל זה יש את החבילה הבסיסית, עמוד אחד ב-X ₪, תשלום אחד ואין יותר הוצאות. ואתה משלם עכשיו רק מקדמה. נתחיל?`],
+['"אפשר בתשלומים?"',['תשלומים','לפרוס'],`התשלום מתחלק ממילא לשניים: מקדמה עכשיו, והיתרה רק אחרי שאתה רואה את האתר הגמור ומרוצה. ככה הסיכון אצלי. מתחילים?`],
+['"מה עם אחסון?"',['אחסון','האוסטינג','hosting'],`האתר יושב על חשבון אחסון חינמי על שמך. אין חשבון חודשי, אין הפתעות. נתקדם?`],
+['"ומה אם ארצה שינויים אחר כך?"',['שינויים אחר כך','לשנות אחר כך','אם ארצה שינוי','עדכונים אחר כך'],`חודש ראשון של תיקונים קטנים כלול. אחרי זה, כל שינוי במחיר הוגן לפי הצורך. בלי מנוי שרץ לך ברקע. סגרנו?`],
+['"אשלם כשאראה תוצאות"',['כשאראה תוצאות','אחרי שאראה','כשזה יביא','אשלם כשיביא'],`בדיוק ככה זה עובד: מקדמה קטנה כדי שאתחיל, ואת היתרה אתה משלם רק אחרי שראית את האתר הגמור ואישרת. עובד לך?`],
+['"יש עלויות נסתרות?"',['עלויות נסתרות','הוצאות נוספות','הפתעות','עלויות נוספות'],`אפס. הכל כלול, חוץ מדומיין של 50 עד 100 ₪ לשנה שנרשם על שמך. נתחיל?`],
+['"תעשה בחינם ואמליץ עליך"',['תעשה בחינם','בחינם ואמליץ','אמליץ עליך','אמליץ עלייך'],`אני רוצה שתמליץ כי אתה מרוצה, לא כי זה היה בחינם 😊 אבל על כל עסק שתמליץ ויסגור, תקבל X ₪ בחזרה. ככה זה יכול לצאת לך כמעט בחינם. מתחילים?`],
+['"יש תשלום חודשי?"',['תשלום חודשי','מנוי','כל חודש','חודשי'],`לא. משלמים פעם אחת והאתר שלך. נתחיל?`],
+['"המחיר בסדר, איך משלמים?"',['איך משלמים','איך לשלם','המחיר בסדר','מסכים למחיר','ביט','פייבוקס'],`מקדמה של X ₪ בביט, פייבוקס או העברה, מה נוח לך? ברגע שהיא עוברת אני מסיים את האתר, ואת היתרה משלמים אחרי שאישרת אותו.`],
+['"יש לך דוגמאות?"',['דוגמאות','דוגמה','עבודות קודמות','תיק עבודות','פורטפוליו'],`הנה 3 מהאחרונים: [קישורים]. איזה מהם הכי קרוב למה שהיית רוצה?`],
+['"יש לך המלצות?"',['המלצות','לקוחות מרוצים','ביקורות'],`הנה מה שלקוחות כתבו: [צילומים]. רוצה מספר של אחד מהם לשאול אותו ישירות?`],
+['"מה אם תיעלם?"',['תיעלם','תברח','אם תעלם','מי מבטיח'],`שאלה טובה. אתה משלם רק מקדמה, ואת היתרה אחרי שראית אתר גמור. בסוף הדומיין והאחסון על שמך. הסיכון עליי. מתקדמים?`],
+['"האתר יהיה שלי?"',['האתר יהיה שלי','בבעלותי','האתר שלי','בעלות על האתר'],`מאה אחוז שלך, התוכן והדומיין. אם פעם תרצה לעבור, אעביר לך הכל. סגרנו?`],
+['"אתה עסק רשום?"',['עוסק','חשבונית','עסק רשום','מעמ'],`כן, [עוסק פטור/מורשה], חשבונית על כל שקל. עוד משהו שחשוב לך לדעת לפני שמתחילים?`],
+['"זה נבנה עם AI?"',['בינה מלאכותית','chatgpt','נבנה עם','עם ai','עושה את זה ai'],`כן, וזה היתרון שלך: AI עושה את העבודה השחורה, אני עובר על כל פרט. איכות של סוכנות במחיר של פרילנסר. רוצה לראות את הגרסה הסופית?`],
+['"השתמשת בתמונות שלי"',['התמונות שלי','השתמשת בתמונות','בלי רשות','בלי לשאול'],`צודק, הייתי צריך לשאול קודם, סליחה. זה פרטי ורק אתה רואה. רוצה שאמחק, או שזה בכיוון ונמשיך?`],
+['"כמה זמן אתה בתחום?"',['כמה זמן אתה','כמה שנים','איזה ניסיון','יש לך ניסיון'],`מספיק כדי לבנות לך אתר לפני שביקשת 😊 תשפוט לפי הטיוטה. מה חשבת עליה?`],
+['"אני רוצה להיפגש"',['להיפגש','פגישה','לפגוש'],`בשמחה. מחר או מחרתיים בערב, 10 דקות בווידאו?`],
+['"תשלח לי פרטים במייל"',['במייל','תשלח מייל','אימייל','email'],`בשמחה, מה הכתובת? ובינתיים, מה הדבר הראשון שתחפש שם, מחיר או דוגמאות? אשים אותו בראש.`],
+['"לא אהבתי"',['לא אהבתי','לא מוצא חן','לא נראה לי','מכוער','לא אוהב'],`מצוין שאמרת, ככה מגיעים לתוצאה. מה הכי צרם, הצבעים, התמונות או המבנה? (ואחרי התיקון: "ככה יותר נכון? מעלים?")`],
+['"תשנה צבעים"',['צבעים','צבע'],`בטח. יותר בהיר או יותר כהה? ואם תאהב אחרי השינוי, סוגרים?`],
+['"חסרים דברים"',['חסר','חסרים','לא הכנסת'],`תשלח הכל ברשימה אחת, אעדכן היום ונעלה. מתאים?`],
+['"התמונות לא טובות"',['התמונות לא','תמונות לא טובות','תמונות גרועות'],`שלח לי 5 שאתה הכי גאה בהן. אחליף, ואם זה נראה כמו שאתה רוצה, עולים לאוויר?`],
+['"אין לי לוגו"',['אין לי לוגו','לוגו'],`זו הזדמנות. אני גם מעצב גרפי, ואם נסגור עכשיו את האתר, הלוגו בחצי מחיר. בפנים?`],
+['"הטקסטים לא נשמעים כמוני"',['לא נשמע כמוני','לא כמוני','הטקסטים'],`שלח הודעה קולית של דקה, כאילו אתה מספר ללקוח על העסק. אני הופך את זה לטקסט ונעלה. מתי נוח לך להקליט?`],
+['"אני רוצה כמו האתר של X"',['כמו האתר של','כמו האתר','דומה לאתר'],`טעם טוב. שלח קישור ואתאים את שלך לכיוון. אם אצליח לפגוע, סוגרים?`],
+['"תוסיף קביעת תורים"',['קביעת תור','תורים','יומן','זימון'],`רעיון מעולה, זה חוסך לך עשרות הודעות בשבוע. X ₪ תוספת. להוסיף כבר בגרסה הראשונה?`],
+['"צריך גם באנגלית"',['גם באנגלית','שפה נוספת','גם ברוסית','גם בערבית'],`אין בעיה, X ₪ לשפה נוספת. מוסיפים עכשיו או אחרי שהעברית באוויר?`],
+['"אני צריך חנות"',['חנות','סליקה','למכור אונליין','מכירות אונליין'],`מעולה, זה הצעד הבא. בוא נעלה קודם את האתר, ובמקביל אכין הצעה לחנות. כמה מוצרים יש לך?`],
+['"תוסיף כפתור וואטסאפ"',['כפתור וואטסאפ','וואטסאפ באתר','ווטסאפ באתר'],`כבר בפנים 😊 לקוח לוחץ ומגיע אליך. יש עוד משהו שחסר לך כדי לאשר?`],
+['"אהבתי, רק כמה שינויים"',['אהבתי','רק כמה שינויים','כמה תיקונים','קצת שינויים'],`מעולה! שלח את כל השינויים ברשימה אחת, אסיים היום, ונעלה. סגור?`],
+['"אני לא מבין בזה"',['לא מבין בזה','לא מבינה בזה','לא מבין בטכנולוגיה','לא טכנולוגי'],`ובשביל זה אני פה. אתה רק אומר אם זה מוצא חן בעיניך, אני מטפל בכל השאר. מוצא חן?`],
+['"אני צריך לחשוב"',['לחשוב','אחשוב','נחשוב','להתלבט'],`בטח. רק כדי שאדע, על מה אתה מתלבט, המחיר, העיצוב, או אם בכלל צריך אתר? (ועונים על הסיבה האמיתית)`],
+['"אין לי זמן"',['אין לי זמן','אין זמן','עמוס מדי','עסוק מדי'],`בדיוק בגלל זה הכל כבר מוכן. צריך דקה אחת לכתוב "מאשר", ואני עושה את השאר. מאשר?`],
+['"צריך להתייעץ עם השותף"',['שותף','שותפה','להתייעץ','אשתי','בן זוג','בת זוג'],`הגיוני. מה לדעתך הוא ישאל? בוא נכין לו תשובות, או שיחה של שלושתנו ל-10 דקות. מתי מתאים?`],
+['"אחרי החגים"',['אחרי החגים','אחרי החג','אחרי הפסח','אחרי סוכות'],`אפשר. רק שים לב שאחרי החגים כולם מחפשים שוב, וזה הזמן שאתה רוצה כבר להיות בגוגל. נעלה לפני ותגיע מוכן?`],
+['"עונה עמוסה"',['עונה עמוסה','תקופה עמוסה','עכשיו עמוס','עונת'],`דווקא עכשיו הכי הרבה לקוחות מחפשים אותך. אתר שעונה בשבילך על שאלות חוסך לך טלפונים. נעלה השבוע?`],
+['"בתחילת החודש הבא"',['חודש הבא','בתחילת החודש','בהמשך השנה'],`סגור. רוצה שנכין הכל עכשיו ורק נעלה ב-1 לחודש? ככה זה מוכן ברגע שתגיד.`],
+['"תזכיר לי בעוד חודש"',['תזכיר לי','בעוד חודש','בעוד כמה חודשים','בעוד כמה'],`בשמחה. ובינתיים אשמור לך את הטיוטה. יש משהו שתרצה שאשנה בה עד אז?`],
+['"אחזור אליך"',['אחזור אליך','אחזור אליכם','אחזור אלייך','אדבר איתך אחר כך'],`(אחרי שבוע, אם נעלם) היי, שמרתי לך את הטיוטה. נשאר רק לבחור: עמוד אחד או אתר מלא?`],
+['"לא בטוח שהעסק ימשיך"',['העסק ימשיך','לא בטוח שאמשיך','אולי אסגור'],`מבין. בגלל זה זה תשלום אחד, בלי מנוי ובלי התחייבות. ודווקא אתר יכול להיות מה שיעזור לו להמשיך. נתחיל מעמוד אחד?`],
+['"אני כבר עובד עם מישהו על אתר"',['עובד עם מישהו','יש לי מישהו','בונה לי אתר','כבר מישהו עושה'],`מעולה. אז יש לך פה השוואה בחינם. אם שלי יוצא טוב יותר, תדע איפה אני. מתי הוא אמור לסיים?`],
+['"יש לי קרוב שעושה לי"',['קרוב שעושה','בן דוד','אחי עושה','אח שלי','חבר שעושה'],`מעולה. אז יש לך פה טיוטה מוכנה להשוואה, בלי להפסיד כלום. מה חשבת עליה?`],
+['"יש לי אינסטגרם"',['אינסטגרם','אינסטה','instagram'],`ובאמת עשית שם עבודה יפה. כשמישהו בעיר מחפש בגוגל "[תחום] ליד הבית", מה הוא מוצא? כרגע את המתחרים שלך. בוא נשנה את זה. מתחילים?`],
+['"מגיעים מהמלצות"',['מהמלצות','מגיעים מהמלצה','מפה לאוזן','מפה לאזן'],`זה הסימן הכי טוב שאתה מעולה. ומה עושה מי שקיבל המלצה? מחפש אותך בגוגל. אם הוא לא מוצא כלום, הוא מתלבט. אתר סוגר לך אותו. נעלה?`],
+['"יש לי מספיק עבודה"',['מספיק עבודה','עמוס בעבודה','מלא עבודה','מספיק לקוחות'],`כל הכבוד! אז אתר לא נועד להביא עוד, אלא לקוחות טובים יותר ומחיר גבוה יותר. מה היית עושה עם 20% יותר לכל עבודה?`],
+['"אף אחד לא נכנס לאתרים"',['אף אחד לא נכנס','אף אחד לא מחפש','לא נכנסים לאתרים'],`לאינסטגרם נכנסים בשביל השראה, לגוגל נכנסים כשרוצים לקנות. אתה רוצה להיות גם שם. נסגור?`],
+['"יש לי עמוד בגוגל מפות"',['גוגל מפות','google maps','גוגל מייפס'],`מצוין, חצי עבודה כבר עשית. אתר שמקושר אליו מחזק אותו ונותן ללקוח סיבה לבחור בך. נחבר ביניהם?`],
+['"העסק קטן מדי"',['עסק קטן','קטן מדי','קטן מידי'],`דווקא לעסק קטן זה הכי חשוב, כי אתר טוב גורם לך להיראות גדול. עמוד אחד, חבילה בסיסית. מתחילים?`],
+['"ניסיתי וזה לא הביא כלום"',['ניסיתי','כבר היה לי אתר','לא הביא כלום','לא עבד לי'],`תודה שסיפרת. בדרך כלל זה כי אף אחד לא חיבר אותו לגוגל. אם אראה לך מה הייתי עושה אחרת, תיתן לזה עוד הזדמנות?`],
+['"אני רק בפייסבוק"',['פייסבוק','בפייס'],`פייסבוק טוב למי שכבר מכיר אותך. אתר מביא את מי שעוד לא שמע עליך. רוצה את שניהם?`],
+['"אני סוגר בקרוב"',['סוגר בקרוב','סוגרת בקרוב','נסגר בקרוב','פורש'],`בהצלחה בהמשך! 🙏 ואם תפתח משהו חדש, אני פה.`,'irr'],
+['"איך זה נראה בטלפון?"',['בטלפון','במובייל','בנייד','סלולרי'],`הנה: [צילום מסך]. רוב הלקוחות שלך ייכנסו משם. נראה טוב?`],
+['"אצטרך לנהל את זה?"',['לנהל','תחזוקה','אצטרך לטפל'],`לא, אני מטפל בהקמה ובחודש הראשון של תיקונים. אחרי זה האתר פשוט עובד. סגרנו?`],
+['"אני רוצה לעדכן בעצמי"',['לעדכן בעצמי','לעדכן לבד','לערוך בעצמי'],`אפשר. אלמד אותך ב-5 דקות, או שתשלח לי ואני מעדכן בתשלום קטן לכל שינוי. מה עדיף לך?`],
+['"יופיע בגוגל?"',['יופיע בגוגל','קידום','seo','ראשון בגוגל','דף ראשון'],`האתר נבנה כך שגוגל יבין אותו. זה לוקח כמה שבועות ואף אחד הגון לא יבטיח לך מקום ראשון, אבל ככל שנעלה מוקדם יותר, נתחיל מוקדם יותר. נעלה השבוע?`],
+['"יש לי כבר דומיין"',['דומיין'],`מעולה, חוסך לנו זמן. אחבר אותו ברגע שנסגור. מתקדמים?`],
+['"צריך מייל עסקי"',['מייל עסקי','כתובת מייל'],`כתובת כמו info@העסק שלך, X ₪ תוספת. להוסיף לחבילה?`],
+['"מה עם נגישות?"',['נגישות','נגיש'],`האתר נבנה עם התאמות נגישות בסיסיות לפי הדרישות. עוד משהו שחשוב לך לפני שמאשרים?`],
+['"אפשר לחבר מעקב פרסום?"',['מעקב','פיקסל','קמפיין','אנליטיקס'],`כן, ככה תדע בדיוק כמה פניות כל קמפיין מביא. אחבר כבר בהעלאה?`],
+['"מתי האתר עולה?"',['מתי האתר עולה','מתי יעלה','מתי עולה','מתי מעלים'],`ברגע שהמקדמה עוברת אני מסיים ושולח לך לאישור. אחרי היתרה הוא עולה לאוויר על הדומיין שלך תוך 24 שעות.`],
+['"משהו לא עובד באתר"',['לא עובד','שבור','באג','תקלה'],`תודה שאמרת, בודק עכשיו ומעדכן אותך תוך שעה.`],
+['"האתר לא מביא פניות"',['לא מביא פניות','אין פניות','לא מגיעות פניות','לא מתקשרים'],`בוא נבדוק ביחד. בדרך כלל זה חיבור לגוגל מפות או קישור בביו שחסר. אבדוק ואשלח לך 3 שיפורים עד מחר, בסדר?`],
+['"מרוצה, תודה"',['מרוצה','תודה רבה','מושלם','תותח','מדהים'],`שמח! שתי בקשות קטנות: ביקורת קצרה בגוגל, ואם אתה מכיר עוד בעל עסק בלי אתר, על כל אחד שסוגר תקבל X ₪. יש מישהו שעולה לך לראש?`],
+['"חבר שלי גם צריך"',['חבר שלי','חברה שלי','מכיר מישהו','מכיר עוד','גם צריך'],`מעולה! תעביר לו את המספר שלי, ועל כל עסק שסוגר דרכך תקבל X ₪. מה התחום שלו? אכין לו טיוטה מראש.`],
+['"רוצה לבטל אחרי המקדמה"',['לבטל','ביטול','החזר כספי','רוצה את הכסף'],`מבין, רק לפני כן, מה גרם לזה? אם זה משהו בעיצוב, אני מתקן עד שזה מדויק. מה הכי מפריע לך? (ואם הוא עומד על זה, פועלים לפי מה שסוכם מראש לגבי המקדמה, בלי ויכוח)`],
+['"מקבל ומסרב לשלם יתרה"',['לא משלם','לא אשלם','לא רוצה לשלם','יתרה'],`היי, האתר מוכן ומחכה רק להעברה של היתרה כדי שאוריד את סימן המים ואחבר את הדומיין. משהו עוד לא מתאים לך בו?`]
+];
+const norm=s=>s.toLowerCase().replace(/["'״׳,.!?־\-]/g,' ').replace(/\s+/g,' ').trim();
+function match(text){
+  const t=norm(text);let best=null,sc=0;
+  SIT.forEach(s=>{let v=0;s[1].forEach(k=>{const kk=norm(k);if(kk&&t.includes(kk))v+=kk.length});if(v>sc){sc=v;best=s}});
+  return best;
+}
+function suggest(b){
+  const text=$('ans').value.trim(),out=$('suggOut');
+  if(!text){out.innerHTML='';return}
+  const s=match(text);
+  const res=s||['לא זוהתה סיטואציה מדויקת',[],`תודה על התשובה! מה הדבר הראשון שהיית רוצה לדעת לפני שמתקדמים, המחיר, הדוגמאות או הזמנים?`];
+  b.objection=res[0].replace(/"/g,'');
+  const box=document.createElement('div');box.className='sugg';
+  const t=document.createElement('div');t.className='t';t.textContent=(s?'🎯 זוהתה סיטואציה: ':'ℹ️ ')+res[0];box.appendChild(t);
+  if(res[3]==='stop'||res[3]==='irr'){
+    const w=document.createElement('div');w.className='stopw';
+    w.textContent=res[3]==='stop'?'כלל ברזל: הודעה אחת מנומסת ולא פונים שוב לעולם.':'מסמנים "לא רלוונטי" ולא ממשיכים.';
+    box.appendChild(w);
+  }
+  const p=document.createElement('p');p.textContent=res[2];box.appendChild(p);
+  const row=document.createElement('div');row.className='row';
+  const cp=document.createElement('button');cp.className='btn pri';cp.textContent='📋 העתק';cp.style.flex='1';
+  cp.onclick=()=>{
+    const done=()=>{cp.textContent='✓ הועתק';setTimeout(()=>cp.textContent='📋 העתק',1500)};
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(res[2]).then(done,fb);else fb();
+    function fb(){const ta=document.createElement('textarea');ta.value=res[2];document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(e){}ta.remove();done()}
+  };
+  row.appendChild(cp);
+  if(res[3]&&['found','sent','yes'].includes(b.stage)){
+    const ir=document.createElement('button');ir.className='btn bad';ir.textContent='🚫 סמן לא רלוונטי';
+    ir.onclick=()=>{b.ans=text;say(b,'them',text);say(b,'me',res[2]);moveTo(b,'irr')};
+    row.appendChild(ir);
+  }
+  box.appendChild(row);
+  out.innerHTML='';out.appendChild(box);
+  const tag=$('cDyn');if(tag)refreshCard();
+}
+
+/* ---------- אתחול ---------- */
+buildStatic();
+SEED.forEach(r=>{const b=mkBiz(r);seedMsgs(b)});
+// פיזור סדר התחלתי
+S.biz.forEach((b,i)=>{b.order=i;const p=SP[b.stage]||{x:1160,y:600};b._fx=C.x;b._fy=C.y});
+S.order=S.biz.length;
+refreshFilter();layout();
+</script>
+</body>
+</html>
