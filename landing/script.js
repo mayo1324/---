@@ -29,7 +29,9 @@
       const el = id === '#top' ? document.body : $(id);
       if (!el) return;
       e.preventDefault();
-      if (lenis) lenis.scrollTo(el, { offset: id === '#top' ? 0 : -20, duration: 1.6 });
+      const m = $('#menu');
+      if (m && !m.hidden) setMenu(false);
+      if (lenis) lenis.scrollTo(el, { offset: id === '#top' ? 0 : -20, duration: 1.6, force: true });
       else el.scrollIntoView({ behavior: 'smooth' });
     });
   });
@@ -90,6 +92,9 @@
       el.addEventListener('mouseleave', () => { qx(0); qy(0); });
     });
   }
+
+  /* crop marks on cards */
+  $$('.card, .feat, .plan, .quote').forEach((c) => { const i = document.createElement('i'); i.className = 'cm'; i.setAttribute('aria-hidden', 'true'); c.append(i); });
 
   /* card spotlight */
   $$('.card').forEach((c) => {

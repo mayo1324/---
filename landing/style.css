@@ -653,3 +653,55 @@ h2 em, .hero__title em, .cta__title em {
 .menu__foot { position: relative; margin-top: auto; display: grid; gap: 16px; justify-items: center; text-align: center; }
 .menu__tel { font: 400 22px var(--mono); letter-spacing: .08em; direction: ltr; color: var(--cream); }
 .menu__foot p { font-size: 13px; letter-spacing: .08em; color: var(--sand); opacity: .7; }
+
+/* photographer details */
+.cm { position: absolute; inset: 14px; pointer-events: none; opacity: .32; transition: inset .6s var(--ease), opacity .5s;
+  background:
+    linear-gradient(var(--gold), var(--gold)) 0 0 / 14px 1px, linear-gradient(var(--gold), var(--gold)) 0 0 / 1px 14px,
+    linear-gradient(var(--gold), var(--gold)) 100% 0 / 14px 1px, linear-gradient(var(--gold), var(--gold)) 100% 0 / 1px 14px,
+    linear-gradient(var(--gold), var(--gold)) 0 100% / 14px 1px, linear-gradient(var(--gold), var(--gold)) 0 100% / 1px 14px,
+    linear-gradient(var(--gold), var(--gold)) 100% 100% / 14px 1px, linear-gradient(var(--gold), var(--gold)) 100% 100% / 1px 14px;
+  background-repeat: no-repeat; z-index: 3; }
+.card:hover .cm, .feat:hover .cm, .plan:hover .cm, .quote:hover .cm { inset: 8px; opacity: .95; }
+.feat, .plan, .quote { position: relative; }
+
+.label b { position: relative; padding: 3px 9px; }
+.label b::before { content: ''; position: absolute; inset: 0; opacity: .8;
+  background:
+    linear-gradient(var(--gold), var(--gold)) 0 0 / 5px 1px, linear-gradient(var(--gold), var(--gold)) 0 0 / 1px 5px,
+    linear-gradient(var(--gold), var(--gold)) 100% 0 / 5px 1px, linear-gradient(var(--gold), var(--gold)) 100% 0 / 1px 5px,
+    linear-gradient(var(--gold), var(--gold)) 0 100% / 5px 1px, linear-gradient(var(--gold), var(--gold)) 0 100% / 1px 5px,
+    linear-gradient(var(--gold), var(--gold)) 100% 100% / 5px 1px, linear-gradient(var(--gold), var(--gold)) 100% 100% / 1px 5px;
+  background-repeat: no-repeat; }
+
+.exif { position: absolute; right: 9%; bottom: 7%; font: 400 12px var(--mono); letter-spacing: .14em; color: var(--sand); opacity: .85; direction: ltr; }
+
+/* film strip process */
+.steps { position: relative; gap: 0; grid-template-columns: repeat(4, 1fr); padding: 44px 14px; background: #130b09; border-radius: 12px; border: 1px solid var(--line); box-shadow: 0 40px 70px -40px rgba(0, 0, 0, .8); }
+.steps::before, .steps::after { content: ''; position: absolute; left: 14px; right: 14px; height: 12px; background: repeating-linear-gradient(90deg, rgba(243, 233, 220, .16) 0 14px, transparent 14px 30px); border-radius: 2px; }
+.steps::before { top: 16px; } .steps::after { bottom: 16px; }
+.step { border-radius: 4px; margin-inline: 6px; background: linear-gradient(170deg, #3a2a25, #2a1b17); border: 1px solid rgba(243, 233, 220, .08); padding: 22px 20px 24px; }
+.step:hover { transform: none; border-color: rgba(231, 201, 163, .5); }
+.step__no { width: auto; height: auto; border-radius: 0; background: none; place-items: start; margin-bottom: 14px; font: 400 13px var(--mono); letter-spacing: .2em; color: var(--gold); }
+.step__no::before { content: 'FRAME '; opacity: .6; }
+@media (max-width: 1000px) { .steps { grid-template-columns: repeat(2, 1fr); row-gap: 14px; } }
+@media (max-width: 560px) {
+  .steps { grid-template-columns: 1fr; padding: 14px 40px; }
+  .steps::before, .steps::after { top: 14px; bottom: 14px; width: 12px; height: auto; right: auto; background: repeating-linear-gradient(180deg, rgba(243, 233, 220, .16) 0 14px, transparent 14px 30px); }
+  .steps::before { left: 14px; } .steps::after { left: auto; right: 14px; }
+}
+
+/* aperture */
+.cta__iris { position: absolute; left: 50%; top: 50%; width: min(120vw, 980px); transform: translate(-50%, -50%); color: var(--gold); opacity: .12; animation: iris 120s linear infinite; pointer-events: none; }
+@keyframes iris { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+/* focus reticle cursor */
+.cursor__ring::before { content: ''; position: absolute; inset: -3px; opacity: 0; transition: opacity .3s;
+  background:
+    linear-gradient(var(--gold), var(--gold)) 0 0 / 9px 1.5px, linear-gradient(var(--gold), var(--gold)) 0 0 / 1.5px 9px,
+    linear-gradient(var(--gold), var(--gold)) 100% 0 / 9px 1.5px, linear-gradient(var(--gold), var(--gold)) 100% 0 / 1.5px 9px,
+    linear-gradient(var(--gold), var(--gold)) 0 100% / 9px 1.5px, linear-gradient(var(--gold), var(--gold)) 0 100% / 1.5px 9px,
+    linear-gradient(var(--gold), var(--gold)) 100% 100% / 9px 1.5px, linear-gradient(var(--gold), var(--gold)) 100% 100% / 1.5px 9px;
+  background-repeat: no-repeat; }
+.cursor.is-hover .cursor__ring { border-radius: 6px; border-color: transparent; background: transparent; }
+.cursor.is-hover .cursor__ring::before { opacity: 1; }
