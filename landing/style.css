@@ -552,3 +552,12 @@ h2 em, .hero__title em, .cta__title em {
 }
 
 .card__arrow { top: 28px; bottom: auto; }
+
+.statement__grid { grid-template-columns: 1fr 1fr; }
+.statement__img--site { aspect-ratio: auto; border-radius: 16px; background: #120b09; border: 1px solid var(--line); }
+.statement__img--site::after { display: none; }
+.site-bar { display: flex; gap: 6px; padding: 11px 14px; background: #20150f; border-bottom: 1px solid var(--line); }
+.site-bar i { width: 9px; height: 9px; border-radius: 50%; background: rgba(243, 233, 220, .22); }
+.statement__scr { position: relative; aspect-ratio: 1.6; overflow: hidden; }
+.statement__img--site img { top: -4%; height: 108%; }
+@media (max-width: 1000px) { .statement__grid { grid-template-columns: 1fr; } .statement__img--site { aspect-ratio: auto; } }
