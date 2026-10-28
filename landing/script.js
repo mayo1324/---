@@ -418,6 +418,14 @@
     onEnter: (els) => gsap.to(els, { y: 0, opacity: 1, duration: 1.2, stagger: 0.12, ease: 'expo.out', clearProps: 'opacity,transform' }),
   });
 
+  /* photographers */
+  gsap.set('.feat', { y: 60, opacity: 0 });
+  ScrollTrigger.batch('.feat', {
+    start: 'top 90%', once: true,
+    onEnter: (els) => gsap.to(els, { y: 0, opacity: 1, duration: 1.2, stagger: 0.1, ease: 'expo.out', clearProps: 'opacity,transform' }),
+  });
+  gsap.from('.genres span', { y: 20, opacity: 0, stagger: 0.06, duration: 0.9, ease: 'expo.out', scrollTrigger: { trigger: '.genres', start: 'top 92%', once: true } });
+
   /* pricing */
   gsap.set('.plan', { y: 100, opacity: 0 });
   ScrollTrigger.batch('.plan', {
