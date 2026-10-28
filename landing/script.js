@@ -303,8 +303,8 @@
   });
 
   /* photo parallax */
-  gsap.fromTo('.statement__img img', { yPercent: -3.5 }, { yPercent: 3.5, ease: 'none', scrollTrigger: { trigger: '.statement__img', start: 'top bottom', end: 'bottom top', scrub: true } });
-  gsap.from('.statement__img', { clipPath: 'inset(10% 6% 10% 6% round 16px)', opacity: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: '.statement__img', start: 'top 85%', once: true } });
+  gsap.fromTo('.statement__mock img', { yPercent: 4, rotate: -1.5 }, { yPercent: -4, rotate: 0, ease: 'none', scrollTrigger: { trigger: '.statement__mock', start: 'top bottom', end: 'bottom top', scrub: true } });
+  gsap.from('.statement__mock', { opacity: 0, y: 70, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: '.statement__mock', start: 'top 85%', once: true } });
 
   /* headings */
   $$('[data-split]').forEach((h) => {

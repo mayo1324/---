@@ -561,3 +561,6 @@ h2 em, .hero__title em, .cta__title em {
 .statement__scr { position: relative; aspect-ratio: 1.6; overflow: hidden; }
 .statement__img--site img { top: -4%; height: 108%; }
 @media (max-width: 1000px) { .statement__grid { grid-template-columns: 1fr; } .statement__img--site { aspect-ratio: auto; } }
+
+.statement__mock { margin: 0; }
+.statement__mock img { display: block; width: 100%; height: auto; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .35)); }
