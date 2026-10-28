@@ -108,6 +108,7 @@
   gsap.set('.stage', { scale: 0.86, opacity: 0, rotateY: -18, rotateX: 8 });
   gsap.set('.hero-photo', { y: 90, opacity: 0, clipPath: 'inset(18% 12% 0% 12% round 400px 400px 28px 28px)' });
   gsap.set('.rings', { opacity: 0, scale: 0.8 });
+  gsap.set('.hero-tag', { opacity: 0, y: 30 });
 
   const heroIn = () => {
     const t = gsap.timeline({ defaults: { ease: 'expo.out' } });
@@ -119,6 +120,7 @@
       .to('.hero__scroll', { opacity: 1, y: 0, duration: 1 }, 1.2)
       .to('.stage', { scale: 1, opacity: 1, rotateY: 0, rotateX: 0, duration: 1.8 }, 0.2)
       .to('.rings', { opacity: 1, scale: 1, duration: 2 }, 0.3)
+      .to('.hero-tag', { opacity: 1, y: 0, duration: 1.2 }, 1.1)
       .to('.hero-photo', { y: 0, opacity: 1, clipPath: 'inset(0% 0% 0% 0% round 400px 400px 28px 28px)', duration: 1.8 }, 0.4)
     return t;
   };
@@ -244,7 +246,9 @@
     $('#skip').addEventListener('click', () => tl.timeScale(9));
   };
 
-  if (reduce) {
+  let seen = false;
+  try { seen = !!sessionStorage.getItem('yb_intro') && !/[?&]intro/.test(location.search); sessionStorage.setItem('yb_intro', '1'); } catch (e) {}
+  if (reduce || seen) {
     $('#intro').style.display = 'none';
     heroIn().progress(1);
     finish();
@@ -445,6 +449,54 @@
     });
   }
   gsap.from('.cta__row > *', { y: 50, opacity: 0, stagger: 0.12, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.cta__row', start: 'top 92%', once: true } });
+
+
+  /* mobile menu */
+  const burger = $('#burger'), menu = $('#menu');
+  const setMenu = (open) => {
+    burger.setAttribute('aria-expanded', open);
+    menu.hidden = !open;
+    if (open) { if (lenis) lenis.stop(); gsap.from('#menu > *', { y: 30, opacity: 0, stagger: 0.06, duration: 0.8, ease: 'expo.out' }); }
+    else if (lenis && !body.classList.contains('is-loading')) lenis.start();
+  };
+  burger.addEventListener('click', () => setMenu(burger.getAttribute('aria-expanded') !== 'true'));
+  $$('#menu a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+
+  /* faq: smooth open and close */
+  $$('.qa').forEach((d) => {
+    const sum = $('summary', d), ans = $('.qa__a', d);
+    sum.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (d.open) {
+        gsap.to(ans, { height: 0, duration: 0.5, ease: 'power3.inOut', onComplete: () => { d.open = false; gsap.set(ans, { clearProps: 'height' }); ScrollTrigger.refresh(); } });
+      } else {
+        d.open = true;
+        gsap.fromTo(ans, { height: 0 }, { height: 'auto', duration: 0.6, ease: 'power3.out', onComplete: () => { gsap.set(ans, { clearProps: 'height' }); ScrollTrigger.refresh(); } });
+      }
+    });
+  });
+  gsap.from('.qa', { y: 40, opacity: 0, stagger: 0.1, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.qas', start: 'top 90%', once: true } });
+
+  /* legal dialog */
+  const legal = $('#legal');
+  $$('[data-legal]').forEach((b) => b.addEventListener('click', () => {
+    $$('[data-pane]', legal).forEach((p) => { p.hidden = p.dataset.pane !== b.dataset.legal; });
+    legal.showModal();
+  }));
+  $('#legalX').addEventListener('click', () => legal.close());
+  legal.addEventListener('click', (e) => { if (e.target === legal) legal.close(); });
+
+  /* contact tracking: pushes to dataLayer, and to gtag when it is installed */
+  const track = (name) => {
+    (window.dataLayer = window.dataLayer || []).push({ event: name });
+    if (typeof window.gtag === 'function') window.gtag('event', name);
+  };
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a');
+    if (!a) return;
+    if (a.href.includes('wa.me')) track('whatsapp_click');
+    else if (a.href.startsWith('tel:')) track('phone_click');
+  });
 
   addEventListener('load', () => ScrollTrigger.refresh());
 })();

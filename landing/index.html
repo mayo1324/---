@@ -6,6 +6,12 @@
 <title>yehuda Studio | דפי נחיתה ואתרי תדמית לצלמים</title>
 <meta name="description" content="דפי נחיתה ואתרי תדמית לצלמים. גלריה חדה, טעינה מהירה והזמנות ישר לוואטסאפ.">
 <meta name="theme-color" content="#2E1F1B">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="yehuda Studio | דפי נחיתה ואתרי תדמית לצלמים">
+<meta property="og:description" content="גלריה חדה, טעינה מהירה והזמנות ישר לוואטסאפ.">
+<meta property="og:image" content="og.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%232E1F1B'/%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='%23E7C9A3' stroke-width='2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -103,8 +109,18 @@
     <a href="#process" data-cursor>תהליך</a>
     <a href="#pricing" data-cursor>מחירים</a>
   </nav>
-  <a class="btn btn--sm magnetic" href="#contact"><span>בואו נדבר</span></a>
+  <a class="btn btn--sm magnetic nav__cta" href="#contact"><span>בואו נדבר</span></a>
+  <button class="burger" id="burger" type="button" aria-label="תפריט" aria-expanded="false" aria-controls="menu"><i></i><i></i></button>
 </header>
+<nav class="menu" id="menu" aria-label="תפריט ראשי" hidden>
+  <a href="#services">שירותים</a>
+  <a href="#photographers">לצלמים</a>
+  <a href="#work">עבודות</a>
+  <a href="#process">תהליך</a>
+  <a href="#faq">שאלות</a>
+  <a href="#pricing">מחירים</a>
+  <a class="btn" href="#contact"><span>בואו נדבר</span></a>
+</nav>
 
 <main id="top">
 
@@ -141,7 +157,10 @@
       </svg>
 
       <div class="layer" data-depth="1">
-        <figure class="hero-photo"><img src="images/hero.jpg" alt="" width="900" height="1125"></figure>
+        <figure class="hero-photo"><img class="hero-photo__bg" src="images/hero.jpg" alt="" width="900" height="1125"><img class="hero-photo__me" src="images/me.webp" alt="יהודה צברי" width="798" height="1186"></figure>
+      </div>
+      <div class="layer" data-depth="2">
+        <div class="hero-tag"><b>יהודה צברי</b><span>בונה אתרים לצלמים</span></div>
       </div>
 </div>
     </div>
@@ -252,10 +271,19 @@
   <div class="quotes"><figure class="quote" data-cursor><svg class="quote__mark" viewBox="0 0 48 36" fill="none"><path d="M0 36V20C0 8 7 1 19 0v7c-6 1-9 4-9 9h9v20H0Zm28 0V20C28 8 35 1 47 0v7c-6 1-9 4-9 9h9v20H28Z" fill="currentColor"/></svg><blockquote>יהודה תותח אמיתי. תקתק לי אתר מושלם תוך יומיים ומביא לי פניות כל יום. ממליץ בחום!</blockquote><figcaption><span class="av">ר</span><span><b>רועי כהן</b><small>צלם חתונות</small></span></figcaption></figure><figure class="quote" data-cursor><svg class="quote__mark" viewBox="0 0 48 36" fill="none"><path d="M0 36V20C0 8 7 1 19 0v7c-6 1-9 4-9 9h9v20H0Zm28 0V20C28 8 35 1 47 0v7c-6 1-9 4-9 9h9v20H28Z" fill="currentColor"/></svg><blockquote>יהודה הבין בדיוק מה אני צריך כצלם. בנה לי פורטפוליו מהמם שגורם ללקוחות לסגור איתי ישר.</blockquote><figcaption><span class="av">ד</span><span><b>דניאל לוי</b><small>צלם סטילס</small></span></figcaption></figure><figure class="quote" data-cursor><svg class="quote__mark" viewBox="0 0 48 36" fill="none"><path d="M0 36V20C0 8 7 1 19 0v7c-6 1-9 4-9 9h9v20H0Zm28 0V20C28 8 35 1 47 0v7c-6 1-9 4-9 9h9v20H28Z" fill="currentColor"/></svg><blockquote>עבודה נקייה, מהירה ובלי כאבי ראש. יהודה פשוט פגע בול במה שחיפשתי.</blockquote><figcaption><span class="av">א</span><span><b>אביב פרץ</b><small>צלם אירועי בוטיק</small></span></figcaption></figure></div>
 </section>
 
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <header class="sec-head">
+    <p class="label"><b>07</b>שאלות</p>
+    <h2 data-split>שאלות <em>נפוצות.</em></h2>
+  </header>
+  <div class="qas"><details class="qa"><summary><span>כמה זמן לוקח לבנות דף נחיתה?</span><i aria-hidden="true"></i></summary><div class="qa__a"><p>דף נחיתה מוכן בדרך כלל תוך 7 ימי עבודה, מהרגע שקיבלתי את התמונות והטקסטים. אתר תדמית לוקח קצת יותר, לפי מספר העמודים.</p></div></details><details class="qa"><summary><span>מה אני צריך להכין?</span><i aria-hidden="true"></i></summary><div class="qa__a"><p>תמונות נבחרות, כמה משפטים עליך ועל סגנון הצילום, לוגו אם יש, והמלצות של לקוחות. אם משהו חסר, נשלים אותו יחד.</p></div></details><details class="qa"><summary><span>אפשר לבקש תיקונים?</span><i aria-hidden="true"></i></summary><div class="qa__a"><p>כן. בשלב העיצוב אפשר לשנות ולהתאים עד שהכיוון מרגיש נכון, ורק אז אני עובר לקוד.</p></div></details><details class="qa"><summary><span>יש לי כבר דומיין, אפשר לחבר אותו?</span><i aria-hidden="true"></i></summary><div class="qa__a"><p>בטח. אני מחבר את הדומיין שיש לך, או עוזר לך לרכוש חדש. בשלב ההשקה הכול מחובר ובדוק.</p></div></details></div>
+</section>
+
 <!-- PRICING -->
 <section class="pricing" id="pricing">
   <header class="sec-head sec-head--center">
-    <p class="label"><b>07</b>מחירים</p>
+    <p class="label"><b>08</b>מחירים</p>
     <h2 data-split>מחיר ברור <em>מההתחלה.</em></h2>
   </header>
   <div class="plans">
@@ -299,7 +327,7 @@
 <section class="cta" id="contact">
   <img class="cta__bg" src="images/cta-wood.jpg" alt="" width="1200" height="1500" loading="lazy">
   <div class="cta__glow" aria-hidden="true"></div>
-  <p class="label label--center"><b>08</b>יצירת קשר</p>
+  <p class="label label--center"><b>09</b>יצירת קשר</p>
   <h2 class="cta__title" data-split>הצילומים שלך<br><em>ראויים לאתר.</em></h2>
   <div class="cta__row">
     <a class="btn btn--xl magnetic" href="https://wa.me/972584363245?text=%D7%94%D7%99%D7%99%20%D7%99%D7%94%D7%95%D7%93%D7%94%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%94%D7%90%D7%AA%D7%A8%20%D7%95%D7%A8%D7%A6%D7%99%D7%AA%D7%99%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%9C%20%D7%93%D7%A3%20%D7%A0%D7%97%D7%99%D7%AA%D7%94" target="_blank" rel="noopener"><span>שלחו הודעה בוואטסאפ</span></a>
@@ -311,9 +339,23 @@
 
 <footer class="foot">
   <span class="logo__text">yehuda<em>Studio</em></span>
+  <span class="foot__links"><button type="button" data-legal="a11y">הצהרת נגישות</button><button type="button" data-legal="privacy">מדיניות פרטיות</button></span>
   <span>© <span id="year">2026</span> כל הזכויות שמורות</span>
   <a href="#top" data-cursor>חזרה למעלה</a>
 </footer>
+<dialog class="legal" id="legal" aria-labelledby="legalTitle">
+  <button class="legal__x" type="button" id="legalX" aria-label="סגירה">&times;</button>
+  <div data-pane="a11y">
+    <h2 id="legalTitle">הצהרת נגישות</h2>
+    <p>אני שואף שהאתר יהיה נגיש לכולם, וממשיך לשפר אותו. האתר בנוי בכותרות ברורות, ניגודיות קריאה, ניווט במקלדת והתאמה לטלפון. מי שמעדיף פחות תנועה יקבל אתר עם אנימציות מופחתות לפי הגדרות המכשיר.</p>
+    <p>נתקלת בקושי? אשמח לשמוע ולתקן. אפשר לפנות אליי בוואטסאפ למספר 058-436-3245.</p>
+  </div>
+  <div data-pane="privacy" hidden>
+    <h2>מדיניות פרטיות</h2>
+    <p>האתר לא אוסף פרטים אישיים בעצמו. כשפונים אליי בוואטסאפ או בטלפון, הפרטים שנשלחים משמשים רק כדי לחזור אליך ולתאם עבודה, ולא מועברים לגורם אחר.</p>
+    <p>האתר עשוי למדוד כמה אנשים לוחצים על כפתורי יצירת הקשר, באופן אנונימי ובלי לזהות אותך. לבקשת מחיקה של פרטים אפשר לפנות בוואטסאפ למספר 058-436-3245.</p>
+  </div>
+</dialog>
 
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
