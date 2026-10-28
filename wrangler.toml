@@ -1,3 +1,5 @@
 name = "yehuda-studio"
-pages_build_output_dir = "landing"
 compatibility_date = "2025-01-01"
+
+[assets]
+directory = "./landing"
