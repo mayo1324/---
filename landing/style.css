@@ -240,7 +240,7 @@ h2 em, .hero__title em, .cta__title em {
 .logo { display: inline-flex; align-items: center; gap: 10px; }
 .logo__mark { width: 34px; height: 34px; color: var(--gold); display: grid; place-items: center; }
 .logo__text { font-family: var(--serif); font-weight: 600; font-size: 20px; letter-spacing: .02em; direction: ltr; }
-.logo__text em { font-family: var(--ital); font-style: normal; font-weight: 400; margin-inline-start: 4px; color: var(--gold); }
+.logo__text em { margin-inline-start: 6px; font-family: var(--ital); font-style: normal; font-weight: 400; margin-inline-start: 4px; color: var(--gold); }
 .nav__links { display: flex; gap: 34px; font-size: 16px; }
 .nav__links a { position: relative; padding-block: 4px; opacity: .8; transition: opacity .3s; }
 .nav__links a::after { content: ''; position: absolute; right: 0; bottom: 0; height: 1px; width: 100%; background: var(--gold); transform: scaleX(0); transform-origin: 100% 50%; transition: transform .5s var(--ease); }
