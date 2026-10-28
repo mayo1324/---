@@ -106,8 +106,7 @@
   gsap.set(['.eyebrow', '.hero__sub', '.hero__cta > *', '.hero__scroll'], { opacity: 0, y: 26 });
   gsap.set('.nav', { yPercent: -160, opacity: 0 });
   gsap.set('.stage', { scale: 0.86, opacity: 0, rotateY: -18, rotateX: 8 });
-  gsap.set('.phone', { y: 120, opacity: 0 });
-  gsap.set('.browser', { y: 80, opacity: 0 });
+  gsap.set('.hero-photo', { y: 90, opacity: 0, clipPath: 'inset(18% 12% 0% 12% round 400px 400px 28px 28px)' });
   gsap.set('.rings', { opacity: 0, scale: 0.8 });
 
   const heroIn = () => {
@@ -120,8 +119,7 @@
       .to('.hero__scroll', { opacity: 1, y: 0, duration: 1 }, 1.2)
       .to('.stage', { scale: 1, opacity: 1, rotateY: 0, rotateX: 0, duration: 1.8 }, 0.2)
       .to('.rings', { opacity: 1, scale: 1, duration: 2 }, 0.3)
-      .to('.browser', { y: 0, opacity: 1, duration: 1.5 }, 0.5)
-      .to('.phone', { y: 0, opacity: 1, duration: 1.5 }, 0.75);
+      .to('.hero-photo', { y: 0, opacity: 1, clipPath: 'inset(0% 0% 0% 0% round 400px 400px 28px 28px)', duration: 1.8 }, 0.4)
     return t;
   };
 
@@ -303,6 +301,10 @@
     opacity: 1, stagger: 0.1, ease: 'none',
     scrollTrigger: { trigger: st, start: 'top 80%', end: 'bottom 45%', scrub: true },
   });
+
+  /* photo parallax */
+  gsap.fromTo('.statement__img img', { yPercent: -6 }, { yPercent: 6, ease: 'none', scrollTrigger: { trigger: '.statement__img', start: 'top bottom', end: 'bottom top', scrub: true } });
+  gsap.from('.statement__img', { clipPath: 'inset(12% 8% 12% 8% round 24px)', opacity: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: '.statement__img', start: 'top 85%', once: true } });
 
   /* headings */
   $$('[data-split]').forEach((h) => {
