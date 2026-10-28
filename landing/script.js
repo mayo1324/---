@@ -9,10 +9,14 @@
 
   if (!window.gsap || !window.ScrollTrigger) {
     body.classList.remove('is-loading');
-    $('.loader').remove();
+    const i = $('#intro');
+    if (i) i.remove();
     return;
   }
   gsap.registerPlugin(ScrollTrigger);
+
+  const shell = [$('#nav'), $('#menu'), $('main'), $('.foot')].filter(Boolean);
+  const setInert = (v) => shell.forEach((e) => { e.inert = v; });
 
   /* smooth scroll */
   let lenis = null;
@@ -133,11 +137,13 @@
   /* intro: walk into the screen */
   const finish = () => {
     $('#intro').style.display = 'none';
+    setInert(false);
     body.classList.remove('is-loading');
     if (lenis) lenis.start();
     ScrollTrigger.refresh();
   };
   const runIntro = () => {
+    setInert(true);
     const stageEl = $('#introStage');
     const W = innerWidth, H = innerHeight;
     const portrait = W < H * 0.85;
@@ -249,6 +255,7 @@
       .to('#intro', { opacity: 0, duration: 0.9, ease: 'power2.out' }, 7.5);
 
     $('#skip').addEventListener('click', () => tl.timeScale(9));
+    setTimeout(() => { if ($('#intro').style.display !== 'none') { tl.kill(); finish(); } }, 16000);
   };
 
   let seen = false;
@@ -305,7 +312,7 @@
   /* statement: words light up on scroll */
   const st = $('[data-scrub]');
   const stWords = splitWords(st);
-  gsap.set(stWords, { opacity: 0.14 });
+  gsap.set(stWords, { opacity: 0.26 });
   gsap.to(stWords, {
     opacity: 1, stagger: 0.1, ease: 'none',
     scrollTrigger: { trigger: st, start: 'top 80%', end: 'bottom 45%', scrub: true },
@@ -383,7 +390,10 @@
     ring.style.transform = `translateZ(${-R}px)`;
     setNow(bi);
   };
+  let rigOn = true;
+  new IntersectionObserver((en) => { rigOn = en[0].isIntersecting; }, { rootMargin: '200px' }).observe(rig);
   gsap.ticker.add((t, dt) => {
+    if (!rigOn) return;
     const d = Math.min(dt, 64) / 1000;
     const target = reduce || hover || dragging ? 0 : speed;
     if (!dragging) {
@@ -467,17 +477,23 @@
   };
   burger.addEventListener('click', () => setMenu(burger.getAttribute('aria-expanded') !== 'true'));
   $$('#menu a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { setMenu(false); burger.focus(); } });
+  addEventListener('resize', () => { if (innerWidth > 1000 && !menu.hidden) setMenu(false); });
 
   /* faq: smooth open and close */
   $$('.qa').forEach((d) => {
     const sum = $('summary', d), ans = $('.qa__a', d);
+    let want = d.open;
     sum.addEventListener('click', (e) => {
       e.preventDefault();
-      if (d.open) {
-        gsap.to(ans, { height: 0, duration: 0.5, ease: 'power3.inOut', onComplete: () => { d.open = false; gsap.set(ans, { clearProps: 'height' }); ScrollTrigger.refresh(); } });
-      } else {
+      want = !want;
+      gsap.killTweensOf(ans);
+      if (want) {
+        const cur = d.open ? ans.offsetHeight : 0;
         d.open = true;
-        gsap.fromTo(ans, { height: 0 }, { height: 'auto', duration: 0.6, ease: 'power3.out', onComplete: () => { gsap.set(ans, { clearProps: 'height' }); ScrollTrigger.refresh(); } });
+        gsap.fromTo(ans, { height: cur }, { height: ans.scrollHeight, duration: 0.55, ease: 'power3.out', onComplete: () => { gsap.set(ans, { clearProps: 'height' }); ScrollTrigger.refresh(); } });
+      } else {
+        gsap.to(ans, { height: 0, duration: 0.45, ease: 'power3.inOut', onComplete: () => { d.open = false; gsap.set(ans, { clearProps: 'height' }); ScrollTrigger.refresh(); } });
       }
     });
   });
