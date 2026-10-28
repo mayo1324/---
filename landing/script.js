@@ -106,7 +106,6 @@
   gsap.set(['.eyebrow', '.hero__sub', '.hero__cta > *', '.hero__scroll'], { opacity: 0, y: 26 });
   gsap.set('.nav', { yPercent: -160, opacity: 0 });
   gsap.set('.stage', { scale: 0.86, opacity: 0, rotateY: -18, rotateX: 8 });
-  gsap.set('.chip', { scale: 0, opacity: 0 });
   gsap.set('.phone', { y: 120, opacity: 0 });
   gsap.set('.browser', { y: 80, opacity: 0 });
   gsap.set('.rings', { opacity: 0, scale: 0.8 });
@@ -122,8 +121,7 @@
       .to('.stage', { scale: 1, opacity: 1, rotateY: 0, rotateX: 0, duration: 1.8 }, 0.2)
       .to('.rings', { opacity: 1, scale: 1, duration: 2 }, 0.3)
       .to('.browser', { y: 0, opacity: 1, duration: 1.5 }, 0.5)
-      .to('.phone', { y: 0, opacity: 1, duration: 1.5 }, 0.75)
-      .to('.chip', { scale: 1, opacity: 1, duration: 1, stagger: 0.18, ease: 'back.out(2)' }, 1.2);
+      .to('.phone', { y: 0, opacity: 1, duration: 1.5 }, 0.75);
     return t;
   };
 
