@@ -350,7 +350,6 @@
   addEventListener('resize', layout);
 
   let rot = 0, vel = 0, speed = 5, hover = false, dragging = false, last = 0, lastX = 0, shown = -1;
-  const chipBtns = $$('.chip-btn');
   const setNow = (i) => {
     if (i === shown) return;
     shown = i;
@@ -359,7 +358,6 @@
       $('#nowName').textContent = d.n; $('#nowKind').textContent = d.k;
       gsap.to('#now', { opacity: 1, duration: 0.35 });
     } });
-    chipBtns.forEach((c) => c.classList.toggle('is-on', c.dataset.p === d.p));
   };
   const place = () => {
     let best = -2, bi = 0;
@@ -400,12 +398,6 @@
   const endDrag = () => { if (!dragging) return; dragging = false; rig.classList.remove('is-drag'); vel = Math.max(-90, Math.min(90, vel)); };
   rig.addEventListener('pointerup', endDrag);
   rig.addEventListener('pointercancel', endDrag);
-  chipBtns.forEach((b) => b.addEventListener('click', () => {
-    const idx = +b.dataset.goto;
-    let t = -idx * step;
-    t += Math.round((rot - t) / 360) * 360;
-    gsap.to({ v: rot }, { v: t, duration: 1.4, ease: 'expo.inOut', onUpdate() { rot = this.targets()[0].v; vel = 0; } });
-  }));
   gsap.from('.rig', { opacity: 0, y: 80, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: '.rig', start: 'top 85%', once: true } });
 
   /* numbers */
@@ -417,24 +409,13 @@
       onEnter: () => gsap.to(o, { v: end, duration: 2.2, ease: 'power3.out', onUpdate: () => { el.textContent = Math.round(o.v); } }),
     });
   });
-  gsap.from('.num', { y: 60, opacity: 0, stagger: 0.15, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.numbers', start: 'top 80%', once: true } });
+  gsap.from('.num', { y: 40, opacity: 0, stagger: 0.15, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.numbers', start: 'top 80%', once: true } });
 
-  /* process: stacked cards shrink as the next one covers them */
-  mm.add('(min-width: 721px)', () => {
-    const steps = $$('.step');
-    steps.forEach((s, i) => {
-      if (i === steps.length - 1) return;
-      gsap.to(s, {
-        scale: 0.93 - (steps.length - i) * 0.004, filter: 'brightness(0.55)', ease: 'none',
-        scrollTrigger: { trigger: steps[i + 1], start: 'top 85%', end: 'top 25%', scrub: true },
-      });
-    });
-    steps.forEach((s) => {
-      gsap.from(s.querySelector('.step__no'), {
-        xPercent: 30, opacity: 0, duration: 1.3, ease: 'expo.out',
-        scrollTrigger: { trigger: s, start: 'top 80%', once: true },
-      });
-    });
+  /* process */
+  gsap.set('.step', { y: 60, opacity: 0 });
+  ScrollTrigger.batch('.step', {
+    start: 'top 90%', once: true,
+    onEnter: (els) => gsap.to(els, { y: 0, opacity: 1, duration: 1.2, stagger: 0.12, ease: 'expo.out', clearProps: 'opacity,transform' }),
   });
 
   /* pricing */
