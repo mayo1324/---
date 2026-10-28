@@ -110,7 +110,6 @@
   gsap.set('.phone', { y: 120, opacity: 0 });
   gsap.set('.browser', { y: 80, opacity: 0 });
   gsap.set('.rings', { opacity: 0, scale: 0.8 });
-  gsap.set('.loader__words i', { yPercent: 110 });
 
   const heroIn = () => {
     const t = gsap.timeline({ defaults: { ease: 'expo.out' } });
@@ -128,30 +127,134 @@
     return t;
   };
 
-  /* loader */
-  const count = { v: 0 };
-  const countEl = $('.loader__count');
-  const intro = gsap.timeline({
-    onComplete: () => {
-      $('.loader').style.display = 'none';
-      body.classList.remove('is-loading');
-      if (lenis) lenis.start();
-      ScrollTrigger.refresh();
-    },
-  });
-  intro
-    .to('.loader__words i', { yPercent: 0, duration: 1, stagger: 0.3, ease: 'expo.out' }, 0.1)
-    .to(count, {
-      v: 100, duration: 2.3, ease: 'power2.inOut',
-      onUpdate: () => { countEl.textContent = String(Math.round(count.v)).padStart(3, '0'); },
-    }, 0)
-    .to('.loader__line i', { scaleX: 1, duration: 2.3, ease: 'power2.inOut' }, 0)
-    .to('.loader__words i', { yPercent: -110, duration: 0.7, stagger: 0.08, ease: 'expo.in' }, 2.45)
-    .to('.loader__meta', { opacity: 0, duration: 0.4 }, 2.5)
-    .to('.loader__panel--top', { yPercent: -100, duration: 1.2, ease: 'expo.inOut' }, 3.0)
-    .to('.loader__panel--bottom', { yPercent: 100, duration: 1.2, ease: 'expo.inOut' }, 3.0)
-    .add(heroIn(), 3.5);
-  if (reduce) intro.progress(1);
+  /* intro: walk into the screen */
+  const finish = () => {
+    $('#intro').style.display = 'none';
+    body.classList.remove('is-loading');
+    if (lenis) lenis.start();
+    ScrollTrigger.refresh();
+  };
+  const runIntro = () => {
+    const stageEl = $('#introStage');
+    const W = innerWidth, H = innerHeight;
+    const portrait = W < H * 0.85;
+    const base = portrait ? W / 900 : Math.max(W / 1600, H / 900);
+
+    /* keys + dust */
+    const rows = [[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1.7], [1.6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1.4], [1.9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2.2], [2.4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2.8], [1.3, 1.3, 1.3, 6.2, 1.3, 1.3, 1.3]];
+    const keysEl = $('#keys');
+    keysEl.style.gridTemplateRows = 'repeat(5, 1fr)';
+    rows.forEach((r) => {
+      const row = document.createElement('div');
+      r.forEach((w, i) => {
+        const k = document.createElement('i');
+        k.style.flex = w;
+        if (w > 1.2 && w !== 6.2 || i === 0 && w > 1) k.className = 'd';
+        row.append(k);
+      });
+      keysEl.append(row);
+    });
+    const keyEls = $$('#keys i');
+    const dust = $('#dust');
+    for (let i = 0; i < 34; i++) {
+      const d = document.createElement('span');
+      d.style.left = Math.random() * 100 + '%';
+      d.style.top = Math.random() * 100 + '%';
+      d.style.transform = `scale(${0.6 + Math.random() * 1.4})`;
+      dust.append(d);
+    }
+
+    /* measure everything at scale 1 */
+    gsap.set(stageEl, { x: 0, y: 0, scale: 1, opacity: 1 });
+    const loc = (el) => {
+      const sr = stageEl.getBoundingClientRect();
+      const r = el.getBoundingClientRect();
+      return { x: r.left - sr.left, y: r.top - sr.top, w: r.width, h: r.height, cx: r.left - sr.left + r.width / 2, cy: r.top - sr.top + r.height / 2 };
+    };
+    const edBox = loc($('#ed'));
+    const cvBox = loc($('#canvas'));
+    const playBox = loc($('#play'));
+    const tracksBox = loc($('#tracks'));
+    const view = (fx, fy, S) => ({ x: W / 2 - fx * S, y: H / 2 - fy * S, scale: S });
+    const startView = view(800, portrait ? 400 : 440, base * 0.96);
+    const dollyView = view(800, 450, base * (portrait ? 1.06 : 1.1));
+    const zoomS = Math.max(W / cvBox.w, H / cvBox.h) * 1.01;
+    const zoomView = view(cvBox.cx, cvBox.cy, zoomS);
+    gsap.set(stageEl, { ...startView, opacity: 0, transformOrigin: '0 0', force3D: false });
+
+    /* initial states */
+    const ui = ['.ed__top', '.ed__layers', '.ed__insp', '.ed__time'];
+    gsap.set(ui, { opacity: 0 });
+    gsap.set('.ed__stagewrap', { opacity: 0 });
+    gsap.set('.trk i', { scaleX: 0 });
+    gsap.set('.ed__layers u', { opacity: 0, x: -8 });
+    gsap.set('.cv-wire i', { opacity: 0 });
+    gsap.set('#cur', { x: edBox.w * 0.62, y: edBox.h * 0.62, opacity: 0 });
+    gsap.set('#head', { x: 0 });
+    gsap.set('.dust span', { opacity: 0 });
+
+    const prog = { v: 0 };
+    const tc = $('#tc');
+    const render = $('#cvRender');
+    const scan = $('#cvScan');
+    const headMax = tracksBox.w - 20;
+    const fmt = (n) => String(n).padStart(2, '0');
+    const onProg = () => {
+      const p = prog.v;
+      gsap.set('#head', { x: p * headMax });
+      const f = Math.round(p * 24 * 8);
+      tc.textContent = `00:${fmt(Math.floor(f / 24))}:${fmt(f % 24)}`;
+      render.style.clipPath = `inset(0 ${(1 - p) * 100}% 0 0)`;
+      gsap.set(scan, { x: p * cvBox.w, opacity: p > 0.01 && p < 0.99 ? 1 : 0 });
+      $('#count').textContent = String(Math.round(p * 100)).padStart(3, '0');
+      gsap.set('#hudLine', { scaleX: p });
+      if (Math.random() < 0.5) {
+        const k = keyEls[(Math.random() * keyEls.length) | 0];
+        k.classList.add('hit');
+        setTimeout(() => k.classList.remove('hit'), 110);
+      }
+    };
+
+    const tl = gsap.timeline({ onComplete: finish });
+    tl.to(stageEl, { opacity: 1, duration: 1.2, ease: 'power1.out' }, 0)
+      .to(stageEl, { ...dollyView, duration: 4.4, ease: 'power1.inOut' }, 0)
+      .fromTo(['#barglow', '#lightcone', '#wallglow'], { opacity: 0 }, { keyframes: { opacity: [0, 0.8, 0.15, 0.9, 0.35, 1] }, duration: 1, ease: 'none', stagger: 0.04 }, 0.5)
+      .to('#screenOff', { opacity: 0, duration: 0.7, ease: 'power2.out' }, 1.3)
+      .to('#spill', { opacity: 1, duration: 1.4 }, 1.3)
+      .to('.dust span', { opacity: 0.8, duration: 1.2, stagger: 0.03 }, 1.2)
+      .to('.ed__stagewrap', { opacity: 1, duration: 0.6 }, 1.5)
+      .to(ui, { opacity: 1, duration: 0.6, stagger: 0.1 }, 1.5)
+      .to('.ed__layers u', { opacity: 1, x: 0, duration: 0.5, stagger: 0.07 }, 1.7)
+      .to('.cv-wire i', { opacity: 1, duration: 0.5, stagger: 0.1 }, 1.8)
+      .to('.trk i', { scaleX: 1, duration: 0.8, stagger: 0.08, ease: 'power3.out' }, 1.9)
+      .to('#hud', { opacity: 1, duration: 0.6 }, 2)
+      .to('#skip', { opacity: 1, duration: 0.6 }, 2)
+      .to('#cur', { opacity: 1, duration: 0.3 }, 2.2)
+      .to('#cur', { x: playBox.cx - edBox.x, y: playBox.cy - edBox.y, duration: 1.1, ease: 'power2.inOut' }, 2.3)
+      .to('#cur', { scale: 0.82, duration: 0.1, yoyo: true, repeat: 1 }, 3.45)
+      .fromTo('#ripple', { opacity: 1, scale: 0.3 }, { opacity: 0, scale: 1.6, duration: 0.6, ease: 'power2.out' }, 3.45)
+      .add(() => $('#play').classList.add('on'), 3.5)
+      .to('#cur', { x: edBox.w * 0.7, y: edBox.h * 0.42, duration: 1.2, ease: 'power2.inOut' }, 3.8)
+      .to('.cv-wire', { opacity: 0, duration: 0.5 }, 3.6)
+      .to(prog, { v: 1, duration: 2.1, ease: 'power1.inOut', onUpdate: onProg }, 3.6)
+      .to('#hud', { opacity: 0, duration: 0.4 }, 5.7)
+      .to('#skip', { opacity: 0, duration: 0.3 }, 5.7)
+      .to('#cur', { opacity: 0, duration: 0.3 }, 5.7)
+      .to(stageEl, { ...zoomView, duration: 1.9, ease: 'expo.inOut' }, 5.8)
+      .to('#flash', { opacity: 1, duration: 0.45, ease: 'power2.in' }, 7.2)
+      .add(heroIn(), 7.45)
+      .to('#intro', { opacity: 0, duration: 0.9, ease: 'power2.out' }, 7.5);
+
+    $('#skip').addEventListener('click', () => tl.timeScale(9));
+  };
+
+  if (reduce) {
+    $('#intro').style.display = 'none';
+    heroIn().progress(1);
+    finish();
+  } else {
+    runIntro();
+  }
 
   /* hero tilt + depth */
   if (fine && !reduce) {

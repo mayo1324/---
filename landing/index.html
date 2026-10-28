@@ -18,20 +18,78 @@
 <div class="progress" aria-hidden="true"><i></i></div>
 <div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"><b></b></span></div>
 
-<div class="loader" aria-hidden="true">
-  <div class="loader__panel loader__panel--top"></div>
-  <div class="loader__panel loader__panel--bottom"></div>
-  <div class="loader__inner">
-    <div class="loader__words">
-      <span><i>עיצוב</i></span>
-      <span><i>קוד</i></span>
-      <span><i>תנועה</i></span>
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro__stage" id="introStage">
+    <div class="wall"></div>
+    <div class="wallglow" id="wallglow"></div>
+    <div class="poster"><b>DESIGN</b><b>CODE</b><b>MOTION</b><b>DETAIL</b></div>
+    <div class="photo"><i></i></div>
+    <div class="lightcone" id="lightcone"></div>
+    <div class="lightbar"><i id="barglow"></i></div>
+    <svg class="plant plant--l" viewBox="0 0 300 420" aria-hidden="true"><defs><linearGradient id="lfplant--l" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6b6a4c"/><stop offset="1" stop-color="#2f2e22"/></linearGradient></defs><g fill="url(#lfplant--l)"><g transform="translate(150 330) rotate(-62) scale(1.0)"><path d="M0 0C34-44 36-118 0-186 -36-118 -34-44 0 0Z"/></g><g transform="translate(150 330) rotate(-38) scale(1.25)"><path d="M0 0C34-44 36-118 0-186 -36-118 -34-44 0 0Z"/></g><g transform="translate(150 330) rotate(-14) scale(1.45)"><path d="M0 0C34-44 36-118 0-186 -36-118 -34-44 0 0Z"/></g><g transform="translate(150 330) rotate(8) scale(1.3)"><path d="M0 0C34-44 36-118 0-186 -36-118 -34-44 0 0Z"/></g><g transform="translate(150 330) rotate(30) scale(1.2)"><path d="M0 0C34-44 36-118 0-186 -36-118 -34-44 0 0Z"/></g><g transform="translate(150 330) rotate(54) scale(0.95)"><path d="M0 0C34-44 36-118 0-186 -36-118 -34-44 0 0Z"/></g><g transform="translate(150 330) rotate(-80) scale(0.7)"><path d="M0 0C34-44 36-118 0-186 -36-118 -34-44 0 0Z"/></g><g transform="translate(150 330) rotate(76) scale(0.7)"><path d="M0 0C34-44 36-118 0-186 -36-118 -34-44 0 0Z"/></g></g><path d="M92 330h116l-12 90H104z" fill="#d6c6b2"/><path d="M92 330h116v10H92z" fill="#bba995"/></svg>
+    <div class="laptop"><div class="laptop__lid"><div class="laptop__scr"><i></i><i></i><i></i></div></div><div class="laptop__base"></div><div class="laptop__stand"></div></div>
+    <div class="riser"><div class="riser__glow"></div></div>
+    <div class="macmini"></div><div class="puck"></div>
+    <svg class="plant plant--r" viewBox="0 0 180 230" aria-hidden="true"><defs><linearGradient id="lfplant--r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6b6a4c"/><stop offset="1" stop-color="#2f2e22"/></linearGradient></defs><g fill="url(#lfplant--r)"><g transform="translate(90 150) rotate(-48) scale(0.5)"><path d="M0 0C34-44 36-118 0-186 -36-118 -34-44 0 0Z"/></g><g transform="translate(90 150) rotate(-18) scale(0.68)"><path d="M0 0C34-44 36-118 0-186 -36-118 -34-44 0 0Z"/></g><g transform="translate(90 150) rotate(14) scale(0.6)"><path d="M0 0C34-44 36-118 0-186 -36-118 -34-44 0 0Z"/></g><g transform="translate(90 150) rotate(44) scale(0.45)"><path d="M0 0C34-44 36-118 0-186 -36-118 -34-44 0 0Z"/></g></g><path d="M52 150h76l-8 70H60z" fill="#d6c6b2"/></svg>
+    <div class="monitor" id="monitor">
+      <div class="monitor__neck"></div><div class="monitor__base"></div>
+      <div class="monitor__body">
+        <div class="screen" id="screen">
+          <div class="ed" id="ed" dir="ltr">
+            <div class="ed__top"><i></i><i></i><i></i><span>YT Studio · project_01</span><b>Export</b></div>
+            <div class="ed__main">
+              <aside class="ed__layers"><p>LAYERS</p><u class="on"></u><u></u><u></u><u></u><u></u><u></u></aside>
+              <div class="ed__stagewrap">
+                <div class="canvas" id="canvas">
+                  <div class="cv-render" id="cvRender">
+                    <div class="cv-glow"></div>
+                    <div class="cv-nav"><b></b><em>YT Studio</em><span></span><span></span><span></span><s></s></div>
+                    <div class="cv-vis"><div class="cv-ring"></div><div class="cv-ring cv-ring--2"></div><div class="cv-orb"></div><div class="cv-win"></div></div>
+                    <div class="cv-text" dir="rtl"><p class="cv-eyebrow"><i></i>סטודיו לדפי נחיתה ואתרי תדמית</p><h4>דף אחד.<br>רושם <em>שנשאר.</em></h4><p class="cv-sub">נבנה לך אתר שמרגיש כמו מותג גדול, נטען מהר, ומביא פניות.</p><div class="cv-btns"><s></s><s></s></div></div>
+                  </div>
+                  <div class="cv-wire" id="cvWire"><i></i><i></i><i></i><i></i></div>
+                  <div class="cv-scan" id="cvScan"></div>
+                </div>
+              </div>
+              <aside class="ed__insp"><p>INSPECTOR</p><span class="sl"><i></i></span><span class="sl"><i></i></span><span class="sl"><i></i></span><span class="sl"><i></i></span><div class="sw"><i></i><i></i><i></i></div></aside>
+            </div>
+            <div class="ed__time">
+              <div class="ed__ctl"><button class="play" id="play"><i></i></button><span id="tc">00:00:00</span></div>
+              <div class="ed__tracks" id="tracks">
+                <div class="ruler"></div>
+                <div class="trk"><i style="left:2%;width:26%"></i><i style="left:30%;width:18%"></i><i style="left:52%;width:40%"></i></div>
+                <div class="trk trk--b"><i style="left:8%;width:34%"></i><i style="left:46%;width:24%"></i></div>
+                <div class="trk trk--c"><i style="left:0%;width:62%"></i><i style="left:66%;width:30%"></i></div>
+                <div class="head" id="head"></div>
+              </div>
+            </div>
+            <div class="ed__cursor" id="cur"><svg viewBox="0 0 16 22"><path d="M1 1v17l4.5-4 3 7 3-1.4-3-6.8H15z" fill="#F3E9DC" stroke="#1d1311" stroke-width="1.2" stroke-linejoin="round"/></svg><u id="ripple"></u></div>
+          </div>
+          <div class="screen__off" id="screenOff"></div>
+        </div>
+        <div class="gloss"></div>
+      </div>
     </div>
-    <div class="loader__meta">
-      <span class="loader__count">000</span>
-      <span class="loader__line"><i></i></span>
+    <div class="desk"></div>
+    <div class="spill" id="spill"></div>
+    <div class="plane">
+      <div class="mat"></div>
+      <div class="wrist"></div>
+      <div class="keys" id="keys"></div>
+      <div class="mouse"></div>
+      <div class="notebook"><i></i></div>
     </div>
+    <div class="chair"></div>
+    <div class="dust" id="dust"></div>
   </div>
+  <div class="intro__shade"></div>
+  <div class="intro__flash" id="flash"></div>
+  <div class="intro__hud" id="hud">
+    <span class="hud__label">רינדור</span>
+    <span class="hud__line"><i id="hudLine"></i></span>
+    <span class="hud__count" id="count">000</span>
+  </div>
+  <button class="intro__skip" id="skip" type="button">דלג</button>
 </div>
 
 <header class="nav" id="nav">
@@ -181,33 +239,26 @@
     </header>
 
     <div class="work__track">
-      <article class="proj" style="--a:#C9A27A;--b:#3A2620;--c:#F3E9DC" data-cursor="צפו">
-        <div class="proj__screen">
-          <div class="s-nav"><b></b><span></span><span></span></div>
-          <div class="s-body v1"><div class="s-title"></div><div class="s-title short"></div><div class="s-btn"></div><div class="s-orb"></div></div>
+      <article class="proj proj--wide" data-cursor="צפו">
+        <div class="shot shot--desk">
+          <div class="shot__bar"><i></i><i></i><i></i></div>
+          <div class="shot__img"><img src="works/sofia-desktop-1.jpg" alt="עמוד הבית של האתר של צופיה קזיוף" loading="eager"></div>
         </div>
-        <div class="proj__meta"><span class="no">01</span><h3>Aurum</h3><p>תכשיטנות</p></div>
+        <div class="proj__meta"><span class="no">01</span><h3>צופיה קזיוף</h3><p>אתר תדמית · צלמת</p></div>
       </article>
-      <article class="proj" style="--a:#9DB8A6;--b:#1F2A26;--c:#EEF3EC" data-cursor="צפו">
-        <div class="proj__screen">
-          <div class="s-nav"><b></b><span></span><span></span></div>
-          <div class="s-body v2"><div class="s-title"></div><div class="s-title short"></div><div class="s-grid"><i></i><i></i><i></i><i></i></div></div>
+      <article class="proj proj--wide" data-cursor="צפו">
+        <div class="shot shot--desk">
+          <div class="shot__bar"><i></i><i></i><i></i></div>
+          <div class="shot__img"><img src="works/sofia-desktop-3.jpg" alt="גלריית הצילומים באתר של צופיה קזיוף" loading="eager"></div>
         </div>
-        <div class="proj__meta"><span class="no">02</span><h3>Nova</h3><p>קליניקה</p></div>
+        <div class="proj__meta"><span class="no">02</span><h3>גלריה</h3><p>גלילה אופקית ותמונות מובילות</p></div>
       </article>
-      <article class="proj" style="--a:#B9795A;--b:#2A1A16;--c:#F6E7DA" data-cursor="צפו">
-        <div class="proj__screen">
-          <div class="s-nav"><b></b><span></span><span></span></div>
-          <div class="s-body v3"><div class="s-big"></div><div class="s-title short"></div><div class="s-btn"></div></div>
+      <article class="proj proj--phone" data-cursor="צפו">
+        <div class="shot shot--phone">
+          <div class="shot__notch"></div>
+          <div class="shot__img"><img src="works/sofia-mobile-1.jpg" alt="גרסת הנייד של האתר של צופיה קזיוף" loading="eager"></div>
         </div>
-        <div class="proj__meta"><span class="no">03</span><h3>Dune</h3><p>מסעדה</p></div>
-      </article>
-      <article class="proj" style="--a:#8C97B8;--b:#1C1F2B;--c:#ECEEF6" data-cursor="צפו">
-        <div class="proj__screen">
-          <div class="s-nav"><b></b><span></span><span></span></div>
-          <div class="s-body v4"><div class="s-title"></div><div class="s-title short"></div><div class="s-split"><i></i><i></i></div></div>
-        </div>
-        <div class="proj__meta"><span class="no">04</span><h3>Kavod</h3><p>משרד עורכי דין</p></div>
+        <div class="proj__meta"><span class="no">03</span><h3>נייד</h3><p>מותאם לכל מסך</p></div>
       </article>
       <div class="proj proj--end">
         <p>הבא<br><em>שלך.</em></p>
@@ -250,10 +301,35 @@
   </div>
 </section>
 
+<!-- VOICES -->
+<section class="voices" id="voices">
+  <header class="sec-head">
+    <p class="label"><b>05</b>המלצות</p>
+    <h2 data-split>מה לקוחות <em>אומרים.</em></h2>
+  </header>
+  <div class="quotes">
+    <figure class="quote" data-cursor>
+      <svg class="quote__mark" viewBox="0 0 48 36" fill="none"><path d="M0 36V20C0 8 7 1 19 0v7c-6 1-9 4-9 9h9v20H0Zm28 0V20C28 8 35 1 47 0v7c-6 1-9 4-9 9h9v20H28Z" fill="currentColor"/></svg>
+      <blockquote data-quote="1">ההמלצה הראשונה תופיע כאן.</blockquote>
+      <figcaption><span class="av"></span><span><b data-qname="1">שם הלקוח</b><small data-qrole="1">תחום עיסוק</small></span></figcaption>
+    </figure>
+    <figure class="quote" data-cursor>
+      <svg class="quote__mark" viewBox="0 0 48 36" fill="none"><path d="M0 36V20C0 8 7 1 19 0v7c-6 1-9 4-9 9h9v20H0Zm28 0V20C28 8 35 1 47 0v7c-6 1-9 4-9 9h9v20H28Z" fill="currentColor"/></svg>
+      <blockquote data-quote="2">ההמלצה השנייה תופיע כאן.</blockquote>
+      <figcaption><span class="av"></span><span><b data-qname="2">שם הלקוח</b><small data-qrole="2">תחום עיסוק</small></span></figcaption>
+    </figure>
+    <figure class="quote" data-cursor>
+      <svg class="quote__mark" viewBox="0 0 48 36" fill="none"><path d="M0 36V20C0 8 7 1 19 0v7c-6 1-9 4-9 9h9v20H0Zm28 0V20C28 8 35 1 47 0v7c-6 1-9 4-9 9h9v20H28Z" fill="currentColor"/></svg>
+      <blockquote data-quote="3">ההמלצה השלישית תופיע כאן.</blockquote>
+      <figcaption><span class="av"></span><span><b data-qname="3">שם הלקוח</b><small data-qrole="3">תחום עיסוק</small></span></figcaption>
+    </figure>
+  </div>
+</section>
+
 <!-- PRICING -->
 <section class="pricing" id="pricing">
   <header class="sec-head sec-head--center">
-    <p class="label"><b>05</b>מחירים</p>
+    <p class="label"><b>06</b>מחירים</p>
     <h2 data-split>מחיר ברור <em>מההתחלה.</em></h2>
   </header>
   <div class="plans">
@@ -301,7 +377,7 @@
 <!-- CTA -->
 <section class="cta" id="contact">
   <div class="cta__glow" aria-hidden="true"></div>
-  <p class="label label--center"><b>06</b>יצירת קשר</p>
+  <p class="label label--center"><b>07</b>יצירת קשר</p>
   <h2 class="cta__title" data-split>יש לך רעיון?<br><em>בוא נבנה אותו.</em></h2>
   <div class="cta__row">
     <a class="btn btn--xl magnetic" href="https://wa.me/972500000000" target="_blank" rel="noopener"><span>שלחו הודעה בוואטסאפ</span></a>
