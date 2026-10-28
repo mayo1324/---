@@ -456,7 +456,8 @@
   const setMenu = (open) => {
     burger.setAttribute('aria-expanded', open);
     menu.hidden = !open;
-    if (open) { if (lenis) lenis.stop(); gsap.from('#menu > *', { y: 30, opacity: 0, stagger: 0.06, duration: 0.8, ease: 'expo.out' }); }
+    if (open) { if (lenis) lenis.stop(); gsap.from('.menu__list li a', { yPercent: 110, stagger: 0.07, duration: 1, ease: 'expo.out' });
+      gsap.from('.menu__foot > *', { y: 24, opacity: 0, stagger: 0.08, duration: 0.9, delay: 0.35, ease: 'expo.out' }); }
     else if (lenis && !body.classList.contains('is-loading')) lenis.start();
   };
   burger.addEventListener('click', () => setMenu(burger.getAttribute('aria-expanded') !== 'true'));
