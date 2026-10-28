@@ -328,26 +328,85 @@
     onEnter: (els) => gsap.to(els, { y: 0, opacity: 1, rotateX: 0, duration: 1.4, stagger: 0.14, ease: 'expo.out', clearProps: 'transform' }),
   });
 
-  /* work: horizontal pinned scroll */
   const mm = gsap.matchMedia();
-  mm.add('(min-width: 721px)', () => {
-    const track = $('.work__track');
-    const dist = () => Math.max(0, track.scrollWidth - innerWidth);
-    gsap.to(track, {
-      x: () => dist(),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.work', start: 'top top', end: () => '+=' + (dist() + innerHeight * 0.4),
-        pin: '.work__pin', scrub: 0.6, invalidateOnRefresh: true, anticipatePin: 1,
-        onUpdate: (s) => gsap.set('.work__bar i', { scaleX: s.progress }),
-      },
+
+  /* work: ring of monitors, keeps turning */
+  const rig = $('#rig');
+  const ring = $('#ring');
+  const mons = $$('.mon');
+  const N = mons.length;
+  const step = 360 / N;
+  const names = mons.map((m) => ({ n: $('b', m).textContent, k: $('span', m).textContent, p: m.dataset.p }));
+  let R = 1200;
+  const layout = () => {
+    const vw = innerWidth;
+    const w = vw < 720 ? vw * 0.62 : Math.min(470, vw * 0.245);
+    rig.style.setProperty('--w', w + 'px');
+    rig.style.setProperty('--h', w / 1.6 + 36 + 'px');
+    R = (N * (w + w * 0.05)) / (2 * Math.PI);
+    mons.forEach((m, i) => { m.dataset.a = i * step; });
+  };
+  layout();
+  addEventListener('resize', layout);
+
+  let rot = 0, vel = 0, speed = 5, hover = false, dragging = false, last = 0, lastX = 0, shown = -1;
+  const chipBtns = $$('.chip-btn');
+  const setNow = (i) => {
+    if (i === shown) return;
+    shown = i;
+    const d = names[i];
+    gsap.to('#now', { opacity: 0, duration: 0.18, onComplete: () => {
+      $('#nowName').textContent = d.n; $('#nowKind').textContent = d.k;
+      gsap.to('#now', { opacity: 1, duration: 0.35 });
+    } });
+    chipBtns.forEach((c) => c.classList.toggle('is-on', c.dataset.p === d.p));
+  };
+  const place = () => {
+    let best = -2, bi = 0;
+    mons.forEach((m, i) => {
+      const a = i * step + rot;
+      const rad = (a * Math.PI) / 180;
+      const c = Math.cos(rad);
+      if (c > best) { best = c; bi = i; }
+      const vis = Math.max(0, Math.min(1, (c + 0.5) / 0.75));
+      m.style.opacity = vis.toFixed(3);
+      m.style.transform = `rotateY(${a}deg) translateZ(${R}px) scale(${(0.9 + 0.1 * Math.max(0, c)).toFixed(3)})`;
+      m.style.filter = `brightness(${(0.55 + 0.45 * Math.max(0, c)).toFixed(3)})`;
     });
+    ring.style.transform = `translateZ(${-R}px)`;
+    setNow(bi);
+  };
+  gsap.ticker.add((t, dt) => {
+    const d = Math.min(dt, 64) / 1000;
+    const target = reduce || hover || dragging ? 0 : speed;
+    if (!dragging) {
+      vel += (target - vel) * Math.min(1, d * 3);
+      rot -= vel * d;
+    }
+    place();
   });
-  mm.add('(max-width: 720px)', () => {
-    $$('.proj').forEach((p) => {
-      gsap.from(p, { y: 70, opacity: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: p, start: 'top 88%', once: true } });
-    });
+  ScrollTrigger.create({ trigger: '#work', start: 'top bottom', end: 'bottom top', onUpdate: (s) => { if (!dragging) vel += s.getVelocity() / 140 * 0.02; } });
+  rig.addEventListener('mouseenter', () => { hover = true; });
+  rig.addEventListener('mouseleave', () => { hover = false; });
+  rig.addEventListener('pointerdown', (e) => { dragging = true; lastX = e.clientX; last = performance.now(); rig.classList.add('is-drag'); rig.setPointerCapture(e.pointerId); });
+  rig.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const dx = e.clientX - lastX; lastX = e.clientX;
+    const now = performance.now();
+    rot -= dx * 0.16;
+    vel = (-dx * 0.16) / Math.max(0.008, (now - last) / 1000) * -1;
+    last = now;
   });
+  const endDrag = () => { if (!dragging) return; dragging = false; rig.classList.remove('is-drag'); vel = Math.max(-90, Math.min(90, vel)); };
+  rig.addEventListener('pointerup', endDrag);
+  rig.addEventListener('pointercancel', endDrag);
+  chipBtns.forEach((b) => b.addEventListener('click', () => {
+    const idx = +b.dataset.goto;
+    let t = -idx * step;
+    t += Math.round((rot - t) / 360) * 360;
+    gsap.to({ v: rot }, { v: t, duration: 1.4, ease: 'expo.inOut', onUpdate() { rot = this.targets()[0].v; vel = 0; } });
+  }));
+  gsap.from('.rig', { opacity: 0, y: 80, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: '.rig', start: 'top 85%', once: true } });
 
   /* numbers */
   $$('[data-count]').forEach((el) => {
